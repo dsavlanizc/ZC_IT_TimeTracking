@@ -135,6 +135,7 @@
     <Content Include="SQLScripts\dbo.Roles.sql" />
     <Content Include="SQLScripts\dbo.Team.sql" />
     <Content Include="SQLScripts\dbo.Team_Lead.sql" />
+    <Content Include="SQLScripts\DB_IT_TIME_TRACKING.sql" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
