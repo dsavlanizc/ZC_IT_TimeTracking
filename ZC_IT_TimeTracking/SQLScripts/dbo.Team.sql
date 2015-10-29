@@ -1,0 +1,35 @@
+USE [IT-Tracking]
+GO
+
+/****** Object:  Table [dbo].[Team]    Script Date: 29-10-2015 15:15:57 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Team](
+	[TeamID] [int] IDENTITY(1,1) NOT NULL,
+	[TeamName] [varchar](150) NOT NULL,
+	[DepartmentID] [int] NOT NULL,
+ CONSTRAINT [PK_Team] PRIMARY KEY CLUSTERED 
+(
+	[TeamID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Team]  WITH CHECK ADD  CONSTRAINT [FK_Team_DepartmentID] FOREIGN KEY([DepartmentID])
+REFERENCES [dbo].[Department] ([DepartmentID])
+GO
+
+ALTER TABLE [dbo].[Team] CHECK CONSTRAINT [FK_Team_DepartmentID]
+GO
+
