@@ -135,7 +135,7 @@
     <Content Include="SQLScripts\dbo.Roles.sql" />
     <Content Include="SQLScripts\dbo.Team.sql" />
     <Content Include="SQLScripts\dbo.Team_Lead.sql" />
-    <Content Include="SQLScripts\DB_IT_TIME_TRACKING.sql" />
+    <Content Include="SQLScripts\DB_IT_TRACKING_Tables.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_CheckQuaterDueDate.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_Goal_Details.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_Goal_Found.sql" />
