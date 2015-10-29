@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home";
 }
+@model List<ZC_IT_TimeTracking.Goal_Master>
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -20,23 +21,25 @@
         </div>
         <div id="collapse2" class="panel-collapse collapse">
             <div class="panel-body">
-                @RenderPage("~/Views/Home/_CreateGoal.cshtml")
-                <div id="accordion2">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion2" href="#collapse3">Goal Rules</a>
-                            </h4>
-                        </div>
-                        <div id="collapse3" class="panel-collapse collapse">
-                            <div class="panel-body">@RenderPage("~/Views/Home/_GoalRule.cshtml")</div>
+                <form role="form" id="goalCreateForm" class="form-horizontal">
+                    @RenderPage("~/Views/Home/_CreateGoal.cshtml")
+                    <div id="accordion2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion2" href="#collapse3">Goal Rules</a>
+                                </h4>
+                            </div>
+                            <div id="collapse3" class="panel-collapse collapse">
+                                <div class="panel-body">@RenderPage("~/Views/Home/_GoalRule.cshtml")</div>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
             <div class="panel-body">
                 <button class="btn btn-primary">Submit</button>
-                </div>
             </div>
-    </div>    
+        </div>
+    </div>
 </div>

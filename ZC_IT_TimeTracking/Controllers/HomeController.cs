@@ -8,10 +8,12 @@ namespace ZC_IT_TimeTracking.Controllers
 {
     public class HomeController : Controller
     {
+        private DatabaseEntities DbContext = new DatabaseEntities();
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            var GoalList = DbContext.Goal_Master.ToList();
+            return View(GoalList);
         }
     }
 }
