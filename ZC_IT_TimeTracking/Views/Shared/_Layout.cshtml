@@ -14,20 +14,8 @@
         <div class="navbar-header">
             <a class="navbar-brand">Zerochaos</a>
         </div>
-        <ul class="nav navbar-nav navbar-right">
-            @if (User.Identity.IsAuthenticated)
-            {
-                <li style="color:white;"><a data-toggle="tooltip" data-placement="bottom" title="Your Profile"><span class="glyphicon glyphicon-user"></span> @Session["username"]</a></li>
-                <li><a data-toggle="tooltip" data-placement="bottom" title="LogOut"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-            }
-            else
-            {
-                <li><a href="~/Home/Login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-            }
-        </ul>
-
     </nav>
-    <div class="container">
+    <div class="container panel panel-primary">
         @RenderBody()
     </div>
 </body>
