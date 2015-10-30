@@ -61,7 +61,7 @@
           <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="RoleID" Type="int" />
-          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="TeamID" Type="int" />
         </EntityType>
         <EntityType Name="Resource_Goal">
           <Key>
@@ -78,7 +78,7 @@
           </Key>
           <Property Name="Resource_Goal_PerformanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Resource_Performance" Type="float" Nullable="false" />
-          <Property Name="Resource_Rating" Type="float" Nullable="false" />
+          <Property Name="Resource_Rating" Type="float" />
           <Property Name="ResourceId" Type="int" Nullable="false" />
           <Property Name="Goal_MasterID" Type="int" Nullable="false" />
         </EntityType>
@@ -97,6 +97,16 @@
           </Key>
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -235,7 +245,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_TeamID">
-          <End Role="Team" Type="Self.Team" Multiplicity="1" />
+          <End Role="Team" Type="Self.Team" Multiplicity="0..1" />
           <End Role="Resource" Type="Self.Resource" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
@@ -294,11 +304,94 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CheckQuaterDueDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="p_Quater" Type="int" Mode="In" />
+          <Parameter Name="p_Year" Type="int" Mode="In" />
+          <Parameter Name="IsValid" Type="int" Mode="InOut" />
+          <Parameter Name="Quater_Id" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="DeleteGoalMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GoalId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="DeleteGoalRule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GoalRuleId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
         <Function Name="GetGoalDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Goal_Id" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetQuarterDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Quarter_Id" Type="int" Mode="In" />
+        <Function Name="GetGoalRuleDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GoalId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetQuaterDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="QuaterId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertGoalMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Goal_Title" Type="varchar" Mode="In" />
+          <Parameter Name="Goal_Description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Unit_Of_Measurement" Type="varchar" Mode="In" />
+          <Parameter Name="Measurement_Value" Type="float" Mode="In" />
+          <Parameter Name="Is_HigherValueGood" Type="bit" Mode="In" />
+          <Parameter Name="CreationDate" Type="date" Mode="In" />
+          <Parameter Name="QuaterID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InsertGoalQuater" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Quater" Type="int" Mode="In" />
+          <Parameter Name="Year" Type="int" Mode="In" />
+          <Parameter Name="GoalCreate_From" Type="date" Mode="In" />
+          <Parameter Name="GoalCreate_To" Type="date" Mode="In" />
+        </Function>
+        <Function Name="InsertGoalRules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PerformanceRangeFrom" Type="int" Mode="In" />
+          <Parameter Name="PerformanceRangeTo" Type="int" Mode="In" />
+          <Parameter Name="Rating" Type="float" Mode="In" />
+          <Parameter Name="GoalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="version" Type="int" Mode="In" />
+          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+        </Function>
+        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+          <Parameter Name="owner_id" Type="int" Mode="In" />
+          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="UpdateGoalMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Goal_Id" Type="int" Mode="In" />
+          <Parameter Name="Goal_Title" Type="varchar" Mode="In" />
+          <Parameter Name="Goal_Description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="Unit_Of_Measurement" Type="varchar" Mode="In" />
+          <Parameter Name="Measurement_Value" Type="float" Mode="In" />
+          <Parameter Name="CreateDate" Type="date" Mode="In" />
+          <Parameter Name="Is_HigherValueGood" Type="bit" Mode="In" />
+          <Parameter Name="QuaterID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateGoalRules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PerformanceRangeFrom" Type="int" Mode="In" />
+          <Parameter Name="PerformanceRangeTo" Type="int" Mode="In" />
+          <Parameter Name="Rating" Type="float" Mode="In" />
+          <Parameter Name="GoalID" Type="int" Mode="In" />
         </Function>
         <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
@@ -311,6 +404,7 @@
           <EntitySet Name="Resource_Goal_Performance" EntityType="Self.Resource_Goal_Performance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resource_Performance" EntityType="Self.Resource_Performance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamLead" EntityType="Self.TeamLead" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Goal_Master_QuaterID" Association="Self.FK_Goal_Master_QuaterID">
@@ -385,6 +479,9 @@
           <FunctionImport Name="GetGoalDetails1">
           <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(DatabaseModel.GetQuarterDetails_Result)">
+            <Parameter Name="Quarter_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="Departments" EntityType="DatabaseModel.Department" />
           <EntitySet Name="Goal_Master" EntityType="DatabaseModel.Goal_Master" />
           <EntitySet Name="Goal_Quater" EntityType="DatabaseModel.Goal_Quater" />
@@ -395,6 +492,7 @@
           <EntitySet Name="Resource_Goal_Performance" EntityType="DatabaseModel.Resource_Goal_Performance" />
           <EntitySet Name="Resource_Performance" EntityType="DatabaseModel.Resource_Performance" />
           <EntitySet Name="Roles" EntityType="DatabaseModel.Role" />
+          <EntitySet Name="sysdiagrams" EntityType="DatabaseModel.sysdiagram" />
           <EntitySet Name="Teams" EntityType="DatabaseModel.Team" />
           <EntitySet Name="TeamLeads" EntityType="DatabaseModel.TeamLead" />
           <AssociationSet Name="FK_Team_DepartmentID" Association="DatabaseModel.FK_Team_DepartmentID">
@@ -457,8 +555,90 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamLead" EntitySet="TeamLeads" />
           </AssociationSet>
-          <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(DatabaseModel.GetQuarterDetails_Result)">
-            <Parameter Name="Quarter_Id" Mode="In" Type="Int32" />
+          <FunctionImport Name="CheckQuaterDueDate">
+            <Parameter Name="p_Quater" Mode="In" Type="Int32" />
+            <Parameter Name="p_Year" Mode="In" Type="Int32" />
+            <Parameter Name="IsValid" Mode="InOut" Type="Int32" />
+            <Parameter Name="Quater_Id" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteGoalMaster">
+            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteGoalRule">
+            <Parameter Name="GoalRuleId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetGoalRuleDetails" ReturnType="Collection(DatabaseModel.GetGoalRuleDetails_Result)">
+            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetQuaterDetails" ReturnType="Collection(DatabaseModel.GetQuaterDetails_Result)">
+            <Parameter Name="QuaterId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertGoalMaster">
+            <Parameter Name="Goal_Title" Mode="In" Type="String" />
+            <Parameter Name="Goal_Description" Mode="In" Type="String" />
+            <Parameter Name="Unit_Of_Measurement" Mode="In" Type="String" />
+            <Parameter Name="Measurement_Value" Mode="In" Type="Double" />
+            <Parameter Name="Is_HigherValueGood" Mode="In" Type="Boolean" />
+            <Parameter Name="CreationDate" Mode="In" Type="DateTime" />
+            <Parameter Name="QuaterID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InsertGoalQuater">
+            <Parameter Name="Quater" Mode="In" Type="Int32" />
+            <Parameter Name="Year" Mode="In" Type="Int32" />
+            <Parameter Name="GoalCreate_From" Mode="In" Type="DateTime" />
+            <Parameter Name="GoalCreate_To" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertGoalRules">
+            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Int32" />
+            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Int32" />
+            <Parameter Name="Rating" Mode="In" Type="Double" />
+            <Parameter Name="GoalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(DatabaseModel.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(DatabaseModel.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
+          <FunctionImport Name="UpdateGoalMaster">
+            <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
+            <Parameter Name="Goal_Title" Mode="In" Type="String" />
+            <Parameter Name="Goal_Description" Mode="In" Type="String" />
+            <Parameter Name="Unit_Of_Measurement" Mode="In" Type="String" />
+            <Parameter Name="Measurement_Value" Mode="In" Type="Double" />
+            <Parameter Name="CreateDate" Mode="In" Type="DateTime" />
+            <Parameter Name="Is_HigherValueGood" Mode="In" Type="Boolean" />
+            <Parameter Name="QuaterID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateGoalRules">
+            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Int32" />
+            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Int32" />
+            <Parameter Name="Rating" Mode="In" Type="Double" />
+            <Parameter Name="GoalID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="GetGoalDetails_Result">
@@ -469,6 +649,10 @@
           <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
           <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
           <Property Type="Int32" Name="QuaterId" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetQuarterDetails_Result">
+          <Property Type="Int32" Name="Quater" Nullable="false" />
+          <Property Type="Int32" Name="YEAR" Nullable="false" />
         </ComplexType>
         <EntityType Name="Department">
           <Key>
@@ -536,7 +720,7 @@
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="RoleID" Type="Int32" />
-          <Property Name="TeamID" Type="Int32" Nullable="false" />
+          <Property Name="TeamID" Type="Int32" />
           <NavigationProperty Name="Managers" Relationship="DatabaseModel.FK_TeamManager_Resource" FromRole="Resource" ToRole="Manager" />
           <NavigationProperty Name="Resource_Goal_Performance" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Resource" FromRole="Resource" ToRole="Resource_Goal_Performance" />
           <NavigationProperty Name="Resource_Goal" Relationship="DatabaseModel.FK_Resource_Goal_Resource" FromRole="Resource" ToRole="Resource_Goal" />
@@ -562,7 +746,7 @@
           </Key>
           <Property Name="Resource_Goal_PerformanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Resource_Performance" Type="Double" Nullable="false" />
-          <Property Name="Resource_Rating" Type="Double" Nullable="false" />
+          <Property Name="Resource_Rating" Type="Double" />
           <Property Name="ResourceId" Type="Int32" Nullable="false" />
           <Property Name="Goal_MasterID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Goal_Master" FromRole="Resource_Goal_Performance" ToRole="Goal_Master" />
@@ -586,6 +770,16 @@
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Resources" Relationship="DatabaseModel.FK_Resource_RoleID" FromRole="Role" ToRole="Resource" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -754,7 +948,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_TeamID">
-          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="1" />
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="0..1" />
           <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
@@ -789,9 +983,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetQuarterDetails_Result">
+        <ComplexType Name="GetGoalRuleDetails_Result">
+          <Property Type="Int32" Name="Goal_RuleID" Nullable="false" />
+          <Property Type="Int32" Name="Performance_RangeFrom" Nullable="false" />
+          <Property Type="Int32" Name="Performance_RangeTo" Nullable="false" />
+          <Property Type="Double" Name="Rating" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetQuaterDetails_Result">
           <Property Type="Int32" Name="Quater" Nullable="false" />
           <Property Type="Int32" Name="YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="GoalCreateFrom" Nullable="false" />
+          <Property Type="DateTime" Name="GoalCreateTo" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -916,6 +1129,17 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DatabaseModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="DatabaseModel.Team">
               <MappingFragment StoreEntitySet="Team">
@@ -934,14 +1158,58 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetQuarterDetails" FunctionName="DatabaseModel.Store.GetQuarterDetails">
+          <FunctionImportMapping FunctionImportName="CheckQuaterDueDate" FunctionName="DatabaseModel.Store.CheckQuaterDueDate" />
+          <FunctionImportMapping FunctionImportName="DeleteGoalMaster" FunctionName="DatabaseModel.Store.DeleteGoalMaster" />
+          <FunctionImportMapping FunctionImportName="DeleteGoalRule" FunctionName="DatabaseModel.Store.DeleteGoalRule" />
+          <FunctionImportMapping FunctionImportName="GetGoalRuleDetails" FunctionName="DatabaseModel.Store.GetGoalRuleDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetQuarterDetails_Result">
-                <ScalarProperty Name="Quater" ColumnName="Quater" />
-                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+              <ComplexTypeMapping TypeName="DatabaseModel.GetGoalRuleDetails_Result">
+                <ScalarProperty Name="Goal_RuleID" ColumnName="Goal_RuleID" />
+                <ScalarProperty Name="Performance_RangeFrom" ColumnName="Performance_RangeFrom" />
+                <ScalarProperty Name="Performance_RangeTo" ColumnName="Performance_RangeTo" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetQuaterDetails" FunctionName="DatabaseModel.Store.GetQuaterDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.GetQuaterDetails_Result">
+                <ScalarProperty Name="Quater" ColumnName="Quater" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
+                <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertGoalMaster" FunctionName="DatabaseModel.Store.InsertGoalMaster" />
+          <FunctionImportMapping FunctionImportName="InsertGoalQuater" FunctionName="DatabaseModel.Store.InsertGoalQuater" />
+          <FunctionImportMapping FunctionImportName="InsertGoalRules" FunctionName="DatabaseModel.Store.InsertGoalRules" />
+          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="DatabaseModel.Store.sp_alterdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="DatabaseModel.Store.sp_creatediagram" />
+          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="DatabaseModel.Store.sp_dropdiagram" />
+          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="DatabaseModel.Store.sp_helpdiagramdefinition">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.sp_helpdiagramdefinition_Result">
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="DatabaseModel.Store.sp_helpdiagrams">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.sp_helpdiagrams_Result">
+                <ScalarProperty Name="Database" ColumnName="Database" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="DatabaseModel.Store.sp_renamediagram" />
+          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="DatabaseModel.Store.sp_upgraddiagrams" />
+          <FunctionImportMapping FunctionImportName="UpdateGoalMaster" FunctionName="DatabaseModel.Store.UpdateGoalMaster" />
+          <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="DatabaseModel.Store.UpdateGoalRules" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -963,6 +1231,37 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="7c2844f6975f4b7ba45f3023c7fc7dea" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseModel.Department" Width="1.5" PointX="0.75" PointY="8.625" />
+        <EntityTypeShape EntityType="DatabaseModel.Goal_Master" Width="1.5" PointX="8.25" PointY="0.75" />
+        <EntityTypeShape EntityType="DatabaseModel.Goal_Quater" Width="1.5" PointX="6" PointY="1.5" />
+        <EntityTypeShape EntityType="DatabaseModel.Goal_Rules" Width="1.5" PointX="10.5" PointY="1.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Manager" Width="1.5" PointX="7.5" PointY="8.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource_Goal" Width="1.5" PointX="7.5" PointY="11.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource_Goal_Performance" Width="1.5" PointX="10.5" PointY="5.25" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource_Performance" Width="1.5" PointX="7.5" PointY="5.375" />
+        <EntityTypeShape EntityType="DatabaseModel.Role" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="DatabaseModel.sysdiagram" Width="1.5" PointX="0.75" PointY="1.875" />
+        <EntityTypeShape EntityType="DatabaseModel.Team" Width="1.5" PointX="3" PointY="8.25" />
+        <EntityTypeShape EntityType="DatabaseModel.TeamLead" Width="1.5" PointX="10.5" PointY="8.375" />
+        <AssociationConnector Association="DatabaseModel.FK_Team_DepartmentID" />
+        <AssociationConnector Association="DatabaseModel.FK_Goal_Master_QuaterID" />
+        <AssociationConnector Association="DatabaseModel.FK_Goal_Rules_Goal_Master" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Goal_Master" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Performance_Goal_Master" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Performance_Goal_Quater" />
+        <AssociationConnector Association="DatabaseModel.FK_Manager_TeamID" />
+        <AssociationConnector Association="DatabaseModel.FK_TeamManager_Resource" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Performance_Resource" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Resource" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Performance_Resource" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_RoleID" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_TeamID" />
+        <AssociationConnector Association="DatabaseModel.FK_TeamLead_Resource" />
+        <AssociationConnector Association="DatabaseModel.FK_TeamLead_TeamID" />
+      </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>
