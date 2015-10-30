@@ -157,10 +157,15 @@
     <Content Include="SQLScripts\dbo.Team_Lead.sql" />
     <Content Include="SQLScripts\DB_IT_TRACKING_Tables.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_CheckQuaterDueDate.sql" />
-    <Content Include="SQLScripts\StoreProcedures\sp_Goal_Details.sql" />
+    <Content Include="SQLScripts\StoreProcedures\sp_deleteGoalMaster.sql" />
+    <Content Include="SQLScripts\StoreProcedures\sp_DeleteGoalRules.sql" />
+    <Content Include="SQLScripts\StoreProcedures\sp_GetGoalDetails.sql" />
+    <Content Include="SQLScripts\StoreProcedures\sp_getGoalRulesDetails.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_Goal_Found.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_Insert_Goal_Master.sql" />
-    <Content Include="SQLScripts\StoreProcedures\Update_Goal_Master.sql" />
+    <Content Include="SQLScripts\StoreProcedures\SP_Insert_Goal_Rules.sql" />
+    <Content Include="SQLScripts\StoreProcedures\sp_updateGoalMaster.sql" />
+    <Content Include="SQLScripts\StoreProcedures\sp_Update_Goal_Rules.sql" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

@@ -345,7 +345,10 @@ GO
 USE [IT-Tracking]
 GO
 
-/****** Object:  Table [dbo].[Goal_Master]    Script Date: 29-10-2015 18:34:00 ******/
+USE [IT-Tracking]
+GO
+
+/****** Object:  Table [dbo].[Goal_Master]    Script Date: 2015-10-30 14:52:19 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -361,6 +364,7 @@ CREATE TABLE [dbo].[Goal_Master](
 	[GoalDescription] [varchar](max) NULL,
 	[UnitOfMeasurement] [varchar](20) NOT NULL,
 	[MeasurementValue] [float] NOT NULL,
+	[Creation_Date] [date] NULL,
 	[IsHigherValueGood] [bit] NOT NULL,
 	[QuaterId] [int] NOT NULL,
  CONSTRAINT [PK_Goal_Master] PRIMARY KEY CLUSTERED 
@@ -370,6 +374,18 @@ CREATE TABLE [dbo].[Goal_Master](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 
 GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Goal_Master]  WITH CHECK ADD  CONSTRAINT [FK_Goal_Master_QuaterID] FOREIGN KEY([QuaterId])
+REFERENCES [dbo].[Goal_Quater] ([QuaterID])
+GO
+
+ALTER TABLE [dbo].[Goal_Master] CHECK CONSTRAINT [FK_Goal_Master_QuaterID]
+GO
+
+
 
 SET ANSI_PADDING OFF
 GO
@@ -395,10 +411,12 @@ CREATE TABLE [dbo].[Goal_Rules](
 	[Goal_RuleID] [int] IDENTITY(1,1) NOT NULL,
 	[Performance_RangeFrom] [int] NOT NULL,
 	[Performance_RangeTo] [int] NOT NULL,
-	[Rating] [int] NOT NULL,
+	[Rating] [float] NOT NULL,
 	[GoalId] [int] NOT NULL,
  CONSTRAINT [PK_Goal_Rules] PRIMARY KEY CLUSTERED 
 (
+
+
 	[Goal_RuleID] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
@@ -461,8 +479,8 @@ GO
 
 CREATE TABLE [dbo].[Resource_Goal_Performance](
 	[Resource_Goal_PerformanceID] [int] IDENTITY(1,1) NOT NULL,
-	[Resource_Performance] [int] NOT NULL,
-	[Resource_Rating] [int] NOT NULL,
+	[Resource_Performance] [float] NOT NULL,
+	[Resource_Rating] [float] NOT NULL,
 	[ResourceId] [int] NOT NULL,
 	[Goal_MasterID] [int] NOT NULL,
  CONSTRAINT [PK_Resource_Goal_Performance] PRIMARY KEY CLUSTERED 
@@ -504,7 +522,7 @@ CREATE TABLE [dbo].[Resource_Performance](
 	[Resource_PerformanceID] [int] IDENTITY(1,1) NOT NULL,
 	[ResourceID] [int] NOT NULL,
 	[QuaterID] [int] NOT NULL,
-	[Resource_Performance] [int] NOT NULL,
+	[Resource_Performance] [float] NOT NULL,
  CONSTRAINT [PK_Resource_Performance] PRIMARY KEY CLUSTERED 
 (
 	[Resource_PerformanceID] ASC
