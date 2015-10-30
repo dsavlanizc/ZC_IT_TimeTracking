@@ -17,7 +17,7 @@ namespace ZC_IT_TimeTracking
         public int Goal_RuleID { get; set; }
         public int Performance_RangeFrom { get; set; }
         public int Performance_RangeTo { get; set; }
-        public int Rating { get; set; }
+        public double Rating { get; set; }
         public int GoalId { get; set; }
     
         public virtual Goal_Master Goal_Master { get; set; }

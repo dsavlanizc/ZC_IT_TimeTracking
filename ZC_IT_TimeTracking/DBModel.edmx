@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -21,6 +21,7 @@
           <Property Name="GoalDescription" Type="varchar(max)" />
           <Property Name="UnitOfMeasurement" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="MeasurementValue" Type="float" Nullable="false" />
+          <Property Name="Creation_Date" Type="date" />
           <Property Name="IsHigherValueGood" Type="bit" Nullable="false" />
           <Property Name="QuaterId" Type="int" Nullable="false" />
         </EntityType>
@@ -41,7 +42,7 @@
           <Property Name="Goal_RuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Performance_RangeFrom" Type="int" Nullable="false" />
           <Property Name="Performance_RangeTo" Type="int" Nullable="false" />
-          <Property Name="Rating" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="float" Nullable="false" />
           <Property Name="GoalId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Manager">
@@ -76,8 +77,8 @@
             <PropertyRef Name="Resource_Goal_PerformanceID" />
           </Key>
           <Property Name="Resource_Goal_PerformanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Resource_Performance" Type="int" Nullable="false" />
-          <Property Name="Resource_Rating" Type="int" Nullable="false" />
+          <Property Name="Resource_Performance" Type="float" Nullable="false" />
+          <Property Name="Resource_Rating" Type="float" Nullable="false" />
           <Property Name="ResourceId" Type="int" Nullable="false" />
           <Property Name="Goal_MasterID" Type="int" Nullable="false" />
         </EntityType>
@@ -88,7 +89,7 @@
           <Property Name="Resource_PerformanceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ResourceID" Type="int" Nullable="false" />
           <Property Name="QuaterID" Type="int" Nullable="false" />
-          <Property Name="Resource_Performance" Type="int" Nullable="false" />
+          <Property Name="Resource_Performance" Type="float" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -293,6 +294,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetGoalDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Goal_Id" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetQuarterDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Quarter_Id" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="DatabaseModelStoreContainer">
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Goal_Master" EntityType="Self.Goal_Master" Schema="dbo" store:Type="Tables" />
@@ -367,34 +374,126 @@
             <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="GetGoalDetails" ReturnType="Collection(DatabaseModel.GetGoalDetails_Result)">
+          <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetGoalDetails1">
+          <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Departments" EntityType="DatabaseModel.Department" />
+          <EntitySet Name="Goal_Master" EntityType="DatabaseModel.Goal_Master" />
+          <EntitySet Name="Goal_Quater" EntityType="DatabaseModel.Goal_Quater" />
+          <EntitySet Name="Goal_Rules" EntityType="DatabaseModel.Goal_Rules" />
+          <EntitySet Name="Managers" EntityType="DatabaseModel.Manager" />
+          <EntitySet Name="Resources" EntityType="DatabaseModel.Resource" />
+          <EntitySet Name="Resource_Goal" EntityType="DatabaseModel.Resource_Goal" />
+          <EntitySet Name="Resource_Goal_Performance" EntityType="DatabaseModel.Resource_Goal_Performance" />
+          <EntitySet Name="Resource_Performance" EntityType="DatabaseModel.Resource_Performance" />
+          <EntitySet Name="Roles" EntityType="DatabaseModel.Role" />
+          <EntitySet Name="Teams" EntityType="DatabaseModel.Team" />
+          <EntitySet Name="TeamLeads" EntityType="DatabaseModel.TeamLead" />
+          <AssociationSet Name="FK_Team_DepartmentID" Association="DatabaseModel.FK_Team_DepartmentID">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Team" EntitySet="Teams" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goal_Master_QuaterID" Association="DatabaseModel.FK_Goal_Master_QuaterID">
+            <End Role="Goal_Quater" EntitySet="Goal_Quater" />
+            <End Role="Goal_Master" EntitySet="Goal_Master" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Goal_Rules_Goal_Master" Association="DatabaseModel.FK_Goal_Rules_Goal_Master">
+            <End Role="Goal_Master" EntitySet="Goal_Master" />
+            <End Role="Goal_Rules" EntitySet="Goal_Rules" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_Goal_Goal_Master" Association="DatabaseModel.FK_Resource_Goal_Goal_Master">
+            <End Role="Goal_Master" EntitySet="Goal_Master" />
+            <End Role="Resource_Goal" EntitySet="Resource_Goal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_Goal_Performance_Goal_Master" Association="DatabaseModel.FK_Resource_Goal_Performance_Goal_Master">
+            <End Role="Goal_Master" EntitySet="Goal_Master" />
+            <End Role="Resource_Goal_Performance" EntitySet="Resource_Goal_Performance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_Performance_Goal_Quater" Association="DatabaseModel.FK_Resource_Performance_Goal_Quater">
+            <End Role="Goal_Quater" EntitySet="Goal_Quater" />
+            <End Role="Resource_Performance" EntitySet="Resource_Performance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Manager_TeamID" Association="DatabaseModel.FK_Manager_TeamID">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Manager" EntitySet="Managers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamManager_Resource" Association="DatabaseModel.FK_TeamManager_Resource">
+            <End Role="Resource" EntitySet="Resources" />
+            <End Role="Manager" EntitySet="Managers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_Goal_Performance_Resource" Association="DatabaseModel.FK_Resource_Goal_Performance_Resource">
+            <End Role="Resource" EntitySet="Resources" />
+            <End Role="Resource_Goal_Performance" EntitySet="Resource_Goal_Performance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_Goal_Resource" Association="DatabaseModel.FK_Resource_Goal_Resource">
+            <End Role="Resource" EntitySet="Resources" />
+            <End Role="Resource_Goal" EntitySet="Resource_Goal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_Performance_Resource" Association="DatabaseModel.FK_Resource_Performance_Resource">
+            <End Role="Resource" EntitySet="Resources" />
+            <End Role="Resource_Performance" EntitySet="Resource_Performance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_RoleID" Association="DatabaseModel.FK_Resource_RoleID">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Resource" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Resource_TeamID" Association="DatabaseModel.FK_Resource_TeamID">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="Resource" EntitySet="Resources" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamLead_Resource" Association="DatabaseModel.FK_TeamLead_Resource">
+            <End Role="Resource" EntitySet="Resources" />
+            <End Role="TeamLead" EntitySet="TeamLeads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TeamLead_TeamID" Association="DatabaseModel.FK_TeamLead_TeamID">
+            <End Role="Team" EntitySet="Teams" />
+            <End Role="TeamLead" EntitySet="TeamLeads" />
+          </AssociationSet>
+          <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(DatabaseModel.GetQuarterDetails_Result)">
+            <Parameter Name="Quarter_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetGoalDetails_Result">
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="GoalDescription" Nullable="true" />
+          <Property Type="String" Name="UnitOfMeasurement" Nullable="false" MaxLength="20" />
+          <Property Type="Double" Name="MeasurementValue" Nullable="false" />
+          <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
+          <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
+          <Property Type="Int32" Name="QuaterId" Nullable="false" />
+        </ComplexType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
           </Key>
           <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Department_Name" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Teams" Relationship="Self.FK_Team_DepartmentID" FromRole="Department" ToRole="Team" />
+          <Property Name="Department_Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Teams" Relationship="DatabaseModel.FK_Team_DepartmentID" FromRole="Department" ToRole="Team" />
         </EntityType>
         <EntityType Name="Goal_Master">
           <Key>
             <PropertyRef Name="Goal_MasterID" />
           </Key>
           <Property Name="Goal_MasterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GoalTitle" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GoalTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="GoalDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="UnitOfMeasurement" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UnitOfMeasurement" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="MeasurementValue" Type="Double" Nullable="false" />
+          <Property Name="Creation_Date" Type="DateTime" Precision="0" />
           <Property Name="IsHigherValueGood" Type="Boolean" Nullable="false" />
           <Property Name="QuaterId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Quater" Relationship="Self.FK_Goal_Master_QuaterID" FromRole="Goal_Master" ToRole="Goal_Quater" />
-          <NavigationProperty Name="Goal_Rules" Relationship="Self.FK_Goal_Rules_Goal_Master" FromRole="Goal_Master" ToRole="Goal_Rules" />
-          <NavigationProperty Name="Resource_Goal" Relationship="Self.FK_Resource_Goal_Goal_Master" FromRole="Goal_Master" ToRole="Resource_Goal" />
-          <NavigationProperty Name="Resource_Goal_Performance" Relationship="Self.FK_Resource_Goal_Performance_Goal_Master" FromRole="Goal_Master" ToRole="Resource_Goal_Performance" />
+          <NavigationProperty Name="Goal_Quater" Relationship="DatabaseModel.FK_Goal_Master_QuaterID" FromRole="Goal_Master" ToRole="Goal_Quater" />
+          <NavigationProperty Name="Goal_Rules" Relationship="DatabaseModel.FK_Goal_Rules_Goal_Master" FromRole="Goal_Master" ToRole="Goal_Rules" />
+          <NavigationProperty Name="Resource_Goal" Relationship="DatabaseModel.FK_Resource_Goal_Goal_Master" FromRole="Goal_Master" ToRole="Resource_Goal" />
+          <NavigationProperty Name="Resource_Goal_Performance" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Goal_Master" FromRole="Goal_Master" ToRole="Resource_Goal_Performance" />
         </EntityType>
         <EntityType Name="Goal_Quater">
           <Key>
@@ -405,8 +504,8 @@
           <Property Name="Year" Type="Int32" Nullable="false" />
           <Property Name="GoalCreateFrom" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="GoalCreateTo" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="Goal_Master" Relationship="Self.FK_Goal_Master_QuaterID" FromRole="Goal_Quater" ToRole="Goal_Master" />
-          <NavigationProperty Name="Resource_Performance" Relationship="Self.FK_Resource_Performance_Goal_Quater" FromRole="Goal_Quater" ToRole="Resource_Performance" />
+          <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Goal_Master_QuaterID" FromRole="Goal_Quater" ToRole="Goal_Master" />
+          <NavigationProperty Name="Resource_Performance" Relationship="DatabaseModel.FK_Resource_Performance_Goal_Quater" FromRole="Goal_Quater" ToRole="Resource_Performance" />
         </EntityType>
         <EntityType Name="Goal_Rules">
           <Key>
@@ -415,9 +514,9 @@
           <Property Name="Goal_RuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Performance_RangeFrom" Type="Int32" Nullable="false" />
           <Property Name="Performance_RangeTo" Type="Int32" Nullable="false" />
-          <Property Name="Rating" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Double" Nullable="false" />
           <Property Name="GoalId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Master" Relationship="Self.FK_Goal_Rules_Goal_Master" FromRole="Goal_Rules" ToRole="Goal_Master" />
+          <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Goal_Rules_Goal_Master" FromRole="Goal_Rules" ToRole="Goal_Master" />
         </EntityType>
         <EntityType Name="Manager">
           <Key>
@@ -426,25 +525,25 @@
           <Property Name="ManagerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ManagerResourceID" Type="Int32" />
           <Property Name="TeamID" Type="Int32" />
-          <NavigationProperty Name="Team" Relationship="Self.FK_Manager_TeamID" FromRole="Manager" ToRole="Team" />
-          <NavigationProperty Name="Resource" Relationship="Self.FK_TeamManager_Resource" FromRole="Manager" ToRole="Resource" />
+          <NavigationProperty Name="Team" Relationship="DatabaseModel.FK_Manager_TeamID" FromRole="Manager" ToRole="Team" />
+          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_TeamManager_Resource" FromRole="Manager" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
             <PropertyRef Name="ResourceID" />
           </Key>
           <Property Name="ResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="TeamID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Managers" Relationship="Self.FK_TeamManager_Resource" FromRole="Resource" ToRole="Manager" />
-          <NavigationProperty Name="Resource_Goal_Performance" Relationship="Self.FK_Resource_Goal_Performance_Resource" FromRole="Resource" ToRole="Resource_Goal_Performance" />
-          <NavigationProperty Name="Resource_Goal" Relationship="Self.FK_Resource_Goal_Resource" FromRole="Resource" ToRole="Resource_Goal" />
-          <NavigationProperty Name="Resource_Performance" Relationship="Self.FK_Resource_Performance_Resource" FromRole="Resource" ToRole="Resource_Performance" />
-          <NavigationProperty Name="Role" Relationship="Self.FK_Resource_RoleID" FromRole="Resource" ToRole="Roles" />
-          <NavigationProperty Name="Team" Relationship="Self.FK_Resource_TeamID" FromRole="Resource" ToRole="Team" />
-          <NavigationProperty Name="TeamLeads" Relationship="Self.FK_TeamLead_Resource" FromRole="Resource" ToRole="TeamLead" />
+          <NavigationProperty Name="Managers" Relationship="DatabaseModel.FK_TeamManager_Resource" FromRole="Resource" ToRole="Manager" />
+          <NavigationProperty Name="Resource_Goal_Performance" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Resource" FromRole="Resource" ToRole="Resource_Goal_Performance" />
+          <NavigationProperty Name="Resource_Goal" Relationship="DatabaseModel.FK_Resource_Goal_Resource" FromRole="Resource" ToRole="Resource_Goal" />
+          <NavigationProperty Name="Resource_Performance" Relationship="DatabaseModel.FK_Resource_Performance_Resource" FromRole="Resource" ToRole="Resource_Performance" />
+          <NavigationProperty Name="Role" Relationship="DatabaseModel.FK_Resource_RoleID" FromRole="Resource" ToRole="Role" />
+          <NavigationProperty Name="Team" Relationship="DatabaseModel.FK_Resource_TeamID" FromRole="Resource" ToRole="Team" />
+          <NavigationProperty Name="TeamLeads" Relationship="DatabaseModel.FK_TeamLead_Resource" FromRole="Resource" ToRole="TeamLead" />
         </EntityType>
         <EntityType Name="Resource_Goal">
           <Key>
@@ -454,20 +553,20 @@
           <Property Name="ResourceID" Type="Int32" Nullable="false" />
           <Property Name="Goal_MasterID" Type="Int32" Nullable="false" />
           <Property Name="Weight" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Master" Relationship="Self.FK_Resource_Goal_Goal_Master" FromRole="Resource_Goal" ToRole="Goal_Master" />
-          <NavigationProperty Name="Resource" Relationship="Self.FK_Resource_Goal_Resource" FromRole="Resource_Goal" ToRole="Resource" />
+          <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Resource_Goal_Goal_Master" FromRole="Resource_Goal" ToRole="Goal_Master" />
+          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_Resource_Goal_Resource" FromRole="Resource_Goal" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Resource_Goal_Performance">
           <Key>
             <PropertyRef Name="Resource_Goal_PerformanceID" />
           </Key>
           <Property Name="Resource_Goal_PerformanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Resource_Performance" Type="Int32" Nullable="false" />
-          <Property Name="Resource_Rating" Type="Int32" Nullable="false" />
+          <Property Name="Resource_Performance" Type="Double" Nullable="false" />
+          <Property Name="Resource_Rating" Type="Double" Nullable="false" />
           <Property Name="ResourceId" Type="Int32" Nullable="false" />
           <Property Name="Goal_MasterID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Master" Relationship="Self.FK_Resource_Goal_Performance_Goal_Master" FromRole="Resource_Goal_Performance" ToRole="Goal_Master" />
-          <NavigationProperty Name="Resource" Relationship="Self.FK_Resource_Goal_Performance_Resource" FromRole="Resource_Goal_Performance" ToRole="Resource" />
+          <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Goal_Master" FromRole="Resource_Goal_Performance" ToRole="Goal_Master" />
+          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Resource" FromRole="Resource_Goal_Performance" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Resource_Performance">
           <Key>
@@ -476,29 +575,29 @@
           <Property Name="Resource_PerformanceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ResourceID" Type="Int32" Nullable="false" />
           <Property Name="QuaterID" Type="Int32" Nullable="false" />
-          <Property Name="Resource_Performance1" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Quater" Relationship="Self.FK_Resource_Performance_Goal_Quater" FromRole="Resource_Performance" ToRole="Goal_Quater" />
-          <NavigationProperty Name="Resource" Relationship="Self.FK_Resource_Performance_Resource" FromRole="Resource_Performance" ToRole="Resource" />
+          <Property Name="Resource_Performance1" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Goal_Quater" Relationship="DatabaseModel.FK_Resource_Performance_Goal_Quater" FromRole="Resource_Performance" ToRole="Goal_Quater" />
+          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_Resource_Performance_Resource" FromRole="Resource_Performance" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="RoleID" />
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Resources" Relationship="Self.FK_Resource_RoleID" FromRole="Roles" ToRole="Resource" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Resources" Relationship="DatabaseModel.FK_Resource_RoleID" FromRole="Role" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
             <PropertyRef Name="TeamID" />
           </Key>
           <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TeamName" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TeamName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="DepartmentID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Department" Relationship="Self.FK_Team_DepartmentID" FromRole="Team" ToRole="Department" />
-          <NavigationProperty Name="Managers" Relationship="Self.FK_Manager_TeamID" FromRole="Team" ToRole="Manager" />
-          <NavigationProperty Name="Resources" Relationship="Self.FK_Resource_TeamID" FromRole="Team" ToRole="Resource" />
-          <NavigationProperty Name="TeamLeads" Relationship="Self.FK_TeamLead_TeamID" FromRole="Team" ToRole="TeamLead" />
+          <NavigationProperty Name="Department" Relationship="DatabaseModel.FK_Team_DepartmentID" FromRole="Team" ToRole="Department" />
+          <NavigationProperty Name="Managers" Relationship="DatabaseModel.FK_Manager_TeamID" FromRole="Team" ToRole="Manager" />
+          <NavigationProperty Name="Resources" Relationship="DatabaseModel.FK_Resource_TeamID" FromRole="Team" ToRole="Resource" />
+          <NavigationProperty Name="TeamLeads" Relationship="DatabaseModel.FK_TeamLead_TeamID" FromRole="Team" ToRole="TeamLead" />
         </EntityType>
         <EntityType Name="TeamLead">
           <Key>
@@ -507,12 +606,12 @@
           <Property Name="TeamLeadID" Type="Int32" Nullable="false" />
           <Property Name="TeamID" Type="Int32" />
           <Property Name="TeamLeadResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Resource" Relationship="Self.FK_TeamLead_Resource" FromRole="TeamLead" ToRole="Resource" />
-          <NavigationProperty Name="Team" Relationship="Self.FK_TeamLead_TeamID" FromRole="TeamLead" ToRole="Team" />
+          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_TeamLead_Resource" FromRole="TeamLead" ToRole="Resource" />
+          <NavigationProperty Name="Team" Relationship="DatabaseModel.FK_TeamLead_TeamID" FromRole="TeamLead" ToRole="Team" />
         </EntityType>
         <Association Name="FK_Team_DepartmentID">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="Team" Type="Self.Team" Multiplicity="*" />
+          <End Type="DatabaseModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
               <PropertyRef Name="DepartmentID" />
@@ -523,8 +622,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Goal_Master_QuaterID">
-          <End Role="Goal_Quater" Type="Self.Goal_Quater" Multiplicity="1" />
-          <End Role="Goal_Master" Type="Self.Goal_Master" Multiplicity="*" />
+          <End Type="DatabaseModel.Goal_Quater" Role="Goal_Quater" Multiplicity="1" />
+          <End Type="DatabaseModel.Goal_Master" Role="Goal_Master" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Quater">
               <PropertyRef Name="QuaterID" />
@@ -535,8 +634,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Goal_Rules_Goal_Master">
-          <End Role="Goal_Master" Type="Self.Goal_Master" Multiplicity="1" />
-          <End Role="Goal_Rules" Type="Self.Goal_Rules" Multiplicity="*" />
+          <End Type="DatabaseModel.Goal_Master" Role="Goal_Master" Multiplicity="1" />
+          <End Type="DatabaseModel.Goal_Rules" Role="Goal_Rules" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Master">
               <PropertyRef Name="Goal_MasterID" />
@@ -547,8 +646,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Goal_Goal_Master">
-          <End Role="Goal_Master" Type="Self.Goal_Master" Multiplicity="1" />
-          <End Role="Resource_Goal" Type="Self.Resource_Goal" Multiplicity="*" />
+          <End Type="DatabaseModel.Goal_Master" Role="Goal_Master" Multiplicity="1" />
+          <End Type="DatabaseModel.Resource_Goal" Role="Resource_Goal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Master">
               <PropertyRef Name="Goal_MasterID" />
@@ -559,8 +658,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Goal_Performance_Goal_Master">
-          <End Role="Goal_Master" Type="Self.Goal_Master" Multiplicity="1" />
-          <End Role="Resource_Goal_Performance" Type="Self.Resource_Goal_Performance" Multiplicity="*" />
+          <End Type="DatabaseModel.Goal_Master" Role="Goal_Master" Multiplicity="1" />
+          <End Type="DatabaseModel.Resource_Goal_Performance" Role="Resource_Goal_Performance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Master">
               <PropertyRef Name="Goal_MasterID" />
@@ -571,8 +670,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Performance_Goal_Quater">
-          <End Role="Goal_Quater" Type="Self.Goal_Quater" Multiplicity="1" />
-          <End Role="Resource_Performance" Type="Self.Resource_Performance" Multiplicity="*" />
+          <End Type="DatabaseModel.Goal_Quater" Role="Goal_Quater" Multiplicity="1" />
+          <End Type="DatabaseModel.Resource_Performance" Role="Resource_Performance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Quater">
               <PropertyRef Name="QuaterID" />
@@ -583,8 +682,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Manager_TeamID">
-          <End Role="Team" Type="Self.Team" Multiplicity="0..1" />
-          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Manager" Role="Manager" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="TeamID" />
@@ -595,8 +694,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TeamManager_Resource">
-          <End Role="Resource" Type="Self.Resource" Multiplicity="0..1" />
-          <End Role="Manager" Type="Self.Manager" Multiplicity="*" />
+          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Manager" Role="Manager" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -607,8 +706,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Goal_Performance_Resource">
-          <End Role="Resource" Type="Self.Resource" Multiplicity="1" />
-          <End Role="Resource_Goal_Performance" Type="Self.Resource_Goal_Performance" Multiplicity="*" />
+          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="DatabaseModel.Resource_Goal_Performance" Role="Resource_Goal_Performance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -619,8 +718,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Goal_Resource">
-          <End Role="Resource" Type="Self.Resource" Multiplicity="1" />
-          <End Role="Resource_Goal" Type="Self.Resource_Goal" Multiplicity="*" />
+          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="DatabaseModel.Resource_Goal" Role="Resource_Goal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -631,8 +730,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Performance_Resource">
-          <End Role="Resource" Type="Self.Resource" Multiplicity="1" />
-          <End Role="Resource_Performance" Type="Self.Resource_Performance" Multiplicity="*" />
+          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="DatabaseModel.Resource_Performance" Role="Resource_Performance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -643,10 +742,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_RoleID">
-          <End Role="Roles" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="Resource" Type="Self.Resource" Multiplicity="*" />
+          <End Type="DatabaseModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Roles">
+            <Principal Role="Role">
               <PropertyRef Name="RoleID" />
             </Principal>
             <Dependent Role="Resource">
@@ -655,8 +754,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_TeamID">
-          <End Role="Team" Type="Self.Team" Multiplicity="1" />
-          <End Role="Resource" Type="Self.Resource" Multiplicity="*" />
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="1" />
+          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="TeamID" />
@@ -667,8 +766,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TeamLead_Resource">
-          <End Role="Resource" Type="Self.Resource" Multiplicity="1" />
-          <End Role="TeamLead" Type="Self.TeamLead" Multiplicity="*" />
+          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="DatabaseModel.TeamLead" Role="TeamLead" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -679,8 +778,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TeamLead_TeamID">
-          <End Role="Team" Type="Self.Team" Multiplicity="0..1" />
-          <End Role="TeamLead" Type="Self.TeamLead" Multiplicity="*" />
+          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="0..1" />
+          <End Type="DatabaseModel.TeamLead" Role="TeamLead" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="TeamID" />
@@ -690,206 +789,159 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Departments" EntityType="Self.Department" />
-          <EntitySet Name="Goal_Master" EntityType="Self.Goal_Master" />
-          <EntitySet Name="Goal_Quater" EntityType="Self.Goal_Quater" />
-          <EntitySet Name="Goal_Rules" EntityType="Self.Goal_Rules" />
-          <EntitySet Name="Managers" EntityType="Self.Manager" />
-          <EntitySet Name="Resources" EntityType="Self.Resource" />
-          <EntitySet Name="Resource_Goal" EntityType="Self.Resource_Goal" />
-          <EntitySet Name="Resource_Goal_Performance" EntityType="Self.Resource_Goal_Performance" />
-          <EntitySet Name="Resource_Performance" EntityType="Self.Resource_Performance" />
-          <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="Teams" EntityType="Self.Team" />
-          <EntitySet Name="TeamLeads" EntityType="Self.TeamLead" />
-          <AssociationSet Name="FK_Team_DepartmentID" Association="Self.FK_Team_DepartmentID">
-            <End Role="Department" EntitySet="Departments" />
-            <End Role="Team" EntitySet="Teams" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Goal_Master_QuaterID" Association="Self.FK_Goal_Master_QuaterID">
-            <End Role="Goal_Quater" EntitySet="Goal_Quater" />
-            <End Role="Goal_Master" EntitySet="Goal_Master" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Goal_Rules_Goal_Master" Association="Self.FK_Goal_Rules_Goal_Master">
-            <End Role="Goal_Master" EntitySet="Goal_Master" />
-            <End Role="Goal_Rules" EntitySet="Goal_Rules" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_Goal_Goal_Master" Association="Self.FK_Resource_Goal_Goal_Master">
-            <End Role="Goal_Master" EntitySet="Goal_Master" />
-            <End Role="Resource_Goal" EntitySet="Resource_Goal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_Goal_Performance_Goal_Master" Association="Self.FK_Resource_Goal_Performance_Goal_Master">
-            <End Role="Goal_Master" EntitySet="Goal_Master" />
-            <End Role="Resource_Goal_Performance" EntitySet="Resource_Goal_Performance" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_Performance_Goal_Quater" Association="Self.FK_Resource_Performance_Goal_Quater">
-            <End Role="Goal_Quater" EntitySet="Goal_Quater" />
-            <End Role="Resource_Performance" EntitySet="Resource_Performance" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Manager_TeamID" Association="Self.FK_Manager_TeamID">
-            <End Role="Team" EntitySet="Teams" />
-            <End Role="Manager" EntitySet="Managers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeamManager_Resource" Association="Self.FK_TeamManager_Resource">
-            <End Role="Resource" EntitySet="Resources" />
-            <End Role="Manager" EntitySet="Managers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_Goal_Performance_Resource" Association="Self.FK_Resource_Goal_Performance_Resource">
-            <End Role="Resource" EntitySet="Resources" />
-            <End Role="Resource_Goal_Performance" EntitySet="Resource_Goal_Performance" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_Goal_Resource" Association="Self.FK_Resource_Goal_Resource">
-            <End Role="Resource" EntitySet="Resources" />
-            <End Role="Resource_Goal" EntitySet="Resource_Goal" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_Performance_Resource" Association="Self.FK_Resource_Performance_Resource">
-            <End Role="Resource" EntitySet="Resources" />
-            <End Role="Resource_Performance" EntitySet="Resource_Performance" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_RoleID" Association="Self.FK_Resource_RoleID">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Resource" EntitySet="Resources" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Resource_TeamID" Association="Self.FK_Resource_TeamID">
-            <End Role="Team" EntitySet="Teams" />
-            <End Role="Resource" EntitySet="Resources" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeamLead_Resource" Association="Self.FK_TeamLead_Resource">
-            <End Role="Resource" EntitySet="Resources" />
-            <End Role="TeamLead" EntitySet="TeamLeads" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TeamLead_TeamID" Association="Self.FK_TeamLead_TeamID">
-            <End Role="Team" EntitySet="Teams" />
-            <End Role="TeamLead" EntitySet="TeamLeads" />
-          </AssociationSet>
-        </EntityContainer>
+        <ComplexType Name="GetQuarterDetails_Result">
+          <Property Type="Int32" Name="Quater" Nullable="false" />
+          <Property Type="Int32" Name="YEAR" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <FunctionImportMapping FunctionImportName="GetGoalDetails" FunctionName="DatabaseModel.Store.GetGoalDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.GetGoalDetails_Result">
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
+                <ScalarProperty Name="QuaterId" ColumnName="QuaterId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetGoalDetails1" FunctionName="DatabaseModel.Store.GetGoalDetails" />
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="DatabaseModel.Department">
               <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Goal_Master">
             <EntityTypeMapping TypeName="DatabaseModel.Goal_Master">
               <MappingFragment StoreEntitySet="Goal_Master">
-                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
-                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
-                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
-                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
-                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
-                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
                 <ScalarProperty Name="QuaterId" ColumnName="QuaterId" />
+                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Goal_Quater">
             <EntityTypeMapping TypeName="DatabaseModel.Goal_Quater">
               <MappingFragment StoreEntitySet="Goal_Quater">
-                <ScalarProperty Name="QuaterID" ColumnName="QuaterID" />
-                <ScalarProperty Name="Quater" ColumnName="Quater" />
-                <ScalarProperty Name="Year" ColumnName="Year" />
-                <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
                 <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
+                <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Quater" ColumnName="Quater" />
+                <ScalarProperty Name="QuaterID" ColumnName="QuaterID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Goal_Rules">
             <EntityTypeMapping TypeName="DatabaseModel.Goal_Rules">
               <MappingFragment StoreEntitySet="Goal_Rules">
-                <ScalarProperty Name="Goal_RuleID" ColumnName="Goal_RuleID" />
-                <ScalarProperty Name="Performance_RangeFrom" ColumnName="Performance_RangeFrom" />
-                <ScalarProperty Name="Performance_RangeTo" ColumnName="Performance_RangeTo" />
-                <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="GoalId" ColumnName="GoalId" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Performance_RangeTo" ColumnName="Performance_RangeTo" />
+                <ScalarProperty Name="Performance_RangeFrom" ColumnName="Performance_RangeFrom" />
+                <ScalarProperty Name="Goal_RuleID" ColumnName="Goal_RuleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Managers">
             <EntityTypeMapping TypeName="DatabaseModel.Manager">
               <MappingFragment StoreEntitySet="Manager">
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-                <ScalarProperty Name="ManagerResourceID" ColumnName="ManagerResourceID" />
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="ManagerResourceID" ColumnName="ManagerResourceID" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resources">
             <EntityTypeMapping TypeName="DatabaseModel.Resource">
               <MappingFragment StoreEntitySet="Resource">
-                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resource_Goal">
             <EntityTypeMapping TypeName="DatabaseModel.Resource_Goal">
               <MappingFragment StoreEntitySet="Resource_Goal">
-                <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
-                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
-                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
+                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+                <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resource_Goal_Performance">
             <EntityTypeMapping TypeName="DatabaseModel.Resource_Goal_Performance">
               <MappingFragment StoreEntitySet="Resource_Goal_Performance">
-                <ScalarProperty Name="Resource_Goal_PerformanceID" ColumnName="Resource_Goal_PerformanceID" />
-                <ScalarProperty Name="Resource_Performance" ColumnName="Resource_Performance" />
-                <ScalarProperty Name="Resource_Rating" ColumnName="Resource_Rating" />
-                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
                 <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
+                <ScalarProperty Name="ResourceId" ColumnName="ResourceId" />
+                <ScalarProperty Name="Resource_Rating" ColumnName="Resource_Rating" />
+                <ScalarProperty Name="Resource_Performance" ColumnName="Resource_Performance" />
+                <ScalarProperty Name="Resource_Goal_PerformanceID" ColumnName="Resource_Goal_PerformanceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resource_Performance">
             <EntityTypeMapping TypeName="DatabaseModel.Resource_Performance">
               <MappingFragment StoreEntitySet="Resource_Performance">
-                <ScalarProperty Name="Resource_PerformanceID" ColumnName="Resource_PerformanceID" />
-                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
-                <ScalarProperty Name="QuaterID" ColumnName="QuaterID" />
                 <ScalarProperty Name="Resource_Performance1" ColumnName="Resource_Performance" />
+                <ScalarProperty Name="QuaterID" ColumnName="QuaterID" />
+                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+                <ScalarProperty Name="Resource_PerformanceID" ColumnName="Resource_PerformanceID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
             <EntityTypeMapping TypeName="DatabaseModel.Role">
               <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Teams">
             <EntityTypeMapping TypeName="DatabaseModel.Team">
               <MappingFragment StoreEntitySet="Team">
-                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
-                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TeamLeads">
             <EntityTypeMapping TypeName="DatabaseModel.TeamLead">
               <MappingFragment StoreEntitySet="TeamLead">
-                <ScalarProperty Name="TeamLeadID" ColumnName="TeamLeadID" />
-                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="TeamLeadResourceID" ColumnName="TeamLeadResourceID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="TeamLeadID" ColumnName="TeamLeadID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetQuarterDetails" FunctionName="DatabaseModel.Store.GetQuarterDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.GetQuarterDetails_Result">
+                <ScalarProperty Name="Quater" ColumnName="Quater" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

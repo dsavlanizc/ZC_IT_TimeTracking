@@ -17,7 +17,7 @@ namespace ZC_IT_TimeTracking
         public int Resource_PerformanceID { get; set; }
         public int ResourceID { get; set; }
         public int QuaterID { get; set; }
-        public int Resource_Performance1 { get; set; }
+        public double Resource_Performance1 { get; set; }
     
         public virtual Goal_Quater Goal_Quater { get; set; }
         public virtual Resource Resource { get; set; }

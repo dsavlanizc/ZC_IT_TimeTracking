@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using ZC_IT_TimeTracking.Models;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
@@ -22,22 +25,9 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             if (DbContext.Goal_Master.Any(a => a.Goal_MasterID == Id))
             {
-                var goal = DbContext.Goal_Master.Where(w => w.Goal_MasterID == Id).Select(s => new {
-                                                                                                s.GoalTitle,
-                                                                                                s.GoalDescription,
-                                                                                                s.UnitOfMeasurement,
-                                                                                                s.MeasurementValue,
-                                                                                                s.Goal_Quater.Quater,
-                                                                                                s.Goal_Quater.Year,
-                                                                                                s.IsHigherValueGood,
-                                                                                                s.Goal_Rules
-                                                                                        }).FirstOrDefault();
-                string res = JsonConvert.SerializeObject(goal, Formatting.Indented,
-                                new JsonSerializerSettings
-                                {
-                                    ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                                    PreserveReferencesHandling = PreserveReferencesHandling.Objects
-                                });
+                var goal = DbContext.GetGoalDetails(Id).FirstOrDefault();
+                var quarter = DbContext.GetQuarterDetails(goal.QuaterId).FirstOrDefault();
+                string res = JsonConvert.SerializeObject(new {goal = goal, quarter = quarter});
                 return Json(res);
             }
             return Json("{\"message\":\"Error while fetching data for the user.\"}");

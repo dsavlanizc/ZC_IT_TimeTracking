@@ -13,6 +13,19 @@
             success: function (dt) {
                 hideLoading();
                 console.log(dt);
+                var data = JSON.parse(dt);
+                var goal = data.goal;
+                var quarter = data.quarter;
+                $("#GoalTitle").val(goal.GoalTitle);
+                $("#GoalDescription").val(goal.GoalDescription);
+                $("#GoalYear option:selected").text(quarter.YEAR);
+                $("#GoalQuarter option:selected").text(quarter.Quater);
+                $("#GoalUnit").val(goal.UnitOfMeasurement);
+                $("#GoalUnitValue").val(goal.MeasurementValue);
+                if (goal.IsHigherValueGood)
+                    $("#IsTrue").attr("checked", true);
+                else
+                    $("#IsTrue").attr("checked", false);
             },
             error: function (dt) {
                 hideLoading();
@@ -71,4 +84,30 @@
             }
         }
     });
+    //Add the Row of Goal Rule to the list
+    var count = 0;
+    addToList = function() {
+        if (count > -1) {
+            count += 1;
+            var RangeFrom = $("#RangeFrom").val();
+            var RangeTo = $("#RangeTo").val();
+            var Rating = $("#Rating").val();
+            $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3">' + RangeFrom + '</td><td class="col-md-3">' + RangeTo + '</td><td class="col-md-3">' + Rating + '</td><td class="col-md-1"><span id="Edit" onclick="editRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="removeRule(rule' + count + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+            $("#RangeFrom").val(null);
+            $("#RangeTo").val(null);
+            $("#Rating").val(null);
+        }
+    }
+    editRule = function(id) {
+        var RangeFrom = $(id).find("td:nth-child(1)").html();
+        var RangeTo = $(id).find("td:nth-child(2)").html()
+        var Rating = $(id).find("td:nth-child(3)").html();
+        $("#RangeFrom").val(RangeFrom);
+        $("#RangeTo").val(RangeTo);
+        $("#Rating").val(Rating);
+        $(id).remove();
+    }
+    removeRule = function(id) {
+        $(id).remove();
+    }
 });

@@ -26,6 +26,7 @@ namespace ZC_IT_TimeTracking
         public string GoalDescription { get; set; }
         public string UnitOfMeasurement { get; set; }
         public double MeasurementValue { get; set; }
+        public Nullable<System.DateTime> Creation_Date { get; set; }
         public bool IsHigherValueGood { get; set; }
         public int QuaterId { get; set; }
     

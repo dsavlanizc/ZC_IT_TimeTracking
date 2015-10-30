@@ -15,5 +15,6 @@ namespace ZC_IT_TimeTracking.Models
         public bool IsHigherValueGood { get; set; }
         public GoalQuarter Quarter { get; set; }
         public List<GoalRule> GoalRule { get; set; }
+        public DateTime CreationDate { get; set; }
     }
 }

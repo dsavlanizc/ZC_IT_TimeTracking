@@ -12,6 +12,8 @@ namespace ZC_IT_TimeTracking
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class DatabaseEntities : DbContext
     {
@@ -37,5 +39,32 @@ namespace ZC_IT_TimeTracking
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamLead> TeamLeads { get; set; }
+    
+        public virtual ObjectResult<GetGoalDetails_Result> GetGoalDetails(Nullable<int> goal_Id)
+        {
+            var goal_IdParameter = goal_Id.HasValue ?
+                new ObjectParameter("Goal_Id", goal_Id) :
+                new ObjectParameter("Goal_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetGoalDetails_Result>("GetGoalDetails", goal_IdParameter);
+        }
+    
+        public virtual int GetGoalDetails1(Nullable<int> goal_Id)
+        {
+            var goal_IdParameter = goal_Id.HasValue ?
+                new ObjectParameter("Goal_Id", goal_Id) :
+                new ObjectParameter("Goal_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetGoalDetails1", goal_IdParameter);
+        }
+    
+        public virtual ObjectResult<GetQuarterDetails_Result> GetQuarterDetails(Nullable<int> quarter_Id)
+        {
+            var quarter_IdParameter = quarter_Id.HasValue ?
+                new ObjectParameter("Quarter_Id", quarter_Id) :
+                new ObjectParameter("Quarter_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuarterDetails_Result>("GetQuarterDetails", quarter_IdParameter);
+        }
     }
 }
