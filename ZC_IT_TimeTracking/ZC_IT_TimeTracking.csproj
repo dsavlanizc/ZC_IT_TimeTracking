@@ -110,6 +110,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Loading.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\photo.png" />
@@ -142,7 +143,11 @@
     <Content Include="Scripts\GoalScript.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\signin.css" />
+    <None Include="Scripts\_references.js" />
     <Content Include="SQLScripts\dbo.Department.sql" />
     <Content Include="SQLScripts\dbo.Goal_Master.sql" />
     <Content Include="SQLScripts\dbo.Goal_Quater.sql" />
@@ -203,6 +208,9 @@
     <Compile Include="Manager.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Goal.cs" />
+    <Compile Include="Models\GoalQuarter.cs" />
+    <Compile Include="Models\GoalRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs">
       <DependentUpon>DBContext.tt</DependentUpon>
@@ -242,7 +250,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

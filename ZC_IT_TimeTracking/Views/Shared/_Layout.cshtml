@@ -4,15 +4,15 @@
 <head>
     @Scripts.Render("~/Content/js")
     @Styles.Render("~/Content/css")
-    @*<script src="~/Scripts/jquery-1.9.1.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />*@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     @RenderSection("header", false)
     <meta name="description" content="The description of my page" />
 </head>
 <body>
+    <div class="overlay" id="loading" hidden>
+        <div class="loader"></div>
+    </div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <a class="navbar-brand">ZC IT Time Tracking</a>
