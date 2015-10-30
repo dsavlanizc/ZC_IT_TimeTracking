@@ -1,12 +1,14 @@
+USE [IT-Tracking]
+GO
 
+/****** Object:  StoredProcedure [dbo].[GoalFound]    Script Date: 2015-10-30 14:47:24 ******/
 SET ANSI_NULLS ON
 GO
+
 SET QUOTED_IDENTIFIER ON
 GO
-use [IT-Tracking]
-GO
 
-Create PROCEDURE GoalFound
+Create PROCEDURE [dbo].[GoalFound]
 	@GoalID int,
 	@GoalFound INT OUTPUT 
 AS
@@ -29,3 +31,6 @@ ELSE
 	END 
 
 END
+
+GO
+
