@@ -120,23 +120,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <EntityDeploy Include="DBModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DBModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DBModel.edmx.diagram">
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="DBModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <LastGenOutput>DBModel.cs</LastGenOutput>
-    </Content>
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -153,104 +136,121 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <EntityDeploy Include="ZC_IT_TimeTracking.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ZC_IT_TimeTracking.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="ZC_IT_TimeTracking.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZC_IT_TimeTracking.edmx</DependentUpon>
+      <LastGenOutput>ZC_IT_TimeTracking.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ZC_IT_TimeTracking.edmx.diagram">
+      <DependentUpon>ZC_IT_TimeTracking.edmx</DependentUpon>
+    </Content>
+    <Content Include="ZC_IT_TimeTracking.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ZC_IT_TimeTracking.edmx</DependentUpon>
+      <LastGenOutput>ZC_IT_TimeTracking.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="CheckQuater_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DBModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Department.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllGoalsOfResource_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllResourceForGoal_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="GetGoalDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="GetGoalRuleDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetQuaterDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+    <Compile Include="GetQuarterDetails_Result.cs">
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="GetResouceDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="GetResourceByTeam_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="GetTeamDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Goal_Master.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
-    <Compile Include="Goal_Quater.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+    <Compile Include="Goal_Quarter.cs">
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Goal_Rules.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Manager.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\GoalQuarter.cs" />
     <Compile Include="Models\GoalRule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Resource_Goal.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Resource_Goal_Performance.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Resource_Performance.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="sp_helpdiagrams_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagram.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="Team.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
     </Compile>
     <Compile Include="TeamLead.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZC_IT_TimeTracking.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZC_IT_TimeTracking.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZC_IT_TimeTracking.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZC_IT_TimeTracking.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ZC_IT_TimeTracking.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ZC_IT_TimeTracking.edmx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
