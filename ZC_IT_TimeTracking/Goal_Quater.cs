@@ -22,7 +22,7 @@ namespace ZC_IT_TimeTracking
     
         public int QuaterID { get; set; }
         public int Quater { get; set; }
-        public int Year { get; set; }
+        public int QuarterYear { get; set; }
         public System.DateTime GoalCreateFrom { get; set; }
         public System.DateTime GoalCreateTo { get; set; }
     

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -28,10 +29,33 @@ namespace ZC_IT_TimeTracking.Controllers
                 var goal = DbContext.GetGoalDetails(Id).FirstOrDefault();
                 var quarter = DbContext.GetQuaterDetails(goal.QuaterId).FirstOrDefault();
                 var rules = DbContext.GetGoalRuleDetails(Id).ToList();
-                string res = JsonConvert.SerializeObject(new {goal = goal, quarter = quarter, rules = rules});
+                string res = JsonConvert.SerializeObject(new { goal = goal, quarter = quarter, rules = rules });
                 return Json(res);
             }
             return Json("{\"message\":\"Error while fetching data for the user.\"}");
+        }
+
+        [HttpPost]
+        public JsonResult CreateGoal(Goal GoalData)
+        {
+            try
+            {
+                var quarter = DbContext.CheckQuater(GoalData.Quarter, GoalData.Year).FirstOrDefault();
+                ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
+                DbContext.InsertGoalMaster(GoalData.Title, GoalData.Description, GoalData.UnitOfMeasurement, GoalData.MeasurementValue, GoalData.IsHigher, DateTime.Today, quarter.QuaterID, insertedId);
+                Int32 goalId = Int32.Parse(insertedId.Value.ToString());
+
+                //
+                foreach (GoalRule rule in GoalData.GoalRules)
+                {
+                    DbContext.InsertGoalRules(rule.RangeFrom, rule.RangeTo, rule.Rating, goalId);
+                }
+                return Json(new { message = "Added Successfully", success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = "Error occured!", success = false });
+            }
         }
     }
 }

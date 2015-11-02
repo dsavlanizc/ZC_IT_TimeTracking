@@ -15,10 +15,10 @@ namespace ZC_IT_TimeTracking
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DatabaseEntities : DbContext
+    public partial class DatabseEntities : DbContext
     {
-        public DatabaseEntities()
-            : base("name=DatabaseEntities")
+        public DatabseEntities()
+            : base("name=DatabseEntities")
         {
         }
     
@@ -40,31 +40,17 @@ namespace ZC_IT_TimeTracking
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamLead> TeamLeads { get; set; }
     
-        public virtual ObjectResult<GetGoalDetails_Result> GetGoalDetails(Nullable<int> goal_Id)
+        public virtual ObjectResult<CheckQuater_Result> CheckQuater(Nullable<int> quater, Nullable<int> qYear)
         {
-            var goal_IdParameter = goal_Id.HasValue ?
-                new ObjectParameter("Goal_Id", goal_Id) :
-                new ObjectParameter("Goal_Id", typeof(int));
+            var quaterParameter = quater.HasValue ?
+                new ObjectParameter("Quater", quater) :
+                new ObjectParameter("Quater", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetGoalDetails_Result>("GetGoalDetails", goal_IdParameter);
-        }
+            var qYearParameter = qYear.HasValue ?
+                new ObjectParameter("QYear", qYear) :
+                new ObjectParameter("QYear", typeof(int));
     
-        public virtual int GetGoalDetails1(Nullable<int> goal_Id)
-        {
-            var goal_IdParameter = goal_Id.HasValue ?
-                new ObjectParameter("Goal_Id", goal_Id) :
-                new ObjectParameter("Goal_Id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetGoalDetails1", goal_IdParameter);
-        }
-    
-        public virtual ObjectResult<GetQuarterDetails_Result> GetQuarterDetails(Nullable<int> quarter_Id)
-        {
-            var quarter_IdParameter = quarter_Id.HasValue ?
-                new ObjectParameter("Quarter_Id", quarter_Id) :
-                new ObjectParameter("Quarter_Id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuarterDetails_Result>("GetQuarterDetails", quarter_IdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CheckQuater_Result>("CheckQuater", quaterParameter, qYearParameter);
         }
     
         public virtual int DeleteGoalMaster(Nullable<int> goalId)
@@ -85,6 +71,15 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteGoalRule", goalRuleIdParameter);
         }
     
+        public virtual ObjectResult<GetGoalDetails_Result> GetGoalDetails(Nullable<int> goal_Id)
+        {
+            var goal_IdParameter = goal_Id.HasValue ?
+                new ObjectParameter("Goal_Id", goal_Id) :
+                new ObjectParameter("Goal_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetGoalDetails_Result>("GetGoalDetails", goal_IdParameter);
+        }
+    
         public virtual ObjectResult<GetGoalRuleDetails_Result> GetGoalRuleDetails(Nullable<int> goalId)
         {
             var goalIdParameter = goalId.HasValue ?
@@ -103,7 +98,7 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuaterDetails_Result>("GetQuaterDetails", quaterIdParameter);
         }
     
-        public virtual int InsertGoalMaster(string goal_Title, string goal_Description, string unit_Of_Measurement, Nullable<double> measurement_Value, Nullable<bool> is_HigherValueGood, Nullable<System.DateTime> creationDate, Nullable<int> quaterID)
+        public virtual int InsertGoalMaster(string goal_Title, string goal_Description, string unit_Of_Measurement, Nullable<double> measurement_Value, Nullable<bool> is_HigherValueGood, Nullable<System.DateTime> creationDate, Nullable<int> quaterID, ObjectParameter currentInsertedId)
         {
             var goal_TitleParameter = goal_Title != null ?
                 new ObjectParameter("Goal_Title", goal_Title) :
@@ -133,7 +128,7 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("QuaterID", quaterID) :
                 new ObjectParameter("QuaterID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalMaster", goal_TitleParameter, goal_DescriptionParameter, unit_Of_MeasurementParameter, measurement_ValueParameter, is_HigherValueGoodParameter, creationDateParameter, quaterIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalMaster", goal_TitleParameter, goal_DescriptionParameter, unit_Of_MeasurementParameter, measurement_ValueParameter, is_HigherValueGoodParameter, creationDateParameter, quaterIDParameter, currentInsertedId);
         }
     
         public virtual int InsertGoalQuater(Nullable<int> quater, Nullable<int> year, Nullable<System.DateTime> goalCreate_From, Nullable<System.DateTime> goalCreate_To)
@@ -234,15 +229,6 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("GoalID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateGoalRules", performanceRangeFromParameter, performanceRangeToParameter, ratingParameter, goalIDParameter);
-        }
-    
-        public virtual ObjectResult<GetQuaterDetails_Result> GetQuaterDetails1(Nullable<int> quaterId)
-        {
-            var quaterIdParameter = quaterId.HasValue ?
-                new ObjectParameter("QuaterId", quaterId) :
-                new ObjectParameter("QuaterId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuaterDetails_Result>("GetQuaterDetails1", quaterIdParameter);
         }
     }
 }

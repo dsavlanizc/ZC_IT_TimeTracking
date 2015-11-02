@@ -11,12 +11,10 @@ namespace ZC_IT_TimeTracking
 {
     using System;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class CheckQuater_Result
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public int QuaterID { get; set; }
+        public System.DateTime GoalCreateFrom { get; set; }
+        public System.DateTime GoalCreateTo { get; set; }
     }
 }
