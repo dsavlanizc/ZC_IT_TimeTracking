@@ -307,6 +307,10 @@
         <Function Name="GetGoalDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Goal_Id" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetGoalDetailsWithPagination" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageNo" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetGoalRuleDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GoalId" Type="int" Mode="In" />
         </Function>
@@ -748,7 +752,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DatabseEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Departments" EntityType="Self.Department" />
           <EntitySet Name="Goal_Master" EntityType="Self.Goal_Master" />
           <EntitySet Name="Goal_Quater" EntityType="Self.Goal_Quater" />
@@ -878,6 +882,10 @@
             <Parameter Name="Rating" Mode="In" Type="Double" />
             <Parameter Name="GoalID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetGoalDetailsWithPagination" ReturnType="Collection(DatabaseModel.GetGoalDetailsWithPagination_Result)">
+            <Parameter Name="PageNo" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuaterID" Nullable="false" />
@@ -905,12 +913,21 @@
           <Property Type="DateTime" Name="GoalCreateFrom" Nullable="false" />
           <Property Type="DateTime" Name="GoalCreateTo" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="GetGoalDetailsWithPagination_Result">
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="GoalDescription" Nullable="true" />
+          <Property Type="String" Name="UnitOfMeasurement" Nullable="false" MaxLength="20" />
+          <Property Type="Double" Name="MeasurementValue" Nullable="false" />
+          <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
+          <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
+          <Property Type="Int32" Name="QuaterId" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabseEntities">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
           <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="DatabaseModel.Department">
               <MappingFragment StoreEntitySet="Department">
@@ -1081,6 +1098,19 @@
           <FunctionImportMapping FunctionImportName="InsertGoalRules" FunctionName="DatabaseModel.Store.InsertGoalRules" />
           <FunctionImportMapping FunctionImportName="UpdateGoalMaster" FunctionName="DatabaseModel.Store.UpdateGoalMaster" />
           <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="DatabaseModel.Store.UpdateGoalRules" />
+          <FunctionImportMapping FunctionImportName="GetGoalDetailsWithPagination" FunctionName="DatabaseModel.Store.GetGoalDetailsWithPagination">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.GetGoalDetailsWithPagination_Result">
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
+                <ScalarProperty Name="QuaterId" ColumnName="QuaterId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1102,36 +1132,6 @@
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams>
-      <Diagram DiagramId="0c9492f5f38b45b798fc36883ff31eef" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseModel.Department" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Goal_Master" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Goal_Quater" Width="1.5" PointX="6" PointY="1.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Goal_Rules" Width="1.5" PointX="10.5" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Manager" Width="1.5" PointX="5.25" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Resource" Width="1.5" PointX="8.25" PointY="7.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Resource_Goal" Width="1.5" PointX="10.5" PointY="8.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Resource_Goal_Performance" Width="1.5" PointX="10.5" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Resource_Performance" Width="1.5" PointX="10.5" PointY="11.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Role" Width="1.5" PointX="6" PointY="5.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Team" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.TeamLead" Width="1.5" PointX="13.5" PointY="8.375" IsExpanded="true" />
-        <AssociationConnector Association="DatabaseModel.FK_Team_DepartmentID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Goal_Master_QuaterID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Goal_Rules_Goal_Master" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Goal_Master" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Performance_Goal_Master" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_Performance_Goal_Quater" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Manager_TeamID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_TeamManager_Resource" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Performance_Resource" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Resource" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_Performance_Resource" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_RoleID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Resource_TeamID" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_TeamLead_Resource" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_TeamLead_TeamID" ManuallyRouted="false" />
-      </Diagram>
-    </Diagrams>
+    <Diagrams></Diagrams>
   </Designer>
 </edmx:Edmx>

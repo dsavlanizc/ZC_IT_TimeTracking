@@ -57,5 +57,12 @@ namespace ZC_IT_TimeTracking.Controllers
                 return Json(new { message = "Error occured!", success = false });
             }
         }
+
+        public ActionResult GetallGoal(int PageNo)
+        {
+            int PageSize = 5;
+            var GoalList = DbContext.GetGoalDetailsWithPagination(PageNo, PageSize).ToList();
+            return View();
+        }
     }
 }

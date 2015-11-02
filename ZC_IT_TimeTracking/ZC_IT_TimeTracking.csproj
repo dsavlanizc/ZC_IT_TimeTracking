@@ -182,6 +182,9 @@
     <Compile Include="Department.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetGoalDetailsWithPagination_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetGoalDetails_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -207,8 +210,10 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Goal.cs" />
+    <Compile Include="Models\GoalDetail.cs" />
     <Compile Include="Models\GoalQuarter.cs" />
     <Compile Include="Models\GoalRule.cs" />
+    <Compile Include="Models\Pager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs">
       <DependentUpon>DBModel.tt</DependentUpon>

@@ -5,9 +5,9 @@ GO
 CREATE DATABASE [IT-Tracking]
  CONTAINMENT = NONE
  ON  PRIMARY 
-( NAME = N'IT-Tracking', FILENAME = N'C:\Users\tpanchal\IT-Tracking.mdf' , SIZE = 4096KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
+( NAME = N'IT-Tracking', FILENAME = N'C:\Users\mgoswami\IT-Tracking.mdf' , SIZE = 4096KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
  LOG ON 
-( NAME = N'IT-Tracking_log', FILENAME = N'C:\Users\tpanchal\IT-Tracking_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+( NAME = N'IT-Tracking_log', FILENAME = N'C:\Users\mgoswami\IT-Tracking_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
 GO
 
 ALTER DATABASE [IT-Tracking] SET COMPATIBILITY_LEVEL = 110
@@ -385,17 +385,6 @@ GO
 ALTER TABLE [dbo].[Goal_Master] CHECK CONSTRAINT [FK_Goal_Master_QuaterID]
 GO
 
-
-
-SET ANSI_PADDING OFF
-GO
-
-ALTER TABLE [dbo].[Goal_Master]  WITH CHECK ADD  CONSTRAINT [FK_Goal_Master_QuaterID] FOREIGN KEY([QuaterId])
-REFERENCES [dbo].[Goal_Quater] ([QuaterID])
-GO
-
-ALTER TABLE [dbo].[Goal_Master] CHECK CONSTRAINT [FK_Goal_Master_QuaterID]
-GO
 
 USE [IT-Tracking]
 GO

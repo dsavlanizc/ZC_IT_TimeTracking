@@ -15,10 +15,10 @@ namespace ZC_IT_TimeTracking
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DatabseEntities : DbContext
+    public partial class DatabaseEntities : DbContext
     {
-        public DatabseEntities()
-            : base("name=DatabseEntities")
+        public DatabaseEntities()
+            : base("name=DatabaseEntities")
         {
         }
     
@@ -229,6 +229,19 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("GoalID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateGoalRules", performanceRangeFromParameter, performanceRangeToParameter, ratingParameter, goalIDParameter);
+        }
+    
+        public virtual ObjectResult<GetGoalDetailsWithPagination_Result> GetGoalDetailsWithPagination(Nullable<int> pageNo, Nullable<int> pageSize)
+        {
+            var pageNoParameter = pageNo.HasValue ?
+                new ObjectParameter("PageNo", pageNo) :
+                new ObjectParameter("PageNo", typeof(int));
+    
+            var pageSizeParameter = pageSize.HasValue ?
+                new ObjectParameter("PageSize", pageSize) :
+                new ObjectParameter("PageSize", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetGoalDetailsWithPagination_Result>("GetGoalDetailsWithPagination", pageNoParameter, pageSizeParameter);
         }
     }
 }
