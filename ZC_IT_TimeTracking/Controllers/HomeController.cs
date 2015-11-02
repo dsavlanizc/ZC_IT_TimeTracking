@@ -58,6 +58,26 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         [HttpPost]
+        public JsonResult UpdateGoal(Goal GoalData)
+        {
+            try
+            {
+                var quarter = DbContext.CheckQuater(GoalData.Quarter, GoalData.Year).FirstOrDefault();
+                DbContext.UpdateGoalMaster(GoalData.ID, GoalData.Title, GoalData.Description, GoalData.UnitOfMeasurement, GoalData.MeasurementValue, DateTime.Today, GoalData.IsHigher, quarter.QuarterID);
+                DbContext.Delete_AllRulesOfGoal(GoalData.ID);
+                foreach (GoalRule rule in GoalData.GoalRules)
+                {
+                    DbContext.InsertGoalRules(rule.RangeFrom, rule.RangeTo, rule.Rating, GoalData.ID);
+                }
+                return Json(new { message = "Goal updated successfully!", success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { message = "Error occured!", success = false });
+            }
+        }
+
+        [HttpPost]
         public JsonResult DeleteGoal(int id)
         {
             try

@@ -1,11 +1,17 @@
 ﻿$(function () {
     isCreate = true;
-
     //on submitting form
     $("#GoalCreateForm").submit(function (ev) {
         ev.preventDefault();
+        if (isCreate)
+            postUrl = "/Home/CreateGoal";
+        else
+            postUrl = "/Home/UpdateGoal";
+
         if ($("#GoalCreateForm").valid()) {
             var GoalData = {};
+            if (!isCreate)
+                GoalData.ID = updateGoalId;
             GoalData.Title = $("#GoalTitle").val();
             GoalData.Description = $("#GoalDescription").val();
             GoalData.Year = $("#GoalYear option:selected").text();
@@ -28,7 +34,7 @@
 
                 //submitting data
                 $.ajax({
-                    url: "/Home/CreateGoal",
+                    url: postUrl,
                     type: "POST",
                     dataType: "json",
                     contentType: "application/json",
@@ -112,7 +118,11 @@
 
     //edit goal function
     EditGoal = function (id) {
-        alert(id);
+        //alert(id);
+        ViewGoal(id);
+        $("#submitButton").attr("disabled", false);
+        isCreate = false;
+        updateGoalId = id;
     }
 
     //delete goal
