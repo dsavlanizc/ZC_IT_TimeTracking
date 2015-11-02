@@ -15,10 +15,10 @@ namespace ZC_IT_TimeTracking
     using System.Data.Entity.Core.Objects;
     using System.Linq;
     
-    public partial class DatabaseEntities : DbContext
+    public partial class DatabseEntities : DbContext
     {
-        public DatabaseEntities()
-            : base("name=DatabaseEntities")
+        public DatabseEntities()
+            : base("name=DatabseEntities")
         {
         }
     
@@ -37,35 +37,20 @@ namespace ZC_IT_TimeTracking
         public virtual DbSet<Resource_Goal_Performance> Resource_Goal_Performance { get; set; }
         public virtual DbSet<Resource_Performance> Resource_Performance { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamLead> TeamLeads { get; set; }
     
-        public virtual ObjectResult<GetGoalDetails_Result> GetGoalDetails(Nullable<int> goal_Id)
+        public virtual ObjectResult<CheckQuater_Result> CheckQuater(Nullable<int> quater, Nullable<int> qYear)
         {
-            var goal_IdParameter = goal_Id.HasValue ?
-                new ObjectParameter("Goal_Id", goal_Id) :
-                new ObjectParameter("Goal_Id", typeof(int));
+            var quaterParameter = quater.HasValue ?
+                new ObjectParameter("Quater", quater) :
+                new ObjectParameter("Quater", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetGoalDetails_Result>("GetGoalDetails", goal_IdParameter);
-        }
+            var qYearParameter = qYear.HasValue ?
+                new ObjectParameter("QYear", qYear) :
+                new ObjectParameter("QYear", typeof(int));
     
-        public virtual int GetGoalDetails1(Nullable<int> goal_Id)
-        {
-            var goal_IdParameter = goal_Id.HasValue ?
-                new ObjectParameter("Goal_Id", goal_Id) :
-                new ObjectParameter("Goal_Id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetGoalDetails1", goal_IdParameter);
-        }
-    
-        public virtual ObjectResult<GetQuarterDetails_Result> GetQuarterDetails(Nullable<int> quarter_Id)
-        {
-            var quarter_IdParameter = quarter_Id.HasValue ?
-                new ObjectParameter("Quarter_Id", quarter_Id) :
-                new ObjectParameter("Quarter_Id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuarterDetails_Result>("GetQuarterDetails", quarter_IdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CheckQuater_Result>("CheckQuater", quaterParameter, qYearParameter);
         }
     
         public virtual int DeleteGoalMaster(Nullable<int> goalId)
@@ -86,6 +71,15 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteGoalRule", goalRuleIdParameter);
         }
     
+        public virtual ObjectResult<GetGoalDetails_Result> GetGoalDetails(Nullable<int> goal_Id)
+        {
+            var goal_IdParameter = goal_Id.HasValue ?
+                new ObjectParameter("Goal_Id", goal_Id) :
+                new ObjectParameter("Goal_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetGoalDetails_Result>("GetGoalDetails", goal_IdParameter);
+        }
+    
         public virtual ObjectResult<GetGoalRuleDetails_Result> GetGoalRuleDetails(Nullable<int> goalId)
         {
             var goalIdParameter = goalId.HasValue ?
@@ -104,7 +98,7 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuaterDetails_Result>("GetQuaterDetails", quaterIdParameter);
         }
     
-        public virtual int InsertGoalMaster(string goal_Title, string goal_Description, string unit_Of_Measurement, Nullable<double> measurement_Value, Nullable<bool> is_HigherValueGood, Nullable<System.DateTime> creationDate, Nullable<int> quarterID)
+        public virtual int InsertGoalMaster(string goal_Title, string goal_Description, string unit_Of_Measurement, Nullable<double> measurement_Value, Nullable<bool> is_HigherValueGood, Nullable<System.DateTime> creationDate, Nullable<int> quaterID, ObjectParameter currentInsertedId)
         {
             var goal_TitleParameter = goal_Title != null ?
                 new ObjectParameter("Goal_Title", goal_Title) :
@@ -130,11 +124,11 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("CreationDate", creationDate) :
                 new ObjectParameter("CreationDate", typeof(System.DateTime));
     
-            var quarterIDParameter = quarterID.HasValue ?
-                new ObjectParameter("QuarterID", quarterID) :
-                new ObjectParameter("QuarterID", typeof(int));
+            var quaterIDParameter = quaterID.HasValue ?
+                new ObjectParameter("QuaterID", quaterID) :
+                new ObjectParameter("QuaterID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalMaster", goal_TitleParameter, goal_DescriptionParameter, unit_Of_MeasurementParameter, measurement_ValueParameter, is_HigherValueGoodParameter, creationDateParameter, quarterIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalMaster", goal_TitleParameter, goal_DescriptionParameter, unit_Of_MeasurementParameter, measurement_ValueParameter, is_HigherValueGoodParameter, creationDateParameter, quaterIDParameter, currentInsertedId);
         }
     
         public virtual int InsertGoalQuater(Nullable<int> quater, Nullable<int> year, Nullable<System.DateTime> goalCreate_From, Nullable<System.DateTime> goalCreate_To)
@@ -235,269 +229,6 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("GoalID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateGoalRules", performanceRangeFromParameter, performanceRangeToParameter, ratingParameter, goalIDParameter);
-        }
-    
-        public virtual ObjectResult<GetQuaterDetails_Result> GetQuaterDetails1(Nullable<int> quaterId)
-        {
-            var quaterIdParameter = quaterId.HasValue ?
-                new ObjectParameter("QuaterId", quaterId) :
-                new ObjectParameter("QuaterId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuaterDetails_Result>("GetQuaterDetails1", quaterIdParameter);
-        }
-    
-        public virtual int AddResource(string firstName, string lastName, Nullable<int> roleId, Nullable<int> teamId)
-        {
-            var firstNameParameter = firstName != null ?
-                new ObjectParameter("FirstName", firstName) :
-                new ObjectParameter("FirstName", typeof(string));
-    
-            var lastNameParameter = lastName != null ?
-                new ObjectParameter("LastName", lastName) :
-                new ObjectParameter("LastName", typeof(string));
-    
-            var roleIdParameter = roleId.HasValue ?
-                new ObjectParameter("RoleId", roleId) :
-                new ObjectParameter("RoleId", typeof(int));
-    
-            var teamIdParameter = teamId.HasValue ?
-                new ObjectParameter("TeamId", teamId) :
-                new ObjectParameter("TeamId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddResource", firstNameParameter, lastNameParameter, roleIdParameter, teamIdParameter);
-        }
-    
-        public virtual int AssignGoalToResource(Nullable<int> resourceId, Nullable<int> goalId, Nullable<int> weight, ObjectParameter currentInsertedId)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("ResourceId", resourceId) :
-                new ObjectParameter("ResourceId", typeof(int));
-    
-            var goalIdParameter = goalId.HasValue ?
-                new ObjectParameter("GoalId", goalId) :
-                new ObjectParameter("GoalId", typeof(int));
-    
-            var weightParameter = weight.HasValue ?
-                new ObjectParameter("weight", weight) :
-                new ObjectParameter("weight", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AssignGoalToResource", resourceIdParameter, goalIdParameter, weightParameter, currentInsertedId);
-        }
-    
-        public virtual ObjectResult<CheckQuater_Result> CheckQuater(Nullable<int> quater, Nullable<int> qYear)
-        {
-            var quaterParameter = quater.HasValue ?
-                new ObjectParameter("Quater", quater) :
-                new ObjectParameter("Quater", typeof(int));
-    
-            var qYearParameter = qYear.HasValue ?
-                new ObjectParameter("QYear", qYear) :
-                new ObjectParameter("QYear", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CheckQuater_Result>("CheckQuater", quaterParameter, qYearParameter);
-        }
-    
-        public virtual int DeleteResourceGoal(Nullable<int> resourceId, Nullable<int> goalId)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("ResourceId", resourceId) :
-                new ObjectParameter("ResourceId", typeof(int));
-    
-            var goalIdParameter = goalId.HasValue ?
-                new ObjectParameter("GoalId", goalId) :
-                new ObjectParameter("GoalId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteResourceGoal", resourceIdParameter, goalIdParameter);
-        }
-    
-        public virtual ObjectResult<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(Nullable<int> resourceId)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("ResourceId", resourceId) :
-                new ObjectParameter("ResourceId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllGoalsOfResource_Result>("GetAllGoalsOfResource", resourceIdParameter);
-        }
-    
-        public virtual ObjectResult<GetAllResourceForGoal_Result> GetAllResourceForGoal(Nullable<int> goal_id)
-        {
-            var goal_idParameter = goal_id.HasValue ?
-                new ObjectParameter("Goal_id", goal_id) :
-                new ObjectParameter("Goal_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllResourceForGoal_Result>("GetAllResourceForGoal", goal_idParameter);
-        }
-    
-        public virtual ObjectResult<GetResouceDetails_Result> GetResouceDetails(Nullable<int> resourceID)
-        {
-            var resourceIDParameter = resourceID.HasValue ?
-                new ObjectParameter("resourceID", resourceID) :
-                new ObjectParameter("resourceID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResouceDetails_Result>("GetResouceDetails", resourceIDParameter);
-        }
-    
-        public virtual ObjectResult<GetResourceByTeam_Result> GetResourceByTeam(Nullable<int> teamId)
-        {
-            var teamIdParameter = teamId.HasValue ?
-                new ObjectParameter("TeamId", teamId) :
-                new ObjectParameter("TeamId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceByTeam_Result>("GetResourceByTeam", teamIdParameter);
-        }
-    
-        public virtual ObjectResult<GetTeamDetails_Result> GetTeamDetails(Nullable<int> teamId)
-        {
-            var teamIdParameter = teamId.HasValue ?
-                new ObjectParameter("teamId", teamId) :
-                new ObjectParameter("teamId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTeamDetails_Result>("GetTeamDetails", teamIdParameter);
-        }
-    
-        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var versionParameter = version.HasValue ?
-                new ObjectParameter("version", version) :
-                new ObjectParameter("version", typeof(int));
-    
-            var definitionParameter = definition != null ?
-                new ObjectParameter("definition", definition) :
-                new ObjectParameter("definition", typeof(byte[]));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
-        }
-    
-        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagramdefinition_Result> sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagramdefinition_Result>("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual ObjectResult<sp_helpdiagrams_Result> sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_helpdiagrams_Result>("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
-        }
-    
-        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
-        {
-            var diagramnameParameter = diagramname != null ?
-                new ObjectParameter("diagramname", diagramname) :
-                new ObjectParameter("diagramname", typeof(string));
-    
-            var owner_idParameter = owner_id.HasValue ?
-                new ObjectParameter("owner_id", owner_id) :
-                new ObjectParameter("owner_id", typeof(int));
-    
-            var new_diagramnameParameter = new_diagramname != null ?
-                new ObjectParameter("new_diagramname", new_diagramname) :
-                new ObjectParameter("new_diagramname", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
-        }
-    
-        public virtual int sp_upgraddiagrams()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
-        }
-    
-        public virtual int UpdateResourceDetails(Nullable<int> resourceId, string firstName, string lastName, Nullable<int> roleId, Nullable<int> teamID)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("resourceId", resourceId) :
-                new ObjectParameter("resourceId", typeof(int));
-    
-            var firstNameParameter = firstName != null ?
-                new ObjectParameter("firstName", firstName) :
-                new ObjectParameter("firstName", typeof(string));
-    
-            var lastNameParameter = lastName != null ?
-                new ObjectParameter("lastName", lastName) :
-                new ObjectParameter("lastName", typeof(string));
-    
-            var roleIdParameter = roleId.HasValue ?
-                new ObjectParameter("roleId", roleId) :
-                new ObjectParameter("roleId", typeof(int));
-    
-            var teamIDParameter = teamID.HasValue ?
-                new ObjectParameter("teamID", teamID) :
-                new ObjectParameter("teamID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateResourceDetails", resourceIdParameter, firstNameParameter, lastNameParameter, roleIdParameter, teamIDParameter);
-        }
-    
-        public virtual int UpdateResourceGoal(Nullable<int> resourceId, Nullable<int> goalId, Nullable<int> weight)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("ResourceId", resourceId) :
-                new ObjectParameter("ResourceId", typeof(int));
-    
-            var goalIdParameter = goalId.HasValue ?
-                new ObjectParameter("GoalId", goalId) :
-                new ObjectParameter("GoalId", typeof(int));
-    
-            var weightParameter = weight.HasValue ?
-                new ObjectParameter("weight", weight) :
-                new ObjectParameter("weight", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateResourceGoal", resourceIdParameter, goalIdParameter, weightParameter);
         }
     }
 }

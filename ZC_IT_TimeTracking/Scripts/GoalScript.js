@@ -1,5 +1,57 @@
 ﻿$(function () {
     isCreate = true;
+
+    //on submitting form
+    $("#GoalCreateForm").submit(function (ev) {
+        ev.preventDefault();
+        if ($("#GoalCreateForm").valid()) {
+            var GoalData = {};
+            GoalData.Title = $("#GoalTitle").val();
+            GoalData.Description = $("#GoalDescription").val();
+            GoalData.Year = $("#GoalYear option:selected").text();
+            GoalData.Quarter = $("#GoalQuarter option:selected").text();
+            GoalData.UnitOfMeasurement = $("#GoalUnit").val();
+            GoalData.MeasurementValue = $("#GoalUnitValue").val();
+            GoalData.IsHigher = $("#IsHigherValue").is(":checked");
+
+            if ($("#RuleListTable").find("tr").length > 0) {
+                //adding goal rules
+                var GoalRules = Array();
+                $("#RuleListTable").find("tr").each(function () {
+                    var rule = {};
+                    rule.RangeFrom = $(this).find(".RangeFrom").text();
+                    rule.RangeTo = $(this).find(".RangeTo").text();
+                    rule.Rating = $(this).find(".Rating").text();
+                    GoalRules.push(rule);
+                });
+                GoalData.GoalRules = GoalRules;
+
+                //submitting data
+                $.ajax({
+                    url: "/Home/CreateGoal",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({ GoalData: GoalData }),
+                    beforeSend: showLoading(),
+                    success: function (dt) {
+                        hideLoading();
+                    },
+                    error: function (dt) {
+                        hideLoading();
+                        console.log(dt);
+                    }
+                });
+            }
+            else {
+                alert("Please define atleast one rule!");
+                $("#collapse3").collapse('show');
+            }
+            console.log(JSON.stringify(GoalData));
+
+        }
+    });
+
     //resetting form
     $("#resetButton").click(function () {
         isCreate = true;
@@ -34,15 +86,15 @@
                 $("#GoalUnit").val(goal.UnitOfMeasurement);
                 $("#GoalUnitValue").val(goal.MeasurementValue);
                 if (goal.IsHigherValueGood)
-                    $("#IsTrue").attr("checked", true);
+                    $("#IsHigherValue").attr("checked", true);
                 else
-                    $("#IsTrue").attr("checked", false);
+                    $("#IsHigherValue").attr("checked", false);
 
                 //rules filling
                 $('#RuleListTable').html("");
                 $(rules).each(function () {
                     //console.log(this);
-                    $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3">' + this.Performance_RangeFrom + '</td><td class="col-md-3">' + this.Performance_RangeTo + '</td><td class="col-md-3">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="editRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="removeRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+                    $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
                 });
                 $("#collapse1").collapse('hide');
                 $("#collapse2").collapse('show');
@@ -53,15 +105,6 @@
             }
         });
     }
-    $("#GoalCreateForm").submit(function (sd) {
-        sd.preventDefault();
-        //if ($(this).valid()) {
-        //    alert('the form is valid');
-        //}
-        //else {
-        //    alert('the form is not valid');
-        //}
-    });
 
     //form validation
     $("#GoalCreateForm").validate({
@@ -106,19 +149,19 @@
     });
     //Add the Row of Goal Rule to the list
     var count = 0;
-    addToList = function() {
+    AddGoalRule = function () {
         if (count > -1) {
             count += 1;
             var RangeFrom = $("#RangeFrom").val();
             var RangeTo = $("#RangeTo").val();
             var Rating = $("#Rating").val();
-            $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3">' + RangeFrom + '</td><td class="col-md-3">' + RangeTo + '</td><td class="col-md-3">' + Rating + '</td><td class="col-md-1"><span id="Edit" onclick="editRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="removeRule(rule' + count + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+            $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + count + ')" class="glyphicon glyphicon-remove" /></td></tr>');
             $("#RangeFrom").val(null);
             $("#RangeTo").val(null);
             $("#Rating").val(null);
         }
     }
-    editRule = function(id) {
+    EditGoalRule = function (id) {
         var RangeFrom = $(id).find("td:nth-child(1)").html();
         var RangeTo = $(id).find("td:nth-child(2)").html()
         var Rating = $(id).find("td:nth-child(3)").html();
@@ -127,7 +170,7 @@
         $("#Rating").val(Rating);
         $(id).remove();
     }
-    removeRule = function(id) {
+    RemoveGoalRule = function (id) {
         $(id).remove();
     }
 });
