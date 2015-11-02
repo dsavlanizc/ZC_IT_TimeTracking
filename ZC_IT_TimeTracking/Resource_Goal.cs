@@ -14,6 +14,11 @@ namespace ZC_IT_TimeTracking
     
     public partial class Resource_Goal
     {
+        public Resource_Goal()
+        {
+            this.Resource_Goal_Performance = new HashSet<Resource_Goal_Performance>();
+        }
+    
         public int Resource_GoalID { get; set; }
         public int ResourceID { get; set; }
         public int Goal_MasterID { get; set; }
@@ -21,5 +26,6 @@ namespace ZC_IT_TimeTracking
     
         public virtual Goal_Master Goal_Master { get; set; }
         public virtual Resource Resource { get; set; }
+        public virtual ICollection<Resource_Goal_Performance> Resource_Goal_Performance { get; set; }
     }
 }

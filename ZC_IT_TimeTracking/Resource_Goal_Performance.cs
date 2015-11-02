@@ -17,10 +17,8 @@ namespace ZC_IT_TimeTracking
         public int Resource_Goal_PerformanceID { get; set; }
         public double Resource_Performance { get; set; }
         public Nullable<double> Resource_Rating { get; set; }
-        public int ResourceId { get; set; }
-        public int Goal_MasterID { get; set; }
+        public int Resource_GoalId { get; set; }
     
-        public virtual Goal_Master Goal_Master { get; set; }
-        public virtual Resource Resource { get; set; }
+        public virtual Resource_Goal Resource_Goal { get; set; }
     }
 }

@@ -36,6 +36,10 @@
                     beforeSend: showLoading(),
                     success: function (dt) {
                         hideLoading();
+                        alert(dt.message);
+                        if (dt.success) {
+                            location.reload(true);
+                        }
                     },
                     error: function (dt) {
                         hideLoading();
@@ -104,6 +108,36 @@
                 console.log(dt);
             }
         });
+    }
+
+    //edit goal function
+    EditGoal = function (id) {
+        alert(id);
+    }
+
+    //delete goal
+    DeleteGoal = function (id) {
+        if (confirm("Are you sure to delete?")) {
+            $.ajax({
+                url: "/Home/DeleteGoal",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ Id: id }),
+                beforeSend: showLoading(),
+                success: function (dt) {
+                    hideLoading();
+                    alert(dt.message);
+                    if (dt.success) {
+                        location.reload(true);
+                    }
+                },
+                error: function (dt) {
+                    hideLoading();
+                    console.log(dt);
+                }
+            });
+        }
     }
 
     //form validation
