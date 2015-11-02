@@ -13,7 +13,7 @@ namespace ZC_IT_TimeTracking
     
     public partial class CheckQuater_Result
     {
-        public int QuaterID { get; set; }
+        public int QuarterID { get; set; }
         public System.DateTime GoalCreateFrom { get; set; }
         public System.DateTime GoalCreateTo { get; set; }
     }

@@ -27,7 +27,7 @@ namespace ZC_IT_TimeTracking.Controllers
             if (DbContext.Goal_Master.Any(a => a.Goal_MasterID == Id))
             {
                 var goal = DbContext.GetGoalDetails(Id).FirstOrDefault();
-                var quarter = DbContext.GetQuaterDetails(goal.QuaterId).FirstOrDefault();
+                var quarter = DbContext.GetQuarterDetails(goal.QuarterId).FirstOrDefault();
                 var rules = DbContext.GetGoalRuleDetails(Id).ToList();
                 string res = JsonConvert.SerializeObject(new { goal = goal, quarter = quarter, rules = rules });
                 return Json(res);
@@ -42,19 +42,32 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 var quarter = DbContext.CheckQuater(GoalData.Quarter, GoalData.Year).FirstOrDefault();
                 ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                DbContext.InsertGoalMaster(GoalData.Title, GoalData.Description, GoalData.UnitOfMeasurement, GoalData.MeasurementValue, GoalData.IsHigher, DateTime.Today, quarter.QuaterID, insertedId);
+                DbContext.InsertGoalMaster(GoalData.Title, GoalData.Description, GoalData.UnitOfMeasurement, GoalData.MeasurementValue, GoalData.IsHigher, DateTime.Today, quarter.QuarterID, insertedId);
                 Int32 goalId = Int32.Parse(insertedId.Value.ToString());
 
-                //
                 foreach (GoalRule rule in GoalData.GoalRules)
                 {
                     DbContext.InsertGoalRules(rule.RangeFrom, rule.RangeTo, rule.Rating, goalId);
                 }
-                return Json(new { message = "Added Successfully", success = true });
+                return Json(new { message = "Goal created successfully!", success = true });
             }
             catch (Exception ex)
             {
                 return Json(new { message = "Error occured!", success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteGoal(int id)
+        {
+            try
+            {
+                DbContext.DeleteGoalMaster(id);
+                return Json(new { message = "Goal Deleted Successfully!", success = true });
+            }
+            catch
+            {
+                return Json(new { message = "Error occured while deleting!", success = false });
             }
         }
     }

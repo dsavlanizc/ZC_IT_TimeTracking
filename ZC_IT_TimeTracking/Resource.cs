@@ -17,7 +17,6 @@ namespace ZC_IT_TimeTracking
         public Resource()
         {
             this.Managers = new HashSet<Manager>();
-            this.Resource_Goal_Performance = new HashSet<Resource_Goal_Performance>();
             this.Resource_Goal = new HashSet<Resource_Goal>();
             this.Resource_Performance = new HashSet<Resource_Performance>();
             this.TeamLeads = new HashSet<TeamLead>();
@@ -30,7 +29,6 @@ namespace ZC_IT_TimeTracking
         public Nullable<int> TeamID { get; set; }
     
         public virtual ICollection<Manager> Managers { get; set; }
-        public virtual ICollection<Resource_Goal_Performance> Resource_Goal_Performance { get; set; }
         public virtual ICollection<Resource_Goal> Resource_Goal { get; set; }
         public virtual ICollection<Resource_Performance> Resource_Performance { get; set; }
         public virtual Role Role { get; set; }
