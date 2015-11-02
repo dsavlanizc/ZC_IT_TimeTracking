@@ -11,12 +11,14 @@ namespace ZC_IT_TimeTracking
 {
     using System;
     
-    public partial class sp_helpdiagrams_Result
+    public partial class GetGoalDetails_Result
     {
-        public string Database { get; set; }
-        public string Name { get; set; }
-        public int ID { get; set; }
-        public string Owner { get; set; }
-        public int OwnerID { get; set; }
+        public string GoalTitle { get; set; }
+        public string GoalDescription { get; set; }
+        public string UnitOfMeasurement { get; set; }
+        public double MeasurementValue { get; set; }
+        public Nullable<System.DateTime> Creation_Date { get; set; }
+        public bool IsHigherValueGood { get; set; }
+        public int QuaterId { get; set; }
     }
 }
