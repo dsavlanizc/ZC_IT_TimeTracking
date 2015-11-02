@@ -1,7 +1,15 @@
 ﻿$(function () {
+    isCreate = true;
+    //resetting form
+    $("#resetButton").click(function () {
+        isCreate = true;
+        $("#submitButton").attr("disabled", false);
+        $('#RuleListTable').html("");
+    });
     hideLoading = function () { $("#loading").hide(); }
     showLoading = function () { $("#loading").show(); }
     ViewGoal = function (id) {
+        $("#submitButton").attr("disabled", true);
         //alert("asdf"+id);
         $.ajax({
             url: "/Home/GetGoalById",
@@ -12,10 +20,13 @@
             beforeSend: showLoading(),
             success: function (dt) {
                 hideLoading();
-                console.log(dt);
+                //console.log(dt);
                 var data = JSON.parse(dt);
                 var goal = data.goal;
                 var quarter = data.quarter;
+                var rules = data.rules;
+
+                //goal details filling
                 $("#GoalTitle").val(goal.GoalTitle);
                 $("#GoalDescription").val(goal.GoalDescription);
                 $("#GoalYear option:selected").text(quarter.YEAR);
@@ -26,6 +37,15 @@
                     $("#IsTrue").attr("checked", true);
                 else
                     $("#IsTrue").attr("checked", false);
+
+                //rules filling
+                $('#RuleListTable').html("");
+                $(rules).each(function () {
+                    //console.log(this);
+                    $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3">' + this.Performance_RangeFrom + '</td><td class="col-md-3">' + this.Performance_RangeTo + '</td><td class="col-md-3">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="editRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="removeRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+                });
+                $("#collapse1").collapse('hide');
+                $("#collapse2").collapse('show');
             },
             error: function (dt) {
                 hideLoading();
@@ -35,12 +55,12 @@
     }
     $("#GoalCreateForm").submit(function (sd) {
         sd.preventDefault();
-        if ($(this).valid()) {
-            alert('the form is valid');
-        }
-        else {
-            alert('the form is not valid');
-        }
+        //if ($(this).valid()) {
+        //    alert('the form is valid');
+        //}
+        //else {
+        //    alert('the form is not valid');
+        //}
     });
 
     //form validation
