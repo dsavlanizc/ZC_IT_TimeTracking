@@ -7,7 +7,6 @@
             postUrl = "/Home/CreateGoal";
         else
             postUrl = "/Home/UpdateGoal";
-
         if ($("#GoalCreateForm").valid()) {
             var GoalData = {};
             if (!isCreate)
@@ -58,19 +57,24 @@
                 $("#collapse3").collapse('show');
             }
             console.log(JSON.stringify(GoalData));
-
         }
     });
 
     //resetting form
     $("#resetButton").click(function () {
         isCreate = true;
+        ResetForm();
         $("#submitButton").attr("disabled", false);
         $('#RuleListTable').html("");
     });
+
+    //loading overlay events
     hideLoading = function () { $("#loading").hide(); }
     showLoading = function () { $("#loading").show(); }
+
+    //goal view
     ViewGoal = function (id) {
+        ResetForm();
         $("#submitButton").attr("disabled", true);
         //alert("asdf"+id);
         $.ajax({
@@ -151,7 +155,7 @@
     }
 
     //form validation
-    $("#GoalCreateForm").validate({
+    var validator = $("#GoalCreateForm").validate({
         rules: {
             GoalTitle: {
                 minlength: 3,
@@ -191,6 +195,13 @@
             }
         }
     });
+
+    //reset form and validations
+    ResetForm = function () {
+        validator.resetForm();
+        $('.form-group').removeClass('has-error');
+    }
+
     //Add the Row of Goal Rule to the list
     var count = 0;
     AddGoalRule = function () {
