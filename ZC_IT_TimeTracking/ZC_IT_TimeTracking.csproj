@@ -151,6 +151,7 @@
     <Content Include="SQLScripts\DB_IT_TRACKING_Tables.sql" />
     <Content Include="SQLScripts\StoreProcedures\Assign_Goal_sp.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_Goal.sql" />
+    <Content Include="SQLScripts\StoreProcedures\team_and_resourceDETAILS_SP.txt" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

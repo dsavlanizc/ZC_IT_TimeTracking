@@ -12,9 +12,8 @@ GO
 CREATE PROCEDURE [dbo].[CheckQuater] 
 	
 	@_Quater int  , 
-	@_Year int ,
-	@IsValid int OUTPUT,
-	@Quater_Id int OUTPUT
+	@_Year int 
+
 AS
 BEGIN
 SET NOCOUNT ON;
@@ -23,15 +22,9 @@ SET NOCOUNT ON;
 	where 
 	Quater = @_Quater AND  Year=@_Year
 
-
-
-RETURN	@IsValid
 END
 
-
-GO
-
-
+go
 USE [IT-Tracking]
 GO
 
@@ -44,7 +37,7 @@ GO
 
 
 CREATE PROCEDURE [dbo].[DeleteGoalMaster] 
-	-- Add the parameters for the stored procedure here
+
 	@GoalId int
 	
 AS
@@ -130,7 +123,7 @@ GO
 
 
 CREATE PROCEDURE [dbo].[GetGoalRuleDetails]
-	-- Add the parameters for the stored procedure here
+	
 	@GoalId int
 
 AS
@@ -254,7 +247,7 @@ GO
 
 
 CREATE PROCEDURE [dbo].[InsertGoalRules] 
-	-- Add the parameters for the stored procedure here
+
 	@PerformanceRangeFrom int , 
 	@PerformanceRangeTo int ,
 	@Rating float,
@@ -334,7 +327,6 @@ GO
 
 
 CREATE PROCEDURE [dbo].[UpdateGoalRules] 
-	-- Add the parameters for the stored procedure here
 	@PerformanceRangeFrom int , 
 	@PerformanceRangeTo int ,
 	@Rating float,

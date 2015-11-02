@@ -1,50 +1,18 @@
 USE [IT-Tracking]
 GO
 
-/****** Object:  StoredProcedure [dbo].[AddResource]    Script Date: 2015-10-30 19:00:12 ******/
+/****** Object:  StoredProcedure [dbo].[AssignGoalToResource]    Script Date: 2015-11-02 13:14:45 ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
-
-
-CREATE PROCEDURE [dbo].[AddResource]
-	@FirstName varchar(255),
-	@LastName varchar(255),
-	@RoleId int,
-	@TeamId int
-AS
-BEGIN
-INSERT INTO [dbo].[Resource]
-           ([FirstName]
-           ,[LastName]
-           ,[RoleID]
-           ,[TeamID])
-     VALUES
-           (@FirstName
-           ,@LastName
-           ,@RoleId
-           ,@TeamId)
-
-END
-
-GO
-USE [IT-Tracking]
-GO
-
-/****** Object:  StoredProcedure [dbo].[AssignGoalToResource]    Script Date: 2015-10-30 19:00:29 ******/
-SET ANSI_NULLS ON
-GO
-
-SET QUOTED_IDENTIFIER ON
-GO
-
 
 CREATE PROCEDURE [dbo].[AssignGoalToResource]
 @ResourceId int,
 @GoalId int,
-@weight int
+@weight int,
+@CurrentInsertedId int OUTPUT
 AS
 BEGIN
 	INSERT INTO [dbo].[Resource_Goal]
@@ -55,14 +23,11 @@ BEGIN
            (@ResourceId
            ,@GoalId
            ,@weight)
+		   SET @CurrentInsertedId = SCOPE_IDENTITY();
 END
 
 GO
 
-
-
-USE [IT-Tracking]
-GO
 
 /****** Object:  StoredProcedure [dbo].[UpdateResourceGoal]    Script Date: 2015-10-30 19:01:05 ******/
 SET ANSI_NULLS ON
