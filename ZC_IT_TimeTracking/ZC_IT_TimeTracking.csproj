@@ -148,19 +148,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\signin.css" />
     <None Include="Scripts\_references.js" />
-    <Content Include="SQLScripts\dbo.Department.sql" />
-    <Content Include="SQLScripts\dbo.Goal_Master.sql" />
-    <Content Include="SQLScripts\dbo.Goal_Quater.sql" />
-    <Content Include="SQLScripts\dbo.Goal_Rules.sql" />
-    <Content Include="SQLScripts\dbo.Manager.sql" />
-    <Content Include="SQLScripts\dbo.Resource.sql" />
-    <Content Include="SQLScripts\dbo.Resource_Goal.sql" />
-    <Content Include="SQLScripts\dbo.Resource_Goal_Performance.sql" />
-    <Content Include="SQLScripts\dbo.Resource_Performance.sql" />
-    <Content Include="SQLScripts\dbo.Roles.sql" />
-    <Content Include="SQLScripts\dbo.Team.sql" />
-    <Content Include="SQLScripts\dbo.Team_Lead.sql" />
     <Content Include="SQLScripts\DB_IT_TRACKING_Tables.sql" />
+    <Content Include="SQLScripts\StoreProcedures\Assign_Goal_sp.sql" />
     <Content Include="SQLScripts\StoreProcedures\sp_Goal.sql" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -233,6 +222,15 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Role.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Team.cs">
