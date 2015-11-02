@@ -1,0 +1,151 @@
+USE [IT-Tracking]
+GO
+
+/****** Object:  StoredProcedure [dbo].[AddResource]    Script Date: 2015-10-30 19:00:12 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[AddResource]
+	@FirstName varchar(255),
+	@LastName varchar(255),
+	@RoleId int,
+	@TeamId int
+AS
+BEGIN
+INSERT INTO [dbo].[Resource]
+           ([FirstName]
+           ,[LastName]
+           ,[RoleID]
+           ,[TeamID])
+     VALUES
+           (@FirstName
+           ,@LastName
+           ,@RoleId
+           ,@TeamId)
+
+END
+
+GO
+USE [IT-Tracking]
+GO
+
+USE [IT-Tracking]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetResouceDetails]    Script Date: 2015-11-02 12:50:27 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GetResouceDetails] 
+	@resourceID int
+AS
+BEGIN
+	SELECT	FirstName,
+			LastName,
+			TeamID,
+			RoleID
+	FROM [dbo].[Resource]
+	WHERE ResourceID=@resourceID
+END
+
+GO
+
+USE [IT-Tracking]
+GO
+
+/****** Object:  StoredProcedure [dbo].[UpdateResourceDetails]    Script Date: 2015-11-02 13:19:59 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[UpdateResourceDetails]
+	@resourceId int ,
+	@firstName varchar(255),
+	@lastName varchar(255),
+	@roleId int ,
+	@teamID int
+AS
+BEGIN
+	UPDATE [dbo].[Resource]
+   SET [FirstName] = @firstName
+      ,[LastName] = @lastName
+      ,[RoleID] = @roleId
+      ,[TeamID] = @teamID
+ WHERE [ResourceID]=@resourceId
+
+END
+
+GO
+
+
+USE [IT-Tracking]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetResourceByTeam]    Script Date: 2015-11-02 12:51:04 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GetResourceByTeam] 
+	@TeamId int 
+AS
+BEGIN
+	SELECT ResourceID , 
+			FirstName ,
+			LastName,
+			RoleID
+	FROM Resource
+	where TeamID=@TeamId
+END
+
+GO
+
+USE [IT-Tracking]
+GO
+
+/****** Object:  StoredProcedure [dbo].[GetTeamDetails]    Script Date: 2015-11-02 13:24:03 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+CREATE PROCEDURE [dbo].[GetTeamDetails] 
+	@teamId int
+AS
+BEGIN
+  SELECT team.TeamName ,
+         department.Department_Name,
+		 manager.ManagerId , 
+		 teamLead.TeamLeadID ,
+		 manager.ManagerResourceID as ManagerResourceID ,
+		 teamLead.TeamLeadResourceID as TeamLeadResourceID 
+	FROM Team team, 
+		Manager manager ,
+		TeamLead teamLead ,
+		Resource teamResource,
+		Department department
+	WHERE team.TeamID=manager.TeamID
+		and team.TeamID=teamLead.TeamID
+		and team.DepartmentID=department.DepartmentID
+		and manager.ManagerResourceID=teamResource.ResourceID
+		and teamLead.TeamLeadResourceID= teamResource.ResourceID
+END
+
+GO
+
