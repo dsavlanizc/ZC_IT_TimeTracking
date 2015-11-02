@@ -1,5 +1,30 @@
 
+USE [IT-Tracking]
+GO
 
+/****** Object:  StoredProcedure [dbo].[CheckQuater]    Script Date: 2015-11-02 12:33:17 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE [dbo].[CheckQuater] 
+	
+	@_Quater int  , 
+	@_Year int 
+
+AS
+BEGIN
+SET NOCOUNT ON;
+
+ select  QuaterID,GoalCreateFrom,GoalCreateTo  FROM dbo.Goal_Quater 
+	where 
+	Quater = @_Quater AND  Year=@_Year
+
+END
+
+go
 USE [IT-Tracking]
 GO
 
@@ -10,13 +35,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
--- =============================================
--- Author:		trushna
--- Create date: 
--- Description:	
--- =============================================
+
 CREATE PROCEDURE [dbo].[DeleteGoalMaster] 
-	-- Add the parameters for the stored procedure here
+
 	@GoalId int
 	
 AS
@@ -42,11 +63,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
+
 CREATE PROCEDURE [dbo].[DeleteGoalRule]
 	@GoalRuleId int
 AS
@@ -71,10 +88,7 @@ GO
 
 
 
--- =============================================
--- Author:		Trushna
--- Description:	give all goal details
--- =============================================
+
 CREATE PROCEDURE [dbo].[GetGoalDetails] 
 	@Goal_Id int
 	
@@ -107,13 +121,9 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
+
 CREATE PROCEDURE [dbo].[GetGoalRuleDetails]
-	-- Add the parameters for the stored procedure here
+	
 	@GoalId int
 
 AS
@@ -202,11 +212,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
+
 CREATE PROCEDURE [dbo].[InsertGoalQuater]
 
 	@Quater int, 
@@ -239,13 +245,9 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
--- =============================================
--- Author:		Trushna
--- Create date: 
--- Description:	
--- =============================================
+
 CREATE PROCEDURE [dbo].[InsertGoalRules] 
-	-- Add the parameters for the stored procedure here
+
 	@PerformanceRangeFrom int , 
 	@PerformanceRangeTo int ,
 	@Rating float,
@@ -282,11 +284,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 
--- =============================================
--- Author:		Trushna
--- Create date: 
--- Description:	
--- =============================================
+
 CREATE PROCEDURE [dbo].[UpdateGoalMaster] 
 	@Goal_Id int,
 	@Goal_Title varchar(150), 
@@ -327,13 +325,8 @@ GO
 
 
 
--- =============================================
--- Author:		Trushana
--- Create date: 
--- Description:	
--- =============================================
+
 CREATE PROCEDURE [dbo].[UpdateGoalRules] 
-	-- Add the parameters for the stored procedure here
 	@PerformanceRangeFrom int , 
 	@PerformanceRangeTo int ,
 	@Rating float,
