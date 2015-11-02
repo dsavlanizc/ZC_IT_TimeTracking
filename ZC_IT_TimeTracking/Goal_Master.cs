@@ -18,6 +18,7 @@ namespace ZC_IT_TimeTracking
         {
             this.Goal_Rules = new HashSet<Goal_Rules>();
             this.Resource_Goal = new HashSet<Resource_Goal>();
+            this.Resource_Goal_Performance = new HashSet<Resource_Goal_Performance>();
         }
     
         public int Goal_MasterID { get; set; }
@@ -27,10 +28,11 @@ namespace ZC_IT_TimeTracking
         public double MeasurementValue { get; set; }
         public Nullable<System.DateTime> Creation_Date { get; set; }
         public bool IsHigherValueGood { get; set; }
-        public int QuarterId { get; set; }
+        public int QuaterId { get; set; }
     
-        public virtual Goal_Quarter Goal_Quarter { get; set; }
+        public virtual Goal_Quater Goal_Quater { get; set; }
         public virtual ICollection<Goal_Rules> Goal_Rules { get; set; }
         public virtual ICollection<Resource_Goal> Resource_Goal { get; set; }
+        public virtual ICollection<Resource_Goal_Performance> Resource_Goal_Performance { get; set; }
     }
 }

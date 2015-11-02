@@ -11,9 +11,9 @@ namespace ZC_IT_TimeTracking
 {
     using System;
     
-    public partial class GetQuarterDetails_Result
+    public partial class GetQuaterDetails_Result
     {
-        public int GoalQuarter { get; set; }
+        public int Quater { get; set; }
         public int QuarterYear { get; set; }
         public System.DateTime GoalCreateFrom { get; set; }
         public System.DateTime GoalCreateTo { get; set; }
