@@ -10,17 +10,13 @@
 namespace ZC_IT_TimeTracking
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class Resource_Goal_Performance
+    public partial class sp_helpdiagrams_Result
     {
-        public int Resource_Goal_PerformanceID { get; set; }
-        public double Resource_Performance { get; set; }
-        public Nullable<double> Resource_Rating { get; set; }
-        public int ResourceId { get; set; }
-        public int Goal_MasterID { get; set; }
-    
-        public virtual Goal_Master Goal_Master { get; set; }
-        public virtual Resource Resource { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace ZC_IT_TimeTracking
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public Nullable<int> RoleID { get; set; }
-        public int TeamID { get; set; }
+        public Nullable<int> TeamID { get; set; }
     
         public virtual ICollection<Manager> Managers { get; set; }
         public virtual ICollection<Resource_Goal_Performance> Resource_Goal_Performance { get; set; }

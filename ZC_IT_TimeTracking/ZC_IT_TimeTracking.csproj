@@ -148,10 +148,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\signin.css" />
     <None Include="Scripts\_references.js" />
-    <Content Include="SQLScripts\DB_IT_TRACKING_Tables.sql" />
-    <Content Include="SQLScripts\StoreProcedures\Assign_Goal_sp.sql" />
-    <Content Include="SQLScripts\StoreProcedures\sp_Goal.sql" />
-    <Content Include="SQLScripts\StoreProcedures\team_and_resourceDETAILS_SP.txt" />
+    <Content Include="SQLScripts\dbScript.sql" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -160,6 +157,9 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="CheckQuater_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DBModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -179,6 +179,12 @@
     <Compile Include="Department.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllGoalsOfResource_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllResourceForGoal_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetGoalDetails_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -189,6 +195,15 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetQuaterDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetResouceDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetResourceByTeam_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTeamDetails_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -225,6 +240,15 @@
     <Compile Include="Role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sp_helpdiagrams_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Team.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -248,6 +272,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="SQLScripts\StoreProcedures\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
