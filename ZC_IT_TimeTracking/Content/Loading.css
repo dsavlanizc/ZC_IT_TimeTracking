@@ -1,4 +1,9 @@
-﻿.overlay{
+﻿/*for Required Field*/
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+.overlay{
   position: absolute;
   top: 0;
   left: 0;
