@@ -8,7 +8,7 @@ namespace MvcDemo.App_Start
         public static void RegisterBundles(BundleCollection bundles)
         {
             //adding javascript and bootstrap js
-            bundles.Add(new ScriptBundle("~/Content/js").Include("~/Scripts/jquery-1.9.1.min.js",
+            bundles.Add(new ScriptBundle("~/Content/js").Include("~/Scripts/jquery-{version}.js",
                                                                  "~/Scripts/bootstrap.min.js",
                                                                  "~/Scripts/jquery.validate.min.js",
                                                                  "~/Scripts/GoalScript.js"));
