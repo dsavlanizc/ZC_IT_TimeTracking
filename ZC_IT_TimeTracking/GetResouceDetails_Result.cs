@@ -11,11 +11,11 @@ namespace ZC_IT_TimeTracking
 {
     using System;
     
-    public partial class GetQuaterDetails_Result
+    public partial class GetResouceDetails_Result
     {
-        public int Quater { get; set; }
-        public int QuarterYear { get; set; }
-        public System.DateTime GoalCreateFrom { get; set; }
-        public System.DateTime GoalCreateTo { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Nullable<int> TeamID { get; set; }
+        public Nullable<int> RoleID { get; set; }
     }
 }

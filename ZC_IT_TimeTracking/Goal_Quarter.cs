@@ -10,11 +10,23 @@
 namespace ZC_IT_TimeTracking
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class CheckQuater_Result
+    public partial class Goal_Quarter
     {
+        public Goal_Quarter()
+        {
+            this.Goal_Master = new HashSet<Goal_Master>();
+            this.Resource_Performance = new HashSet<Resource_Performance>();
+        }
+    
         public int QuarterID { get; set; }
+        public int GoalQuarter { get; set; }
+        public int QuarterYear { get; set; }
         public System.DateTime GoalCreateFrom { get; set; }
         public System.DateTime GoalCreateTo { get; set; }
+    
+        public virtual ICollection<Goal_Master> Goal_Master { get; set; }
+        public virtual ICollection<Resource_Performance> Resource_Performance { get; set; }
     }
 }
