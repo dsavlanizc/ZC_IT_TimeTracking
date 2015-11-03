@@ -34,7 +34,5 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             string asdfasdf = asd.GetType().GetProperty("success").GetValue(asd, null).ToString();
             Assert.AreEqual("True", asdfasdf);
         }
-
-        [TestMethod]
     }
 }
