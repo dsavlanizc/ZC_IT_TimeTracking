@@ -87,7 +87,7 @@
             success: function (data) {
                 hideLoading();
                 if (data.success) {
-                    //console.log(dt);
+                    console.log(data);
                     var goal = data.goal;
                     var quarter = data.quarter;
                     var rules = data.rules;
@@ -95,8 +95,8 @@
                     //goal details filling
                     $("#GoalTitle").val(goal.GoalTitle);
                     $("#GoalDescription").val(goal.GoalDescription);
-                    $("#GoalYear option:selected").text(quarter.YEAR);
-                    $("#GoalQuarter option:selected").text(quarter.Quater);
+                    $("#GoalYear option:selected").text(quarter.QuarterYear);
+                    $("#GoalQuarter option:selected").text(quarter.GoalQuarter);
                     $("#GoalUnit").val(goal.UnitOfMeasurement);
                     $("#GoalUnitValue").val(goal.MeasurementValue);
                     if (goal.IsHigherValueGood)
