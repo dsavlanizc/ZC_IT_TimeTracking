@@ -148,11 +148,8 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\signin.css" />
     <None Include="Scripts\_references.js" />
-    <Content Include="SQLScripts\DB_IT_TRACKING_Tables.sql" />
-    <Content Include="SQLScripts\Final_DB_with_SP.sql" />
-    <Content Include="SQLScripts\StoreProcedures\Assign_Goal_sp.sql" />
-    <Content Include="SQLScripts\StoreProcedures\sp_Goal.sql" />
-    <Content Include="SQLScripts\StoreProcedures\team_and_resourceDETAILS_SP.txt" />
+    <Content Include="SQLScripts\DB_tableScript.sql" />
+    <Content Include="SQLScripts\StoreProcedures\DB_SPScript.sql" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
