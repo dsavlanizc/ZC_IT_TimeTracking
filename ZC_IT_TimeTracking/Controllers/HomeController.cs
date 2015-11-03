@@ -15,11 +15,28 @@ namespace ZC_IT_TimeTracking.Controllers
     public class HomeController : Controller
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
+        private int GetQuarter()
+        {
+            DateTime date = DateTime.Now;
+            if (date.Month >= 1 && date.Month <= 3)
+                return 1;
+            else if (date.Month >= 4 && date.Month <= 7)
+                return 2;
+            else if (date.Month >= 8 && date.Month <= 10)
+                return 3;
+            else
+                return 4;
+        }
         // GET: Home
         public ActionResult Index()
         {
             try
             {
+                int Quarter = GetQuarter();
+                int Year = DateTime.Now.Year;
+                var quarter = DbContext.CheckQuater(Quarter, Year).FirstOrDefault();
+                if (quarter == null)
+                    ViewData["AddQuarterRequest"] = "If you want To Create A Goal than first Add Quarter";
                 var GoalList = DbContext.Goal_Master.ToList();
                 return View(GoalList);
             }
@@ -102,6 +119,30 @@ namespace ZC_IT_TimeTracking.Controllers
             catch
             {
                 return Json(new { message = "Error occured while deleting!", success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AddQuarter(GoalQuarters QuarterData)
+        {
+            try
+            {
+                var Quater = DbContext.CheckQuater(QuarterData.GoalQuarter, QuarterData.QuarterYear).FirstOrDefault();
+                if (Quater == null)
+                {
+                    var qurter = DbContext.InsertGoalQuarter(QuarterData.GoalQuarter, QuarterData.QuarterYear, QuarterData.GoalCreateFrom, QuarterData.GoalCreateTo);
+                    return Json(new { message = "Quarter created successfully!", success = true }); ;
+                }
+                else
+                {
+                    return Json(new { message = "Quarter Is already Added!", success = false }); ;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                return Json(new { message = "Error occured while creating Quarter!", success = false });
             }
         }
     }

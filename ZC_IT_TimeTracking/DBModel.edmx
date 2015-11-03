@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -453,8 +453,7 @@
             <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -848,40 +847,40 @@
             <Parameter Name="QYear" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Delete_AllRulesOfGoal">
-            <Parameter Name="goalID" Mode="In" Type="Int32" />
+          <Parameter Name="goalID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteGoalMaster">
-            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteGoalRule">
-            <Parameter Name="GoalRuleId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalRuleId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteResourceGoal">
-            <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllGoalsOfResource" ReturnType="Collection(DatabaseModel.GetAllGoalsOfResource_Result)">
-            <Parameter Name="ResourceId" Mode="In" Type="Int32" />
+          <Parameter Name="ResourceId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllResourceForGoal" ReturnType="Collection(DatabaseModel.GetAllResourceForGoal_Result)">
-            <Parameter Name="Goal_id" Mode="In" Type="Int32" />
+          <Parameter Name="Goal_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoalDetails" ReturnType="Collection(DatabaseModel.GetGoalDetails_Result)">
-            <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
+          <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoalRuleDetails" ReturnType="Collection(DatabaseModel.GetGoalRuleDetails_Result)">
-            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(DatabaseModel.GetQuarterDetails_Result)">
-            <Parameter Name="QuaterId" Mode="In" Type="Int32" />
+          <Parameter Name="QuaterId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetResouceDetails" ReturnType="Collection(DatabaseModel.GetResouceDetails_Result)">
-            <Parameter Name="resourceID" Mode="In" Type="Int32" />
+          <Parameter Name="resourceID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetResourceByTeam" ReturnType="Collection(DatabaseModel.GetResourceByTeam_Result)">
-            <Parameter Name="TeamId" Mode="In" Type="Int32" />
+          <Parameter Name="TeamId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTeamDetails" ReturnType="Collection(DatabaseModel.GetTeamDetails_Result)">
-            <Parameter Name="teamId" Mode="In" Type="Int32" />
+          <Parameter Name="teamId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertGoalMaster">
             <Parameter Name="Goal_Title" Mode="In" Type="String" />

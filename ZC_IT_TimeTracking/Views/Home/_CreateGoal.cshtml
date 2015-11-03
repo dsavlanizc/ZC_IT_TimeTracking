@@ -1,5 +1,6 @@
 ﻿@functions{
-    private int GetQuarter(){
+    private int GetQuarter()
+    {
         DateTime date = DateTime.Now;
         if (date.Month >= 1 && date.Month <= 3)
             return 1;
@@ -7,24 +8,24 @@
             return 2;
         else if (date.Month >= 8 && date.Month <= 10)
             return 3;
-        else 
+        else
             return 4;
     }
 }
 <div class="form-horizontal">
-    <div class="form-group">
-        <label class="control-label col-md-3">Title</label>
+    <div class="form-group required">
+        <label class="col-md-3 control-label">Title</label>
         <div class="col-md-4">
             <input type="text" name="GoalTitle" id="GoalTitle" class="form-control" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group required">
         <label class="control-label col-md-3">Description</label>
         <div class="col-md-4">
             <textarea name="GoalDescription" id="GoalDescription" class="form-control"></textarea>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group required">
         <label class="control-label col-md-3">Year</label>
         <div class="col-md-3">
             <select name="GoalYear" id="GoalYear" class="form-control" readonly="readonly">
@@ -32,7 +33,7 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group required">
         <label class="control-label col-md-3">Quarter</label>
         <div class="col-md-3">
             <select name="GoalQuarter" id="GoalQuarter" class="form-control" readonly="readonly">
@@ -40,18 +41,18 @@
             </select>
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group required">
         <label class="control-label col-md-3">Unit of Measurement</label>
         <div class="col-md-4">
             <input name="GoalUnit" id="GoalUnit" type="text" class="form-control" />
         </div>
     </div>
-    <div class="form-group">
+    <div class="form-group required">
         <label class="control-label col-md-3">Measurement Value</label>
         <div class="col-md-4">
             <input name="GoalUnitValue" id="GoalUnitValue" type="number" class="form-control" />
         </div>
-    </div>    
+    </div>
     <div class="form-group">
         <label class="control-label col-md-3">Is Higher Value Appreciable?</label>
         <div class="col-md-2">

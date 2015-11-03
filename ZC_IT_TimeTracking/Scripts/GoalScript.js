@@ -5,8 +5,9 @@
         ev.preventDefault();
         if (isCreate)
             postUrl = "/Home/CreateGoal";
-        else
+        else {
             postUrl = "/Home/UpdateGoal";
+        }
         if ($("#GoalCreateForm").valid()) {
             var GoalData = {};
             if (!isCreate)
@@ -87,7 +88,7 @@
             success: function (data) {
                 hideLoading();
                 if (data.success) {
-                    //console.log(dt);
+                    //console.log(data);
                     var goal = data.goal;
                     var quarter = data.quarter;
                     var rules = data.rules;
@@ -95,8 +96,8 @@
                     //goal details filling
                     $("#GoalTitle").val(goal.GoalTitle);
                     $("#GoalDescription").val(goal.GoalDescription);
-                    $("#GoalYear option:selected").text(quarter.YEAR);
-                    $("#GoalQuarter option:selected").text(quarter.Quater);
+                    $("#GoalYear option:selected").text(quarter.QuarterYear);
+                    $("#GoalQuarter option:selected").text(quarter.GoalQuarter);
                     $("#GoalUnit").val(goal.UnitOfMeasurement);
                     $("#GoalUnitValue").val(goal.MeasurementValue);
                     if (goal.IsHigherValueGood)
@@ -229,4 +230,73 @@
     RemoveGoalRule = function (id) {
         $(id).remove();
     }
+
+    //Goal Quater region
+
+    //Add Quarter
+    $("#GoalQuarterForm").submit(function (ev) {
+        ev.preventDefault();
+        if ($("#GoalQuarterForm").valid()) {
+            var QuarterData = {};
+            QuarterData.GoalQuarter = $("#GoalQuarters").val();
+            QuarterData.QuarterYear = $("#GoalYears").val();
+            QuarterData.GoalCreateFrom = $("#GoalCreateFrom").val();
+            QuarterData.GoalCreateTo = $("#GoalCreateTo").val();
+
+            $.ajax({
+                url: "/Home/AddQuarter",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ QuarterData: QuarterData }),
+                beforeSend: showLoading(),
+                success: function (dt) {
+                    hideLoading();
+                    alert(dt.message);
+                    if (dt.success) {
+                        location.reload(true);
+                    }
+                },
+                error: function (dt) {
+                    hideLoading();
+                    console.log(dt);
+                }
+            });
+            console.log(JSON.stringify(QuarterData));
+        }
+    });
+
+    //Quarter validation
+    var validationQuarter = $("#GoalQuarterForm").validate({
+        rules: {
+            GoalQuarters: {
+                required: true
+            },
+            GoalYears: {
+                minlength: 4,
+                required: true
+            },
+            GoalCreateFrom: {
+                required: true
+            },
+            GoalCreateTo: {
+                required: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
 });

@@ -221,7 +221,7 @@
     </Compile>
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\GoalDetail.cs" />
-    <Compile Include="Models\GoalQuarter.cs" />
+    <Compile Include="Models\GoalQuarters.cs" />
     <Compile Include="Models\GoalRule.cs" />
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -255,6 +255,7 @@
     <Content Include="Views\Home\_GoalRule.cshtml" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
     <Content Include="Views\Shared\_ErrorView.cshtml" />
+    <Content Include="Views\Home\_AddQuarter.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
