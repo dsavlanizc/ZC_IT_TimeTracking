@@ -257,6 +257,7 @@
     <Content Include="Views\Home\_CreateGoal.cshtml" />
     <Content Include="Views\Home\_GoalRule.cshtml" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
+    <Content Include="Views\Shared\_ErrorView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

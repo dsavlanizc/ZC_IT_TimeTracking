@@ -84,38 +84,39 @@
             contentType: "application/json",
             data: JSON.stringify({ Id: id }),
             beforeSend: showLoading(),
-            success: function (dt) {
+            success: function (data) {
                 hideLoading();
-                //console.log(dt);
-                var data = JSON.parse(dt);
-                var goal = data.goal;
-                var quarter = data.quarter;
-                var rules = data.rules;
+                if (data.success) {
+                    //console.log(dt);
+                    var goal = data.goal;
+                    var quarter = data.quarter;
+                    var rules = data.rules;
 
-                //goal details filling
-                $("#GoalTitle").val(goal.GoalTitle);
-                $("#GoalDescription").val(goal.GoalDescription);
-                $("#GoalYear option:selected").text(quarter.YEAR);
-                $("#GoalQuarter option:selected").text(quarter.Quater);
-                $("#GoalUnit").val(goal.UnitOfMeasurement);
-                $("#GoalUnitValue").val(goal.MeasurementValue);
-                if (goal.IsHigherValueGood)
-                    $("#IsHigherValue").attr("checked", true);
-                else
-                    $("#IsHigherValue").attr("checked", false);
+                    //goal details filling
+                    $("#GoalTitle").val(goal.GoalTitle);
+                    $("#GoalDescription").val(goal.GoalDescription);
+                    $("#GoalYear option:selected").text(quarter.YEAR);
+                    $("#GoalQuarter option:selected").text(quarter.Quater);
+                    $("#GoalUnit").val(goal.UnitOfMeasurement);
+                    $("#GoalUnitValue").val(goal.MeasurementValue);
+                    if (goal.IsHigherValueGood)
+                        $("#IsHigherValue").attr("checked", true);
+                    else
+                        $("#IsHigherValue").attr("checked", false);
 
-                //rules filling
-                $('#RuleListTable').html("");
-                $(rules).each(function () {
-                    //console.log(this);
-                    $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
-                });
-                $("#collapse1").collapse('hide');
-                $("#collapse2").collapse('show');
+                    //rules filling
+                    $('#RuleListTable').html("");
+                    $(rules).each(function () {
+                        //console.log(this);
+                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+                    });
+                    $("#collapse1").collapse('hide');
+                    $("#collapse2").collapse('show');
+                }
             },
             error: function (dt) {
                 hideLoading();
-                console.log(dt);
+                alert(dt.message);
             }
         });
     }

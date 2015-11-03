@@ -18,21 +18,35 @@ namespace ZC_IT_TimeTracking.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            var GoalList = DbContext.Goal_Master.ToList();
-            return View(GoalList);
+            try
+            {
+                var GoalList = DbContext.Goal_Master.ToList();
+                return View(GoalList);
+            }
+            catch (Exception ex)
+            {
+                return View("~/Views/Shared/_ErrorView.cshtml");
+            }
         }
+
         [HttpPost]
         public JsonResult GetGoalById(int Id)
         {
-            if (DbContext.Goal_Master.Any(a => a.Goal_MasterID == Id))
+            try
             {
-                var goal = DbContext.GetGoalDetails(Id).FirstOrDefault();
-                var quarter = DbContext.GetQuarterDetails(goal.QuarterId).FirstOrDefault();
-                var rules = DbContext.GetGoalRuleDetails(Id).ToList();
-                string res = JsonConvert.SerializeObject(new { goal = goal, quarter = quarter, rules = rules });
-                return Json(res);
+                if (DbContext.Goal_Master.Any(a => a.Goal_MasterID == Id))
+                {
+                    var goal = DbContext.GetGoalDetails(Id).FirstOrDefault();
+                    var quarter = DbContext.GetQuarterDetails(goal.QuarterId).FirstOrDefault();
+                    var rules = DbContext.GetGoalRuleDetails(Id).ToList();
+                    return Json(new { goal = goal, quarter = quarter, rules = rules, success = true });
+                }
+                return Json(new { message = "Requested user data does not exist", success = false });
             }
-            return Json("{\"message\":\"Error while fetching data for the user.\"}");
+            catch (Exception ex)
+            {
+                return Json(new { message = "Error occured while fetching user data", success = false });
+            }
         }
 
         [HttpPost]
@@ -53,7 +67,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { message = "Error occured!", success = false });
+                return Json(new { message = "Error occured while creating goal!", success = false });
             }
         }
 
@@ -73,7 +87,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
             catch (Exception ex)
             {
-                return Json(new { message = "Error occured!", success = false });
+                return Json(new { message = "Error occured while updating goal!", success = false });
             }
         }
 
