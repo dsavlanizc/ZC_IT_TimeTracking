@@ -34,5 +34,15 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             string asdfasdf = asd.GetType().GetProperty("success").GetValue(asd, null).ToString();
             Assert.AreEqual("True", asdfasdf);
         }
+
+        //For Index
+        [TestMethod]
+        public void GoalList()
+        {
+            HomeController idx = new HomeController();
+            ViewResult result = idx.Index() as ViewResult;
+            Assert.AreNotEqual("_ErrorView", result.ViewName);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
+        }
     }
 }
