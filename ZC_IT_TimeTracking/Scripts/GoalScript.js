@@ -1,9 +1,9 @@
 ﻿$(function () {
     isCreate = true;
     $('[data-toggle="tooltip"]').tooltip();
-    $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy'
-    })
+
+       
+    
     //on submitting form
     $("#GoalCreateForm").submit(function (ev) {
         ev.preventDefault();
@@ -323,4 +323,5 @@
     $("#GoalCreateFrom").change(function () {
         console.log(this.value);
     });
+    $('.datepicker').datepicker();
 });
