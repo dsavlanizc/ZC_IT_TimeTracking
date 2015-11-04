@@ -1,6 +1,9 @@
 ﻿$(function () {
     isCreate = true;
     $('[data-toggle="tooltip"]').tooltip();
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy'
+    })
     //on submitting form
     $("#GoalCreateForm").submit(function (ev) {
         ev.preventDefault();
@@ -120,7 +123,7 @@
             error: function (dt) {
                 hideLoading();
                 if (dt.readyState == 0) {
-                    bootbox.alert("Please check your interner connection!");
+                    bootbox.alert("Please check your internet connection!");
                 }
                 console.log(dt);
             }
@@ -140,7 +143,7 @@
 
     //delete goal
     DeleteGoal = function (id) {
-        bootbox.confirm("Are you sure to delete?", function (r) {
+        bootbox.confirm("Are you sure want to delete Goal?", function (r) {
             if (r) {
                 $.ajax({
                     url: "/Home/DeleteGoal",
