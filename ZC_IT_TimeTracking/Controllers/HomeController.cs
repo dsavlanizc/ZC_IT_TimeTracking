@@ -15,7 +15,7 @@ namespace ZC_IT_TimeTracking.Controllers
     public class HomeController : Controller
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
-        
+
         // GET: Home
         public ActionResult Index()
         {
@@ -48,11 +48,11 @@ namespace ZC_IT_TimeTracking.Controllers
                     var quarterList = DbContext.Goal_Quarter.Select(s => new { s.GoalQuarter, s.QuarterYear }).ToList();
                     return Json(new { goal = goal, quarter = quarter, rules = rules, quarterList = quarterList, success = true });
                 }
-                return Json(new { message = "Requested user data does not exist", success = false });
+                return Json(new JsonResponse{ message = "Requested user data does not exist", success = false });
             }
             catch (Exception ex)
             {
-                return Json(new { message = "Error occured while fetching user data", success = false });
+                return Json(new JsonResponse { message = "Error occured while fetching user data", success = false });
             }
         }
 
@@ -70,11 +70,11 @@ namespace ZC_IT_TimeTracking.Controllers
                 {
                     DbContext.InsertGoalRules(rule.RangeFrom, rule.RangeTo, rule.Rating, goalId);
                 }
-                return Json(new { message = "Goal created successfully!", success = true });
+                return Json(new JsonResponse { message = "Goal created successfully!", success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { message = "Error occured while creating goal!", success = false });
+                return Json(new JsonResponse { message = "Error occured while creating goal!", success = false });
             }
         }
 
@@ -90,11 +90,11 @@ namespace ZC_IT_TimeTracking.Controllers
                 {
                     DbContext.InsertGoalRules(rule.RangeFrom, rule.RangeTo, rule.Rating, GoalData.ID);
                 }
-                return Json(new { message = "Goal updated successfully!", success = true });
+                return Json(new JsonResponse { message = "Goal updated successfully!", success = true });
             }
             catch (Exception ex)
             {
-                return Json(new { message = "Error occured while updating goal!", success = false });
+                return Json(new JsonResponse { message = "Error occured while updating goal!", success = false });
             }
         }
 
@@ -103,12 +103,15 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                DbContext.DeleteGoalMaster(id);
-                return Json(new { message = "Goal Deleted Successfully!", success = true });
+                int del = DbContext.DeleteGoalMaster(id);
+                if (del == -1)
+                    return Json(new JsonResponse { message = "No such goal exist!", success = false });
+                else
+                    return Json(new JsonResponse { message = "Goal Deleted Successfully!", success = true });
             }
             catch
             {
-                return Json(new { message = "Error occured while deleting!", success = false });
+                return Json(new JsonResponse { message = "Error occured while deleting!", success = false });
             }
         }
 
@@ -121,16 +124,16 @@ namespace ZC_IT_TimeTracking.Controllers
                 if (Quater == null)
                 {
                     var qurter = DbContext.InsertGoalQuarter(QuarterData.GoalQuarter, QuarterData.QuarterYear, QuarterData.GoalCreateFrom, QuarterData.GoalCreateTo);
-                    return Json(new { message = "Quarter created successfully!", success = true }); ;
+                    return Json(new JsonResponse { message = "Quarter created successfully!", success = true }); ;
                 }
                 else
                 {
-                    return Json(new { message = "Quarter Is already Added!", success = false }); ;
+                    return Json(new JsonResponse { message = "Quarter Is already Added!", success = false }); ;
                 }
             }
             catch (Exception e)
             {
-                return Json(new { message = "Error occured while creating Quarter!", success = false });
+                return Json(new JsonResponse { message = "Error occured while creating Quarter!", success = false });
             }
         }
     }
