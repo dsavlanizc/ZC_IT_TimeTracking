@@ -1,5 +1,6 @@
 ﻿$(function () {
     isCreate = true;
+    $('[data-toggle="tooltip"]').tooltip();
     //on submitting form
     $("#GoalCreateForm").submit(function (ev) {
         ev.preventDefault();
@@ -10,8 +11,7 @@
         }
         if ($("#GoalCreateForm").valid()) {
             var GoalData = {};
-            if (!isCreate)
-                GoalData.ID = updateGoalId;
+            if (!isCreate) GoalData.ID = updateGoalId;
             GoalData.Title = $("#GoalTitle").val();
             GoalData.Description = $("#GoalDescription").val();
             GoalData.Year = $("#GoalYear option:selected").text();
@@ -42,10 +42,11 @@
                     beforeSend: showLoading(),
                     success: function (dt) {
                         hideLoading();
-                        alert(dt.message);
-                        if (dt.success) {
-                            location.reload(true);
-                        }
+                        bootbox.alert(dt.message, function () {
+                            if (dt.success) {
+                                location.reload(true);
+                            }
+                        });
                     },
                     error: function (dt) {
                         hideLoading();
@@ -54,8 +55,9 @@
                 });
             }
             else {
-                alert("Please define atleast one rule!");
-                $("#collapse3").collapse('show');
+                bootbox.alert("Please define atleast one rule!", function () {
+                    $("#collapse3").collapse('show');
+                });
             }
             console.log(JSON.stringify(GoalData));
         }
@@ -117,7 +119,10 @@
             },
             error: function (dt) {
                 hideLoading();
-                alert(dt.message);
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your interner connection!");
+                }
+                console.log(dt);
             }
         });
     }
@@ -125,35 +130,42 @@
     //edit goal function
     EditGoal = function (id) {
         //alert(id);
-        ViewGoal(id);
         $("#submitButton").attr("disabled", false);
         isCreate = false;
         updateGoalId = id;
+        $("#collapse1").collapse('hide');
+        $("#collapse2").collapse('show');
     }
 
     //delete goal
     DeleteGoal = function (id) {
-        if (confirm("Are you sure to delete?")) {
-            $.ajax({
-                url: "/Home/DeleteGoal",
-                type: "POST",
-                dataType: "json",
-                contentType: "application/json",
-                data: JSON.stringify({ Id: id }),
-                beforeSend: showLoading(),
-                success: function (dt) {
-                    hideLoading();
-                    alert(dt.message);
-                    if (dt.success) {
-                        location.reload(true);
+        bootbox.confirm("Are you sure to delete?", function (r) {
+            if (r) {
+                $.ajax({
+                    url: "/Home/DeleteGoal",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({ Id: id }),
+                    beforeSend: showLoading(),
+                    success: function (dt) {
+                        hideLoading();
+                        bootbox.alert(dt.message, function () {
+                            if (dt.success) {
+                                location.reload(true);
+                            }
+                        });
+                    },
+                    error: function (dt) {
+                        hideLoading();
+                        if (dt.readyState == 0) {
+                            bootbox.alert("Please check your interner connection!");
+                        }
+                        console.log(dt);
                     }
-                },
-                error: function (dt) {
-                    hideLoading();
-                    console.log(dt);
-                }
-            });
-        }
+                });
+            }
+        });
     }
 
     //form validation
@@ -212,7 +224,7 @@
             var RangeFrom = $("#RangeFrom").val();
             var RangeTo = $("#RangeTo").val();
             var Rating = $("#Rating").val();
-            $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + count + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+            $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit Rule" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete Rule" onclick="RemoveGoalRule(rule' + count + ')" /></td></tr>');
             $("#RangeFrom").val(null);
             $("#RangeTo").val(null);
             $("#Rating").val(null);
@@ -252,13 +264,17 @@
                 beforeSend: showLoading(),
                 success: function (dt) {
                     hideLoading();
-                    alert(dt.message);
-                    if (dt.success) {
-                        location.reload(true);
-                    }
+                    bootbox.alert(dt.message, function () {
+                        if (dt.success) {
+                            location.reload(true);
+                        }
+                    });
                 },
                 error: function (dt) {
                     hideLoading();
+                    if (dt.readyState == 0) {
+                        bootbox.alert("Please check your interner connection!");
+                    }
                     console.log(dt);
                 }
             });
@@ -270,7 +286,8 @@
     var validationQuarter = $("#GoalQuarterForm").validate({
         rules: {
             GoalQuarters: {
-                required: true
+                required: true,
+                range: [1, 4]
             },
             GoalYears: {
                 minlength: 4,
@@ -298,5 +315,8 @@
                 error.insertAfter(element);
             }
         }
+    });
+    $("#GoalCreateFrom").change(function () {
+        console.log(this.value);
     });
 });
