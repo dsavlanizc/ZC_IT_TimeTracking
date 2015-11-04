@@ -49,7 +49,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         {
             HomeController home = new HomeController();
             Goal goal = new Goal();
-            goal.ID = 1004;
+            goal.ID = 2005;
             goal.Title = "Testing Update goal";
             goal.Description = "Add goal description here";
             goal.UnitOfMeasurement = "hours";
@@ -90,10 +90,10 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         {
             HomeController home = new HomeController();
             GoalQuarters Quarter = new GoalQuarters();
-            Quarter.GoalQuarter = 4;
+            Quarter.GoalQuarter = 1;
             Quarter.QuarterYear = 2010;
             Quarter.GoalCreateFrom = DateTime.Today.AddYears(-5);
-            Quarter.GoalCreateTo = DateTime.Today.AddYears(-5);
+            Quarter.GoalCreateTo = DateTime.Today.AddYears(-5).AddMonths(1);
             object obj = home.AddQuarter(Quarter).Data;
             string success = obj.GetType().GetProperty("success").GetValue(obj, null).ToString();
             Assert.AreEqual("True", success);
