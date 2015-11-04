@@ -10,7 +10,7 @@
                 <th>Year</th>
                 <th>Unit of Measurement</th>
                 <th>Measurement Value</th>
-                <th>Action</th>
+                <th align="center">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -27,7 +27,11 @@
                     <td>@goal.Goal_Quarter.QuarterYear</td>
                     <td>@goal.UnitOfMeasurement</td>
                     <td>@goal.MeasurementValue</td>
-                    <td><span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" onclick="ViewGoal(@goal.Goal_MasterID)"></span>&nbsp;<span class="glyphicon glyphicon-pencil" style="cursor:pointer;" onclick="EditGoal(@goal.Goal_MasterID)"></span>&nbsp;<span class="glyphicon glyphicon-remove" style="cursor:pointer;" onclick="DeleteGoal(@goal.Goal_MasterID)"></span></td>
+                    <td align="center">
+                        <span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="View Goal" onclick="ViewGoal(@goal.Goal_MasterID)">&nbsp;</span>
+                        <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Goal" onclick="EditGoal(@goal.Goal_MasterID)">&nbsp;</span>
+                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Goal" onclick="DeleteGoal(@goal.Goal_MasterID)"></span>
+                    </td>
                 </tr>
             }
         </tbody>

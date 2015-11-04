@@ -15,24 +15,13 @@ namespace ZC_IT_TimeTracking.Controllers
     public class HomeController : Controller
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
-        private int GetQuarter()
-        {
-            DateTime date = DateTime.Now;
-            if (date.Month >= 1 && date.Month <= 3)
-                return 1;
-            else if (date.Month >= 4 && date.Month <= 7)
-                return 2;
-            else if (date.Month >= 8 && date.Month <= 10)
-                return 3;
-            else
-                return 4;
-        }
+        
         // GET: Home
         public ActionResult Index()
         {
             try
             {
-                int Quarter = GetQuarter();
+                int Quarter = Utilities.GetQuarter();
                 int Year = DateTime.Now.Year;
                 var quarter = DbContext.CheckQuater(Quarter, Year).FirstOrDefault();
                 if (quarter == null)
@@ -137,8 +126,6 @@ namespace ZC_IT_TimeTracking.Controllers
                 {
                     return Json(new { message = "Quarter Is already Added!", success = false }); ;
                 }
-
-
             }
             catch (Exception e)
             {
