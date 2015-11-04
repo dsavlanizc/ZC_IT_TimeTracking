@@ -32,8 +32,8 @@
           <Property Name="QuarterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GoalQuarter" Type="int" Nullable="false" />
           <Property Name="QuarterYear" Type="int" Nullable="false" />
-          <Property Name="GoalCreateFrom" Type="date" Nullable="false" />
-          <Property Name="GoalCreateTo" Type="date" Nullable="false" />
+          <Property Name="GoalCreateFrom" Type="date" />
+          <Property Name="GoalCreateTo" Type="date" />
         </EntityType>
         <EntityType Name="Goal_Rules">
           <Key>
@@ -544,8 +544,8 @@
           <Property Name="QuarterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GoalQuarter" Type="Int32" Nullable="false" />
           <Property Name="QuarterYear" Type="Int32" Nullable="false" />
-          <Property Name="GoalCreateFrom" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="GoalCreateTo" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="GoalCreateFrom" Type="DateTime" Precision="0" />
+          <Property Name="GoalCreateTo" Type="DateTime" Precision="0" />
           <NavigationProperty Name="Goal_Master" Relationship="Self.FK_Goal_Master_QuaeterID" FromRole="Goal_Quarter" ToRole="Goal_Master" />
           <NavigationProperty Name="Resource_Performance" Relationship="Self.FK_Resource_Performance_Goal_Quater" FromRole="Goal_Quarter" ToRole="Resource_Performance" />
         </EntityType>

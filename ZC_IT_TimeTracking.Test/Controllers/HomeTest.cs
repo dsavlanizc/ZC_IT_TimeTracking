@@ -14,7 +14,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
     public class HomeTest
     {
         [TestMethod]
-        public void GetGoalByID()
+        public void GetGoalByIDTest()
         {
             HomeController home = new HomeController();
             Object obj = home.GetGoalById(4).Data;
@@ -57,14 +57,14 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             goal.Quarter = 4;
             goal.Year = 2015;
             GoalRule rule = new GoalRule();
-            rule.RangeFrom =70;
+            rule.RangeFrom = 70;
             rule.RangeTo = 90;
             rule.Rating = 80;
             goal.GoalRules = new List<GoalRule>();
             goal.GoalRules.Add(rule);
             object obj = home.UpdateGoal(goal).Data;
             string success = obj.GetType().GetProperty("success").GetValue(obj, null).ToString();
-            Assert.AreEqual("True",success);
+            Assert.AreEqual("True", success);
         }
 
         [TestMethod]
@@ -74,6 +74,15 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             Object obj = home.DeleteGoal(1006).Data;
             string success = obj.GetType().GetProperty("success").GetValue(obj, null).ToString();
             Assert.AreEqual("True", success);
+        }
+        //For Index
+        [TestMethod]
+        public void GoalList()
+        {
+            HomeController idx = new HomeController();
+            ViewResult result = idx.Index() as ViewResult;
+            Assert.AreNotEqual("_ErrorView", result.ViewName);
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
         }
 
         [TestMethod]
@@ -88,7 +97,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             object obj = home.AddQuarter(Quarter).Data;
             string success = obj.GetType().GetProperty("success").GetValue(obj, null).ToString();
             Assert.AreEqual("True", success);
-  
+
         }
 
     }

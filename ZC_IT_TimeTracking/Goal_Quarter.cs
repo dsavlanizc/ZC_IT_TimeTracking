@@ -23,8 +23,8 @@ namespace ZC_IT_TimeTracking
         public int QuarterID { get; set; }
         public int GoalQuarter { get; set; }
         public int QuarterYear { get; set; }
-        public System.DateTime GoalCreateFrom { get; set; }
-        public System.DateTime GoalCreateTo { get; set; }
+        public Nullable<System.DateTime> GoalCreateFrom { get; set; }
+        public Nullable<System.DateTime> GoalCreateTo { get; set; }
     
         public virtual ICollection<Goal_Master> Goal_Master { get; set; }
         public virtual ICollection<Resource_Performance> Resource_Performance { get; set; }
