@@ -334,9 +334,6 @@
     <Compile Include="sp_helpdiagrams_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Team.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="Model.Resource_Goal_Performance" Width="1.5" PointX="12.75" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Resource_Performance" Width="1.5" PointX="10.5" PointY="2.625" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.Team" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="Model.TeamLead" Width="1.5" PointX="10.5" PointY="8.75" IsExpanded="true" />
         <AssociationConnector Association="Model.FK_Team_DepartmentID" ManuallyRouted="false" />

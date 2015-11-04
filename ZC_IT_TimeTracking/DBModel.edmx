@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -96,16 +96,6 @@
           </Key>
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -449,7 +439,6 @@
           <EntitySet Name="Resource_Goal_Performance" EntityType="Self.Resource_Goal_Performance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Resource_Performance" EntityType="Self.Resource_Performance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Team" EntityType="Self.Team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TeamLead" EntityType="Self.TeamLead" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Goal_Master_QuaeterID" Association="Self.FK_Goal_Master_QuaeterID">
@@ -509,8 +498,7 @@
             <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -627,16 +615,6 @@
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Resources" Relationship="Self.FK_Resource_RoleID" FromRole="Roles" ToRole="Resource" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -839,7 +817,6 @@
           <EntitySet Name="Resource_Goal_Performance" EntityType="Self.Resource_Goal_Performance" />
           <EntitySet Name="Resource_Performance" EntityType="Self.Resource_Performance" />
           <EntitySet Name="Roles" EntityType="Self.Role" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="Teams" EntityType="Self.Team" />
           <EntitySet Name="TeamLeads" EntityType="Self.TeamLead" />
           <AssociationSet Name="FK_Team_DepartmentID" Association="Self.FK_Team_DepartmentID">
@@ -920,31 +897,31 @@
             <Parameter Name="QYear" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Delete_AllRulesOfGoal">
-            <Parameter Name="goalID" Mode="In" Type="Int32" />
+          <Parameter Name="goalID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteGoalMaster">
-            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteGoalRule">
-            <Parameter Name="GoalRuleId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalRuleId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteResourceGoal">
-            <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllGoalsOfResource" ReturnType="Collection(Model.GetAllGoalsOfResource_Result)">
-            <Parameter Name="ResourceId" Mode="In" Type="Int32" />
+          <Parameter Name="ResourceId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllResourceForGoal" ReturnType="Collection(Model.GetAllResourceForGoal_Result)">
-            <Parameter Name="Goal_id" Mode="In" Type="Int32" />
+          <Parameter Name="Goal_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoalDetails" ReturnType="Collection(Model.GetGoalDetails_Result)">
-            <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
+          <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoalRuleDetails" ReturnType="Collection(Model.GetGoalRuleDetails_Result)">
-            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(Model.GetQuarterDetails_Result)">
-            <Parameter Name="QuaterId" Mode="In" Type="Int32" />
+          <Parameter Name="QuaterId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetRating">
             <Parameter Name="goalId" Mode="In" Type="Int32" />
@@ -952,17 +929,17 @@
             <Parameter Name="rating" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="GetResouceDetails" ReturnType="Collection(Model.GetResouceDetails_Result)">
-            <Parameter Name="resourceID" Mode="In" Type="Int32" />
+          <Parameter Name="resourceID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetResourceByTeam" ReturnType="Collection(Model.GetResourceByTeam_Result)">
-            <Parameter Name="TeamId" Mode="In" Type="Int32" />
+          <Parameter Name="TeamId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetResourceGoalDetails" ReturnType="Collection(Model.GetResourceGoalDetails_Result)">
             <Parameter Name="resourceId" Mode="In" Type="Int32" />
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTeamDetails" ReturnType="Collection(Model.GetTeamDetails_Result)">
-            <Parameter Name="teamId" Mode="In" Type="Int32" />
+          <Parameter Name="teamId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertGoalMaster">
             <Parameter Name="Goal_Title" Mode="In" Type="String" />
@@ -1223,17 +1200,6 @@
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Model.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

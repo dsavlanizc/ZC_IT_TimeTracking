@@ -192,12 +192,12 @@ namespace ZC_IT_TimeTracking
         public virtual int GetRating(Nullable<int> goalId, Nullable<double> performance, ObjectParameter rating)
         {
             var goalIdParameter = goalId.HasValue ?
-                new ObjectParameter("GoalId", goalId) :
-                new ObjectParameter("GoalId", typeof(int));
+                new ObjectParameter("goalId", goalId) :
+                new ObjectParameter("goalId", typeof(int));
     
             var performanceParameter = performance.HasValue ?
-                new ObjectParameter("Performance", performance) :
-                new ObjectParameter("Performance", typeof(double));
+                new ObjectParameter("performance", performance) :
+                new ObjectParameter("performance", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetRating", goalIdParameter, performanceParameter, rating);
         }
@@ -265,8 +265,8 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("Is_HigherValueGood", typeof(bool));
     
             var creationDateParameter = creationDate.HasValue ?
-                new ObjectParameter("CreationDate", creationDate) :
-                new ObjectParameter("CreationDate", typeof(System.DateTime));
+                new ObjectParameter("creationDate", creationDate) :
+                new ObjectParameter("creationDate", typeof(System.DateTime));
     
             var quarterIDParameter = quarterID.HasValue ?
                 new ObjectParameter("QuarterID", quarterID) :
