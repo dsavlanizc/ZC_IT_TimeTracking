@@ -11,7 +11,8 @@ namespace MvcDemo.App_Start
             bundles.Add(new ScriptBundle("~/Content/js").Include("~/Scripts/jquery-{version}.js",
                                                                  "~/Scripts/bootstrap.min.js",
                                                                  "~/Scripts/jquery.validate.min.js",
-                                                                 "~/Scripts/GoalScript.js"));
+                                                                 "~/Scripts/GoalScript.js",
+                                                                 "~/Scripts/bootbox.min.js"));
             //adding css
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css",
                                                                  "~/Content/Loading.css"));
