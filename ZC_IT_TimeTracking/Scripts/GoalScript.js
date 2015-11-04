@@ -133,6 +133,7 @@
         $("#submitButton").attr("disabled", false);
         isCreate = false;
         updateGoalId = id;
+        ViewGoal(id);
         $("#collapse1").collapse('hide');
         $("#collapse2").collapse('show');
     }
