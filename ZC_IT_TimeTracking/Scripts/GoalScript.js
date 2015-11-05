@@ -1,52 +1,9 @@
 ﻿$(function () {
     isCreate = true;
     $('[data-toggle="tooltip"]').tooltip();
-    //form validation
-    var validator = $("#GoalCreateForm").validate({
-        rules: {
-            GoalTitle: {
-                minlength: 3,
-                required: true
-            },
-            GoalDescription: {
-                minlength: 15,
-                required: true
-            },
-            GoalYear: {
-                required: true
-            },
-            GoalQuarter: {
-                required: true
-            },
-            GoalUnit: {
-                minlength: 3,
-                required: true
-            },
-            GoalUnitValue: {
-                required: true
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-        },
-        errorElement: 'span',
-        errorClass: 'help-block',
-        errorPlacement: function (error, element) {
-            if (element.parent('.input-group').length) {
-                error.insertAfter(element.parent());
-            } else {
-                error.insertAfter(element);
-            }
-        }
-    });
-    //reset form and validations
-    ResetForm = function () {
-        validator.resetForm();
-        $('.form-group').removeClass('has-error');
-    }
+
+       
+    
     //on submitting form
     $("#GoalCreateForm").submit(function (ev) {
         ev.preventDefault();
@@ -161,86 +118,32 @@
                     });
                     $("#collapse1").collapse('hide');
                     $("#collapse2").collapse('show');
-                    return true;
                 }
             },
             error: function (dt) {
                 hideLoading();
                 if (dt.readyState == 0) {
-                    bootbox.alert("Please check your interner connection!");
+                    bootbox.alert("Please check your internet connection!");
                 }
                 console.log(dt);
             }
         });
     }
+
     //edit goal function
     EditGoal = function (id) {
         //alert(id);
-        $("#submitButton").attr("disabled", false);
         isCreate = false;
         updateGoalId = id;
-        $.ajax({
-            url: "/Home/GetGoalById",
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify({ Id: id }),
-            beforeSend: showLoading(),
-            success: function (data) {
-                hideLoading();
-                if (data.success) {
-                    //console.log(data.quarterList);
-                    $("#GoalYear").html("");
-                    var years = [];
-                    quarterList = data.quarterList;
-                    $.each(quarterList, function (i,v) {
-                        if ($.inArray(v.QuarterYear, years) === -1) {
-                            years.push(v.QuarterYear);
-                            $("#GoalYear").append($("<option>", { value: v.QuarterYear, text: v.QuarterYear }));
-                        }
-                    });
-                    var goal = data.goal;
-                    var quarter = data.quarter;
-                    var rules = data.rules;
-
-                    //goal details filling
-                    $("#GoalTitle").val(goal.GoalTitle);
-                    $("#GoalDescription").val(goal.GoalDescription);
-                    $("#GoalYear").val(quarter.QuarterYear);
-                    $("#GoalQuarter option:selected").text(quarter.GoalQuarter);
-                    $("#GoalUnit").val(goal.UnitOfMeasurement);
-                    $("#GoalUnitValue").val(goal.MeasurementValue);
-                    if (goal.IsHigherValueGood)
-                        $("#IsHigherValue").attr("checked", true);
-                    else
-                        $("#IsHigherValue").attr("checked", false);
-
-                    //rules filling
-                    $('#RuleListTable').html("");
-                    $(rules).each(function () {
-                        //console.log(this);
-                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
-                    });
-                    $("#collapse1").collapse('hide');
-                    $("#collapse2").collapse('show');
-                    return true;
-                }
-            },
-            error: function (dt) {
-                hideLoading();
-                if (dt.readyState == 0) {
-                    bootbox.alert("Please check your interner connection!");
-                }
-                console.log(dt);
-            }
-        });
+        ViewGoal(id);
+        $("#submitButton").attr("disabled", false);
         $("#collapse1").collapse('hide');
         $("#collapse2").collapse('show');
     }
 
     //delete goal
     DeleteGoal = function (id) {
-        bootbox.confirm("Are you sure to delete?", function (r) {
+        bootbox.confirm("Are you sure want to delete Goal?", function (r) {
             if (r) {
                 $.ajax({
                     url: "/Home/DeleteGoal",
@@ -267,6 +170,54 @@
                 });
             }
         });
+    }
+
+    //form validation
+    var validator = $("#GoalCreateForm").validate({
+        rules: {
+            GoalTitle: {
+                minlength: 3,
+                required: true
+            },
+            GoalDescription: {
+                minlength: 15,
+                required: true
+            },
+            GoalYear: {
+                required: true
+            },
+            GoalQuarter: {
+                required: true
+            },
+            GoalUnit: {
+                minlength: 3,
+                required: true
+            },
+            GoalUnitValue: {
+                required: true
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+    //reset form and validations
+    ResetForm = function () {
+        validator.resetForm();
+        $('.form-group').removeClass('has-error');
     }
 
     //Add the Row of Goal Rule to the list
@@ -316,13 +267,9 @@
                 data: JSON.stringify({ QuarterData: QuarterData }),
                 beforeSend: showLoading(),
                 success: function (dt) {
-                    $("#GoalQuarters").val('');
-                    $("#GoalYears").val('');
-                    $("#GoalCreateFrom").val('');
-                    $("#GoalCreateTo").val('');
                     hideLoading();
                     bootbox.alert(dt.message, function () {
-                        if (dt.success) {                            
+                        if (dt.success) {
                             location.reload(true);
                         }
                     });
@@ -373,14 +320,8 @@
             }
         }
     });
-    $("#GoalYear").change(function () {
-        var selection = this.value;
-        $("#GoalQuarter").html("");
-        $.each(quarterList, function (i, v) {
-            if (v.QuarterYear == selection) {
-                $("#GoalQuarter").append($("<option>", { value: v.GoalQuarter, text: v.GoalQuarter }));
-            }
-        });        
+    $("#GoalCreateFrom").change(function () {
+        console.log(this.value);
     });
-
+    $('.datepicker').datepicker();
 });

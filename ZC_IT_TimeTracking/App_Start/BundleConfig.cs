@@ -12,10 +12,12 @@ namespace MvcDemo.App_Start
                                                                  "~/Scripts/bootstrap.min.js",
                                                                  "~/Scripts/jquery.validate.min.js",
                                                                  "~/Scripts/GoalScript.js",
-                                                                 "~/Scripts/bootbox.min.js"));
+                                                                 "~/Scripts/bootbox.min.js",
+                                                                 "~/Scripts/bootstrap-datepicker.min.js"));
             //adding css
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css",
-                                                                 "~/Content/Loading.css"));
+                                                                 "~/Content/Loading.css",
+                                                                 "~/Content/bootstrap-datepicker.min.css"));
         }
     }
 }
