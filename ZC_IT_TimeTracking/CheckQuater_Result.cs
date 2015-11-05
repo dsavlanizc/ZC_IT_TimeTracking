@@ -11,11 +11,10 @@ namespace ZC_IT_TimeTracking
 {
     using System;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
     public partial class CheckQuater_Result
     {
         public int QuarterID { get; set; }
-        public System.DateTime GoalCreateFrom { get; set; }
-        public System.DateTime GoalCreateTo { get; set; }
+        public Nullable<System.DateTime> GoalCreateFrom { get; set; }
+        public Nullable<System.DateTime> GoalCreateTo { get; set; }
     }
 }

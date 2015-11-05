@@ -12,9 +12,10 @@ namespace ZC_IT_TimeTracking
     using System;
     using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework","4.0.0.0")] 
- 	public partial class Team
+    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework","4.0.0.0")]
+	public partial class Team
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Team()
         {
             this.Managers = new HashSet<Manager>();
@@ -27,8 +28,11 @@ namespace ZC_IT_TimeTracking
         public int DepartmentID { get; set; }
     
         public virtual Department Department { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Manager> Managers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resource> Resources { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TeamLead> TeamLeads { get; set; }
     }
 }
