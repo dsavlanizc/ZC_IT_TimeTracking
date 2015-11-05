@@ -10,15 +10,14 @@
 namespace ZC_IT_TimeTracking
 {
     using System;
+    using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
-    public partial class GetTeamDetails_Result
+    public partial class sysdiagram
     {
-        public string TeamName { get; set; }
-        public string Department_Name { get; set; }
-        public int ManagerId { get; set; }
-        public int TeamLeadID { get; set; }
-        public Nullable<int> ManagerResourceID { get; set; }
-        public int TeamLeadResourceID { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

@@ -112,6 +112,7 @@ foreach (var complex in typeMapper.GetItemsToGenerate<ComplexType>(itemCollectio
     BeginNamespace(code);
 #>
 <#=codeStringGenerator.UsingDirectives(inHeader: false, includeCollections: false)#>
+[global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
 <#=Accessibility.ForType(complex)#> partial class <#=code.Escape(complex)#>
 {
 <#
@@ -308,7 +309,7 @@ public class CodeStringGenerator
     {
         return string.Format(
             CultureInfo.InvariantCulture,
-            "{0} {1}partial class {2}{3}",
+            "[global::System.CodeDom.Compiler.GeneratedCode(\"EntityFramework\",\"4.0.0.0\")] \n \t{0} {1}partial class {2}{3}",
             Accessibility.ForType(entity),
             _code.SpaceAfter(_code.AbstractOption(entity)),
             _code.Escape(entity),

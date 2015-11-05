@@ -296,15 +296,15 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalQuarter", quaterParameter, yearParameter, goalCreate_FromParameter, goalCreate_ToParameter);
         }
     
-        public virtual int InsertGoalRules(Nullable<int> performanceRangeFrom, Nullable<int> performanceRangeTo, Nullable<double> rating, Nullable<int> goalID)
+        public virtual int InsertGoalRules(Nullable<double> performanceRangeFrom, Nullable<double> performanceRangeTo, Nullable<double> rating, Nullable<int> goalID)
         {
             var performanceRangeFromParameter = performanceRangeFrom.HasValue ?
                 new ObjectParameter("PerformanceRangeFrom", performanceRangeFrom) :
-                new ObjectParameter("PerformanceRangeFrom", typeof(int));
+                new ObjectParameter("PerformanceRangeFrom", typeof(double));
     
             var performanceRangeToParameter = performanceRangeTo.HasValue ?
                 new ObjectParameter("PerformanceRangeTo", performanceRangeTo) :
-                new ObjectParameter("PerformanceRangeTo", typeof(int));
+                new ObjectParameter("PerformanceRangeTo", typeof(double));
     
             var ratingParameter = rating.HasValue ?
                 new ObjectParameter("Rating", rating) :
@@ -527,6 +527,15 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("quarter", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getYearForQuarter_Result>("getYearForQuarter", quarterParameter);
+        }
+    
+        public virtual ObjectResult<GetQuarterFromYear_Result> GetQuarterFromYear(Nullable<int> qyear)
+        {
+            var qyearParameter = qyear.HasValue ?
+                new ObjectParameter("qyear", qyear) :
+                new ObjectParameter("qyear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuarterFromYear_Result>("GetQuarterFromYear", qyearParameter);
         }
     }
 }

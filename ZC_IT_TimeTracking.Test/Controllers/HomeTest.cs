@@ -17,7 +17,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void GetGoalByIDTest()
         {
             HomeController home = new HomeController();
-            Object obj = home.GetGoalById(4009).Data;
+            Object obj = home.GetGoalById(1).Data;
             string success = obj.GetType().GetProperty("success").GetValue(obj, null).ToString();
             Assert.AreEqual("True", success);
         }
@@ -48,7 +48,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         {
             HomeController home = new HomeController();
             Goal goal = new Goal();
-            goal.ID = 4009;
+            goal.ID = 2;
             goal.Title = "Testing Update goal";
             goal.Description = "Add goal description here";
             goal.UnitOfMeasurement = "hours";
@@ -69,7 +69,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void DeleteGoalMaster()
         {
             HomeController home = new HomeController();
-            JsonResponse obj = home.DeleteGoal(2005).Data as JsonResponse;
+            JsonResponse obj = home.DeleteGoal(3).Data as JsonResponse;
             Assert.AreEqual(true, obj.success);
         }
         //For Index
@@ -89,7 +89,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         {
             HomeController home = new HomeController();
             GoalQuarters Quarter = new GoalQuarters();
-            Quarter.GoalQuarter = 4;
+            Quarter.GoalQuarter = 3;
             Quarter.QuarterYear = 2010;
             Quarter.GoalCreateFrom = DateTime.Today.AddYears(-5);
             Quarter.GoalCreateTo = DateTime.Today.AddYears(-5);

@@ -2,16 +2,7 @@
     ViewBag.Title = "Home";
 }
 @model List<ZC_IT_TimeTracking.Goal_Master>
-@{
-    if (ViewData["AddQuarterRequest"] != null)
-    {
-        <div class="alert alert-warning">
-            <strong>Warning!</strong> @ViewData["AddQuarterRequest"]
-            <strong><a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Click Here To Add Quarter</a></strong>
-        </div>
 
-    }
-}
 <div class="panel-group" id="accordion">
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -50,18 +41,6 @@
                 </form>
             </div>
             <div class="panel-body">
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h4 class="panel-title">
-                <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">Add Qurter</a>
-            </h4>
-        </div>
-        <div id="collapse4" class="panel-collapse collapse">
-            <div class="panel-body">
-                @RenderPage("~/Views/Home/_AddQuarter.cshtml")
             </div>
         </div>
     </div>

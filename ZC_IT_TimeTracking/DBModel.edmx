@@ -329,6 +329,9 @@
         <Function Name="GetQuarterDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="QuaterId" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetQuarterFromYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="qyear" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="goalId" Type="int" Mode="In" />
           <Parameter Name="performance" Type="float" Mode="In" />
@@ -367,8 +370,8 @@
           <Parameter Name="GoalCreate_To" Type="date" Mode="In" />
         </Function>
         <Function Name="InsertGoalRules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PerformanceRangeFrom" Type="int" Mode="In" />
-          <Parameter Name="PerformanceRangeTo" Type="int" Mode="In" />
+          <Parameter Name="PerformanceRangeFrom" Type="float" Mode="In" />
+          <Parameter Name="PerformanceRangeTo" Type="float" Mode="In" />
           <Parameter Name="Rating" Type="float" Mode="In" />
           <Parameter Name="GoalID" Type="int" Mode="In" />
         </Function>
@@ -558,8 +561,8 @@
             <Parameter Name="GoalCreate_To" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="InsertGoalRules">
-            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Int32" />
-            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Int32" />
+            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Double" />
+            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Double" />
             <Parameter Name="Rating" Mode="In" Type="Double" />
             <Parameter Name="GoalID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -692,6 +695,9 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamLead" EntitySet="TeamLeads" />
           </AssociationSet>
+          <FunctionImport Name="GetQuarterFromYear" ReturnType="Collection(Model.GetQuarterFromYear_Result)">
+          <Parameter Name="qyear" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuarterID" Nullable="false" />
@@ -1075,6 +1081,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetQuarterFromYear_Result">
+          <Property Type="Int32" Name="QuarterID" Nullable="false" />
+          <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
+          <Property Type="DateTime" Name="GoalCreateFrom" Nullable="true" />
+          <Property Type="DateTime" Name="GoalCreateTo" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1327,6 +1339,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetQuarterFromYear" FunctionName="Model.Store.GetQuarterFromYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.GetQuarterFromYear_Result">
+                <ScalarProperty Name="QuarterID" ColumnName="QuarterID" />
+                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
+                <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
+                <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
