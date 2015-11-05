@@ -208,6 +208,12 @@
     <Compile Include="GetQuarterDetails_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="getQuarterFormQuarterYear_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetQuarterFromYear_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetResouceDetails_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

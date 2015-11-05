@@ -15,7 +15,7 @@
         <label class="control-label col-md-3">Year</label>
         <div class="col-md-3">
             <select name="GoalYear" id="GoalYear" class="form-control" readonly="readonly">
-                <option>@DateTime.Now.Year</option>
+                <option>@ViewBag.Year</option>
             </select>
         </div>
     </div>
@@ -23,7 +23,7 @@
         <label class="control-label col-md-3">Quarter</label>
         <div class="col-md-3">
             <select name="GoalQuarter" id="GoalQuarter" class="form-control" readonly="readonly">
-                <option>@ZC_IT_TimeTracking.Models.Utilities.GetQuarter()</option>
+                <option>@ViewBag.Quarter</option>
             </select>
         </div>
     </div>

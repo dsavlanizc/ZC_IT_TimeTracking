@@ -23,9 +23,14 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 int Quarter = Utilities.GetQuarter();
                 int Year = DateTime.Now.Year;
-                var quarter = DbContext.CheckQuater(Quarter, Year).FirstOrDefault();
-                if (quarter == null)
-                    ViewData["AddQuarterRequest"] = "If you want To Create A Goal than first Add Quarter";
+                ViewBag.Year = Year;
+                ViewBag.Quarter = Quarter;
+                var QY = DbContext.GetQuarterFromYear(Year);
+                if (!QY.Any(a => a.GoalQuarter == Quarter))
+                {
+                    ViewBag.Message = "There is no quarter available! Please create one";
+                    return View("_AddQuarter");
+                }
                 var GoalList = DbContext.Goal_Master.ToList();
                 return View(GoalList);
             }
@@ -48,7 +53,7 @@ namespace ZC_IT_TimeTracking.Controllers
                     var quarterList = DbContext.Goal_Quarter.Select(s => new { s.GoalQuarter, s.QuarterYear }).ToList();
                     return Json(new { goal = goal, quarter = quarter, rules = rules, quarterList = quarterList, success = true });
                 }
-                return Json(new JsonResponse{ message = "Requested user data does not exist", success = false });
+                return Json(new JsonResponse { message = "Requested user data does not exist", success = false });
             }
             catch (Exception ex)
             {
@@ -104,7 +109,7 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 int del = DbContext.DeleteGoalMaster(id);
-                if (del == -1)
+                if (del == 0)
                     return Json(new JsonResponse { message = "No such goal exist!", success = false });
                 else
                     return Json(new JsonResponse { message = "Goal Deleted Successfully!", success = true });

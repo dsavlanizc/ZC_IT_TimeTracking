@@ -1,15 +1,16 @@
-﻿<form role="form" id="GoalQuarterForm" class="form-horizontal">
+﻿<h3>@ViewBag.Message</h3>
+<form role="form" id="GoalQuarterForm" class="form-horizontal">
     <div class="form-horizontal">
         <div class="form-group required">
             <label class="col-md-3 control-label">Quarter</label>
             <div class="col-md-4">
-                <input type="number" name="GoalQuarters" id="GoalQuarters" class="form-control" />
+                <input type="number" name="GoalQuarters" id="GoalQuarters" class="form-control" value="@ViewBag.Quarter"/>
             </div>
         </div>
         <div class="form-group required">
             <label class="col-md-3 control-label">Quarter Year</label>
             <div class="col-md-4">
-                <input type="number" name="GoalYears" id="GoalYears" class="form-control" />
+                <input type="number" name="GoalYears" id="GoalYears" class="form-control" value="@ViewBag.Year" />
             </div>
         </div>
         <div class="form-group required">

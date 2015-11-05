@@ -12,13 +12,9 @@ namespace ZC_IT_TimeTracking
     using System;
     
     [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
-    public partial class GetTeamDetails_Result
+    public partial class getQuarterFormQuarterYear_Result
     {
-        public string TeamName { get; set; }
-        public string Department_Name { get; set; }
-        public int ManagerId { get; set; }
-        public int TeamLeadID { get; set; }
-        public Nullable<int> ManagerResourceID { get; set; }
-        public int TeamLeadResourceID { get; set; }
+        public int GoalQuarter { get; set; }
+        public int QuarterYear { get; set; }
     }
 }

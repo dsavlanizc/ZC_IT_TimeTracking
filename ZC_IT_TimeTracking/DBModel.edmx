@@ -293,11 +293,6 @@
           <Parameter Name="weight" Type="int" Mode="In" />
           <Parameter Name="CurrentInsertedId" Type="int" Mode="InOut" />
         </Function>
-        <Function Name="calculateResourceGoalRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ResourceId" Type="int" Mode="In" />
-          <Parameter Name="GoalId" Type="int" Mode="In" />
-          <Parameter Name="ResourcePerformance" Type="float" Mode="In" />
-        </Function>
         <Function Name="CheckQuater" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Quater" Type="int" Mode="In" />
           <Parameter Name="QYear" Type="int" Mode="In" />
@@ -329,10 +324,11 @@
         <Function Name="GetQuarterDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="QuaterId" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="GoalId" Type="int" Mode="In" />
-          <Parameter Name="Performance" Type="float" Mode="In" />
-          <Parameter Name="Rating" Type="float" Mode="InOut" />
+        <Function Name="getQuarterFormQuarterYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="quarter" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetQuarterFromYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="qyear" Type="int" Mode="In" />
         </Function>
         <Function Name="GetResouceDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="resourceID" Type="int" Mode="In" />
@@ -682,6 +678,12 @@
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamLead" EntitySet="TeamLeads" />
           </AssociationSet>
+          <FunctionImport Name="getQuarterFormQuarterYear" ReturnType="Collection(DatabaseModel.getQuarterFormQuarterYear_Result)">
+          <Parameter Name="quarter" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetQuarterFromYear" ReturnType="Collection(DatabaseModel.GetQuarterFromYear_Result)">
+            <Parameter Name="qyear" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuarterID" Nullable="false" />
@@ -1060,6 +1062,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="getQuarterFormQuarterYear_Result">
+          <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
+          <Property Type="Int32" Name="QuarterYear" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetQuarterFromYear_Result">
+          <Property Type="Int32" Name="QuarterID" Nullable="false" />
+          <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
+          <Property Type="DateTime" Name="GoalCreateFrom" Nullable="false" />
+          <Property Type="DateTime" Name="GoalCreateTo" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1068,7 +1080,6 @@
         <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
           <FunctionImportMapping FunctionImportName="AddResource" FunctionName="DatabaseModel.Store.AddResource" />
           <FunctionImportMapping FunctionImportName="AssignGoalToResource" FunctionName="DatabaseModel.Store.AssignGoalToResource" />
-          <FunctionImportMapping FunctionImportName="calculateResourceGoalRating" FunctionName="DatabaseModel.Store.calculateResourceGoalRating" />
           <FunctionImportMapping FunctionImportName="CheckQuater" FunctionName="DatabaseModel.Store.CheckQuater">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DatabaseModel.CheckQuater_Result">
@@ -1135,7 +1146,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetRating" FunctionName="DatabaseModel.Store.GetRating" />
           <FunctionImportMapping FunctionImportName="GetResouceDetails" FunctionName="DatabaseModel.Store.GetResouceDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DatabaseModel.GetResouceDetails_Result">
@@ -1295,6 +1305,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="getQuarterFormQuarterYear" FunctionName="DatabaseModel.Store.getQuarterFormQuarterYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.getQuarterFormQuarterYear_Result">
+                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
+                <ScalarProperty Name="QuarterYear" ColumnName="QuarterYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetQuarterFromYear" FunctionName="DatabaseModel.Store.GetQuarterFromYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.GetQuarterFromYear_Result">
+                <ScalarProperty Name="QuarterID" ColumnName="QuarterID" />
+                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
+                <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
+                <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
