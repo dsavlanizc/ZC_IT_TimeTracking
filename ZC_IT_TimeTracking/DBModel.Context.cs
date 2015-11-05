@@ -519,5 +519,14 @@ namespace ZC_IT_TimeTracking
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateResourceGoal", resourceIdParameter, goalIdParameter, weightParameter);
         }
+    
+        public virtual ObjectResult<getYearForQuarter_Result> getYearForQuarter(Nullable<int> quarter)
+        {
+            var quarterParameter = quarter.HasValue ?
+                new ObjectParameter("quarter", quarter) :
+                new ObjectParameter("quarter", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getYearForQuarter_Result>("getYearForQuarter", quarterParameter);
+        }
     }
 }
