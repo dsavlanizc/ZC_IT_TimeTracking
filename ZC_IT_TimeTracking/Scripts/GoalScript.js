@@ -1,9 +1,6 @@
 ﻿$(function () {
     isCreate = true;
     $('[data-toggle="tooltip"]').tooltip();
-
-       
-    
     //on submitting form
     $("#GoalCreateForm").submit(function (ev) {
         ev.preventDefault();
@@ -123,7 +120,7 @@
             error: function (dt) {
                 hideLoading();
                 if (dt.readyState == 0) {
-                    bootbox.alert("Please check your internet connection!");
+                    bootbox.alert("Please check your interner connection!");
                 }
                 console.log(dt);
             }
@@ -143,7 +140,7 @@
 
     //delete goal
     DeleteGoal = function (id) {
-        bootbox.confirm("Are you sure want to delete Goal?", function (r) {
+        bootbox.confirm("Are you sure to delete?", function (r) {
             if (r) {
                 $.ajax({
                     url: "/Home/DeleteGoal",
@@ -323,5 +320,4 @@
     $("#GoalCreateFrom").change(function () {
         console.log(this.value);
     });
-    $('.datepicker').datepicker();
 });

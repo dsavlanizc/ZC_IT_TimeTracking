@@ -10,12 +10,14 @@
 namespace ZC_IT_TimeTracking
 {
     using System;
+    using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
-    public partial class CheckQuater_Result
+    public partial class sysdiagram
     {
-        public int QuarterID { get; set; }
-        public System.DateTime GoalCreateFrom { get; set; }
-        public System.DateTime GoalCreateTo { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
