@@ -103,7 +103,7 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 int del = DbContext.DeleteGoalMaster(id);
-                if (del == -1)
+                if (del == 0)
                     return Json(new JsonResponse { message = "No such goal exist!", success = false });
                 else
                     return Json(new JsonResponse { message = "Goal Deleted Successfully!", success = true });

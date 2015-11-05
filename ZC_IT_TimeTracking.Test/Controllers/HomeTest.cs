@@ -69,7 +69,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void DeleteGoalMaster()
         {
             HomeController home = new HomeController();
-            JsonResponse obj = home.DeleteGoal(4009).Data as JsonResponse;
+            JsonResponse obj = home.DeleteGoal(4013).Data as JsonResponse;
             Assert.AreEqual(true, obj.success);
         }
         //For Index
