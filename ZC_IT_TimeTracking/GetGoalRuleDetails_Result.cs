@@ -11,12 +11,11 @@ namespace ZC_IT_TimeTracking
 {
     using System;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
     public partial class GetGoalRuleDetails_Result
     {
         public int Goal_RuleID { get; set; }
-        public int Performance_RangeFrom { get; set; }
-        public int Performance_RangeTo { get; set; }
+        public double Performance_RangeFrom { get; set; }
+        public double Performance_RangeTo { get; set; }
         public double Rating { get; set; }
     }
 }
