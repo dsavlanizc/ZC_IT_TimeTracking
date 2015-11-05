@@ -50,7 +50,8 @@ namespace ZC_IT_TimeTracking.Controllers
                     var goal = DbContext.GetGoalDetails(Id).FirstOrDefault();
                     var quarter = DbContext.GetQuarterDetails(goal.QuarterId).FirstOrDefault();
                     var rules = DbContext.GetGoalRuleDetails(Id).ToList();
-                    return Json(new { goal = goal, quarter = quarter, rules = rules, success = true });
+                    var quarterList = DbContext.Goal_Quarter.Select(s => new { s.GoalQuarter, s.QuarterYear }).ToList();
+                    return Json(new { goal = goal, quarter = quarter, rules = rules, quarterList = quarterList, success = true });
                 }
                 return Json(new JsonResponse { message = "Requested user data does not exist", success = false });
             }
