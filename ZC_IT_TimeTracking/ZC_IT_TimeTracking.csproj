@@ -161,8 +161,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\signin.css" />
     <None Include="Scripts\_references.js" />
-    <Content Include="SQLScripts\DB_tableScript.sql" />
-    <Content Include="SQLScripts\StoreProcedures\DB_SPScript.sql" />
+    <Content Include="SQLScripts\dbScript.sql" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
