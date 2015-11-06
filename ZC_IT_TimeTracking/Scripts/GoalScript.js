@@ -120,6 +120,9 @@
         ResetForm();
         $("#submitButton").attr("disabled", false);
         $('#RuleListTable').html("");
+        $('#formInput input,textarea,select').attr('readonly', false);
+        var ExistId = $('#GoalQuarter option').attr('id');        
+        $('#GoalQuarter option').text(ExistId);
     });
 
     //loading overlay events
@@ -130,7 +133,7 @@
     ViewGoal = function (id) {
         ResetForm();
         $("#submitButton").attr("disabled", true);
-        //alert("asdf"+id);
+        $('#formInput input,textarea,select').attr('readonly', true);
         $.ajax({
             url: "/Home/GetGoalById",
             type: "POST",
@@ -162,7 +165,7 @@
                     $('#RuleListTable').html("");
                     $(rules).each(function () {
                         //console.log(this);
-                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1" id="Action"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
                     });
                     $("#collapse1").collapse('hide');
                     $("#collapse2").collapse('show');
@@ -181,6 +184,7 @@
     //edit goal function
     EditGoal = function (id) {
         //alert(id);
+        $('#formInput input,textarea,select').attr('readonly', false);
         isCreate = false;
         updateGoalId = id;
         //ViewGoal(id);
@@ -290,10 +294,14 @@
             var RangeFrom = $("#RangeFrom").val();
             var RangeTo = $("#RangeTo").val();
             var Rating = $("#Rating").val();
-            $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit Rule" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete Rule" onclick="RemoveGoalRule(rule' + count + ')" /></td></tr>');
-            $("#RangeFrom").val(null);
-            $("#RangeTo").val(null);
-            $("#Rating").val(null);
+            if (RangeFrom == "" || RangeTo == "" || Rating == "")
+                alert("Fill All The Field.!");
+            else {
+                $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit Rule" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete Rule" onclick="RemoveGoalRule(rule' + count + ')" /></td></tr>');
+                $("#RangeFrom").val(null);
+                $("#RangeTo").val(null);
+                $("#Rating").val(null);
+            }
         }
     }
     EditGoalRule = function (id) {
