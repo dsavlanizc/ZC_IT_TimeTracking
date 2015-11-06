@@ -251,7 +251,7 @@
 
     //delete goal
     DeleteGoal = function (id) {
-        bootbox.confirm("Are you sure to delete?", function (r) {
+        bootbox.confirm("Are you sure want to delete Goal ?", function (r) {
             if (r) {
                 $.ajax({
                     url: "/Home/DeleteGoal",
