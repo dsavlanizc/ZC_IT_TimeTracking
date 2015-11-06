@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -370,8 +370,8 @@
           <Parameter Name="GoalCreate_To" Type="date" Mode="In" />
         </Function>
         <Function Name="InsertGoalRules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PerformanceRangeFrom" Type="int" Mode="In" />
-          <Parameter Name="PerformanceRangeTo" Type="int" Mode="In" />
+          <Parameter Name="PerformanceRangeFrom" Type="float" Mode="In" />
+          <Parameter Name="PerformanceRangeTo" Type="float" Mode="In" />
           <Parameter Name="Rating" Type="float" Mode="In" />
           <Parameter Name="GoalID" Type="int" Mode="In" />
         </Function>
@@ -403,7 +403,7 @@
           <Parameter Name="GoalId" Type="int" Mode="In" />
           <Parameter Name="weight" Type="int" Mode="In" />
         </Function>
-        <EntityContainer Name="DatabaseModelStoreContainer">
+        <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Goal_Master" EntityType="Self.Goal_Master" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Goal_Quarter" EntityType="Self.Goal_Quarter" Schema="dbo" store:Type="Tables" />
@@ -476,7 +476,7 @@
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
           <FunctionImport Name="AddResource">
             <Parameter Name="FirstName" Mode="In" Type="String" />
@@ -490,12 +490,12 @@
             <Parameter Name="weight" Mode="In" Type="Int32" />
             <Parameter Name="CurrentInsertedId" Mode="InOut" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="calculateResourceGoalRating" ReturnType="Collection(Double)">
+          <FunctionImport Name="calculateResourceGoalRating">
             <Parameter Name="ResourceId" Mode="In" Type="Int32" />
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
             <Parameter Name="ResourcePerformance" Mode="In" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="CheckQuater" ReturnType="Collection(DatabaseModel.CheckQuater_Result)">
+          <FunctionImport Name="CheckQuater" ReturnType="Collection(Model.CheckQuater_Result)">
             <Parameter Name="Quater" Mode="In" Type="Int32" />
             <Parameter Name="QYear" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -511,44 +511,38 @@
           <FunctionImport Name="DeleteResourceGoal">
           <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetAllGoalsOfResource" ReturnType="Collection(DatabaseModel.GetAllGoalsOfResource_Result)">
+          <FunctionImport Name="GetAllGoalsOfResource" ReturnType="Collection(Model.GetAllGoalsOfResource_Result)">
           <Parameter Name="ResourceId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetAllResourceForGoal" ReturnType="Collection(DatabaseModel.GetAllResourceForGoal_Result)">
+          <FunctionImport Name="GetAllResourceForGoal" ReturnType="Collection(Model.GetAllResourceForGoal_Result)">
           <Parameter Name="Goal_id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetGoalDetails" ReturnType="Collection(DatabaseModel.GetGoalDetails_Result)">
+          <FunctionImport Name="GetGoalDetails" ReturnType="Collection(Model.GetGoalDetails_Result)">
           <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetGoalRuleDetails" ReturnType="Collection(DatabaseModel.GetGoalRuleDetails_Result)">
+          <FunctionImport Name="GetGoalRuleDetails" ReturnType="Collection(Model.GetGoalRuleDetails_Result)">
           <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(DatabaseModel.GetQuarterDetails_Result)">
+          <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(Model.GetQuarterDetails_Result)">
           <Parameter Name="QuaterId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetQuarterFromYear" ReturnType="Collection(DatabaseModel.GetQuarterFromYear_Result)">
-          <Parameter Name="qyear" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetRating">
             <Parameter Name="goalId" Mode="In" Type="Int32" />
             <Parameter Name="performance" Mode="In" Type="Double" />
             <Parameter Name="rating" Mode="InOut" Type="Double" />
           </FunctionImport>
-          <FunctionImport Name="GetResouceDetails" ReturnType="Collection(DatabaseModel.GetResouceDetails_Result)">
+          <FunctionImport Name="GetResouceDetails" ReturnType="Collection(Model.GetResouceDetails_Result)">
           <Parameter Name="resourceID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetResourceByTeam" ReturnType="Collection(DatabaseModel.GetResourceByTeam_Result)">
+          <FunctionImport Name="GetResourceByTeam" ReturnType="Collection(Model.GetResourceByTeam_Result)">
           <Parameter Name="TeamId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetResourceGoalDetails" ReturnType="Collection(DatabaseModel.GetResourceGoalDetails_Result)">
+          <FunctionImport Name="GetResourceGoalDetails" ReturnType="Collection(Model.GetResourceGoalDetails_Result)">
             <Parameter Name="resourceId" Mode="In" Type="Int32" />
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetTeamDetails" ReturnType="Collection(DatabaseModel.GetTeamDetails_Result)">
+          <FunctionImport Name="GetTeamDetails" ReturnType="Collection(Model.GetTeamDetails_Result)">
           <Parameter Name="teamId" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="getYearForQuarter" ReturnType="Collection(DatabaseModel.getYearForQuarter_Result)">
-          <Parameter Name="quarter" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertGoalMaster">
             <Parameter Name="Goal_Title" Mode="In" Type="String" />
@@ -567,11 +561,41 @@
             <Parameter Name="GoalCreate_To" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="InsertGoalRules">
-            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Int32" />
-            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Int32" />
+            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Double" />
+            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Double" />
             <Parameter Name="Rating" Mode="In" Type="Double" />
             <Parameter Name="GoalID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_alterdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_creatediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="version" Mode="In" Type="Int32" />
+            <Parameter Name="definition" Mode="In" Type="Binary" />
+          </FunctionImport>
+          <FunctionImport Name="sp_dropdiagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(Model.sp_helpdiagramdefinition_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(Model.sp_helpdiagrams_Result)">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_renamediagram">
+            <Parameter Name="diagramname" Mode="In" Type="String" />
+            <Parameter Name="owner_id" Mode="In" Type="Int32" />
+            <Parameter Name="new_diagramname" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="sp_upgraddiagrams" />
           <FunctionImport Name="UpdateGoalMaster">
             <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
             <Parameter Name="Goal_Title" Mode="In" Type="String" />
@@ -600,74 +624,80 @@
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
             <Parameter Name="weight" Mode="In" Type="Int32" />
           </FunctionImport>
-          <EntitySet Name="Departments" EntityType="DatabaseModel.Department" />
-          <EntitySet Name="Goal_Master" EntityType="DatabaseModel.Goal_Master" />
-          <EntitySet Name="Goal_Quarter" EntityType="DatabaseModel.Goal_Quarter" />
-          <EntitySet Name="Goal_Rules" EntityType="DatabaseModel.Goal_Rules" />
-          <EntitySet Name="Managers" EntityType="DatabaseModel.Manager" />
-          <EntitySet Name="Resources" EntityType="DatabaseModel.Resource" />
-          <EntitySet Name="Resource_Goal" EntityType="DatabaseModel.Resource_Goal" />
-          <EntitySet Name="Resource_Goal_Performance" EntityType="DatabaseModel.Resource_Goal_Performance" />
-          <EntitySet Name="Resource_Performance" EntityType="DatabaseModel.Resource_Performance" />
-          <EntitySet Name="Roles" EntityType="DatabaseModel.Role" />
-          <EntitySet Name="Teams" EntityType="DatabaseModel.Team" />
-          <EntitySet Name="TeamLeads" EntityType="DatabaseModel.TeamLead" />
-          <AssociationSet Name="FK_Team_DepartmentID" Association="DatabaseModel.FK_Team_DepartmentID">
+          <FunctionImport Name="getYearForQuarter" ReturnType="Collection(Model.getYearForQuarter_Result)">
+          <Parameter Name="quarter" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="Departments" EntityType="Model.Department" />
+          <EntitySet Name="Goal_Master" EntityType="Model.Goal_Master" />
+          <EntitySet Name="Goal_Quarter" EntityType="Model.Goal_Quarter" />
+          <EntitySet Name="Goal_Rules" EntityType="Model.Goal_Rules" />
+          <EntitySet Name="Managers" EntityType="Model.Manager" />
+          <EntitySet Name="Resources" EntityType="Model.Resource" />
+          <EntitySet Name="Resource_Goal" EntityType="Model.Resource_Goal" />
+          <EntitySet Name="Resource_Goal_Performance" EntityType="Model.Resource_Goal_Performance" />
+          <EntitySet Name="Resource_Performance" EntityType="Model.Resource_Performance" />
+          <EntitySet Name="Roles" EntityType="Model.Role" />
+          <EntitySet Name="Teams" EntityType="Model.Team" />
+          <EntitySet Name="TeamLeads" EntityType="Model.TeamLead" />
+          <AssociationSet Name="FK_Team_DepartmentID" Association="Model.FK_Team_DepartmentID">
             <End Role="Department" EntitySet="Departments" />
             <End Role="Team" EntitySet="Teams" />
           </AssociationSet>
-          <AssociationSet Name="FK_Goal_Master_QuaeterID" Association="DatabaseModel.FK_Goal_Master_QuaeterID">
+          <AssociationSet Name="FK_Goal_Master_QuaeterID" Association="Model.FK_Goal_Master_QuaeterID">
             <End Role="Goal_Quarter" EntitySet="Goal_Quarter" />
             <End Role="Goal_Master" EntitySet="Goal_Master" />
           </AssociationSet>
-          <AssociationSet Name="FK_Goal_Rules_Goal_Master" Association="DatabaseModel.FK_Goal_Rules_Goal_Master">
+          <AssociationSet Name="FK_Goal_Rules_Goal_Master" Association="Model.FK_Goal_Rules_Goal_Master">
             <End Role="Goal_Master" EntitySet="Goal_Master" />
             <End Role="Goal_Rules" EntitySet="Goal_Rules" />
           </AssociationSet>
-          <AssociationSet Name="FK_Resource_Goal_Goal_Master" Association="DatabaseModel.FK_Resource_Goal_Goal_Master">
+          <AssociationSet Name="FK_Resource_Goal_Goal_Master" Association="Model.FK_Resource_Goal_Goal_Master">
             <End Role="Goal_Master" EntitySet="Goal_Master" />
             <End Role="Resource_Goal" EntitySet="Resource_Goal" />
           </AssociationSet>
-          <AssociationSet Name="FK_Resource_Performance_Goal_Quater" Association="DatabaseModel.FK_Resource_Performance_Goal_Quater">
+          <AssociationSet Name="FK_Resource_Performance_Goal_Quater" Association="Model.FK_Resource_Performance_Goal_Quater">
             <End Role="Goal_Quarter" EntitySet="Goal_Quarter" />
             <End Role="Resource_Performance" EntitySet="Resource_Performance" />
           </AssociationSet>
-          <AssociationSet Name="FK_Manager_TeamID" Association="DatabaseModel.FK_Manager_TeamID">
+          <AssociationSet Name="FK_Manager_TeamID" Association="Model.FK_Manager_TeamID">
             <End Role="Team" EntitySet="Teams" />
             <End Role="Manager" EntitySet="Managers" />
           </AssociationSet>
-          <AssociationSet Name="FK_TeamManager_Resource" Association="DatabaseModel.FK_TeamManager_Resource">
+          <AssociationSet Name="FK_TeamManager_Resource" Association="Model.FK_TeamManager_Resource">
             <End Role="Resource" EntitySet="Resources" />
             <End Role="Manager" EntitySet="Managers" />
           </AssociationSet>
-          <AssociationSet Name="FK_Resource_Goal_Resource" Association="DatabaseModel.FK_Resource_Goal_Resource">
+          <AssociationSet Name="FK_Resource_Goal_Resource" Association="Model.FK_Resource_Goal_Resource">
             <End Role="Resource" EntitySet="Resources" />
             <End Role="Resource_Goal" EntitySet="Resource_Goal" />
           </AssociationSet>
-          <AssociationSet Name="FK_Resource_Performance_Resource" Association="DatabaseModel.FK_Resource_Performance_Resource">
+          <AssociationSet Name="FK_Resource_Performance_Resource" Association="Model.FK_Resource_Performance_Resource">
             <End Role="Resource" EntitySet="Resources" />
             <End Role="Resource_Performance" EntitySet="Resource_Performance" />
           </AssociationSet>
-          <AssociationSet Name="FK_Resource_RoleID" Association="DatabaseModel.FK_Resource_RoleID">
+          <AssociationSet Name="FK_Resource_RoleID" Association="Model.FK_Resource_RoleID">
             <End Role="Role" EntitySet="Roles" />
             <End Role="Resource" EntitySet="Resources" />
           </AssociationSet>
-          <AssociationSet Name="FK_Resource_TeamID" Association="DatabaseModel.FK_Resource_TeamID">
+          <AssociationSet Name="FK_Resource_TeamID" Association="Model.FK_Resource_TeamID">
             <End Role="Team" EntitySet="Teams" />
             <End Role="Resource" EntitySet="Resources" />
           </AssociationSet>
-          <AssociationSet Name="FK_TeamLead_Resource" Association="DatabaseModel.FK_TeamLead_Resource">
+          <AssociationSet Name="FK_TeamLead_Resource" Association="Model.FK_TeamLead_Resource">
             <End Role="Resource" EntitySet="Resources" />
             <End Role="TeamLead" EntitySet="TeamLeads" />
           </AssociationSet>
-          <AssociationSet Name="FK_Resource_Goal_Performance_Resource_GoalId" Association="DatabaseModel.FK_Resource_Goal_Performance_Resource_GoalId">
+          <AssociationSet Name="FK_Resource_Goal_Performance_Resource_GoalId" Association="Model.FK_Resource_Goal_Performance_Resource_GoalId">
             <End Role="Resource_Goal" EntitySet="Resource_Goal" />
             <End Role="Resource_Goal_Performance" EntitySet="Resource_Goal_Performance" />
           </AssociationSet>
-          <AssociationSet Name="FK_TeamLead_TeamID" Association="DatabaseModel.FK_TeamLead_TeamID">
+          <AssociationSet Name="FK_TeamLead_TeamID" Association="Model.FK_TeamLead_TeamID">
             <End Role="Team" EntitySet="Teams" />
             <End Role="TeamLead" EntitySet="TeamLeads" />
           </AssociationSet>
+          <FunctionImport Name="GetQuarterFromYear" ReturnType="Collection(Model.GetQuarterFromYear_Result)">
+          <Parameter Name="qyear" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuarterID" Nullable="false" />
@@ -697,19 +727,13 @@
         </ComplexType>
         <ComplexType Name="GetGoalRuleDetails_Result">
           <Property Type="Int32" Name="Goal_RuleID" Nullable="false" />
-          <Property Type="Double" Name="Performance_RangeFrom" Nullable="false" />
-          <Property Type="Double" Name="Performance_RangeTo" Nullable="false" />
+          <Property Type="Int32" Name="Performance_RangeFrom" Nullable="false" />
+          <Property Type="Int32" Name="Performance_RangeTo" Nullable="false" />
           <Property Type="Double" Name="Rating" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetQuarterDetails_Result">
           <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
           <Property Type="Int32" Name="QuarterYear" Nullable="false" />
-          <Property Type="DateTime" Name="GoalCreateFrom" Nullable="true" />
-          <Property Type="DateTime" Name="GoalCreateTo" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="GetQuarterFromYear_Result">
-          <Property Type="Int32" Name="QuarterID" Nullable="false" />
-          <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
           <Property Type="DateTime" Name="GoalCreateFrom" Nullable="true" />
           <Property Type="DateTime" Name="GoalCreateTo" Nullable="true" />
         </ComplexType>
@@ -737,6 +761,17 @@
           <Property Type="Int32" Name="ManagerResourceID" Nullable="true" />
           <Property Type="Int32" Name="TeamLeadResourceID" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="sp_helpdiagramdefinition_Result">
+          <Property Type="Int32" Name="version" Nullable="true" />
+          <Property Type="Binary" Name="definition" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="sp_helpdiagrams_Result">
+          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+          <Property Type="Int32" Name="OwnerID" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="getYearForQuarter_Result">
           <Property Type="Int32" Name="QuarterYear" Nullable="false" />
           <Property Type="DateTime" Name="GoalCreateFrom" Nullable="true" />
@@ -748,7 +783,7 @@
           </Key>
           <Property Name="DepartmentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Department_Name" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Teams" Relationship="DatabaseModel.FK_Team_DepartmentID" FromRole="Department" ToRole="Team" />
+          <NavigationProperty Name="Teams" Relationship="Model.FK_Team_DepartmentID" FromRole="Department" ToRole="Team" />
         </EntityType>
         <EntityType Name="Goal_Master">
           <Key>
@@ -762,9 +797,9 @@
           <Property Name="Creation_Date" Type="DateTime" Precision="0" />
           <Property Name="IsHigherValueGood" Type="Boolean" Nullable="false" />
           <Property Name="QuarterId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Quarter" Relationship="DatabaseModel.FK_Goal_Master_QuaeterID" FromRole="Goal_Master" ToRole="Goal_Quarter" />
-          <NavigationProperty Name="Goal_Rules" Relationship="DatabaseModel.FK_Goal_Rules_Goal_Master" FromRole="Goal_Master" ToRole="Goal_Rules" />
-          <NavigationProperty Name="Resource_Goal" Relationship="DatabaseModel.FK_Resource_Goal_Goal_Master" FromRole="Goal_Master" ToRole="Resource_Goal" />
+          <NavigationProperty Name="Goal_Quarter" Relationship="Model.FK_Goal_Master_QuaeterID" FromRole="Goal_Master" ToRole="Goal_Quarter" />
+          <NavigationProperty Name="Goal_Rules" Relationship="Model.FK_Goal_Rules_Goal_Master" FromRole="Goal_Master" ToRole="Goal_Rules" />
+          <NavigationProperty Name="Resource_Goal" Relationship="Model.FK_Resource_Goal_Goal_Master" FromRole="Goal_Master" ToRole="Resource_Goal" />
         </EntityType>
         <EntityType Name="Goal_Quarter">
           <Key>
@@ -775,8 +810,8 @@
           <Property Name="QuarterYear" Type="Int32" Nullable="false" />
           <Property Name="GoalCreateFrom" Type="DateTime" Precision="0" />
           <Property Name="GoalCreateTo" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Goal_Master_QuaeterID" FromRole="Goal_Quarter" ToRole="Goal_Master" />
-          <NavigationProperty Name="Resource_Performance" Relationship="DatabaseModel.FK_Resource_Performance_Goal_Quater" FromRole="Goal_Quarter" ToRole="Resource_Performance" />
+          <NavigationProperty Name="Goal_Master" Relationship="Model.FK_Goal_Master_QuaeterID" FromRole="Goal_Quarter" ToRole="Goal_Master" />
+          <NavigationProperty Name="Resource_Performance" Relationship="Model.FK_Resource_Performance_Goal_Quater" FromRole="Goal_Quarter" ToRole="Resource_Performance" />
         </EntityType>
         <EntityType Name="Goal_Rules">
           <Key>
@@ -787,7 +822,7 @@
           <Property Name="Performance_RangeTo" Type="Double" Nullable="false" />
           <Property Name="Rating" Type="Double" Nullable="false" />
           <Property Name="GoalId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Goal_Rules_Goal_Master" FromRole="Goal_Rules" ToRole="Goal_Master" />
+          <NavigationProperty Name="Goal_Master" Relationship="Model.FK_Goal_Rules_Goal_Master" FromRole="Goal_Rules" ToRole="Goal_Master" />
         </EntityType>
         <EntityType Name="Manager">
           <Key>
@@ -796,8 +831,8 @@
           <Property Name="ManagerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ManagerResourceID" Type="Int32" />
           <Property Name="TeamID" Type="Int32" />
-          <NavigationProperty Name="Team" Relationship="DatabaseModel.FK_Manager_TeamID" FromRole="Manager" ToRole="Team" />
-          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_TeamManager_Resource" FromRole="Manager" ToRole="Resource" />
+          <NavigationProperty Name="Team" Relationship="Model.FK_Manager_TeamID" FromRole="Manager" ToRole="Team" />
+          <NavigationProperty Name="Resource" Relationship="Model.FK_TeamManager_Resource" FromRole="Manager" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Resource">
           <Key>
@@ -808,12 +843,12 @@
           <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="RoleID" Type="Int32" />
           <Property Name="TeamID" Type="Int32" />
-          <NavigationProperty Name="Managers" Relationship="DatabaseModel.FK_TeamManager_Resource" FromRole="Resource" ToRole="Manager" />
-          <NavigationProperty Name="Resource_Goal" Relationship="DatabaseModel.FK_Resource_Goal_Resource" FromRole="Resource" ToRole="Resource_Goal" />
-          <NavigationProperty Name="Resource_Performance" Relationship="DatabaseModel.FK_Resource_Performance_Resource" FromRole="Resource" ToRole="Resource_Performance" />
-          <NavigationProperty Name="Role" Relationship="DatabaseModel.FK_Resource_RoleID" FromRole="Resource" ToRole="Role" />
-          <NavigationProperty Name="Team" Relationship="DatabaseModel.FK_Resource_TeamID" FromRole="Resource" ToRole="Team" />
-          <NavigationProperty Name="TeamLeads" Relationship="DatabaseModel.FK_TeamLead_Resource" FromRole="Resource" ToRole="TeamLead" />
+          <NavigationProperty Name="Managers" Relationship="Model.FK_TeamManager_Resource" FromRole="Resource" ToRole="Manager" />
+          <NavigationProperty Name="Resource_Goal" Relationship="Model.FK_Resource_Goal_Resource" FromRole="Resource" ToRole="Resource_Goal" />
+          <NavigationProperty Name="Resource_Performance" Relationship="Model.FK_Resource_Performance_Resource" FromRole="Resource" ToRole="Resource_Performance" />
+          <NavigationProperty Name="Role" Relationship="Model.FK_Resource_RoleID" FromRole="Resource" ToRole="Role" />
+          <NavigationProperty Name="Team" Relationship="Model.FK_Resource_TeamID" FromRole="Resource" ToRole="Team" />
+          <NavigationProperty Name="TeamLeads" Relationship="Model.FK_TeamLead_Resource" FromRole="Resource" ToRole="TeamLead" />
         </EntityType>
         <EntityType Name="Resource_Goal">
           <Key>
@@ -823,9 +858,9 @@
           <Property Name="ResourceID" Type="Int32" Nullable="false" />
           <Property Name="Goal_MasterID" Type="Int32" Nullable="false" />
           <Property Name="Weight" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Goal_Master" Relationship="DatabaseModel.FK_Resource_Goal_Goal_Master" FromRole="Resource_Goal" ToRole="Goal_Master" />
-          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_Resource_Goal_Resource" FromRole="Resource_Goal" ToRole="Resource" />
-          <NavigationProperty Name="Resource_Goal_Performance" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Resource_GoalId" FromRole="Resource_Goal" ToRole="Resource_Goal_Performance" />
+          <NavigationProperty Name="Goal_Master" Relationship="Model.FK_Resource_Goal_Goal_Master" FromRole="Resource_Goal" ToRole="Goal_Master" />
+          <NavigationProperty Name="Resource" Relationship="Model.FK_Resource_Goal_Resource" FromRole="Resource_Goal" ToRole="Resource" />
+          <NavigationProperty Name="Resource_Goal_Performance" Relationship="Model.FK_Resource_Goal_Performance_Resource_GoalId" FromRole="Resource_Goal" ToRole="Resource_Goal_Performance" />
         </EntityType>
         <EntityType Name="Resource_Goal_Performance">
           <Key>
@@ -835,7 +870,7 @@
           <Property Name="Resource_Performance" Type="Double" Nullable="false" />
           <Property Name="Resource_Rating" Type="Double" />
           <Property Name="Resource_GoalId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Resource_Goal" Relationship="DatabaseModel.FK_Resource_Goal_Performance_Resource_GoalId" FromRole="Resource_Goal_Performance" ToRole="Resource_Goal" />
+          <NavigationProperty Name="Resource_Goal" Relationship="Model.FK_Resource_Goal_Performance_Resource_GoalId" FromRole="Resource_Goal_Performance" ToRole="Resource_Goal" />
         </EntityType>
         <EntityType Name="Resource_Performance">
           <Key>
@@ -845,8 +880,8 @@
           <Property Name="ResourceID" Type="Int32" Nullable="false" />
           <Property Name="QuaterID" Type="Int32" Nullable="false" />
           <Property Name="Resource_Performance1" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Goal_Quarter" Relationship="DatabaseModel.FK_Resource_Performance_Goal_Quater" FromRole="Resource_Performance" ToRole="Goal_Quarter" />
-          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_Resource_Performance_Resource" FromRole="Resource_Performance" ToRole="Resource" />
+          <NavigationProperty Name="Goal_Quarter" Relationship="Model.FK_Resource_Performance_Goal_Quater" FromRole="Resource_Performance" ToRole="Goal_Quarter" />
+          <NavigationProperty Name="Resource" Relationship="Model.FK_Resource_Performance_Resource" FromRole="Resource_Performance" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -854,7 +889,7 @@
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Resources" Relationship="DatabaseModel.FK_Resource_RoleID" FromRole="Role" ToRole="Resource" />
+          <NavigationProperty Name="Resources" Relationship="Model.FK_Resource_RoleID" FromRole="Role" ToRole="Resource" />
         </EntityType>
         <EntityType Name="Team">
           <Key>
@@ -863,10 +898,10 @@
           <Property Name="TeamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TeamName" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="DepartmentID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Department" Relationship="DatabaseModel.FK_Team_DepartmentID" FromRole="Team" ToRole="Department" />
-          <NavigationProperty Name="Managers" Relationship="DatabaseModel.FK_Manager_TeamID" FromRole="Team" ToRole="Manager" />
-          <NavigationProperty Name="Resources" Relationship="DatabaseModel.FK_Resource_TeamID" FromRole="Team" ToRole="Resource" />
-          <NavigationProperty Name="TeamLeads" Relationship="DatabaseModel.FK_TeamLead_TeamID" FromRole="Team" ToRole="TeamLead" />
+          <NavigationProperty Name="Department" Relationship="Model.FK_Team_DepartmentID" FromRole="Team" ToRole="Department" />
+          <NavigationProperty Name="Managers" Relationship="Model.FK_Manager_TeamID" FromRole="Team" ToRole="Manager" />
+          <NavigationProperty Name="Resources" Relationship="Model.FK_Resource_TeamID" FromRole="Team" ToRole="Resource" />
+          <NavigationProperty Name="TeamLeads" Relationship="Model.FK_TeamLead_TeamID" FromRole="Team" ToRole="TeamLead" />
         </EntityType>
         <EntityType Name="TeamLead">
           <Key>
@@ -875,12 +910,12 @@
           <Property Name="TeamLeadID" Type="Int32" Nullable="false" />
           <Property Name="TeamID" Type="Int32" />
           <Property Name="TeamLeadResourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Resource" Relationship="DatabaseModel.FK_TeamLead_Resource" FromRole="TeamLead" ToRole="Resource" />
-          <NavigationProperty Name="Team" Relationship="DatabaseModel.FK_TeamLead_TeamID" FromRole="TeamLead" ToRole="Team" />
+          <NavigationProperty Name="Resource" Relationship="Model.FK_TeamLead_Resource" FromRole="TeamLead" ToRole="Resource" />
+          <NavigationProperty Name="Team" Relationship="Model.FK_TeamLead_TeamID" FromRole="TeamLead" ToRole="Team" />
         </EntityType>
         <Association Name="FK_Team_DepartmentID">
-          <End Type="DatabaseModel.Department" Role="Department" Multiplicity="1" />
-          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="*" />
+          <End Type="Model.Department" Role="Department" Multiplicity="1" />
+          <End Type="Model.Team" Role="Team" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
               <PropertyRef Name="DepartmentID" />
@@ -891,8 +926,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Goal_Master_QuaeterID">
-          <End Type="DatabaseModel.Goal_Quarter" Role="Goal_Quarter" Multiplicity="1" />
-          <End Type="DatabaseModel.Goal_Master" Role="Goal_Master" Multiplicity="*" />
+          <End Type="Model.Goal_Quarter" Role="Goal_Quarter" Multiplicity="1" />
+          <End Type="Model.Goal_Master" Role="Goal_Master" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Quarter">
               <PropertyRef Name="QuarterID" />
@@ -903,8 +938,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Goal_Rules_Goal_Master">
-          <End Type="DatabaseModel.Goal_Master" Role="Goal_Master" Multiplicity="1" />
-          <End Type="DatabaseModel.Goal_Rules" Role="Goal_Rules" Multiplicity="*" />
+          <End Type="Model.Goal_Master" Role="Goal_Master" Multiplicity="1" />
+          <End Type="Model.Goal_Rules" Role="Goal_Rules" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Master">
               <PropertyRef Name="Goal_MasterID" />
@@ -915,8 +950,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Goal_Goal_Master">
-          <End Type="DatabaseModel.Goal_Master" Role="Goal_Master" Multiplicity="1" />
-          <End Type="DatabaseModel.Resource_Goal" Role="Resource_Goal" Multiplicity="*" />
+          <End Type="Model.Goal_Master" Role="Goal_Master" Multiplicity="1" />
+          <End Type="Model.Resource_Goal" Role="Resource_Goal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Master">
               <PropertyRef Name="Goal_MasterID" />
@@ -927,8 +962,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Performance_Goal_Quater">
-          <End Type="DatabaseModel.Goal_Quarter" Role="Goal_Quarter" Multiplicity="1" />
-          <End Type="DatabaseModel.Resource_Performance" Role="Resource_Performance" Multiplicity="*" />
+          <End Type="Model.Goal_Quarter" Role="Goal_Quarter" Multiplicity="1" />
+          <End Type="Model.Resource_Performance" Role="Resource_Performance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Goal_Quarter">
               <PropertyRef Name="QuarterID" />
@@ -939,8 +974,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Manager_TeamID">
-          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="0..1" />
-          <End Type="DatabaseModel.Manager" Role="Manager" Multiplicity="*" />
+          <End Type="Model.Team" Role="Team" Multiplicity="0..1" />
+          <End Type="Model.Manager" Role="Manager" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="TeamID" />
@@ -951,8 +986,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TeamManager_Resource">
-          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="0..1" />
-          <End Type="DatabaseModel.Manager" Role="Manager" Multiplicity="*" />
+          <End Type="Model.Resource" Role="Resource" Multiplicity="0..1" />
+          <End Type="Model.Manager" Role="Manager" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -963,8 +998,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Goal_Resource">
-          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="1" />
-          <End Type="DatabaseModel.Resource_Goal" Role="Resource_Goal" Multiplicity="*" />
+          <End Type="Model.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="Model.Resource_Goal" Role="Resource_Goal" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -975,8 +1010,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Performance_Resource">
-          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="1" />
-          <End Type="DatabaseModel.Resource_Performance" Role="Resource_Performance" Multiplicity="*" />
+          <End Type="Model.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="Model.Resource_Performance" Role="Resource_Performance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -987,8 +1022,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_RoleID">
-          <End Type="DatabaseModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="*" />
+          <End Type="Model.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="Model.Resource" Role="Resource" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Role">
               <PropertyRef Name="RoleID" />
@@ -999,8 +1034,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_TeamID">
-          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="0..1" />
-          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="*" />
+          <End Type="Model.Team" Role="Team" Multiplicity="0..1" />
+          <End Type="Model.Resource" Role="Resource" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="TeamID" />
@@ -1011,8 +1046,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TeamLead_Resource">
-          <End Type="DatabaseModel.Resource" Role="Resource" Multiplicity="1" />
-          <End Type="DatabaseModel.TeamLead" Role="TeamLead" Multiplicity="*" />
+          <End Type="Model.Resource" Role="Resource" Multiplicity="1" />
+          <End Type="Model.TeamLead" Role="TeamLead" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource">
               <PropertyRef Name="ResourceID" />
@@ -1023,8 +1058,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Resource_Goal_Performance_Resource_GoalId">
-          <End Type="DatabaseModel.Resource_Goal" Role="Resource_Goal" Multiplicity="1" />
-          <End Type="DatabaseModel.Resource_Goal_Performance" Role="Resource_Goal_Performance" Multiplicity="*" />
+          <End Type="Model.Resource_Goal" Role="Resource_Goal" Multiplicity="1" />
+          <End Type="Model.Resource_Goal_Performance" Role="Resource_Goal_Performance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Resource_Goal">
               <PropertyRef Name="Resource_GoalID" />
@@ -1035,8 +1070,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_TeamLead_TeamID">
-          <End Type="DatabaseModel.Team" Role="Team" Multiplicity="0..1" />
-          <End Type="DatabaseModel.TeamLead" Role="TeamLead" Multiplicity="*" />
+          <End Type="Model.Team" Role="Team" Multiplicity="0..1" />
+          <End Type="Model.TeamLead" Role="TeamLead" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Team">
               <PropertyRef Name="TeamID" />
@@ -1046,31 +1081,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetQuarterFromYear_Result">
+          <Property Type="Int32" Name="QuarterID" Nullable="false" />
+          <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
+          <Property Type="DateTime" Name="GoalCreateFrom" Nullable="true" />
+          <Property Type="DateTime" Name="GoalCreateTo" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
-          <FunctionImportMapping FunctionImportName="AddResource" FunctionName="DatabaseModel.Store.AddResource" />
-          <FunctionImportMapping FunctionImportName="AssignGoalToResource" FunctionName="DatabaseModel.Store.AssignGoalToResource" />
-          <FunctionImportMapping FunctionImportName="calculateResourceGoalRating" FunctionName="DatabaseModel.Store.calculateResourceGoalRating" />
-          <FunctionImportMapping FunctionImportName="CheckQuater" FunctionName="DatabaseModel.Store.CheckQuater">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <FunctionImportMapping FunctionImportName="AddResource" FunctionName="Model.Store.AddResource" />
+          <FunctionImportMapping FunctionImportName="AssignGoalToResource" FunctionName="Model.Store.AssignGoalToResource" />
+          <FunctionImportMapping FunctionImportName="calculateResourceGoalRating" FunctionName="Model.Store.calculateResourceGoalRating" />
+          <FunctionImportMapping FunctionImportName="CheckQuater" FunctionName="Model.Store.CheckQuater">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.CheckQuater_Result">
+              <ComplexTypeMapping TypeName="Model.CheckQuater_Result">
                 <ScalarProperty Name="QuarterID" ColumnName="QuarterID" />
                 <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
                 <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Delete_AllRulesOfGoal" FunctionName="DatabaseModel.Store.Delete_AllRulesOfGoal" />
-          <FunctionImportMapping FunctionImportName="DeleteGoalMaster" FunctionName="DatabaseModel.Store.DeleteGoalMaster" />
-          <FunctionImportMapping FunctionImportName="DeleteGoalRule" FunctionName="DatabaseModel.Store.DeleteGoalRule" />
-          <FunctionImportMapping FunctionImportName="DeleteResourceGoal" FunctionName="DatabaseModel.Store.DeleteResourceGoal" />
-          <FunctionImportMapping FunctionImportName="GetAllGoalsOfResource" FunctionName="DatabaseModel.Store.GetAllGoalsOfResource">
+          <FunctionImportMapping FunctionImportName="Delete_AllRulesOfGoal" FunctionName="Model.Store.Delete_AllRulesOfGoal" />
+          <FunctionImportMapping FunctionImportName="DeleteGoalMaster" FunctionName="Model.Store.DeleteGoalMaster" />
+          <FunctionImportMapping FunctionImportName="DeleteGoalRule" FunctionName="Model.Store.DeleteGoalRule" />
+          <FunctionImportMapping FunctionImportName="DeleteResourceGoal" FunctionName="Model.Store.DeleteResourceGoal" />
+          <FunctionImportMapping FunctionImportName="GetAllGoalsOfResource" FunctionName="Model.Store.GetAllGoalsOfResource">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetAllGoalsOfResource_Result">
+              <ComplexTypeMapping TypeName="Model.GetAllGoalsOfResource_Result">
                 <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
                 <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
                 <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
@@ -1078,9 +1119,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAllResourceForGoal" FunctionName="DatabaseModel.Store.GetAllResourceForGoal">
+          <FunctionImportMapping FunctionImportName="GetAllResourceForGoal" FunctionName="Model.Store.GetAllResourceForGoal">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetAllResourceForGoal_Result">
+              <ComplexTypeMapping TypeName="Model.GetAllResourceForGoal_Result">
                 <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
                 <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
                 <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
@@ -1088,9 +1129,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetGoalDetails" FunctionName="DatabaseModel.Store.GetGoalDetails">
+          <FunctionImportMapping FunctionImportName="GetGoalDetails" FunctionName="Model.Store.GetGoalDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetGoalDetails_Result">
+              <ComplexTypeMapping TypeName="Model.GetGoalDetails_Result">
                 <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
                 <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
                 <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
@@ -1101,9 +1142,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetGoalRuleDetails" FunctionName="DatabaseModel.Store.GetGoalRuleDetails">
+          <FunctionImportMapping FunctionImportName="GetGoalRuleDetails" FunctionName="Model.Store.GetGoalRuleDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetGoalRuleDetails_Result">
+              <ComplexTypeMapping TypeName="Model.GetGoalRuleDetails_Result">
                 <ScalarProperty Name="Goal_RuleID" ColumnName="Goal_RuleID" />
                 <ScalarProperty Name="Performance_RangeFrom" ColumnName="Performance_RangeFrom" />
                 <ScalarProperty Name="Performance_RangeTo" ColumnName="Performance_RangeTo" />
@@ -1111,9 +1152,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetQuarterDetails" FunctionName="DatabaseModel.Store.GetQuarterDetails">
+          <FunctionImportMapping FunctionImportName="GetQuarterDetails" FunctionName="Model.Store.GetQuarterDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetQuarterDetails_Result">
+              <ComplexTypeMapping TypeName="Model.GetQuarterDetails_Result">
                 <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
                 <ScalarProperty Name="QuarterYear" ColumnName="QuarterYear" />
                 <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
@@ -1121,20 +1162,10 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetQuarterFromYear" FunctionName="DatabaseModel.Store.GetQuarterFromYear">
+          <FunctionImportMapping FunctionImportName="GetRating" FunctionName="Model.Store.GetRating" />
+          <FunctionImportMapping FunctionImportName="GetResouceDetails" FunctionName="Model.Store.GetResouceDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetQuarterFromYear_Result">
-                <ScalarProperty Name="QuarterID" ColumnName="QuarterID" />
-                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
-                <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
-                <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetRating" FunctionName="DatabaseModel.Store.GetRating" />
-          <FunctionImportMapping FunctionImportName="GetResouceDetails" FunctionName="DatabaseModel.Store.GetResouceDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetResouceDetails_Result">
+              <ComplexTypeMapping TypeName="Model.GetResouceDetails_Result">
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
@@ -1142,9 +1173,9 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetResourceByTeam" FunctionName="DatabaseModel.Store.GetResourceByTeam">
+          <FunctionImportMapping FunctionImportName="GetResourceByTeam" FunctionName="Model.Store.GetResourceByTeam">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetResourceByTeam_Result">
+              <ComplexTypeMapping TypeName="Model.GetResourceByTeam_Result">
                 <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -1152,17 +1183,17 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetResourceGoalDetails" FunctionName="DatabaseModel.Store.GetResourceGoalDetails">
+          <FunctionImportMapping FunctionImportName="GetResourceGoalDetails" FunctionName="Model.Store.GetResourceGoalDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetResourceGoalDetails_Result">
+              <ComplexTypeMapping TypeName="Model.GetResourceGoalDetails_Result">
                 <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetTeamDetails" FunctionName="DatabaseModel.Store.GetTeamDetails">
+          <FunctionImportMapping FunctionImportName="GetTeamDetails" FunctionName="Model.Store.GetTeamDetails">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetTeamDetails_Result">
+              <ComplexTypeMapping TypeName="Model.GetTeamDetails_Result">
                 <ScalarProperty Name="TeamName" ColumnName="TeamName" />
                 <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
                 <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
@@ -1172,24 +1203,24 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getYearForQuarter" FunctionName="DatabaseModel.Store.getYearForQuarter">
+          <FunctionImportMapping FunctionImportName="InsertGoalMaster" FunctionName="Model.Store.InsertGoalMaster" />
+          <FunctionImportMapping FunctionImportName="InsertGoalQuarter" FunctionName="Model.Store.InsertGoalQuarter" />
+          <FunctionImportMapping FunctionImportName="InsertGoalRules" FunctionName="Model.Store.InsertGoalRules" />
+          <FunctionImportMapping FunctionImportName="UpdateGoalMaster" FunctionName="Model.Store.UpdateGoalMaster" />
+          <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="Model.Store.UpdateGoalRules" />
+          <FunctionImportMapping FunctionImportName="UpdateResourceDetails" FunctionName="Model.Store.UpdateResourceDetails" />
+          <FunctionImportMapping FunctionImportName="UpdateResourceGoal" FunctionName="Model.Store.UpdateResourceGoal" />
+          <FunctionImportMapping FunctionImportName="getYearForQuarter" FunctionName="Model.Store.getYearForQuarter">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.getYearForQuarter_Result">
+              <ComplexTypeMapping TypeName="Model.getYearForQuarter_Result">
                 <ScalarProperty Name="QuarterYear" ColumnName="QuarterYear" />
                 <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
                 <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="InsertGoalMaster" FunctionName="DatabaseModel.Store.InsertGoalMaster" />
-          <FunctionImportMapping FunctionImportName="InsertGoalQuarter" FunctionName="DatabaseModel.Store.InsertGoalQuarter" />
-          <FunctionImportMapping FunctionImportName="InsertGoalRules" FunctionName="DatabaseModel.Store.InsertGoalRules" />
-          <FunctionImportMapping FunctionImportName="UpdateGoalMaster" FunctionName="DatabaseModel.Store.UpdateGoalMaster" />
-          <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="DatabaseModel.Store.UpdateGoalRules" />
-          <FunctionImportMapping FunctionImportName="UpdateResourceDetails" FunctionName="DatabaseModel.Store.UpdateResourceDetails" />
-          <FunctionImportMapping FunctionImportName="UpdateResourceGoal" FunctionName="DatabaseModel.Store.UpdateResourceGoal" />
           <EntitySetMapping Name="Departments">
-            <EntityTypeMapping TypeName="DatabaseModel.Department">
+            <EntityTypeMapping TypeName="Model.Department">
               <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="Department_Name" ColumnName="Department_Name" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
@@ -1197,7 +1228,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Goal_Master">
-            <EntityTypeMapping TypeName="DatabaseModel.Goal_Master">
+            <EntityTypeMapping TypeName="Model.Goal_Master">
               <MappingFragment StoreEntitySet="Goal_Master">
                 <ScalarProperty Name="QuarterId" ColumnName="QuarterId" />
                 <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
@@ -1211,7 +1242,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Goal_Quarter">
-            <EntityTypeMapping TypeName="DatabaseModel.Goal_Quarter">
+            <EntityTypeMapping TypeName="Model.Goal_Quarter">
               <MappingFragment StoreEntitySet="Goal_Quarter">
                 <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
                 <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
@@ -1222,7 +1253,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Goal_Rules">
-            <EntityTypeMapping TypeName="DatabaseModel.Goal_Rules">
+            <EntityTypeMapping TypeName="Model.Goal_Rules">
               <MappingFragment StoreEntitySet="Goal_Rules">
                 <ScalarProperty Name="GoalId" ColumnName="GoalId" />
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
@@ -1233,7 +1264,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Managers">
-            <EntityTypeMapping TypeName="DatabaseModel.Manager">
+            <EntityTypeMapping TypeName="Model.Manager">
               <MappingFragment StoreEntitySet="Manager">
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="ManagerResourceID" ColumnName="ManagerResourceID" />
@@ -1242,7 +1273,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resources">
-            <EntityTypeMapping TypeName="DatabaseModel.Resource">
+            <EntityTypeMapping TypeName="Model.Resource">
               <MappingFragment StoreEntitySet="Resource">
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
@@ -1253,7 +1284,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resource_Goal">
-            <EntityTypeMapping TypeName="DatabaseModel.Resource_Goal">
+            <EntityTypeMapping TypeName="Model.Resource_Goal">
               <MappingFragment StoreEntitySet="Resource_Goal">
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
@@ -1263,7 +1294,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resource_Goal_Performance">
-            <EntityTypeMapping TypeName="DatabaseModel.Resource_Goal_Performance">
+            <EntityTypeMapping TypeName="Model.Resource_Goal_Performance">
               <MappingFragment StoreEntitySet="Resource_Goal_Performance">
                 <ScalarProperty Name="Resource_GoalId" ColumnName="Resource_GoalId" />
                 <ScalarProperty Name="Resource_Rating" ColumnName="Resource_Rating" />
@@ -1273,7 +1304,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Resource_Performance">
-            <EntityTypeMapping TypeName="DatabaseModel.Resource_Performance">
+            <EntityTypeMapping TypeName="Model.Resource_Performance">
               <MappingFragment StoreEntitySet="Resource_Performance">
                 <ScalarProperty Name="Resource_Performance1" ColumnName="Resource_Performance" />
                 <ScalarProperty Name="QuaterID" ColumnName="QuaterID" />
@@ -1283,7 +1314,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="DatabaseModel.Role">
+            <EntityTypeMapping TypeName="Model.Role">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
@@ -1291,7 +1322,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Teams">
-            <EntityTypeMapping TypeName="DatabaseModel.Team">
+            <EntityTypeMapping TypeName="Model.Team">
               <MappingFragment StoreEntitySet="Team">
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="TeamName" ColumnName="TeamName" />
@@ -1300,7 +1331,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TeamLeads">
-            <EntityTypeMapping TypeName="DatabaseModel.TeamLead">
+            <EntityTypeMapping TypeName="Model.TeamLead">
               <MappingFragment StoreEntitySet="TeamLead">
                 <ScalarProperty Name="TeamLeadResourceID" ColumnName="TeamLeadResourceID" />
                 <ScalarProperty Name="TeamID" ColumnName="TeamID" />
@@ -1308,6 +1339,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetQuarterFromYear" FunctionName="Model.Store.GetQuarterFromYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.GetQuarterFromYear_Result">
+                <ScalarProperty Name="QuarterID" ColumnName="QuarterID" />
+                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
+                <ScalarProperty Name="GoalCreateFrom" ColumnName="GoalCreateFrom" />
+                <ScalarProperty Name="GoalCreateTo" ColumnName="GoalCreateTo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,8 +1,10 @@
 ﻿@model List<ZC_IT_TimeTracking.Goal_Master>
+<input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none"/>
 <div class="table table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
+                <th><input type="checkbox" id="SelectAll" /></th>
                 <th>#</th>
                 <th>Title</th>
                 <th>Description</th>
@@ -19,7 +21,7 @@
             {
                 i++;
                 <tr>
-
+                    <td><input type="checkbox" class="SelectedGoal" value="@goal.Goal_MasterID" /></td>
                     <td>@i</td>
                     <td>@goal.GoalTitle</td>
                     <td>@goal.GoalDescription</td>
@@ -35,5 +37,5 @@
                 </tr>
             }
         </tbody>
-    </table>    
+    </table>
 </div>

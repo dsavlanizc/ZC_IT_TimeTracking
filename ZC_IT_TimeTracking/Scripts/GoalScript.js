@@ -399,4 +399,51 @@
             }
         });
     });
+
+    //selection of goal
+    $("#SelectAll").click(function () {
+        if (this.checked)
+            $("#DeleteMultiGoals").show();
+        else
+            $("#DeleteMultiGoals").hide();
+        $('.SelectedGoal').prop('checked', this.checked);
+    });
+    $('.SelectedGoal').change(function () {
+        if ($('.SelectedGoal:checked').length > 0)
+            $("#DeleteMultiGoals").show();
+        else
+            $("#DeleteMultiGoals").hide();
+    });
+    $("#DeleteMultiGoals").click(function () {
+        bootbox.confirm("Are you sure to delete selected goal(s)?", function (result) {
+            if (result) {
+                var ids = [];
+                $('.SelectedGoal:checked').each(function () {
+                    ids.push(this.value);
+                });
+                if (ids.length > 0) {
+                    $.ajax({
+                        url: "/Home/DeleteGoal",
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify({ Id: ids }),
+                        beforeSend: showLoading(),
+                        success: function (data) {
+                            hideLoading();
+                            if (data.success) {
+                                alert(data.message);
+                                location.reload(true);
+                            }
+                        },
+                        error: function (data) {
+                            hideLoading();
+                            alert(data.message);
+                            console.log(data);
+                        }
+                    });
+                }
+            }
+        });
+    });
 });
