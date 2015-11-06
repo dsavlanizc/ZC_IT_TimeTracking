@@ -104,15 +104,22 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteGoal(int id)
+        public JsonResult DeleteGoal(int[] id)
         {
             try
             {
-                int del = DbContext.DeleteGoalMaster(id);
-                if (del == 0)
-                    return Json(new JsonResponse { message = "No such goal exist!", success = false });
+                int count = 0;
+                foreach (int i in id)
+                {
+                    int res = DbContext.DeleteGoalMaster(i);
+                    if (res > 0) count++;
+                }
+                if (count == id.Length)
+                    return Json(new JsonResponse { message = "Goal(s) Deleted Successfully!", success = true });
+                else if (count > 0)
+                    return Json(new JsonResponse { message = "Some of goal(s) deleted!", success = true });
                 else
-                    return Json(new JsonResponse { message = "Goal Deleted Successfully!", success = true });
+                    return Json(new JsonResponse { message = "No such goal exist!", success = false });
             }
             catch
             {
