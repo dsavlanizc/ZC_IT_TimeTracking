@@ -402,11 +402,11 @@
 
     //selection of goal
     $("#SelectAll").click(function () {
-        if (this.checked)
+        $('.SelectedGoal').prop('checked', this.checked);
+        if ($('.SelectedGoal:checked').length > 0)
             $("#DeleteMultiGoals").show();
         else
             $("#DeleteMultiGoals").hide();
-        $('.SelectedGoal').prop('checked', this.checked);
     });
     $('.SelectedGoal').change(function () {
         if ($('.SelectedGoal:checked').length > 0)
@@ -432,8 +432,9 @@
                         success: function (data) {
                             hideLoading();
                             if (data.success) {
-                                alert(data.message);
-                                location.reload(true);
+                                bootbox.alert(data.message, function () {
+                                    location.reload(true);
+                                });
                             }
                         },
                         error: function (data) {
@@ -445,5 +446,155 @@
                 }
             }
         });
+    });
+    onPageClick = function (page) {
+        var form = $("<form method='POST'></form>");        
+        form.append('<input type="number" name="page" value="' + page + '">');
+        form.submit();
+    }
+
+    //Assign Goal region
+
+    $("#ButtonAssignGoal").click(function (e) {
+        e.preventDefault();
+        window.location.href = '/Home/AssignGoal';
+    });
+    //Get Description from Selected Title
+    $("#Goal_MasterID").change(function (e) {
+        e.preventDefault();
+        var TitleID = $(this).find('option:selected').val();
+        if (TitleID == "")
+            $("#GoalDescription").val('');
+        $.ajax({
+            url: "GetDescription",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TitleID: TitleID }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                //console.log(dt);
+                if (dt.success) 
+                 $("#GoalDescription").val(dt.TitleData);
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+    //Assign form Validation
+    var AssignValidation = $("#GoalAssignForm").validate({
+        rules: {
+            GoalTitle: {               
+                required: true
+            },
+            GoalDescription: {                
+                required: true
+            },
+            Team: {
+                required: true
+            },
+            TeamMember: {
+                required: true
+            },
+            Weight: {
+                required: true
+            }
+        },
+        messages:{
+            GoalDescription:{
+                required:"First Select Title From Above list..!"
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    
+    //Get TeamMember from Selected Team
+    $("#TeamID").change(function (e) {
+        e.preventDefault();
+        var TeamID = $(this).find('option:selected').val();
+        $.ajax({
+            url: "GetTeamMember",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TeamID: TeamID }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                //console.log(dt)
+                if (dt.success) {
+                    $("#TeamMember").html('');
+                    for (var val in dt.TeamMember)
+                    {
+                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + "</option>");
+                    }                    
+                }
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+    
+    //Assign Goal To Resourse
+    $("#ButtonAssign").click(function (e) {
+        e.preventDefault();
+        if ($("#GoalAssignForm").valid()) {
+            var AssignData = {};
+            AssignData.ResourceID = [];
+            var rid = $("#TeamMember option:selected").each(function () {
+                AssignData.ResourceID.push(this.value);
+            });
+            AssignData.Goal_MasterID = $("#Goal_MasterID option:selected").val();
+            AssignData.Weight = $("#Weight").val();
+
+            //Assign data
+            $.ajax({
+                url: "/Home/AssignGoal",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ AssignData: AssignData }),
+                beforeSend: showLoading(),
+                success: function (dt) {
+                    hideLoading();
+                    bootbox.alert(dt.message, function () {
+                        if (dt.success) {
+                            location.reload(true);
+                        }
+                    });
+                },
+                error: function (dt) {
+                    hideLoading();
+                    if (dt.readyState == 0) {
+                        bootbox.alert("Please check your internet connection!");
+                    }
+                    console.log(dt);
+                }
+            });
+            console.log(AssignData.ResourceID);
+        }
     });
 });

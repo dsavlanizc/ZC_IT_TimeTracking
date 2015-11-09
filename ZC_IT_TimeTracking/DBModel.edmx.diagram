@@ -13,10 +13,10 @@
         <EntityTypeShape EntityType="Model.Resource" Width="1.5" PointX="5.25" PointY="5.125" />
         <EntityTypeShape EntityType="Model.Resource_Goal" Width="1.5" PointX="7.5" PointY="2.5" />
         <EntityTypeShape EntityType="Model.Resource_Goal_Performance" Width="1.5" PointX="9.75" PointY="2.75" />
-        <EntityTypeShape EntityType="Model.Resource_Performance" Width="1.5" PointX="10.5" PointY="5.625" />
+        <EntityTypeShape EntityType="Model.Resource_Performance" Width="1.5" PointX="7.5" PointY="8.625" />
         <EntityTypeShape EntityType="Model.Role" Width="1.5" PointX="3" PointY="3" />
         <EntityTypeShape EntityType="Model.Team" Width="1.5" PointX="3" PointY="5.5" />
-        <EntityTypeShape EntityType="Model.TeamLead" Width="1.5" PointX="7.5" PointY="8.75" />
+        <EntityTypeShape EntityType="Model.TeamLead" Width="1.5" PointX="10.5" PointY="5.75" />
         <AssociationConnector Association="Model.FK_Team_DepartmentID" />
         <AssociationConnector Association="Model.FK_Goal_Master_QuaeterID" />
         <AssociationConnector Association="Model.FK_Goal_Rules_Goal_Master" />

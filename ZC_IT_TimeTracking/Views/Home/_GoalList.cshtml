@@ -1,41 +1,67 @@
-﻿@model List<ZC_IT_TimeTracking.Goal_Master>
-<input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none"/>
-<div class="table table-responsive">
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th><input type="checkbox" id="SelectAll" /></th>
-                <th>#</th>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Quarter</th>
-                <th>Year</th>
-                <th>Unit of Measurement</th>
-                <th>Measurement Value</th>
-                <th align="center">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @{int i = 0;}
-            @foreach (Goal_Master goal in Model)
-            {
-                i++;
+﻿@using ZC_IT_TimeTracking.Models
+@if (Model.Count == 0)
+{
+        <h1>No records available</h1>
+}
+else
+{
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td><input type="checkbox" class="SelectedGoal" value="@goal.Goal_MasterID" /></td>
-                    <td>@i</td>
-                    <td>@goal.GoalTitle</td>
-                    <td>@goal.GoalDescription</td>
-                    <td>@goal.Goal_Quarter.GoalQuarter</td>
-                    <td>@goal.Goal_Quarter.QuarterYear</td>
-                    <td>@goal.UnitOfMeasurement</td>
-                    <td>@goal.MeasurementValue</td>
-                    <td align="center">
-                        <span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="View Goal" onclick="ViewGoal(@goal.Goal_MasterID)">&nbsp;</span>
-                        <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Goal" onclick="EditGoal(@goal.Goal_MasterID)">&nbsp;</span>
-                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Goal" onclick="DeleteGoal(@goal.Goal_MasterID)"></span>
-                    </td>
+                    <th><input type="checkbox" id="SelectAll" /></th>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Quarter</th>
+                    <th>Year</th>
+                    <th>Unit of Measurement</th>
+                    <th>Measurement Value</th>
+                    <th align="center">Action</th>
                 </tr>
+            </thead>
+            <tbody>
+                @{int c = (ViewBag.page - 1) * Utilities.RecordPerPage;}
+                @foreach (GetSpecificRecordsOfGoal_Result goal in Model)
+            {
+                c++;
+                    <tr>
+                        <td><input type="checkbox" class="SelectedGoal" value="@goal.Goal_MasterID" /></td>
+                        <td>@c</td>
+                        <td>@goal.GoalTitle</td>
+                        <td>@goal.GoalDescription</td>
+                        <td>@goal.GoalQuarter</td>
+                        <td>@goal.QuarterYear</td>
+                        <td>@goal.UnitOfMeasurement</td>
+                        <td>@goal.MeasurementValue</td>
+                        <td align="center">
+                            <span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="View Goal" onclick="ViewGoal(@goal.Goal_MasterID)">&nbsp;</span>
+                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Goal" onclick="EditGoal(@goal.Goal_MasterID)">&nbsp;</span>
+                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Goal" onclick="DeleteGoal(@goal.Goal_MasterID)"></span>
+                        </td>
+                    </tr>
             }
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    <div>
+        <ul class="pagination">
+            @{
+            double count = new DatabaseEntities().Goal_Master.Count();
+            double len = Math.Ceiling(count / Utilities.RecordPerPage);
+            for (int i = 1; i <= len; i++)
+            {
+                if (i == @ViewBag.page)
+                {
+                    <li onclick="onPageClick(@i)" class="active"><a>@i</a></li>
+                }
+                else
+                {
+                    <li onclick="onPageClick(@i)"><a>@i</a></li>
+                }
+            }
+            }
+        </ul>
+    </div>
+    <div>
+        <input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none" />
+    </div>
+}
