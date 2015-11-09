@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
@@ -347,9 +347,15 @@
           <Parameter Name="resourceId" Type="int" Mode="In" />
           <Parameter Name="GoalId" Type="int" Mode="In" />
         </Function>
+        <Function Name="getSpecificRecordOftable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="startFrom" Type="int" Mode="In" />
+          <Parameter Name="NoOfRecords" Type="int" Mode="In" />
+          <Parameter Name="tableName" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="GetSpecificRecordsOfGoal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="startFrom" Type="int" Mode="In" />
           <Parameter Name="NoOfRecords" Type="int" Mode="In" />
+          <Parameter Name="totalRecords" Type="int" Mode="InOut" />
         </Function>
         <Function Name="GetTeamDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="teamId" Type="int" Mode="In" />
@@ -378,6 +384,12 @@
           <Parameter Name="PerformanceRangeTo" Type="int" Mode="In" />
           <Parameter Name="Rating" Type="float" Mode="In" />
           <Parameter Name="GoalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SearchGoalByTitle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
+          <Parameter Name="startFrom" Type="int" Mode="In" />
+          <Parameter Name="NoOfRecords" Type="int" Mode="In" />
+          <Parameter Name="MatchedRecords" Type="int" Mode="InOut" />
         </Function>
         <Function Name="UpdateGoalMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Goal_Id" Type="int" Mode="In" />
@@ -477,8 +489,7 @@
             <End Role="Manager" EntitySet="Manager" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -877,34 +888,34 @@
             <Parameter Name="QYear" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Delete_AllRulesOfGoal">
-            <Parameter Name="goalID" Mode="In" Type="Int32" />
+          <Parameter Name="goalID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteGoalMaster">
-            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteGoalRule">
-            <Parameter Name="GoalRuleId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalRuleId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="DeleteResourceGoal">
-            <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllGoalsOfResource" ReturnType="Collection(DatabaseModel.GetAllGoalsOfResource_Result)">
-            <Parameter Name="ResourceId" Mode="In" Type="Int32" />
+          <Parameter Name="ResourceId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetAllResourceForGoal" ReturnType="Collection(DatabaseModel.GetAllResourceForGoal_Result)">
-            <Parameter Name="Goal_id" Mode="In" Type="Int32" />
+          <Parameter Name="Goal_id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoalDetails" ReturnType="Collection(DatabaseModel.GetGoalDetails_Result)">
-            <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
+          <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoalRuleDetails" ReturnType="Collection(DatabaseModel.GetGoalRuleDetails_Result)">
-            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+          <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetQuarterDetails" ReturnType="Collection(DatabaseModel.GetQuarterDetails_Result)">
-            <Parameter Name="QuaterId" Mode="In" Type="Int32" />
+          <Parameter Name="QuaterId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetQuarterFromYear" ReturnType="Collection(DatabaseModel.GetQuarterFromYear_Result)">
-            <Parameter Name="qyear" Mode="In" Type="Int32" />
+          <Parameter Name="qyear" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetRating">
             <Parameter Name="goalId" Mode="In" Type="Int32" />
@@ -912,24 +923,30 @@
             <Parameter Name="rating" Mode="InOut" Type="Double" />
           </FunctionImport>
           <FunctionImport Name="GetResouceDetails" ReturnType="Collection(DatabaseModel.GetResouceDetails_Result)">
-            <Parameter Name="resourceID" Mode="In" Type="Int32" />
+          <Parameter Name="resourceID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetResourceByTeam" ReturnType="Collection(DatabaseModel.GetResourceByTeam_Result)">
-            <Parameter Name="TeamId" Mode="In" Type="Int32" />
+          <Parameter Name="TeamId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetResourceGoalDetails" ReturnType="Collection(DatabaseModel.GetResourceGoalDetails_Result)">
             <Parameter Name="resourceId" Mode="In" Type="Int32" />
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="getSpecificRecordOftable">
+            <Parameter Name="startFrom" Mode="In" Type="Int32" />
+            <Parameter Name="NoOfRecords" Mode="In" Type="Int32" />
+            <Parameter Name="tableName" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="GetSpecificRecordsOfGoal" ReturnType="Collection(DatabaseModel.GetSpecificRecordsOfGoal_Result)">
             <Parameter Name="startFrom" Mode="In" Type="Int32" />
             <Parameter Name="NoOfRecords" Mode="In" Type="Int32" />
+            <Parameter Name="totalRecords" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTeamDetails" ReturnType="Collection(DatabaseModel.GetTeamDetails_Result)">
-            <Parameter Name="teamId" Mode="In" Type="Int32" />
+          <Parameter Name="teamId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="getYearForQuarter" ReturnType="Collection(DatabaseModel.getYearForQuarter_Result)">
-            <Parameter Name="quarter" Mode="In" Type="Int32" />
+          <Parameter Name="quarter" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="InsertGoalMaster">
             <Parameter Name="Goal_Title" Mode="In" Type="String" />
@@ -952,6 +969,12 @@
             <Parameter Name="PerformanceRangeTo" Mode="In" Type="Int32" />
             <Parameter Name="Rating" Mode="In" Type="Double" />
             <Parameter Name="GoalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SearchGoalByTitle" ReturnType="Collection(DatabaseModel.SearchGoalByTitle_Result)">
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="startFrom" Mode="In" Type="Int32" />
+            <Parameter Name="NoOfRecords" Mode="In" Type="Int32" />
+            <Parameter Name="MatchedRecords" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateGoalMaster">
             <Parameter Name="Goal_Id" Mode="In" Type="Int32" />
@@ -1065,6 +1088,17 @@
           <Property Type="Int32" Name="QuarterYear" Nullable="false" />
           <Property Type="DateTime" Name="GoalCreateFrom" Nullable="true" />
           <Property Type="DateTime" Name="GoalCreateTo" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SearchGoalByTitle_Result">
+          <Property Type="Int32" Name="Goal_MasterID" Nullable="false" />
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="GoalDescription" Nullable="true" />
+          <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
+          <Property Type="Int32" Name="QuarterYear" Nullable="false" />
+          <Property Type="String" Name="UnitOfMeasurement" Nullable="false" MaxLength="20" />
+          <Property Type="Double" Name="MeasurementValue" Nullable="false" />
+          <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
+          <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1300,6 +1334,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getSpecificRecordOftable" FunctionName="DatabaseModel.Store.getSpecificRecordOftable" />
           <FunctionImportMapping FunctionImportName="GetSpecificRecordsOfGoal" FunctionName="DatabaseModel.Store.GetSpecificRecordsOfGoal">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DatabaseModel.GetSpecificRecordsOfGoal_Result">
@@ -1339,6 +1374,21 @@
           <FunctionImportMapping FunctionImportName="InsertGoalMaster" FunctionName="DatabaseModel.Store.InsertGoalMaster" />
           <FunctionImportMapping FunctionImportName="InsertGoalQuarter" FunctionName="DatabaseModel.Store.InsertGoalQuarter" />
           <FunctionImportMapping FunctionImportName="InsertGoalRules" FunctionName="DatabaseModel.Store.InsertGoalRules" />
+          <FunctionImportMapping FunctionImportName="SearchGoalByTitle" FunctionName="DatabaseModel.Store.SearchGoalByTitle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.SearchGoalByTitle_Result">
+                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
+                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
+                <ScalarProperty Name="QuarterYear" ColumnName="QuarterYear" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateGoalMaster" FunctionName="DatabaseModel.Store.UpdateGoalMaster" />
           <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="DatabaseModel.Store.UpdateGoalRules" />
           <FunctionImportMapping FunctionImportName="UpdateResourceDetails" FunctionName="DatabaseModel.Store.UpdateResourceDetails" />

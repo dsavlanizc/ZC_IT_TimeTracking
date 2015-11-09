@@ -121,7 +121,7 @@
         $("#submitButton").attr("disabled", false);
         $('#RuleListTable').html("");
         $('#formInput input,textarea,select').attr('readonly', false);
-        var ExistId = $('#GoalQuarter option').attr('id');        
+        var ExistId = $('#GoalQuarter option').attr('id');
         $('#GoalQuarter option').text(ExistId);
     });
 
@@ -447,9 +447,16 @@
             }
         });
     });
-    onPageClick = function (page) {
-        var form = $("<form method='POST'></form>");        
-        form.append('<input type="number" name="page" value="' + page + '">');
-        form.submit();
-    }
+    $("#SearchByTitle").click(function () {
+        var txt = $("#SearchText").val().trim();
+        if (txt.length > 0)
+            $("#TitleString").val(txt);
+        else
+            $("#TitleString").val(null);
+        $("#PageForm").submit();
+    });
+    $("#ClearTitleSearch").click(function () {
+        $("#TitleString").val(null);
+        $("#PageForm").submit();
+    });
 });

@@ -242,7 +242,7 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceGoalDetails_Result>("GetResourceGoalDetails", resourceIdParameter, goalIdParameter);
         }
     
-        public virtual ObjectResult<GetSpecificRecordsOfGoal_Result> GetSpecificRecordsOfGoal(Nullable<int> startFrom, Nullable<int> noOfRecords)
+        public virtual int getSpecificRecordOftable(Nullable<int> startFrom, Nullable<int> noOfRecords, string tableName)
         {
             var startFromParameter = startFrom.HasValue ?
                 new ObjectParameter("startFrom", startFrom) :
@@ -252,7 +252,24 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("NoOfRecords", noOfRecords) :
                 new ObjectParameter("NoOfRecords", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSpecificRecordsOfGoal_Result>("GetSpecificRecordsOfGoal", startFromParameter, noOfRecordsParameter);
+            var tableNameParameter = tableName != null ?
+                new ObjectParameter("tableName", tableName) :
+                new ObjectParameter("tableName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("getSpecificRecordOftable", startFromParameter, noOfRecordsParameter, tableNameParameter);
+        }
+    
+        public virtual ObjectResult<GetSpecificRecordsOfGoal_Result> GetSpecificRecordsOfGoal(Nullable<int> startFrom, Nullable<int> noOfRecords, ObjectParameter totalRecords)
+        {
+            var startFromParameter = startFrom.HasValue ?
+                new ObjectParameter("startFrom", startFrom) :
+                new ObjectParameter("startFrom", typeof(int));
+    
+            var noOfRecordsParameter = noOfRecords.HasValue ?
+                new ObjectParameter("NoOfRecords", noOfRecords) :
+                new ObjectParameter("NoOfRecords", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSpecificRecordsOfGoal_Result>("GetSpecificRecordsOfGoal", startFromParameter, noOfRecordsParameter, totalRecords);
         }
     
         public virtual ObjectResult<GetTeamDetails_Result> GetTeamDetails(Nullable<int> teamId)
@@ -346,6 +363,23 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("GoalID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalRules", performanceRangeFromParameter, performanceRangeToParameter, ratingParameter, goalIDParameter);
+        }
+    
+        public virtual ObjectResult<SearchGoalByTitle_Result> SearchGoalByTitle(string title, Nullable<int> startFrom, Nullable<int> noOfRecords, ObjectParameter matchedRecords)
+        {
+            var titleParameter = title != null ?
+                new ObjectParameter("title", title) :
+                new ObjectParameter("title", typeof(string));
+    
+            var startFromParameter = startFrom.HasValue ?
+                new ObjectParameter("startFrom", startFrom) :
+                new ObjectParameter("startFrom", typeof(int));
+    
+            var noOfRecordsParameter = noOfRecords.HasValue ?
+                new ObjectParameter("NoOfRecords", noOfRecords) :
+                new ObjectParameter("NoOfRecords", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchGoalByTitle_Result>("SearchGoalByTitle", titleParameter, startFromParameter, noOfRecordsParameter, matchedRecords);
         }
     
         public virtual int UpdateGoalMaster(Nullable<int> goal_Id, string goal_Title, string goal_Description, string unit_Of_Measurement, Nullable<double> measurement_Value, Nullable<System.DateTime> createDate, Nullable<bool> is_HigherValueGood, Nullable<int> quaterID)

@@ -266,6 +266,9 @@
     <Compile Include="Role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SearchGoalByTitle_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Team.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
