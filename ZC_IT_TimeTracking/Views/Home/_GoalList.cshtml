@@ -1,25 +1,25 @@
 ﻿@using ZC_IT_TimeTracking.Models
+<div class="row">
+    <div class="col-lg-3">
+        <input type="text" id="SearchText" class="form-control" placeholder="Search by title" value="@ViewBag.SearchString" />
+    </div>
+    <button class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Search" id="SearchByTitle"><span class="glyphicon glyphicon-search"></span></button>
+    @if (ViewBag.SearchString != "")
+    {
+        <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Clear Search" id="ClearTitleSearch"><span class="glyphicon glyphicon-remove-sign"></span></button>
+    }
+    else
+    {
+        <button class="btn btn-danger" id="ClearTitleSearch" style="display:none;"><span class="glyphicon glyphicon-remove-sign"></span></button>
+    }
+</div>
 @if (Model.Count == 0)
 {
     <h1>No records available</h1>
 }
 else
 {
-    <div class="row">
-        <div class="col-lg-3">
-            <input type="text" id="SearchText" class="form-control" placeholder="Search by title" value="@ViewBag.SearchString" />
-        </div>
-        <button class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Search" id="SearchByTitle"><span class="glyphicon glyphicon-search"></span></button>
-        @if (ViewBag.SearchString != "")
-        {
-            <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Clear Search" id="ClearTitleSearch"><span class="glyphicon glyphicon-remove-sign"></span></button>
-        }
-        else
-        {
-            <button class="btn btn-danger" id="ClearTitleSearch" style="display:none;"><span class="glyphicon glyphicon-remove-sign"></span></button>
-        }
-    </div>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" style="margin-bottom:5px;">
         <thead>
             <tr>
                 <th><input type="checkbox" id="SelectAll" /></th>
@@ -58,29 +58,29 @@ else
             }
         </tbody>
     </table>
-    <form method="post" id="PageForm">
-        <input type="hidden" name="title" id="TitleString" value="@ViewBag.SearchString" />
-        <div>
-            <ul class="pagination">
-                @{
-    double count = ViewBag.TotalCount;
-            double len = Math.Ceiling(count / Utilities.RecordPerPage);
-            for (int i = 1; i <= len; i++)
-            {
-                if (i == @ViewBag.page)
-                {
-                    <li class="active"><input type="submit" name="page" class="btn btn-primary" value="@i" /></li>
-                }
-                else
-                {
-                    <li><input type="submit" name="page" class="btn btn-default" value="@i" /></li>
-                }
-            }
-                }
-            </ul>
-        </div>
-    </form>
     <div>
-        <input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none" />
+        <input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none;" />
     </div>
 }
+<form method="post" id="PageForm">
+    <input type="hidden" name="title" id="TitleString" value="@ViewBag.SearchString" />
+    <div>
+        <ul class="pagination" style="margin-top: 5px;">
+            @{
+                double count = ViewBag.TotalCount;
+                double len = Math.Ceiling(count / Utilities.RecordPerPage);
+                for (int i = 1; i <= len; i++)
+                {
+                    if (i == @ViewBag.page)
+                    {
+                        <li class="active"><input type="submit" name="page" class="btn btn-primary" value="@i" /></li>
+                    }
+                    else
+                    {
+                        <li><input type="submit" name="page" class="btn btn-default" value="@i" /></li>
+                    }
+                }
+            }
+        </ul>
+    </div>
+</form>
