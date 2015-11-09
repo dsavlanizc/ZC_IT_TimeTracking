@@ -295,7 +295,7 @@
             var RangeTo = $("#RangeTo").val();
             var Rating = $("#Rating").val();
             if (RangeFrom == "" || RangeTo == "" || Rating == "")
-                alert("Fill All The Field.!");
+                bootbox.alert("Fill All The Field.!");
             else {
                 $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit Rule" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete Rule" onclick="RemoveGoalRule(rule' + count + ')" /></td></tr>');
                 $("#RangeFrom").val(null);
@@ -402,11 +402,11 @@
 
     //selection of goal
     $("#SelectAll").click(function () {
-        if (this.checked)
+        $('.SelectedGoal').prop('checked', this.checked);
+        if ($('.SelectedGoal:checked').length > 0)
             $("#DeleteMultiGoals").show();
         else
             $("#DeleteMultiGoals").hide();
-        $('.SelectedGoal').prop('checked', this.checked);
     });
     $('.SelectedGoal').change(function () {
         if ($('.SelectedGoal:checked').length > 0)
@@ -432,8 +432,9 @@
                         success: function (data) {
                             hideLoading();
                             if (data.success) {
-                                alert(data.message);
-                                location.reload(true);
+                                bootbox.alert(data.message, function () {
+                                    location.reload(true);
+                                });
                             }
                         },
                         error: function (data) {
@@ -446,4 +447,9 @@
             }
         });
     });
+    onPageClick = function (page) {
+        var form = $("<form method='POST'></form>");        
+        form.append('<input type="number" name="page" value="' + page + '">');
+        form.submit();
+    }
 });

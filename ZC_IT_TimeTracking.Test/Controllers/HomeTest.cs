@@ -27,7 +27,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         {
             HomeController home = new HomeController();
             Goal goal = new Goal();
-            goal.Title = "Testing goal";
+            goal.Title = "Testing goal5";
             goal.Description = "goal testing description";
             goal.UnitOfMeasurement = "Days";
             goal.MeasurementValue = 12;
@@ -78,7 +78,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void IndexTest()
         {
             HomeController idx = new HomeController();
-            ViewResult result = idx.Index() as ViewResult;
+            ViewResult result = idx.Index(0) as ViewResult;
 
             List<Goal_Master> list = new DatabaseEntities().Goal_Master.AsNoTracking().ToList();
             List<Goal_Master> resultList = result.Model as List<Goal_Master>;

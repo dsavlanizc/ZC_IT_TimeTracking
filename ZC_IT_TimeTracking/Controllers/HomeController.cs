@@ -17,13 +17,15 @@ namespace ZC_IT_TimeTracking.Controllers
         private DatabaseEntities DbContext = new DatabaseEntities();
 
         // GET: Home
-        public ActionResult Index()
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public ActionResult Index(int page = 1)
         {
             try
             {
                 int Quarter = Utilities.GetQuarter();
                 int Year = DateTime.Now.Year;
                 ViewBag.Year = Year;
+                ViewBag.page = page;
                 ViewBag.Quarter = Quarter;
                 var QY = DbContext.GetQuarterFromYear(Year);
                 if (!QY.Any(a => a.GoalQuarter == Quarter))
@@ -31,7 +33,16 @@ namespace ZC_IT_TimeTracking.Controllers
                     ViewBag.Message = "There is no quarter available! Please create one";
                     return View("_AddQuarter");
                 }
-                var GoalList = DbContext.Goal_Master.ToList();
+
+                //fetching data
+                int skip = (page - 1) * Utilities.RecordPerPage;
+                var GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage).ToList();
+                if ((GoalList.Count() == 0) && (page - 2) >= 0)
+                {
+                    ViewBag.page = page - 1;
+                    skip = (page - 2) * Utilities.RecordPerPage;
+                    GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage).ToList();
+                }
                 return View(GoalList);
             }
             catch (Exception ex)
