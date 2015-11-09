@@ -17,7 +17,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void GetGoalByIDTest()
         {
             HomeController home = new HomeController();
-            Object obj = home.GetGoalById(4009).Data;
+            Object obj = home.GetGoalById(4002).Data;
             string success = obj.GetType().GetProperty("success").GetValue(obj, null).ToString();
             Assert.AreEqual("True", success);
         }
@@ -78,7 +78,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void IndexTest()
         {
             HomeController idx = new HomeController();
-            ViewResult result = idx.Index(0) as ViewResult;
+            ViewResult result = idx.Index() as ViewResult;
 
             List<Goal_Master> list = new DatabaseEntities().Goal_Master.AsNoTracking().ToList();
             List<Goal_Master> resultList = result.Model as List<Goal_Master>;
