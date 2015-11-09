@@ -1,67 +1,86 @@
 ﻿@using ZC_IT_TimeTracking.Models
+<div class="row">
+    <div class="col-lg-3">
+        <input type="text" id="SearchText" class="form-control" placeholder="Search by title" value="@ViewBag.SearchString" />
+    </div>
+    <button class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="Search" id="SearchByTitle"><span class="glyphicon glyphicon-search"></span></button>
+    @if (ViewBag.SearchString != "")
+    {
+        <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Clear Search" id="ClearTitleSearch"><span class="glyphicon glyphicon-remove-sign"></span></button>
+    }
+    else
+    {
+        <button class="btn btn-danger" id="ClearTitleSearch" style="display:none;"><span class="glyphicon glyphicon-remove-sign"></span></button>
+    }
+</div>
 @if (Model.Count == 0)
 {
-        <h1>No records available</h1>
+    <h1>No records available</h1>
 }
 else
 {
-        <table class="table table-bordered table-striped">
-            <thead>
-                <tr>
-                    <th><input type="checkbox" id="SelectAll" /></th>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Quarter</th>
-                    <th>Year</th>
-                    <th>Unit of Measurement</th>
-                    <th>Measurement Value</th>
-                    <th align="center">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                @{int c = (ViewBag.page - 1) * Utilities.RecordPerPage;}
-                @foreach (GetSpecificRecordsOfGoal_Result goal in Model)
+    <table class="table table-bordered table-striped" style="margin-bottom:5px;">
+        <thead>
+            <tr>
+                <th><input type="checkbox" id="SelectAll" /></th>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Create Date</th>
+                <th>Quarter</th>
+                <th>Year</th>
+                <th>Unit of Measurement</th>
+                <th>Measurement Value</th>
+                <th align="center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{int c = (ViewBag.page - 1) * Utilities.RecordPerPage;}
+            @foreach (var goal in Model)
             {
                 c++;
-                    <tr>
-                        <td><input type="checkbox" class="SelectedGoal" value="@goal.Goal_MasterID" /></td>
-                        <td>@c</td>
-                        <td>@goal.GoalTitle</td>
-                        <td>@goal.GoalDescription</td>
-                        <td>@goal.GoalQuarter</td>
-                        <td>@goal.QuarterYear</td>
-                        <td>@goal.UnitOfMeasurement</td>
-                        <td>@goal.MeasurementValue</td>
-                        <td align="center">
-                            <span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="View Goal" onclick="ViewGoal(@goal.Goal_MasterID)">&nbsp;</span>
-                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Goal" onclick="EditGoal(@goal.Goal_MasterID)">&nbsp;</span>
-                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Goal" onclick="DeleteGoal(@goal.Goal_MasterID)"></span>
-                        </td>
-                    </tr>
+                <tr>
+                    <td><input type="checkbox" class="SelectedGoal" value="@goal.Goal_MasterID" /></td>
+                    <td>@c</td>
+                    <td>@goal.GoalTitle</td>
+                    <td>@goal.GoalDescription</td>
+                    <td>@goal.Creation_Date.ToString("dd/MM/yyyy")</td>
+                    <td>@goal.GoalQuarter</td>
+                    <td>@goal.QuarterYear</td>
+                    <td>@goal.UnitOfMeasurement</td>
+                    <td>@goal.MeasurementValue</td>
+                    <td align="center">
+                        <span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="View Goal" onclick="ViewGoal(@goal.Goal_MasterID)">&nbsp;</span>
+                        <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Goal" onclick="EditGoal(@goal.Goal_MasterID)">&nbsp;</span>
+                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Goal" onclick="DeleteGoal(@goal.Goal_MasterID)"></span>
+                    </td>
+                </tr>
             }
-            </tbody>
-        </table>
+        </tbody>
+    </table>
     <div>
-        <ul class="pagination">
+        <input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none;" />
+    </div>
+}
+<form method="post" id="PageForm">
+    <input type="hidden" name="title" id="TitleString" value="@ViewBag.SearchString" />
+    <div>
+        <ul class="pagination" style="margin-top: 5px;">
             @{
-            double count = new DatabaseEntities().Goal_Master.Count();
-            double len = Math.Ceiling(count / Utilities.RecordPerPage);
-            for (int i = 1; i <= len; i++)
-            {
-                if (i == @ViewBag.page)
+                double count = ViewBag.TotalCount;
+                double len = Math.Ceiling(count / Utilities.RecordPerPage);
+                for (int i = 1; i <= len; i++)
                 {
-                    <li onclick="onPageClick(@i)" class="active"><a>@i</a></li>
+                    if (i == @ViewBag.page)
+                    {
+                        <li class="active"><input type="submit" name="page" class="btn btn-primary" value="@i" /></li>
+                    }
+                    else
+                    {
+                        <li><input type="submit" name="page" class="btn btn-default" value="@i" /></li>
+                    }
                 }
-                else
-                {
-                    <li onclick="onPageClick(@i)"><a>@i</a></li>
-                }
-            }
             }
         </ul>
     </div>
-    <div>
-        <input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none" />
-    </div>
-}
+</form>

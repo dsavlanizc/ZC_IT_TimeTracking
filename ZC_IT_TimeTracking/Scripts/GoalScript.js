@@ -121,7 +121,7 @@
         $("#submitButton").attr("disabled", false);
         $('#RuleListTable').html("");
         $('#formInput input,textarea,select').attr('readonly', false);
-        var ExistId = $('#GoalQuarter option').attr('id');        
+        var ExistId = $('#GoalQuarter option').attr('id');
         $('#GoalQuarter option').text(ExistId);
     });
 
@@ -162,10 +162,10 @@
                         $("#IsHigherValue").attr("checked", false);
 
                     //rules filling
-                    $('#RuleListTable').html("");                    
+                    $('#RuleListTable').html("");
                     $(rules).each(function () {
                         //console.log(this);
-                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1">No Action</td></tr>');
+                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1" id="Action"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
                     });
                     $("#collapse1").collapse('hide');
                     $("#collapse2").collapse('show');
@@ -447,11 +447,18 @@
             }
         });
     });
-    onPageClick = function (page) {
-        var form = $("<form method='POST'></form>");        
-        form.append('<input type="number" name="page" value="' + page + '">');
-        form.submit();
-    }
+    $("#SearchByTitle").click(function () {
+        var txt = $("#SearchText").val().trim();
+        if (txt.length > 0)
+            $("#TitleString").val(txt);
+        else
+            $("#TitleString").val(null);
+        $("#PageForm").submit();
+    });
+    $("#ClearTitleSearch").click(function () {
+        $("#TitleString").val(null);
+        $("#PageForm").submit();
+    });
 
     //Assign Goal region
 
@@ -475,8 +482,8 @@
             success: function (dt) {
                 hideLoading();
                 //console.log(dt);
-                if (dt.success) 
-                 $("#GoalDescription").val(dt.TitleData);
+                if (dt.success)
+                    $("#GoalDescription").val(dt.TitleData);
             },
             error: function (dt) {
                 hideLoading();
@@ -489,10 +496,10 @@
     //Assign form Validation
     var AssignValidation = $("#GoalAssignForm").validate({
         rules: {
-            GoalTitle: {               
+            GoalTitle: {
                 required: true
             },
-            GoalDescription: {                
+            GoalDescription: {
                 required: true
             },
             Team: {
@@ -505,9 +512,9 @@
                 required: true
             }
         },
-        messages:{
-            GoalDescription:{
-                required:"First Select Title From Above list..!"
+        messages: {
+            GoalDescription: {
+                required: "First Select Title From Above list..!"
             }
         },
         highlight: function (element) {
@@ -526,7 +533,7 @@
             }
         }
     });
-    
+
     //Get TeamMember from Selected Team
     $("#TeamID").change(function (e) {
         e.preventDefault();
@@ -543,10 +550,9 @@
                 //console.log(dt)
                 if (dt.success) {
                     $("#TeamMember").html('');
-                    for (var val in dt.TeamMember)
-                    {
+                    for (var val in dt.TeamMember) {
                         $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + "</option>");
-                    }                    
+                    }
                 }
             },
             error: function (dt) {
@@ -557,7 +563,7 @@
             }
         });
     });
-    
+
     //Assign Goal To Resourse
     $("#ButtonAssign").click(function (e) {
         e.preventDefault();

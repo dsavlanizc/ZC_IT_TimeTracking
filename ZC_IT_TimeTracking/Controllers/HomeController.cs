@@ -18,7 +18,7 @@ namespace ZC_IT_TimeTracking.Controllers
 
         // GET: Home
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int page = 1, string title = "")
         {
             try
             {
@@ -26,6 +26,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 int Year = DateTime.Now.Year;
                 ViewBag.Year = Year;
                 ViewBag.page = page;
+                ViewBag.SearchString = title;
                 ViewBag.Quarter = Quarter;
                 var QY = DbContext.GetQuarterFromYear(Year);
                 if (!QY.Any(a => a.GoalQuarter == Quarter))
@@ -35,14 +36,32 @@ namespace ZC_IT_TimeTracking.Controllers
                 }
                 //fetching data
                 int skip = (page - 1) * Utilities.RecordPerPage;
-                var GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage).ToList();
-                if ((GoalList.Count() == 0) && (page - 2) >= 0)
+                if (title == "")
                 {
-                    ViewBag.page = page - 1;
-                    skip = (page - 2) * Utilities.RecordPerPage;
-                    GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage).ToList();
+                    ObjectParameter count = new ObjectParameter("totalRecords", typeof(int));
+                    var GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage, count).ToList();
+                    if ((GoalList.Count() == 0) && (page - 2) >= 0)
+                    {
+                        ViewBag.page = page - 1;
+                        skip = (page - 2) * Utilities.RecordPerPage;
+                        GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage, count).ToList();
+                    }
+                    ViewBag.TotalCount = Convert.ToInt32(count.Value);
+                    return View(GoalList);
                 }
-                return View(GoalList);
+                else
+                {
+                    ObjectParameter count = new ObjectParameter("MatchedRecords",typeof(int));
+                    var GoalList = DbContext.SearchGoalByTitle(title,skip, Utilities.RecordPerPage, count).ToList();
+                    if ((GoalList.Count() == 0) && (page - 2) >= 0)
+                    {
+                        ViewBag.page = page - 1;
+                        skip = (page - 2) * Utilities.RecordPerPage;
+                        GoalList = DbContext.SearchGoalByTitle(title, skip, Utilities.RecordPerPage, count).ToList();
+                    }
+                    ViewBag.TotalCount = Convert.ToInt32(count.Value);
+                    return View(GoalList);
+                }
             }
             catch (Exception ex)
             {
