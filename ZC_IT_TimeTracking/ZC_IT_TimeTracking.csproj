@@ -243,6 +243,7 @@
     <Compile Include="Manager.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssignGoal.cs" />
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\GoalDetail.cs" />
     <Compile Include="Models\GoalQuarters.cs" />
@@ -284,6 +285,7 @@
     <Content Include="Views\Home\_GoalRule.cshtml" />
     <Content Include="Views\Shared\_ErrorView.cshtml" />
     <Content Include="Views\Home\_AddQuarter.cshtml" />
+    <Content Include="Views\Home\_AssignGoal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

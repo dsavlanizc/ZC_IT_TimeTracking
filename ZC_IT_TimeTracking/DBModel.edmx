@@ -347,11 +347,6 @@
           <Parameter Name="resourceId" Type="int" Mode="In" />
           <Parameter Name="GoalId" Type="int" Mode="In" />
         </Function>
-        <Function Name="getSpecificRecordOftable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="startFrom" Type="int" Mode="In" />
-          <Parameter Name="NoOfRecords" Type="int" Mode="In" />
-          <Parameter Name="tableName" Type="varchar(max)" Mode="In" />
-        </Function>
         <Function Name="GetSpecificRecordsOfGoal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="startFrom" Type="int" Mode="In" />
           <Parameter Name="NoOfRecords" Type="int" Mode="In" />
@@ -380,16 +375,10 @@
           <Parameter Name="GoalCreate_To" Type="date" Mode="In" />
         </Function>
         <Function Name="InsertGoalRules" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="PerformanceRangeFrom" Type="int" Mode="In" />
-          <Parameter Name="PerformanceRangeTo" Type="int" Mode="In" />
+          <Parameter Name="PerformanceRangeFrom" Type="float" Mode="In" />
+          <Parameter Name="PerformanceRangeTo" Type="float" Mode="In" />
           <Parameter Name="Rating" Type="float" Mode="In" />
           <Parameter Name="GoalID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SearchGoalByTitle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="title" Type="varchar" Mode="In" />
-          <Parameter Name="startFrom" Type="int" Mode="In" />
-          <Parameter Name="NoOfRecords" Type="int" Mode="In" />
-          <Parameter Name="MatchedRecords" Type="int" Mode="InOut" />
         </Function>
         <Function Name="UpdateGoalMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Goal_Id" Type="int" Mode="In" />
@@ -965,8 +954,8 @@
             <Parameter Name="GoalCreate_To" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="InsertGoalRules">
-            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Int32" />
-            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Int32" />
+            <Parameter Name="PerformanceRangeFrom" Mode="In" Type="Double" />
+            <Parameter Name="PerformanceRangeTo" Mode="In" Type="Double" />
             <Parameter Name="Rating" Mode="In" Type="Double" />
             <Parameter Name="GoalID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1334,7 +1323,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="getSpecificRecordOftable" FunctionName="DatabaseModel.Store.getSpecificRecordOftable" />
           <FunctionImportMapping FunctionImportName="GetSpecificRecordsOfGoal" FunctionName="DatabaseModel.Store.GetSpecificRecordsOfGoal">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DatabaseModel.GetSpecificRecordsOfGoal_Result">
@@ -1374,21 +1362,6 @@
           <FunctionImportMapping FunctionImportName="InsertGoalMaster" FunctionName="DatabaseModel.Store.InsertGoalMaster" />
           <FunctionImportMapping FunctionImportName="InsertGoalQuarter" FunctionName="DatabaseModel.Store.InsertGoalQuarter" />
           <FunctionImportMapping FunctionImportName="InsertGoalRules" FunctionName="DatabaseModel.Store.InsertGoalRules" />
-          <FunctionImportMapping FunctionImportName="SearchGoalByTitle" FunctionName="DatabaseModel.Store.SearchGoalByTitle">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.SearchGoalByTitle_Result">
-                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
-                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
-                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
-                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
-                <ScalarProperty Name="QuarterYear" ColumnName="QuarterYear" />
-                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
-                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
-                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
-                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateGoalMaster" FunctionName="DatabaseModel.Store.UpdateGoalMaster" />
           <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="DatabaseModel.Store.UpdateGoalRules" />
           <FunctionImportMapping FunctionImportName="UpdateResourceDetails" FunctionName="DatabaseModel.Store.UpdateResourceDetails" />

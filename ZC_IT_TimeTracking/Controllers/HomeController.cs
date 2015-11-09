@@ -34,7 +34,6 @@ namespace ZC_IT_TimeTracking.Controllers
                     ViewBag.Message = "There is no quarter available! Please create one";
                     return View("_AddQuarter");
                 }
-
                 //fetching data
                 int skip = (page - 1) * Utilities.RecordPerPage;
                 if (title == "")
@@ -176,6 +175,59 @@ namespace ZC_IT_TimeTracking.Controllers
             catch (Exception e)
             {
                 return Json(new JsonResponse { message = "Error occured while creating Quarter!", success = false });
+            }
+        }
+
+        public ActionResult AssignGoal()
+        {
+            ViewBag.goal = DbContext.Goal_Master.ToList();
+            ViewBag.Team = DbContext.Teams.ToList();
+            return View("_AssignGoal");
+        }
+
+        [HttpPost]
+        public ActionResult GetDescription(int TitleID)
+        {
+            try
+            {
+                var TitleIDdata = DbContext.GetGoalDetails(TitleID).Select(s => s.GoalDescription).FirstOrDefault();
+                return Json(new { TitleData = TitleIDdata, success = true });
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while Getting Description!", success = false });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult GetTeamMember(int TeamID)
+        {
+            try
+            {
+                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID,s.FirstName }).ToList();
+                return Json(new { TeamMember = TeamMember, success = true });
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while Getting Team MemberList", success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AssignGoal(AssignGoal AssignData)
+        {
+            try
+            {
+                foreach (int id in AssignData.ResourceID)
+                {
+                    ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
+                    var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, insertedId);
+                }
+                return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while Assign a Goal", success = false });
             }
         }
     }
