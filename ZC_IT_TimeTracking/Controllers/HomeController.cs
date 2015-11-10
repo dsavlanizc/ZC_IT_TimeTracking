@@ -1,13 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Data.Entity.Core.Objects;
-using System.Data.SqlTypes;
-using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using ZC_IT_TimeTracking.Models;
 
 namespace ZC_IT_TimeTracking.Controllers

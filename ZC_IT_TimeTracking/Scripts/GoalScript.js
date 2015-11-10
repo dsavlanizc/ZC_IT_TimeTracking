@@ -439,7 +439,9 @@
                         },
                         error: function (data) {
                             hideLoading();
-                            alert(data.message);
+                            if (data.readyState == 0) {
+                                bootbox.alert("Please check your internet connection!");
+                            }
                             console.log(data);
                         }
                     });
