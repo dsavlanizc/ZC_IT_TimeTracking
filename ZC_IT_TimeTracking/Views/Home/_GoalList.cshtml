@@ -38,7 +38,11 @@ else
             </tr>
         </thead>
         <tbody>
-            @{int c = (ViewBag.page - 1) * Utilities.RecordPerPage;}
+            @{
+                int c = (ViewBag.page - 1) * Utilities.RecordPerPage;
+                ViewBag.From = c + 1;
+                ViewBag.To = c + Model.Count;
+            }
             @foreach (var goal in Model)
             {
                 c++;
@@ -60,6 +64,7 @@ else
                 </tr>
             }
         </tbody>
+
     </table>
     <div>
         <input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none;" />
@@ -67,6 +72,7 @@ else
 }
 <form method="post" id="PageForm">
     <input type="hidden" name="title" id="TitleString" value="@ViewBag.SearchString" />
+    Showing @ViewBag.From to @ViewBag.To of @ViewBag.TotalCount
     <div>
         <ul class="pagination" style="margin-top: 5px;">
             @{
