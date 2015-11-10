@@ -17,7 +17,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void GetGoalByIDTest()
         {
             HomeController home = new HomeController();
-            Object obj = home.GetGoalById(4).Data;
+            Object obj = home.GetGoalById(1).Data;
             string success = obj.GetType().GetProperty("success").GetValue(obj, null).ToString();
             Assert.AreEqual("True", success);
         }

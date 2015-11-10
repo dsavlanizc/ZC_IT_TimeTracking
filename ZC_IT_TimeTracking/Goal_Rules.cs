@@ -12,8 +12,8 @@ namespace ZC_IT_TimeTracking
     using System;
     using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
-    public partial class Goal_Rules
+    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework","4.0.0.0")]
+	public partial class Goal_Rules
     {
         public int Goal_RuleID { get; set; }
         public int Performance_RangeFrom { get; set; }

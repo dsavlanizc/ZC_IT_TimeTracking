@@ -255,7 +255,7 @@
 
     //delete goal
     DeleteGoal = function (id) {
-        bootbox.confirm("Are you sure want to delete Goal ?", function (r) {
+        bootbox.confirm("Are you sure to delete?", function (r) {
             if (r) {
                 $.ajax({
                     url: "/Home/DeleteGoal",
@@ -610,5 +610,8 @@
     //View AssignGoal
     $("#ButtonViewAssignGoal").click(function () {
         window.location.href = "ViewAssignGoal";
+    });
+    $("#recordInPageDDL").change(function () {
+        
     });
 });

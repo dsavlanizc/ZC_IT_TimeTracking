@@ -12,8 +12,8 @@ namespace ZC_IT_TimeTracking
     using System;
     using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
-    public partial class Resource_Goal_Performance
+    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework","4.0.0.0")]
+	public partial class Resource_Goal_Performance
     {
         public int Resource_Goal_PerformanceID { get; set; }
         public double Resource_Performance { get; set; }

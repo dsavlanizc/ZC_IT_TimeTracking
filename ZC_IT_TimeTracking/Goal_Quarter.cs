@@ -12,9 +12,10 @@ namespace ZC_IT_TimeTracking
     using System;
     using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
-    public partial class Goal_Quarter
+    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework","4.0.0.0")]
+	public partial class Goal_Quarter
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Goal_Quarter()
         {
             this.Goal_Master = new HashSet<Goal_Master>();
@@ -27,7 +28,9 @@ namespace ZC_IT_TimeTracking
         public Nullable<System.DateTime> GoalCreateFrom { get; set; }
         public Nullable<System.DateTime> GoalCreateTo { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Goal_Master> Goal_Master { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resource_Performance> Resource_Performance { get; set; }
     }
 }

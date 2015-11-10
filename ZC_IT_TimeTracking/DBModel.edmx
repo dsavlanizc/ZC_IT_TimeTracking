@@ -40,8 +40,8 @@
             <PropertyRef Name="Goal_RuleID" />
           </Key>
           <Property Name="Goal_RuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Performance_RangeFrom" Type="int" Nullable="false" />
-          <Property Name="Performance_RangeTo" Type="int" Nullable="false" />
+          <Property Name="Performance_RangeFrom" Type="float" Nullable="false" />
+          <Property Name="Performance_RangeTo" Type="float" Nullable="false" />
           <Property Name="Rating" Type="float" Nullable="false" />
           <Property Name="GoalId" Type="int" Nullable="false" />
         </EntityType>
