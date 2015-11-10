@@ -267,6 +267,9 @@
     <Compile Include="Role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SearchGoalByTitle1_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SearchGoalByTitle_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -286,6 +289,7 @@
     <Content Include="Views\Shared\_ErrorView.cshtml" />
     <Content Include="Views\Home\_AddQuarter.cshtml" />
     <Content Include="Views\Home\_AssignGoal.cshtml" />
+    <Content Include="Views\Home\_ViewAssignGoal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

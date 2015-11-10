@@ -71,6 +71,7 @@
           <Property Name="ResourceID" Type="int" Nullable="false" />
           <Property Name="Goal_MasterID" Type="int" Nullable="false" />
           <Property Name="Weight" Type="int" Nullable="false" />
+          <Property Name="GoalAssignDate" Type="date" />
         </EntityType>
         <EntityType Name="Resource_Goal_Performance">
           <Key>
@@ -291,6 +292,7 @@
           <Parameter Name="ResourceId" Type="int" Mode="In" />
           <Parameter Name="GoalId" Type="int" Mode="In" />
           <Parameter Name="weight" Type="int" Mode="In" />
+          <Parameter Name="assignDate" Type="date" Mode="In" />
           <Parameter Name="CurrentInsertedId" Type="int" Mode="InOut" />
         </Function>
         <Function Name="calculateResourceGoalRating" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -379,6 +381,12 @@
           <Parameter Name="PerformanceRangeTo" Type="float" Mode="In" />
           <Parameter Name="Rating" Type="float" Mode="In" />
           <Parameter Name="GoalID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SearchGoalByTitle" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="title" Type="varchar" Mode="In" />
+          <Parameter Name="startFrom" Type="int" Mode="In" />
+          <Parameter Name="NoOfRecords" Type="int" Mode="In" />
+          <Parameter Name="MatchedRecords" Type="int" Mode="InOut" />
         </Function>
         <Function Name="UpdateGoalMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Goal_Id" Type="int" Mode="In" />
@@ -566,6 +574,7 @@
           <NavigationProperty Name="Goal_Master" Relationship="Self.FK_Resource_Goal_Goal_Master" FromRole="Resource_Goal" ToRole="Goal_Master" />
           <NavigationProperty Name="Resource" Relationship="Self.FK_Resource_Goal_Resource" FromRole="Resource_Goal" ToRole="Resource" />
           <NavigationProperty Name="Resource_Goal_Performance" Relationship="Self.FK_Resource_Goal_Performance_Resource_GoalId" FromRole="Resource_Goal" ToRole="Resource_Goal_Performance" />
+          <Property Name="GoalAssignDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="Resource_Goal_Performance">
           <Key>
@@ -865,6 +874,7 @@
             <Parameter Name="ResourceId" Mode="In" Type="Int32" />
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
             <Parameter Name="weight" Mode="In" Type="Int32" />
+            <Parameter Name="assignDate" Mode="In" Type="DateTime" />
             <Parameter Name="CurrentInsertedId" Mode="InOut" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="calculateResourceGoalRating" ReturnType="Collection(Double)">
@@ -993,6 +1003,12 @@
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
             <Parameter Name="weight" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SearchGoalByTitle1" ReturnType="Collection(DatabaseModel.SearchGoalByTitle1_Result)">
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="startFrom" Mode="In" Type="Int32" />
+            <Parameter Name="NoOfRecords" Mode="In" Type="Int32" />
+            <Parameter Name="MatchedRecords" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuarterID" Nullable="false" />
@@ -1089,6 +1105,17 @@
           <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
           <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="SearchGoalByTitle1_Result">
+          <Property Type="Int32" Name="Goal_MasterID" Nullable="false" />
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="GoalDescription" Nullable="true" />
+          <Property Type="Int32" Name="GoalQuarter" Nullable="false" />
+          <Property Type="Int32" Name="QuarterYear" Nullable="false" />
+          <Property Type="String" Name="UnitOfMeasurement" Nullable="false" MaxLength="20" />
+          <Property Type="Double" Name="MeasurementValue" Nullable="false" />
+          <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
+          <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1162,6 +1189,7 @@
           <EntitySetMapping Name="Resource_Goal">
             <EntityTypeMapping TypeName="DatabaseModel.Resource_Goal">
               <MappingFragment StoreEntitySet="Resource_Goal">
+                <ScalarProperty Name="GoalAssignDate" ColumnName="GoalAssignDate" />
                 <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
                 <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
                 <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
@@ -1366,6 +1394,36 @@
           <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="DatabaseModel.Store.UpdateGoalRules" />
           <FunctionImportMapping FunctionImportName="UpdateResourceDetails" FunctionName="DatabaseModel.Store.UpdateResourceDetails" />
           <FunctionImportMapping FunctionImportName="UpdateResourceGoal" FunctionName="DatabaseModel.Store.UpdateResourceGoal" />
+          <FunctionImportMapping FunctionImportName="SearchGoalByTitle1" FunctionName="DatabaseModel.Store.SearchGoalByTitle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.SearchGoalByTitle1_Result">
+                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
+                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
+                <ScalarProperty Name="QuarterYear" ColumnName="QuarterYear" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SearchGoalByTitle" FunctionName="DatabaseModel.Store.SearchGoalByTitle">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.SearchGoalByTitle_Result">
+                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
+                <ScalarProperty Name="GoalQuarter" ColumnName="GoalQuarter" />
+                <ScalarProperty Name="QuarterYear" ColumnName="QuarterYear" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
+                <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
+                <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

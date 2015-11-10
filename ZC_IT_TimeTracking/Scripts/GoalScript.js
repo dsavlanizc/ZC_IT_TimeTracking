@@ -538,12 +538,14 @@
     $("#TeamID").change(function (e) {
         e.preventDefault();
         var TeamID = $(this).find('option:selected').val();
+        var Weight = $("#Weight").val();
+        console.log(JSON.stringify({ TeamID: TeamID, Weight: Weight }));
         $.ajax({
             url: "GetTeamMember",
             type: "POST",
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({ TeamID: TeamID }),
+            data: JSON.stringify({ TeamID: TeamID,Weight:Weight }),
             beforeSend: showLoading(),
             success: function (dt) {
                 hideLoading();
@@ -602,5 +604,9 @@
             });
             console.log(AssignData.ResourceID);
         }
+    });
+    //View AssignGoal
+    $("#ButtonViewAssignGoal").click(function () {
+        window.location.href = "ViewAssignGoal";
     });
 });
