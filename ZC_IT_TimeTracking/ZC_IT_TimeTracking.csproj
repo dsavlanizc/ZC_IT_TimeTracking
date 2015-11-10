@@ -195,6 +195,9 @@
     <Compile Include="GetAllGoalsOfResource_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetAllGoalsOfResource_Result1.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetAllResourceForGoal_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

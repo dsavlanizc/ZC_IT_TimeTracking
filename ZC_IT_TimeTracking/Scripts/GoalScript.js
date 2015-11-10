@@ -541,18 +541,19 @@
         e.preventDefault();
         var TeamID = $(this).find('option:selected').val();
         var Weight = $("#Weight").val();
-        console.log(JSON.stringify({ TeamID: TeamID, Weight: Weight }));
+        var GoalID = $("#Goal_MasterID option:selected").val();
         $.ajax({
             url: "GetTeamMember",
             type: "POST",
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({ TeamID: TeamID,Weight:Weight }),
+            data: JSON.stringify({ TeamID: TeamID,Weight:Weight,GoalID:GoalID }),
             beforeSend: showLoading(),
             success: function (dt) {
                 hideLoading();
                 //console.log(dt)
                 if (dt.success) {
+                    console.log(dt);
                     $("#TeamMember").html('');
                     for (var val in dt.TeamMember) {
                         $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + "</option>");
@@ -609,6 +610,13 @@
     });
     //View AssignGoal
     $("#ButtonViewAssignGoal").click(function () {
-        window.location.href = "ViewAssignGoal";
+        window.location.href = "/Home/ViewAssignGoal";
+    });
+    
+    $("#ResourceID").change(function () {
+        var id = $(this).val();
+        if (id != "") {
+            $("#ResId").val(id);
+        }
     });
 });

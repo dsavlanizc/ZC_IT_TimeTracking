@@ -300,6 +300,14 @@
           <Parameter Name="GoalId" Type="int" Mode="In" />
           <Parameter Name="ResourcePerformance" Type="float" Mode="In" />
         </Function>
+        <Function Name="CalculateResourceWeight" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ResourceId" Type="int" Mode="In" />
+          <Parameter Name="Gquarter" Type="int" Mode="In" />
+          <Parameter Name="Gyear" Type="int" Mode="In" />
+          <Parameter Name="GoalId" Type="int" Mode="In" />
+          <Parameter Name="weightEntered" Type="int" Mode="In" />
+          <Parameter Name="valid" Type="bit" Mode="InOut" />
+        </Function>
         <Function Name="CheckQuater" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Quater" Type="int" Mode="In" />
           <Parameter Name="QYear" Type="int" Mode="In" />
@@ -898,9 +906,6 @@
           <FunctionImport Name="DeleteResourceGoal">
           <Parameter Name="resource_GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetAllGoalsOfResource" ReturnType="Collection(DatabaseModel.GetAllGoalsOfResource_Result)">
-          <Parameter Name="ResourceId" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetAllResourceForGoal" ReturnType="Collection(DatabaseModel.GetAllResourceForGoal_Result)">
           <Parameter Name="Goal_id" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -927,7 +932,7 @@
           <FunctionImport Name="GetResourceByTeam" ReturnType="Collection(DatabaseModel.GetResourceByTeam_Result)">
           <Parameter Name="TeamId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetResourceGoalDetails" ReturnType="Collection(DatabaseModel.GetResourceGoalDetails_Result)">
+          <FunctionImport Name="GetResourceGoalDetails">
             <Parameter Name="resourceId" Mode="In" Type="Int32" />
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -1009,6 +1014,17 @@
             <Parameter Name="NoOfRecords" Mode="In" Type="Int32" />
             <Parameter Name="MatchedRecords" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="CalculateResourceWeight">
+            <Parameter Name="ResourceId" Mode="In" Type="Int32" />
+            <Parameter Name="Gquarter" Mode="In" Type="Int32" />
+            <Parameter Name="Gyear" Mode="In" Type="Int32" />
+            <Parameter Name="GoalId" Mode="In" Type="Int32" />
+            <Parameter Name="weightEntered" Mode="In" Type="Int32" />
+            <Parameter Name="valid" Mode="InOut" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="GetAllGoalsOfResource" ReturnType="Collection(DatabaseModel.GetAllGoalsOfResource_Result)">
+          <Parameter Name="ResourceId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuarterID" Nullable="false" />
@@ -1017,9 +1033,9 @@
         </ComplexType>
         <ComplexType Name="GetAllGoalsOfResource_Result">
           <Property Type="Int32" Name="Resource_GoalID" Nullable="false" />
-          <Property Type="Int32" Name="ResourceID" Nullable="false" />
-          <Property Type="Int32" Name="Goal_MasterID" Nullable="false" />
           <Property Type="Int32" Name="Weight" Nullable="false" />
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="511" />
         </ComplexType>
         <ComplexType Name="GetAllResourceForGoal_Result">
           <Property Type="Int32" Name="Resource_GoalID" Nullable="false" />
@@ -1115,6 +1131,12 @@
           <Property Type="Double" Name="MeasurementValue" Nullable="false" />
           <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
           <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAllGoalsOfResource_Result1">
+          <Property Type="Int32" Name="Resource_GoalID" Nullable="false" />
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="511" />
+          <Property Type="Int32" Name="Weight" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1259,16 +1281,6 @@
           <FunctionImportMapping FunctionImportName="DeleteGoalMaster" FunctionName="DatabaseModel.Store.DeleteGoalMaster" />
           <FunctionImportMapping FunctionImportName="DeleteGoalRule" FunctionName="DatabaseModel.Store.DeleteGoalRule" />
           <FunctionImportMapping FunctionImportName="DeleteResourceGoal" FunctionName="DatabaseModel.Store.DeleteResourceGoal" />
-          <FunctionImportMapping FunctionImportName="GetAllGoalsOfResource" FunctionName="DatabaseModel.Store.GetAllGoalsOfResource">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetAllGoalsOfResource_Result">
-                <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
-                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
-                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetAllResourceForGoal" FunctionName="DatabaseModel.Store.GetAllResourceForGoal">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DatabaseModel.GetAllResourceForGoal_Result">
@@ -1344,12 +1356,6 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetResourceGoalDetails" FunctionName="DatabaseModel.Store.GetResourceGoalDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="DatabaseModel.GetResourceGoalDetails_Result">
-                <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-              </ComplexTypeMapping>
-            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetSpecificRecordsOfGoal" FunctionName="DatabaseModel.Store.GetSpecificRecordsOfGoal">
             <ResultMapping>
@@ -1421,6 +1427,17 @@
                 <ScalarProperty Name="MeasurementValue" ColumnName="MeasurementValue" />
                 <ScalarProperty Name="Creation_Date" ColumnName="Creation_Date" />
                 <ScalarProperty Name="IsHigherValueGood" ColumnName="IsHigherValueGood" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CalculateResourceWeight" FunctionName="DatabaseModel.Store.CalculateResourceWeight" />
+          <FunctionImportMapping FunctionImportName="GetAllGoalsOfResource" FunctionName="DatabaseModel.Store.GetAllGoalsOfResource">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.GetAllGoalsOfResource_Result">
+                <ScalarProperty Name="Resource_GoalID" ColumnName="Resource_GoalID" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

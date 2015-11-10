@@ -148,15 +148,6 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteResourceGoal", resource_GoalIdParameter);
         }
     
-        public virtual ObjectResult<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(Nullable<int> resourceId)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("ResourceId", resourceId) :
-                new ObjectParameter("ResourceId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllGoalsOfResource_Result>("GetAllGoalsOfResource", resourceIdParameter);
-        }
-    
         public virtual ObjectResult<GetAllResourceForGoal_Result> GetAllResourceForGoal(Nullable<int> goal_id)
         {
             var goal_idParameter = goal_id.HasValue ?
@@ -233,7 +224,7 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceByTeam_Result>("GetResourceByTeam", teamIdParameter);
         }
     
-        public virtual ObjectResult<GetResourceGoalDetails_Result> GetResourceGoalDetails(Nullable<int> resourceId, Nullable<int> goalId)
+        public virtual int GetResourceGoalDetails(Nullable<int> resourceId, Nullable<int> goalId)
         {
             var resourceIdParameter = resourceId.HasValue ?
                 new ObjectParameter("resourceId", resourceId) :
@@ -243,7 +234,7 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("GoalId", goalId) :
                 new ObjectParameter("GoalId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceGoalDetails_Result>("GetResourceGoalDetails", resourceIdParameter, goalIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetResourceGoalDetails", resourceIdParameter, goalIdParameter);
         }
     
         public virtual int getSpecificRecordOftable(Nullable<int> startFrom, Nullable<int> noOfRecords, string tableName)
@@ -501,6 +492,40 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("NoOfRecords", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchGoalByTitle1_Result>("SearchGoalByTitle1", titleParameter, startFromParameter, noOfRecordsParameter, matchedRecords);
+        }
+    
+        public virtual int CalculateResourceWeight(Nullable<int> resourceId, Nullable<int> gquarter, Nullable<int> gyear, Nullable<int> goalId, Nullable<int> weightEntered, ObjectParameter valid)
+        {
+            var resourceIdParameter = resourceId.HasValue ?
+                new ObjectParameter("ResourceId", resourceId) :
+                new ObjectParameter("ResourceId", typeof(int));
+    
+            var gquarterParameter = gquarter.HasValue ?
+                new ObjectParameter("Gquarter", gquarter) :
+                new ObjectParameter("Gquarter", typeof(int));
+    
+            var gyearParameter = gyear.HasValue ?
+                new ObjectParameter("Gyear", gyear) :
+                new ObjectParameter("Gyear", typeof(int));
+    
+            var goalIdParameter = goalId.HasValue ?
+                new ObjectParameter("GoalId", goalId) :
+                new ObjectParameter("GoalId", typeof(int));
+    
+            var weightEnteredParameter = weightEntered.HasValue ?
+                new ObjectParameter("weightEntered", weightEntered) :
+                new ObjectParameter("weightEntered", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CalculateResourceWeight", resourceIdParameter, gquarterParameter, gyearParameter, goalIdParameter, weightEnteredParameter, valid);
+        }
+    
+        public virtual ObjectResult<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(Nullable<int> resourceId)
+        {
+            var resourceIdParameter = resourceId.HasValue ?
+                new ObjectParameter("ResourceId", resourceId) :
+                new ObjectParameter("ResourceId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllGoalsOfResource_Result>("GetAllGoalsOfResource", resourceIdParameter);
         }
     }
 }

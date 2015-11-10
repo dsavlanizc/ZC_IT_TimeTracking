@@ -11,11 +11,11 @@ namespace ZC_IT_TimeTracking
 {
     using System;
     
-    public partial class GetAllGoalsOfResource_Result
+    public partial class GetAllGoalsOfResource_Result1
     {
         public int Resource_GoalID { get; set; }
-        public int Weight { get; set; }
         public string GoalTitle { get; set; }
         public string Name { get; set; }
+        public int Weight { get; set; }
     }
 }
