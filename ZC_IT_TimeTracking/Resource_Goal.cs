@@ -24,6 +24,7 @@ namespace ZC_IT_TimeTracking
         public int ResourceID { get; set; }
         public int Goal_MasterID { get; set; }
         public int Weight { get; set; }
+        public Nullable<System.DateTime> GoalAssignDate { get; set; }
     
         public virtual Goal_Master Goal_Master { get; set; }
         public virtual Resource Resource { get; set; }

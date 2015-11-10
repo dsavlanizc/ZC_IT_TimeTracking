@@ -1,0 +1,36 @@
+﻿<div class="row">
+    <h3>AllGoalResourse</h3>
+    <table>
+        <tr>
+            <th>ResourceId</th>
+            <th>GoalID</th>
+            <th>Weight</th>
+        </tr>
+
+        @foreach (var dt in ViewBag.AllGoalResourse)
+        {
+            <tr>
+                <td>@dt.ResourceID</td>
+                <td>@dt.Goal_MasterID</td>
+                <td>@dt.Weight</td>
+            </tr>
+        }
+    </table>
+    <h3>AllResourceGoal</h3>
+    <table>
+        <tr>
+            <th>GoalID</th>
+            <th>ResourceId</th>            
+            <th>Weight</th>
+        </tr>
+
+        @foreach (var dt in ViewBag.AllResourceGoal)
+        {
+            <tr>
+                <td>@dt.Goal_MasterID</td>
+                <td>@dt.ResourceID</td>
+                <td>@dt.Weight</td>
+            </tr>
+        }
+    </table>
+</div>

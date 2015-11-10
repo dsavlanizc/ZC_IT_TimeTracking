@@ -120,6 +120,9 @@
         ResetForm();
         $("#submitButton").attr("disabled", false);
         $('#RuleListTable').html("");
+        $('#formInput input,textarea,select').attr('readonly', false);
+        var ExistId = $('#GoalQuarter option').attr('id');
+        $('#GoalQuarter option').text(ExistId);
     });
 
     //loading overlay events
@@ -130,7 +133,7 @@
     ViewGoal = function (id) {
         ResetForm();
         $("#submitButton").attr("disabled", true);
-        //alert("asdf"+id);
+        $('#formInput input,textarea,select').attr('readonly', true);
         $.ajax({
             url: "/Home/GetGoalById",
             type: "POST",
@@ -162,7 +165,7 @@
                     $('#RuleListTable').html("");
                     $(rules).each(function () {
                         //console.log(this);
-                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
+                        $('#RuleListTable').append('<tr id="rule' + this.Goal_RuleID + '"><td class="col-md-3 RangeFrom">' + this.Performance_RangeFrom + '</td><td class="col-md-3 RangeTo">' + this.Performance_RangeTo + '</td><td class="col-md-3 Rating">' + this.Rating + '</td><td class="col-md-1" id="Action"><span id="Edit" onclick="EditGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span onclick="RemoveGoalRule(rule' + this.Goal_RuleID + ')" class="glyphicon glyphicon-remove" /></td></tr>');
                     });
                     $("#collapse1").collapse('hide');
                     $("#collapse2").collapse('show');
@@ -181,6 +184,7 @@
     //edit goal function
     EditGoal = function (id) {
         //alert(id);
+        $('#formInput input,textarea,select').attr('readonly', false);
         isCreate = false;
         updateGoalId = id;
         //ViewGoal(id);
@@ -290,10 +294,14 @@
             var RangeFrom = $("#RangeFrom").val();
             var RangeTo = $("#RangeTo").val();
             var Rating = $("#Rating").val();
-            $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit Rule" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete Rule" onclick="RemoveGoalRule(rule' + count + ')" /></td></tr>');
-            $("#RangeFrom").val(null);
-            $("#RangeTo").val(null);
-            $("#Rating").val(null);
+            if (RangeFrom == "" || RangeTo == "" || Rating == "")
+                bootbox.alert("Fill All The Field.!");
+            else {
+                $('#RuleListTable').append('<tr id="rule' + count + '"><td class="col-md-3 RangeFrom">' + RangeFrom + '</td><td class="col-md-3 RangeTo">' + RangeTo + '</td><td class="col-md-3 Rating">' + Rating + '</td><td class="col-md-1"><span id="Edit" data-toggle="tooltip" data-placement="bottom" title="Edit Rule" onclick="EditGoalRule(rule' + count + ')" class="glyphicon glyphicon-pencil"/>&nbsp;<span class="glyphicon glyphicon-remove" data-toggle="tooltip" data-placement="bottom" title="Delete Rule" onclick="RemoveGoalRule(rule' + count + ')" /></td></tr>');
+                $("#RangeFrom").val(null);
+                $("#RangeTo").val(null);
+                $("#Rating").val(null);
+            }
         }
     }
     EditGoalRule = function (id) {
@@ -390,5 +398,217 @@
                 $("#GoalQuarter").append($("<option>", { value: v.GoalQuarter, text: v.GoalQuarter }));
             }
         });
+    });
+
+    //selection of goal
+    $("#SelectAll").click(function () {
+        $('.SelectedGoal').prop('checked', this.checked);
+        if ($('.SelectedGoal:checked').length > 0)
+            $("#DeleteMultiGoals").show();
+        else
+            $("#DeleteMultiGoals").hide();
+    });
+    $('.SelectedGoal').change(function () {
+        if ($('.SelectedGoal:checked').length > 0)
+            $("#DeleteMultiGoals").show();
+        else
+            $("#DeleteMultiGoals").hide();
+    });
+    $("#DeleteMultiGoals").click(function () {
+        bootbox.confirm("Are you sure to delete selected goal(s)?", function (result) {
+            if (result) {
+                var ids = [];
+                $('.SelectedGoal:checked').each(function () {
+                    ids.push(this.value);
+                });
+                if (ids.length > 0) {
+                    $.ajax({
+                        url: "/Home/DeleteGoal",
+                        type: "POST",
+                        dataType: "json",
+                        contentType: "application/json",
+                        data: JSON.stringify({ Id: ids }),
+                        beforeSend: showLoading(),
+                        success: function (data) {
+                            hideLoading();
+                            if (data.success) {
+                                bootbox.alert(data.message, function () {
+                                    location.reload(true);
+                                });
+                            }
+                        },
+                        error: function (data) {
+                            hideLoading();
+                            if (data.readyState == 0) {
+                                bootbox.alert("Please check your internet connection!");
+                            }
+                            console.log(data);
+                        }
+                    });
+                }
+            }
+        });
+    });
+    $("#SearchByTitle").click(function () {
+        var txt = $("#SearchText").val().trim();
+        if (txt.length > 0)
+            $("#TitleString").val(txt);
+        else
+            $("#TitleString").val(null);
+        $("#PageForm").submit();
+    });
+    $("#ClearTitleSearch").click(function () {
+        $("#TitleString").val(null);
+        $("#PageForm").submit();
+    });
+
+    //Assign Goal region
+
+    $("#ButtonAssignGoal").click(function (e) {
+        e.preventDefault();
+        window.location.href = '/Home/AssignGoal';
+    });
+    //Get Description from Selected Title
+    $("#Goal_MasterID").change(function (e) {
+        e.preventDefault();
+        var TitleID = $(this).find('option:selected').val();
+        if (TitleID == "")
+            $("#GoalDescription").val('');
+        $.ajax({
+            url: "GetDescription",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TitleID: TitleID }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                //console.log(dt);
+                if (dt.success)
+                    $("#GoalDescription").val(dt.TitleData);
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+    //Assign form Validation
+    var AssignValidation = $("#GoalAssignForm").validate({
+        rules: {
+            GoalTitle: {
+                required: true
+            },
+            GoalDescription: {
+                required: true
+            },
+            Team: {
+                required: true
+            },
+            TeamMember: {
+                required: true
+            },
+            Weight: {
+                required: true
+            }
+        },
+        messages: {
+            GoalDescription: {
+                required: "First Select Title From Above list..!"
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+
+    //Get TeamMember from Selected Team
+    $("#TeamID").change(function (e) {
+        e.preventDefault();
+        var TeamID = $(this).find('option:selected').val();
+        var Weight = $("#Weight").val();
+        console.log(JSON.stringify({ TeamID: TeamID, Weight: Weight }));
+        $.ajax({
+            url: "GetTeamMember",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TeamID: TeamID,Weight:Weight }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                //console.log(dt)
+                if (dt.success) {
+                    $("#TeamMember").html('');
+                    for (var val in dt.TeamMember) {
+                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + "</option>");
+                    }
+                }
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+
+    //Assign Goal To Resourse
+    $("#ButtonAssign").click(function (e) {
+        e.preventDefault();
+        if ($("#GoalAssignForm").valid()) {
+            var AssignData = {};
+            AssignData.ResourceID = [];
+            var rid = $("#TeamMember option:selected").each(function () {
+                AssignData.ResourceID.push(this.value);
+            });
+            AssignData.Goal_MasterID = $("#Goal_MasterID option:selected").val();
+            AssignData.Weight = $("#Weight").val();
+
+            //Assign data
+            $.ajax({
+                url: "/Home/AssignGoal",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ AssignData: AssignData }),
+                beforeSend: showLoading(),
+                success: function (dt) {
+                    hideLoading();
+                    bootbox.alert(dt.message, function () {
+                        if (dt.success) {
+                            location.reload(true);
+                        }
+                    });
+                },
+                error: function (dt) {
+                    hideLoading();
+                    if (dt.readyState == 0) {
+                        bootbox.alert("Please check your internet connection!");
+                    }
+                    console.log(dt);
+                }
+            });
+            console.log(AssignData.ResourceID);
+        }
+    });
+    //View AssignGoal
+    $("#ButtonViewAssignGoal").click(function () {
+        window.location.href = "ViewAssignGoal";
     });
 });

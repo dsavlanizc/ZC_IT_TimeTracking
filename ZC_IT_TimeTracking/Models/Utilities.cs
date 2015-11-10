@@ -7,6 +7,7 @@ namespace ZC_IT_TimeTracking.Models
 {
     public class Utilities
     {
+        public static int RecordPerPage = 2;
         public static int GetQuarter()
         {
             DateTime date = DateTime.Now;

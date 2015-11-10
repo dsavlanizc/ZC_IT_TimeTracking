@@ -1,4 +1,4 @@
-﻿<div class="form-horizontal">
+﻿<div class="form-horizontal" id="formInput">
     <div class="form-group required">
         <label class="col-md-3 control-label">Title</label>
         <div class="col-md-4">
@@ -14,16 +14,16 @@
     <div class="form-group required">
         <label class="control-label col-md-3">Year</label>
         <div class="col-md-3">
-            <select name="GoalYear" id="GoalYear" class="form-control" readonly="readonly">
-                <option>@ViewBag.Year</option>
+            <select name="GoalYear" id="GoalYear" class="form-control">
+                <option id="@ViewBag.Year">@ViewBag.Year</option>
             </select>
         </div>
     </div>
     <div class="form-group required">
         <label class="control-label col-md-3">Quarter</label>
         <div class="col-md-3">
-            <select name="GoalQuarter" id="GoalQuarter" class="form-control" readonly="readonly">
-                <option>@ViewBag.Quarter</option>
+            <select name="GoalQuarter" id="GoalQuarter" class="form-control">
+                <option id="@ViewBag.Quarter">@ViewBag.Quarter</option>
             </select>
         </div>
     </div>

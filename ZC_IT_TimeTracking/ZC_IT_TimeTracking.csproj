@@ -219,6 +219,9 @@
     <Compile Include="GetResourceGoalDetails_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetSpecificRecordsOfGoal_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetTeamDetails_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -240,6 +243,7 @@
     <Compile Include="Manager.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AssignGoal.cs" />
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\GoalDetail.cs" />
     <Compile Include="Models\GoalQuarters.cs" />
@@ -263,6 +267,9 @@
     <Compile Include="Role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="SearchGoalByTitle_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Team.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
@@ -278,6 +285,8 @@
     <Content Include="Views\Home\_GoalRule.cshtml" />
     <Content Include="Views\Shared\_ErrorView.cshtml" />
     <Content Include="Views\Home\_AddQuarter.cshtml" />
+    <Content Include="Views\Home\_AssignGoal.cshtml" />
+    <Content Include="Views\Home\_ViewAssignGoal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -307,7 +316,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49952</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49942/</IISUrl>
+          <IISUrl>http://localhost:49943/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
