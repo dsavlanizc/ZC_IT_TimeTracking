@@ -1,26 +1,45 @@
 ﻿<div class="row">
-    <h3>AllGoalResourse</h3>
-    <table>
-        <tr>
-            <th>ResourceId</th>
-            <th>GoalID</th>
-            <th>Weight</th>
-        </tr>
+    <h3>Goal Assigned To Resource</h3>
+    <div class="form-group">
+        <label class="col-md-1 control-label">Resources</label>
+        <div class="col-md-3">
+            @Html.DropDownList("ResourceID", new SelectList(ViewBag.Resource, "ResourceID", "Name"), "----Select Resource-----", new { @class = "form-control col-md-4" })
+        </div>
+    </div>
+    <div class="form-group">
+        <form role="form" class="form-horizontal" method="post">
+            <input type="hidden" id="ResId" name="ResId" />
+            <div class="col-md-3">
+                <button class="btn btn-default" type="submit">Find</button>
+            </div>
+        </form>
+    </div>
 
-        @foreach (var dt in ViewBag.AllGoalResourse)
-        {
+    <div class="form-group">
+        <table class="table">
             <tr>
-                <td>@dt.ResourceID</td>
-                <td>@dt.Goal_MasterID</td>
-                <td>@dt.Weight</td>
+                <th>Resource Goal Id</th>
+                <th>Goal Title</th>
+                <th>Weight</th>
             </tr>
-        }
-    </table>
-    <h3>AllResourceGoal</h3>
+            @if (ViewBag.AllGoalResourse != null)
+            {
+                foreach (var dt in ViewBag.AllGoalResourse)
+                {
+                    <tr>
+                        <td>@dt.Resource_GoalID</td>
+                        <td>@dt.GoalTitle</td>
+                        <td>@dt.Weight</td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+    @*<h3>Resource Assigned to Goal</h3>
     <table>
         <tr>
             <th>GoalID</th>
-            <th>ResourceId</th>            
+            <th>ResourceId</th>
             <th>Weight</th>
         </tr>
 
@@ -32,5 +51,5 @@
                 <td>@dt.Weight</td>
             </tr>
         }
-    </table>
+    </table>*@
 </div>

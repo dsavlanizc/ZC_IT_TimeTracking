@@ -45,8 +45,8 @@ namespace ZC_IT_TimeTracking.Controllers
                 }
                 else
                 {
-                    ObjectParameter count = new ObjectParameter("MatchedRecords",typeof(int));
-                    var GoalList = DbContext.SearchGoalByTitle(title,skip, Utilities.RecordPerPage, count).ToList();
+                    ObjectParameter count = new ObjectParameter("MatchedRecords", typeof(int));
+                    var GoalList = DbContext.SearchGoalByTitle(title, skip, Utilities.RecordPerPage, count).ToList();
                     if ((GoalList.Count() == 0) && (page - 2) >= 0)
                     {
                         ViewBag.page = page - 1;
@@ -194,11 +194,20 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetTeamMember(int TeamID, int Weight)
+        public ActionResult GetTeamMember(int TeamID, int Weight, int GoalID)
         {
             try
             {
-                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID,s.FirstName }).ToList();
+                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, s.FirstName }).ToList();
+                int count = TeamMember.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    var member = TeamMember.ElementAt(i);
+                    int res = DbContext.GetResourceGoalDetails(member.ResourceID, GoalID);
+                    if (res > 0)
+                        TeamMember.Remove(member);
+
+                }
                 return Json(new { TeamMember = TeamMember, success = true });
             }
             catch
@@ -212,11 +221,16 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                //var ExistAssign = DbContext.GetResourceGoalDetails(AssignData.ResourceID,AssignData.Goal_MasterID).FirstOrDefault();
                 foreach (int id in AssignData.ResourceID)
                 {
-                    ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                    var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date);
+                    int ExistAssign = DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID);
+                    if (ExistAssign == 0)
+                    {
+                        ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
+                        var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
+                    }
+
+
                 }
                 return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
             }
@@ -226,10 +240,15 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
-        public ActionResult ViewAssignGoal()
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public ActionResult ViewAssignGoal(int ResId = -1)
         {
-            ViewBag.AllGoalResourse = DbContext.GetAllGoalsOfResource(2).ToList();
-            ViewBag.AllResourceGoal = DbContext.GetAllResourceForGoal(3).ToList();
+            if (ResId != -1)
+            {
+                ViewBag.AllGoalResourse = DbContext.GetAllGoalsOfResource(ResId).ToList();                
+            }
+            ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+            //ViewBag.AllResourceGoal = DbContext.GetAllResourceForGoal(2).ToList();
             return View("_ViewAssignGoal");
         }
     }
