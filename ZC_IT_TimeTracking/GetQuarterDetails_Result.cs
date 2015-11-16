@@ -15,7 +15,7 @@ namespace ZC_IT_TimeTracking
     {
         public int GoalQuarter { get; set; }
         public int QuarterYear { get; set; }
-        public Nullable<System.DateTime> GoalCreateFrom { get; set; }
-        public Nullable<System.DateTime> GoalCreateTo { get; set; }
+        public System.DateTime GoalCreateFrom { get; set; }
+        public System.DateTime GoalCreateTo { get; set; }
     }
 }

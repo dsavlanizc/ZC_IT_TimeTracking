@@ -203,9 +203,10 @@ namespace ZC_IT_TimeTracking.Controllers
                 for (int i = 0; i < count; i++)
                 {
                     var member = TeamMember.ElementAt(i);
-                    int res = DbContext.GetResourceGoalDetails(member.ResourceID, GoalID);
-                    if (res > 0)
-                        TeamMember.Remove(member);
+                    ObjectParameter res = new ObjectParameter("ResultCount",typeof(int));
+                    DbContext.GetResourceGoalDetails(member.ResourceID, GoalID, res);
+                    if (Convert.ToInt32(res.Value) > 0)
+                    { TeamMember.RemoveAt(i); i--; count--; }
 
                 }
                 return Json(new { TeamMember = TeamMember, success = true });
@@ -223,8 +224,9 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 foreach (int id in AssignData.ResourceID)
                 {
-                    int ExistAssign = DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID);
-                    if (ExistAssign == 0)
+                    ObjectParameter res = new ObjectParameter("ResultCount", typeof(int));
+                    DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID, res);
+                    if (Convert.ToInt32(res.Value) == 0)
                     {
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
                         var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);

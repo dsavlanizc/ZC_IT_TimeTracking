@@ -39,9 +39,9 @@ else
         </thead>
         <tbody>
             @{
-                int c = (ViewBag.page - 1) * Utilities.RecordPerPage;
-                ViewBag.From = c + 1;
-                ViewBag.To = c + Model.Count;
+    int c = (ViewBag.page - 1) * Utilities.RecordPerPage;
+    ViewBag.From = c + 1;
+    ViewBag.To = c + Model.Count;
             }
             @foreach (var goal in Model)
             {
@@ -78,18 +78,37 @@ else
             @{
                 double count = ViewBag.TotalCount;
                 double len = Math.Ceiling(count / Utilities.RecordPerPage);
+                if (ViewBag.page != 1)
+                {
+                    int prev = ViewBag.page - 1;
+                    <li><button type="submit" class="btn btn-default" name="page" value="@prev">&lt;&lt;Prev</button></li>
+                }
+                else
+                {
+                    <li><button type="submit" class="btn btn-default" disabled>&lt;&lt;Prev</button></li>
+                }
                 for (int i = 1; i <= len; i++)
                 {
                     if (i == @ViewBag.page)
                     {
-                        <li class="active"><input type="button" class="btn btn-primary" value="@i"/></li>
+                        <li class="active"><input type="button" class="btn btn-primary" value="@i" /></li>
                     }
                     else
                     {
                         <li><input type="submit" name="page" class="btn btn-default" value="@i" /></li>
                     }
                 }
-            }
+                if (ViewBag.page == len)
+                {
+                    <li><button type="submit" class="btn btn-default" disabled>Next&gt;&gt;</button></li>
+                }
+                else
+                {
+                    int next = ViewBag.page + 1;
+                    <li><button type="submit" class="btn btn-default" name="page" value="@next">Next&gt;&gt;</button></li>
+                }
+}
         </ul>
+
     </div>
 </form>

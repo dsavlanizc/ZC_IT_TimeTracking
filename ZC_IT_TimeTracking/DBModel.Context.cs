@@ -82,7 +82,7 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AssignGoalToResource", resourceIdParameter, goalIdParameter, weightParameter, assignDateParameter, currentInsertedId);
         }
     
-        public virtual ObjectResult<Nullable<double>> calculateResourceGoalRating(Nullable<int> resourceId, Nullable<int> goalId, Nullable<double> resourcePerformance)
+        public virtual int calculateResourceGoalRating(Nullable<int> resourceId, Nullable<int> goalId, Nullable<double> resourcePerformance)
         {
             var resourceIdParameter = resourceId.HasValue ?
                 new ObjectParameter("ResourceId", resourceId) :
@@ -96,7 +96,7 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("ResourcePerformance", resourcePerformance) :
                 new ObjectParameter("ResourcePerformance", typeof(double));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<double>>("calculateResourceGoalRating", resourceIdParameter, goalIdParameter, resourcePerformanceParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("calculateResourceGoalRating", resourceIdParameter, goalIdParameter, resourcePerformanceParameter);
         }
     
         public virtual ObjectResult<CheckQuater_Result> CheckQuater(Nullable<int> quater, Nullable<int> qYear)
@@ -148,6 +148,15 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("DeleteResourceGoal", resource_GoalIdParameter);
         }
     
+        public virtual ObjectResult<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(Nullable<int> resourceId)
+        {
+            var resourceIdParameter = resourceId.HasValue ?
+                new ObjectParameter("ResourceId", resourceId) :
+                new ObjectParameter("ResourceId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllGoalsOfResource_Result>("GetAllGoalsOfResource", resourceIdParameter);
+        }
+    
         public virtual ObjectResult<GetAllResourceForGoal_Result> GetAllResourceForGoal(Nullable<int> goal_id)
         {
             var goal_idParameter = goal_id.HasValue ?
@@ -184,28 +193,6 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuarterDetails_Result>("GetQuarterDetails", quaterIdParameter);
         }
     
-        public virtual ObjectResult<GetQuarterFromYear_Result> GetQuarterFromYear(Nullable<int> qyear)
-        {
-            var qyearParameter = qyear.HasValue ?
-                new ObjectParameter("qyear", qyear) :
-                new ObjectParameter("qyear", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuarterFromYear_Result>("GetQuarterFromYear", qyearParameter);
-        }
-    
-        public virtual int GetRating(Nullable<int> goalId, Nullable<double> performance, ObjectParameter rating)
-        {
-            var goalIdParameter = goalId.HasValue ?
-                new ObjectParameter("goalId", goalId) :
-                new ObjectParameter("goalId", typeof(int));
-    
-            var performanceParameter = performance.HasValue ?
-                new ObjectParameter("performance", performance) :
-                new ObjectParameter("performance", typeof(double));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetRating", goalIdParameter, performanceParameter, rating);
-        }
-    
         public virtual ObjectResult<GetResouceDetails_Result> GetResouceDetails(Nullable<int> resourceID)
         {
             var resourceIDParameter = resourceID.HasValue ?
@@ -224,49 +211,6 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceByTeam_Result>("GetResourceByTeam", teamIdParameter);
         }
     
-        public virtual int GetResourceGoalDetails(Nullable<int> resourceId, Nullable<int> goalId)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("resourceId", resourceId) :
-                new ObjectParameter("resourceId", typeof(int));
-    
-            var goalIdParameter = goalId.HasValue ?
-                new ObjectParameter("GoalId", goalId) :
-                new ObjectParameter("GoalId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetResourceGoalDetails", resourceIdParameter, goalIdParameter);
-        }
-    
-        public virtual int getSpecificRecordOftable(Nullable<int> startFrom, Nullable<int> noOfRecords, string tableName)
-        {
-            var startFromParameter = startFrom.HasValue ?
-                new ObjectParameter("startFrom", startFrom) :
-                new ObjectParameter("startFrom", typeof(int));
-    
-            var noOfRecordsParameter = noOfRecords.HasValue ?
-                new ObjectParameter("NoOfRecords", noOfRecords) :
-                new ObjectParameter("NoOfRecords", typeof(int));
-    
-            var tableNameParameter = tableName != null ?
-                new ObjectParameter("tableName", tableName) :
-                new ObjectParameter("tableName", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("getSpecificRecordOftable", startFromParameter, noOfRecordsParameter, tableNameParameter);
-        }
-    
-        public virtual ObjectResult<GetSpecificRecordsOfGoal_Result> GetSpecificRecordsOfGoal(Nullable<int> startFrom, Nullable<int> noOfRecords, ObjectParameter totalRecords)
-        {
-            var startFromParameter = startFrom.HasValue ?
-                new ObjectParameter("startFrom", startFrom) :
-                new ObjectParameter("startFrom", typeof(int));
-    
-            var noOfRecordsParameter = noOfRecords.HasValue ?
-                new ObjectParameter("NoOfRecords", noOfRecords) :
-                new ObjectParameter("NoOfRecords", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSpecificRecordsOfGoal_Result>("GetSpecificRecordsOfGoal", startFromParameter, noOfRecordsParameter, totalRecords);
-        }
-    
         public virtual ObjectResult<GetTeamDetails_Result> GetTeamDetails(Nullable<int> teamId)
         {
             var teamIdParameter = teamId.HasValue ?
@@ -274,15 +218,6 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("teamId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetTeamDetails_Result>("GetTeamDetails", teamIdParameter);
-        }
-    
-        public virtual ObjectResult<getYearForQuarter_Result> getYearForQuarter(Nullable<int> quarter)
-        {
-            var quarterParameter = quarter.HasValue ?
-                new ObjectParameter("quarter", quarter) :
-                new ObjectParameter("quarter", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getYearForQuarter_Result>("getYearForQuarter", quarterParameter);
         }
     
         public virtual int InsertGoalMaster(string goal_Title, string goal_Description, string unit_Of_Measurement, Nullable<double> measurement_Value, Nullable<bool> is_HigherValueGood, Nullable<System.DateTime> creationDate, Nullable<int> quarterID, ObjectParameter currentInsertedId)
@@ -339,15 +274,15 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalQuarter", quaterParameter, yearParameter, goalCreate_FromParameter, goalCreate_ToParameter);
         }
     
-        public virtual int InsertGoalRules(Nullable<double> performanceRangeFrom, Nullable<double> performanceRangeTo, Nullable<double> rating, Nullable<int> goalID)
+        public virtual int InsertGoalRules(Nullable<int> performanceRangeFrom, Nullable<int> performanceRangeTo, Nullable<double> rating, Nullable<int> goalID)
         {
             var performanceRangeFromParameter = performanceRangeFrom.HasValue ?
                 new ObjectParameter("PerformanceRangeFrom", performanceRangeFrom) :
-                new ObjectParameter("PerformanceRangeFrom", typeof(double));
+                new ObjectParameter("PerformanceRangeFrom", typeof(int));
     
             var performanceRangeToParameter = performanceRangeTo.HasValue ?
                 new ObjectParameter("PerformanceRangeTo", performanceRangeTo) :
-                new ObjectParameter("PerformanceRangeTo", typeof(double));
+                new ObjectParameter("PerformanceRangeTo", typeof(int));
     
             var ratingParameter = rating.HasValue ?
                 new ObjectParameter("Rating", rating) :
@@ -360,21 +295,14 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("InsertGoalRules", performanceRangeFromParameter, performanceRangeToParameter, ratingParameter, goalIDParameter);
         }
     
-        public virtual ObjectResult<SearchGoalByTitle_Result> SearchGoalByTitle(string title, Nullable<int> startFrom, Nullable<int> noOfRecords, ObjectParameter matchedRecords)
+        public virtual int sp_MScleanupmergepublisher()
         {
-            var titleParameter = title != null ?
-                new ObjectParameter("title", title) :
-                new ObjectParameter("title", typeof(string));
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_MScleanupmergepublisher");
+        }
     
-            var startFromParameter = startFrom.HasValue ?
-                new ObjectParameter("startFrom", startFrom) :
-                new ObjectParameter("startFrom", typeof(int));
-    
-            var noOfRecordsParameter = noOfRecords.HasValue ?
-                new ObjectParameter("NoOfRecords", noOfRecords) :
-                new ObjectParameter("NoOfRecords", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchGoalByTitle_Result>("SearchGoalByTitle", titleParameter, startFromParameter, noOfRecordsParameter, matchedRecords);
+        public virtual int sp_MSrepl_startup()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_MSrepl_startup");
         }
     
         public virtual int UpdateGoalMaster(Nullable<int> goal_Id, string goal_Title, string goal_Description, string unit_Of_Measurement, Nullable<double> measurement_Value, Nullable<System.DateTime> createDate, Nullable<bool> is_HigherValueGood, Nullable<int> quaterID)
@@ -477,7 +405,81 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateResourceGoal", resourceIdParameter, goalIdParameter, weightParameter);
         }
     
-        public virtual ObjectResult<SearchGoalByTitle1_Result> SearchGoalByTitle1(string title, Nullable<int> startFrom, Nullable<int> noOfRecords, ObjectParameter matchedRecords)
+        public virtual ObjectResult<GetQuarterFromYear_Result> GetQuarterFromYear(Nullable<int> qyear)
+        {
+            var qyearParameter = qyear.HasValue ?
+                new ObjectParameter("qyear", qyear) :
+                new ObjectParameter("qyear", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetQuarterFromYear_Result>("GetQuarterFromYear", qyearParameter);
+        }
+    
+        public virtual int GetRating(Nullable<int> goalId, Nullable<double> performance, ObjectParameter rating)
+        {
+            var goalIdParameter = goalId.HasValue ?
+                new ObjectParameter("goalId", goalId) :
+                new ObjectParameter("goalId", typeof(int));
+    
+            var performanceParameter = performance.HasValue ?
+                new ObjectParameter("performance", performance) :
+                new ObjectParameter("performance", typeof(double));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetRating", goalIdParameter, performanceParameter, rating);
+        }
+    
+        public virtual int GetResourceGoalDetails(Nullable<int> resourceId, Nullable<int> goalId, ObjectParameter resultCount)
+        {
+            var resourceIdParameter = resourceId.HasValue ?
+                new ObjectParameter("resourceId", resourceId) :
+                new ObjectParameter("resourceId", typeof(int));
+    
+            var goalIdParameter = goalId.HasValue ?
+                new ObjectParameter("GoalId", goalId) :
+                new ObjectParameter("GoalId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GetResourceGoalDetails", resourceIdParameter, goalIdParameter, resultCount);
+        }
+    
+        public virtual int getSpecificRecordOftable(Nullable<int> startFrom, Nullable<int> noOfRecords, string tableName)
+        {
+            var startFromParameter = startFrom.HasValue ?
+                new ObjectParameter("startFrom", startFrom) :
+                new ObjectParameter("startFrom", typeof(int));
+    
+            var noOfRecordsParameter = noOfRecords.HasValue ?
+                new ObjectParameter("NoOfRecords", noOfRecords) :
+                new ObjectParameter("NoOfRecords", typeof(int));
+    
+            var tableNameParameter = tableName != null ?
+                new ObjectParameter("tableName", tableName) :
+                new ObjectParameter("tableName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("getSpecificRecordOftable", startFromParameter, noOfRecordsParameter, tableNameParameter);
+        }
+    
+        public virtual ObjectResult<GetSpecificRecordsOfGoal_Result> GetSpecificRecordsOfGoal(Nullable<int> startFrom, Nullable<int> noOfRecords, ObjectParameter totalRecords)
+        {
+            var startFromParameter = startFrom.HasValue ?
+                new ObjectParameter("startFrom", startFrom) :
+                new ObjectParameter("startFrom", typeof(int));
+    
+            var noOfRecordsParameter = noOfRecords.HasValue ?
+                new ObjectParameter("NoOfRecords", noOfRecords) :
+                new ObjectParameter("NoOfRecords", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetSpecificRecordsOfGoal_Result>("GetSpecificRecordsOfGoal", startFromParameter, noOfRecordsParameter, totalRecords);
+        }
+    
+        public virtual ObjectResult<getYearForQuarter_Result> getYearForQuarter(Nullable<int> quarter)
+        {
+            var quarterParameter = quarter.HasValue ?
+                new ObjectParameter("quarter", quarter) :
+                new ObjectParameter("quarter", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<getYearForQuarter_Result>("getYearForQuarter", quarterParameter);
+        }
+    
+        public virtual ObjectResult<SearchGoalByTitle_Result> SearchGoalByTitle(string title, Nullable<int> startFrom, Nullable<int> noOfRecords, ObjectParameter matchedRecords)
         {
             var titleParameter = title != null ?
                 new ObjectParameter("title", title) :
@@ -491,41 +493,7 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("NoOfRecords", noOfRecords) :
                 new ObjectParameter("NoOfRecords", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchGoalByTitle1_Result>("SearchGoalByTitle1", titleParameter, startFromParameter, noOfRecordsParameter, matchedRecords);
-        }
-    
-        public virtual int CalculateResourceWeight(Nullable<int> resourceId, Nullable<int> gquarter, Nullable<int> gyear, Nullable<int> goalId, Nullable<int> weightEntered, ObjectParameter valid)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("ResourceId", resourceId) :
-                new ObjectParameter("ResourceId", typeof(int));
-    
-            var gquarterParameter = gquarter.HasValue ?
-                new ObjectParameter("Gquarter", gquarter) :
-                new ObjectParameter("Gquarter", typeof(int));
-    
-            var gyearParameter = gyear.HasValue ?
-                new ObjectParameter("Gyear", gyear) :
-                new ObjectParameter("Gyear", typeof(int));
-    
-            var goalIdParameter = goalId.HasValue ?
-                new ObjectParameter("GoalId", goalId) :
-                new ObjectParameter("GoalId", typeof(int));
-    
-            var weightEnteredParameter = weightEntered.HasValue ?
-                new ObjectParameter("weightEntered", weightEntered) :
-                new ObjectParameter("weightEntered", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("CalculateResourceWeight", resourceIdParameter, gquarterParameter, gyearParameter, goalIdParameter, weightEnteredParameter, valid);
-        }
-    
-        public virtual ObjectResult<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(Nullable<int> resourceId)
-        {
-            var resourceIdParameter = resourceId.HasValue ?
-                new ObjectParameter("ResourceId", resourceId) :
-                new ObjectParameter("ResourceId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAllGoalsOfResource_Result>("GetAllGoalsOfResource", resourceIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SearchGoalByTitle_Result>("SearchGoalByTitle", titleParameter, startFromParameter, noOfRecordsParameter, matchedRecords);
         }
     }
 }

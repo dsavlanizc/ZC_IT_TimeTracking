@@ -14,8 +14,8 @@ namespace ZC_IT_TimeTracking
     public partial class GetAllGoalsOfResource_Result
     {
         public int Resource_GoalID { get; set; }
+        public int ResourceID { get; set; }
+        public int Goal_MasterID { get; set; }
         public int Weight { get; set; }
-        public string GoalTitle { get; set; }
-        public string Name { get; set; }
     }
 }

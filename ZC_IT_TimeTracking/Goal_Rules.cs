@@ -16,8 +16,8 @@ namespace ZC_IT_TimeTracking
 	public partial class Goal_Rules
     {
         public int Goal_RuleID { get; set; }
-        public double Performance_RangeFrom { get; set; }
-        public double Performance_RangeTo { get; set; }
+        public int Performance_RangeFrom { get; set; }
+        public int Performance_RangeTo { get; set; }
         public double Rating { get; set; }
         public int GoalId { get; set; }
     

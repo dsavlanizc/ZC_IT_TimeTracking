@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="ee8cfe07891f4c1eacd74084f4cfce49" Name="Diagram1">
+      <Diagram DiagramId="bc4cbce9f2184c04a270057abbeec224" Name="Diagram1">
         <EntityTypeShape EntityType="DatabaseModel.Department" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.Goal_Master" Width="1.5" PointX="8.25" PointY="9.125" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.Goal_Quarter" Width="1.5" PointX="8.25" PointY="1.5" IsExpanded="true" />
@@ -17,6 +17,8 @@
         <EntityTypeShape EntityType="DatabaseModel.Role" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.Team" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
         <EntityTypeShape EntityType="DatabaseModel.TeamLead" Width="1.5" PointX="10.5" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.spt_fallback_usg" PointX="0.75" PointY="0.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.spt_monitor" PointX="2.75" PointY="0.75" Width="1.5" IsExpanded="true" />
         <AssociationConnector Association="DatabaseModel.FK_Team_DepartmentID" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseModel.FK_Goal_Master_QuaeterID" ManuallyRouted="false" />
         <AssociationConnector Association="DatabaseModel.FK_Goal_Rules_Goal_Master" ManuallyRouted="false" />
