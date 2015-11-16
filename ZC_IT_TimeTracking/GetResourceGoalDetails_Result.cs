@@ -14,6 +14,7 @@ namespace ZC_IT_TimeTracking
     public partial class GetResourceGoalDetails_Result
     {
         public int Resource_GoalID { get; set; }
+        public Nullable<System.DateTime> GoalAssignDate { get; set; }
         public int Weight { get; set; }
     }
 }

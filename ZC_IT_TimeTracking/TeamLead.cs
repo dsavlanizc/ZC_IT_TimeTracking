@@ -12,8 +12,7 @@ namespace ZC_IT_TimeTracking
     using System;
     using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework","4.0.0.0")]
-	public partial class TeamLead
+    public partial class TeamLead
     {
         public int TeamLeadID { get; set; }
         public Nullable<int> TeamID { get; set; }

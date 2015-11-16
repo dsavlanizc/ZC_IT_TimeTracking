@@ -1,5 +1,4 @@
 ﻿@using ZC_IT_TimeTracking.Models
-@using System.Web.UI.WebControls
 @if (ViewBag.SearchString != "" || Model.Count != 0)
 {
     <div class="row">
@@ -40,9 +39,9 @@ else
         </thead>
         <tbody>
             @{
-                int c = (ViewBag.page - 1) * Utilities.RecordPerPage;
-                ViewBag.From = c + 1;
-                ViewBag.To = c + Model.Count;
+    int c = (ViewBag.page - 1) * Utilities.RecordPerPage;
+    ViewBag.From = c + 1;
+    ViewBag.To = c + Model.Count;
             }
             @foreach (var goal in Model)
             {
@@ -79,20 +78,20 @@ else
             @{
                 double count = ViewBag.TotalCount;
                 double len = Math.Ceiling(count / Utilities.RecordPerPage);
-
                 if (ViewBag.page != 1)
-                {    int prev = (ViewBag.page-1);
-                    <li><button type="submit" class="btn btn-default" value="@prev">Prev</button></li>
+                {
+                    int prev = ViewBag.page - 1;
+                    <li><button type="submit" class="btn btn-default" name="page" value="@prev">&lt;&lt;Prev</button></li>
                 }
                 else
                 {
-                    <li><button type="submit" class="btn btn-default" value="" disabled>Prev</button></li>
+                    <li><button type="submit" class="btn btn-default" disabled>&lt;&lt;Prev</button></li>
                 }
                 for (int i = 1; i <= len; i++)
                 {
                     if (i == @ViewBag.page)
                     {
-                        <li class="active"><input type="button" class="btn btn-primary" value="@i"/></li>
+                        <li class="active"><input type="button" class="btn btn-primary" value="@i" /></li>
                     }
                     else
                     {
@@ -101,27 +100,15 @@ else
                 }
                 if (ViewBag.page == len)
                 {
-                     <li><button type="submit" class="btn btn-default" value="" disabled>Next</button></li>
+                    <li><button type="submit" class="btn btn-default" disabled>Next&gt;&gt;</button></li>
                 }
                 else
-                {    var next = (ViewBag.page + 1);
-                    <li><button type="submit" class="btn btn-default" value="@next">Next</button></li>
-                }  
-                
-                          
+                {
+                    int next = ViewBag.page + 1;
+                    <li><button type="submit" class="btn btn-default" name="page" value="@next">Next&gt;&gt;</button></li>
+                }
 }
         </ul>
-    </div>
-    @{
-        var recordsInPage = new List<ListItem> { new ListItem { Text = "2", Value = "2" }, new ListItem { Text = "5", Value = "5" }, new ListItem { Text = "10", Value = "10" }, new ListItem { Text = "50", Value = "50" } };
-    }
-    <div class="form-horizontal">
-        <div class="form-group col-md-8 col-lg-8">
-            <label class=" col-md-2">Page Size</label>
-            <div>
-                @Html.DropDownList("select Page Size", new SelectList(recordsInPage), new { @id = "recordInPageDDL" })
-            </div> 
-        </div class="form-group col-md-8 col-lg-8">
-    </div>
 
+    </div>
 </form>
