@@ -14,7 +14,7 @@ namespace ZC_IT_TimeTracking
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    
+    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
     public partial class DatabaseEntities : DbContext
     {
         public DatabaseEntities()

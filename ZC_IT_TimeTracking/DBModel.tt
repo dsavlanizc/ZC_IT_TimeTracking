@@ -23,8 +23,11 @@ foreach (var entity in typeMapper.GetItemsToGenerate<EntityType>(itemCollection)
     fileManager.StartNewFile(entity.Name + ".cs");
     BeginNamespace(code);
 #>
+
 <#=codeStringGenerator.UsingDirectives(inHeader: false)#>
+[global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
 <#=codeStringGenerator.EntityClassOpening(entity)#>
+
 {
 <#
     var propertiesWithDefaultValues = typeMapper.GetPropertiesWithDefaultValues(entity);
