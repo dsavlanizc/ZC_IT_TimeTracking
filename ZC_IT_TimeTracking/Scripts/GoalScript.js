@@ -547,7 +547,7 @@
             type: "POST",
             dataType: "json",
             contentType: "application/json",
-            data: JSON.stringify({ TeamID: TeamID,Weight:Weight,GoalID:GoalID }),
+            data: JSON.stringify({ TeamID: TeamID, Weight: Weight, GoalID: GoalID }),
             beforeSend: showLoading(),
             success: function (dt) {
                 hideLoading();
@@ -612,14 +612,71 @@
     $("#ButtonViewAssignGoal").click(function () {
         window.location.href = "/Home/ViewAssignGoal";
     });
-    
-    $("#ResourceID").change(function () {
+
+    $("#TeamMemberName").change(function () {
         var id = $(this).val();
+        console.log(id);
         if (id != "") {
             $("#ResId").val(id);
         }
     });
-    $("#recordInPageDDL").change(function () {
-        
+
+    $("#TeamName").change(function (e) {
+        e.preventDefault();
+        var TeamID = $(this).find('option:selected').val();
+        console.log(TeamID);
+        $.ajax({
+            url: "ViewAssignGoal",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TeamID: TeamID }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                //console.log(dt)
+                if (dt.success) {
+                    console.log(dt);
+                    $("#TeamMemberName").html('');
+                    $("#TeamMemberName").html('<option value="-1">--Select TeamMember--</option>');
+                    for (var val in dt.TeamMember) {
+                        $("#TeamMemberName").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].Name + "</option>");
+                    }
+                }
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
     });
+
+    $("#recordInPageDDL").change(function () {
+
+    });
+
+    EditAssignedGoal = function (id) {
+        //alert(id);
+        $.ajax({
+            url: "/Home/GetAssignedGoal",
+            type: "POST",
+            dataType: "Json",
+            contentType: "application/json",
+            data: JSON.stringify({ AssignId: id }),
+            beroreSend: showLoading(),
+            success: function (adt) {
+                hideLoading();
+                
+                    console.log(adt);
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    }
 });

@@ -259,5 +259,24 @@ namespace ZC_IT_TimeTracking.Controllers
             //ViewBag.AllResourceGoal = DbContext.GetAllResourceForGoal(2).ToList();
             return View("_ViewAssignGoal");
         }
+
+        [HttpPost]
+        public JsonResult GetAssignedGoal(int AssignId)
+        {
+            try
+            {
+                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignId))
+                {
+                    var AssignedGoal = DbContext.GetAssignedGoalDetails(AssignId).FirstOrDefault();
+                    int id = AssignedGoal.Goal_MasterID;
+                    return Json(AssignedGoal);
+                }
+                return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
+            }
+            catch (Exception)
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Assigned goal", success = false });
+            }
+        }
     }
 }

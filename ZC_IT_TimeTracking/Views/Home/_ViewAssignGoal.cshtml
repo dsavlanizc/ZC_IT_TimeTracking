@@ -37,6 +37,7 @@
                 <th>Resource Goal Id</th>
                 <th>Goal Title</th>
                 <th>Weight</th>
+                <th>Action</th>
             </tr>
             @if (ViewBag.AllGoalResourse != null)
             {
@@ -46,6 +47,10 @@
                         <td>@dt.Resource_GoalID</td>
                         <td>@dt.GoalTitle</td>
                         <td>@dt.Weight</td>
+                        <td>
+                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoal(@dt.Resource_GoalID)">&nbsp;</span>
+                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoal(@dt.Resource_GoalID)"></span>
+                        </td>
                     </tr>
                 }
             }
