@@ -135,21 +135,21 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Compile Include="GetAllGoalsOfResource_Result.cs">
+    <EntityDeploy Include="DBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>GetAllGoalsOfResource_Result.Designer.cs</LastGenOutput>
-    </Compile>
+      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <Content Include="DBModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GetAllGoalsOfResource_Result.cs</DependentUpon>
+      <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.Context.cs</LastGenOutput>
     </Content>
     <Content Include="DBModel.edmx.diagram">
-      <DependentUpon>GetAllGoalsOfResource_Result.cs</DependentUpon>
+      <DependentUpon>DBModel.edmx</DependentUpon>
     </Content>
     <Content Include="DBModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>GetAllGoalsOfResource_Result.cs</DependentUpon>
+      <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
@@ -184,15 +184,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetAllGoalsOfResource_Result.Designer.cs">
+    <Compile Include="DBModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>GetAllGoalsOfResource_Result.cs</DependentUpon>
+      <DependentUpon>DBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Department.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="GetAllGoalsOfResource_Result1.cs">
+    <Compile Include="GetAllGoalsOfResource_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="GetAllResourceForGoal_Result.cs">
