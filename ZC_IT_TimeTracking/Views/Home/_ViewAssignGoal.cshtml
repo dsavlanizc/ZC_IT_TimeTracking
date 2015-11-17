@@ -1,21 +1,37 @@
 ﻿<div class="row">
     <h3>Goal Assigned To Resource</h3>
-    <div class="form-group">
-        <label class="col-md-1 control-label">Resources</label>
-        <div class="col-md-3">
-            @Html.DropDownList("ResourceID", new SelectList(ViewBag.Resource, "ResourceID", "Name"), "----Select Resource-----", new { @class = "form-control col-md-4" })
+    <br />
+    <div class="form-inline">
+        <div class="form-group">
+            <label class="col-md-3 control-label">Team</label>
+            <div class="col-md-3">
+                @Html.DropDownList("TeamName", new SelectList(ViewBag.Team, "TeamID", "TeamName"), "----Select Team-----", new { @class = "form-control col-md-4" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Resources</label>
+            <div class="col-md-3">
+                <select name="TeamMemberName" id="TeamMemberName" class="form-control col-md-4">
+                    <option value="">--Select TeamMember--</option>
+                </select>
+            </div>
+        </div>
+        @*<div class="form-group">
+                <label class="col-md-1 control-label">Resources</label>
+                <div class="col-md-3">
+                    @Html.DropDownList("ResourceID", new SelectList(ViewBag.Resource, "ResourceID", "Name"), "----Select Resource-----", new { @class = "form-control col-md-4" })
+                </div>
+            </div>*@
+        <div class="form-group">
+            <form role="form" class="form-inline" method="post">
+                <input type="hidden" id="ResId" name="ResId" />
+                <div class="col-md-3">
+                    <button class="btn btn-default" type="submit">Find</button>
+                </div>
+            </form>
         </div>
     </div>
-    <div class="form-group">
-        <form role="form" class="form-horizontal" method="post">
-            <input type="hidden" id="ResId" name="ResId" />
-            <div class="col-md-3">
-                <button class="btn btn-default" type="submit">Find</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="form-group">
+    
         <table class="table">
             <tr>
                 <th>Resource Goal Id</th>
@@ -28,28 +44,35 @@
                 {
                     <tr>
                         <td>@dt.Resource_GoalID</td>
-                        <td>@dt.Goal_MasterID</td>
+                        <td>@dt.GoalTitle</td>
                         <td>@dt.Weight</td>
                     </tr>
                 }
             }
+            else
+            {
+                <tr>
+                    <td colspan="3"><p class="bg-warning">Please select Resouces From the Above List</p></td>
+                </tr>
+            }
         </table>
-    </div>
-    @*<h3>Resource Assigned to Goal</h3>
-    <table>
-        <tr>
-            <th>GoalID</th>
-            <th>ResourceId</th>
-            <th>Weight</th>
-        </tr>
 
-        @foreach (var dt in ViewBag.AllResourceGoal)
-        {
+    
+    @*<h3>Resource Assigned to Goal</h3>
+        <table>
             <tr>
-                <td>@dt.Goal_MasterID</td>
-                <td>@dt.ResourceID</td>
-                <td>@dt.Weight</td>
+                <th>GoalID</th>
+                <th>ResourceId</th>
+                <th>Weight</th>
             </tr>
-        }
-    </table>*@
+
+            @foreach (var dt in ViewBag.AllResourceGoal)
+            {
+                <tr>
+                    <td>@dt.Goal_MasterID</td>
+                    <td>@dt.ResourceID</td>
+                    <td>@dt.Weight</td>
+                </tr>
+            }
+        </table>*@
 </div>

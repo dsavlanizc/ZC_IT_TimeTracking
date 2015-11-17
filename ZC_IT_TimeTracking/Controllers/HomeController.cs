@@ -243,13 +243,19 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult ViewAssignGoal(int ResId = -1)
+        public ActionResult ViewAssignGoal(int ResId = -1, int TeamID = -1)
         {
+            ViewBag.Team = DbContext.Teams.ToList();
             if (ResId != -1)
             {
-                ViewBag.AllGoalResourse = DbContext.GetAllGoalsOfResource(ResId).ToList();                
+                ViewBag.AllGoalResourse = DbContext.GetAllGoalsOfResource(ResId).ToList();
+            }            
+            if (TeamID != -1)
+            {
+                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+                return Json(new { TeamMember = TeamMember, success = true });
             }
-            ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+            //ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
             //ViewBag.AllResourceGoal = DbContext.GetAllResourceForGoal(2).ToList();
             return View("_ViewAssignGoal");
         }
