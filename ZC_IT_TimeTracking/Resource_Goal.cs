@@ -9,14 +9,12 @@
 
 namespace ZC_IT_TimeTracking
 {
-    
     using System;
     using System.Collections.Generic;
     
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
     public partial class Resource_Goal
-    
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Resource_Goal()
         {
             this.Resource_Goal_Performance = new HashSet<Resource_Goal_Performance>();
@@ -30,6 +28,7 @@ namespace ZC_IT_TimeTracking
     
         public virtual Goal_Master Goal_Master { get; set; }
         public virtual Resource Resource { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Resource_Goal_Performance> Resource_Goal_Performance { get; set; }
     }
 }

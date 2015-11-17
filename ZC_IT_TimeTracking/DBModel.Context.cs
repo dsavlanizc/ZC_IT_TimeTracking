@@ -14,7 +14,7 @@ namespace ZC_IT_TimeTracking
     using System.Data.Entity.Infrastructure;
     using System.Data.Entity.Core.Objects;
     using System.Linq;
-    [global::System.CodeDom.Compiler.GeneratedCode("EntityFramework", "4.0.0.0")]
+    
     public partial class DatabaseEntities : DbContext
     {
         public DatabaseEntities()
@@ -233,7 +233,7 @@ namespace ZC_IT_TimeTracking
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceByTeam_Result>("GetResourceByTeam", teamIdParameter);
         }
     
-        public virtual ObjectResult<GetResourceGoalDetails_Result> GetResourceGoalDetails(Nullable<int> resourceId, Nullable<int> goalId, ObjectParameter resultCount)
+        public virtual ObjectResult<GetResourceGoalDetails_Result> GetResourceGoalDetails(Nullable<int> resourceId, Nullable<int> goalId)
         {
             var resourceIdParameter = resourceId.HasValue ?
                 new ObjectParameter("resourceId", resourceId) :
@@ -243,7 +243,7 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("GoalId", goalId) :
                 new ObjectParameter("GoalId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceGoalDetails_Result>("GetResourceGoalDetails", resourceIdParameter, goalIdParameter, resultCount);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetResourceGoalDetails_Result>("GetResourceGoalDetails", resourceIdParameter, goalIdParameter);
         }
     
         public virtual int getSpecificRecordOftable(Nullable<int> startFrom, Nullable<int> noOfRecords, string tableName)
