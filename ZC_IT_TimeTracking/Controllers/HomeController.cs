@@ -262,23 +262,55 @@ namespace ZC_IT_TimeTracking.Controllers
             return View("_ViewAssignGoal");
         }
 
-        //[HttpPost]
-        //public JsonResult GetAssignedGoal(int AssignId)
-        //{
-        //    try
-        //    {
-        //        if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignId))
-        //        {
-        //            var AssignedGoal = DbContext.GetAssignedGoalDetails(AssignId).FirstOrDefault();
-        //            int id = AssignedGoal.Goal_MasterID;
-        //            return Json(AssignedGoal);
-        //        }
-        //        return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return Json(new JsonResponse { message = "Error occured while fetching Assigned goal", success = false });
-        //    }
-        //}
+        [HttpPost]
+        public JsonResult GetAssignedGoal(int AssignId)
+        {
+            try
+            {
+                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignId))
+                {
+                    var AssignedGoal = DbContext.GetAssignedGoalDetails(AssignId).FirstOrDefault();
+                    //int id = AssignedGoal.Goal_MasterID;
+                    return Json(AssignedGoal);
+                }
+                return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
+            }
+            catch (Exception)
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Assigned goal", success = false });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditAssignedGoal(int Weight, int ResourceId, int GoalID)
+        {
+            try
+            {
+                DbContext.UpdateResourceGoal(ResourceId, GoalID, Weight);
+                return Json(new JsonResponse { message = "Weight updated successfully!", success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Update Weight", success = false });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAssignedGoal(int Id)
+        {
+            try
+            {
+                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == Id))
+                {
+                    DbContext.DeleteResourceGoal(Id);
+                    return Json(new JsonResponse { message = "Deleted Successfully!", success = true });
+                }
+                return Json(new JsonResponse { message = "No Such Goal is Assigned", success = false });
+            }
+            catch (Exception)
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Delete Assigned Goal", success = false });                
+            }
+        }
     }
 }

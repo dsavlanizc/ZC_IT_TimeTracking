@@ -322,6 +322,9 @@
         <Function Name="GetAllResourceForGoal" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Goal_id" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetAssignedGoalDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AssignedId" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetGoalDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Goal_Id" Type="int" Mode="In" />
         </Function>
@@ -1008,6 +1011,12 @@
             <Parameter Name="GoalId" Mode="In" Type="Int32" />
             <Parameter Name="weight" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetAssignedGoalDetails" ReturnType="Collection(DatabaseModel.GetAssignedGoalDetails_Result)">
+          <Parameter Name="AssignedId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetAssignedGoalDetails1" ReturnType="Collection(DatabaseModel.GetAssignedGoalDetails1_Result)">
+            <Parameter Name="AssignedId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuarterID" Nullable="false" />
@@ -1105,6 +1114,18 @@
           <Property Type="Double" Name="MeasurementValue" Nullable="false" />
           <Property Type="DateTime" Name="Creation_Date" Nullable="true" />
           <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetAssignedGoalDetails_Result">
+          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="GoalDescription" Nullable="true" />
+          <Property Type="Int32" Name="Weight" Nullable="false" />
+          <Property Type="String" Name="TeamName" Nullable="false" MaxLength="150" />
+          <Property Type="String" Name="member" Nullable="false" MaxLength="511" />
+        </ComplexType>
+        <ComplexType Name="GetAssignedGoalDetails1_Result">
+          <Property Type="Int32" Name="ResourceID" Nullable="false" />
+          <Property Type="Int32" Name="Goal_MasterID" Nullable="false" />
+          <Property Type="Int32" Name="Weight" Nullable="false" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1402,6 +1423,17 @@
           <FunctionImportMapping FunctionImportName="UpdateGoalRules" FunctionName="DatabaseModel.Store.UpdateGoalRules" />
           <FunctionImportMapping FunctionImportName="UpdateResourceDetails" FunctionName="DatabaseModel.Store.UpdateResourceDetails" />
           <FunctionImportMapping FunctionImportName="UpdateResourceGoal" FunctionName="DatabaseModel.Store.UpdateResourceGoal" />
+          <FunctionImportMapping FunctionImportName="GetAssignedGoalDetails" FunctionName="DatabaseModel.Store.GetAssignedGoalDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DatabaseModel.GetAssignedGoalDetails_Result">
+                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
+                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
+                <ScalarProperty Name="member" ColumnName="member" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

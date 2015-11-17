@@ -1,4 +1,7 @@
-﻿$(function () {
+﻿/// <reference path="C:\Users\mgoswami\Documents\Visual Studio 2013\Projects\ZC_IT_TimeTracking\ZC_IT_TimeTracking\Views/Home/_AssignGoal.cshtml" />
+/// <reference path="C:\Users\mgoswami\Documents\Visual Studio 2013\Projects\ZC_IT_TimeTracking\ZC_IT_TimeTracking\Views/Home/_AssignGoal.cshtml" />
+/// <reference path="C:\Users\mgoswami\Documents\Visual Studio 2013\Projects\ZC_IT_TimeTracking\ZC_IT_TimeTracking\Views/Home/_AssignGoal.cshtml" />
+$(function () {
     isCreate = true;
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -657,8 +660,7 @@
 
     });
 
-    EditAssignedGoal = function (id) {
-        //alert(id);
+    EditAssignedGoalWight = function (id) {                
         $.ajax({
             url: "/Home/GetAssignedGoal",
             type: "POST",
@@ -666,16 +668,69 @@
             contentType: "application/json",
             data: JSON.stringify({ AssignId: id }),
             beroreSend: showLoading(),
-            success: function (adt) {
+            success: function (dt) {
                 hideLoading();
-                
-                    console.log(adt);
+                EditWeight(dt);
             },
             error: function (dt) {
                 hideLoading();
                 if (dt.readyState == 0) {
                     bootbox.alert("Please check your internet connection!");
                 }
+            }
+        });
+
+        EditWeight = function (data) {
+            var weight = prompt("Update Weight", data.Weight);
+            var GoalID = data.Goal_MasterID;
+            var ResourceId = data.ResourceID;
+            $.ajax({
+                url: "/Home/EditAssignedGoal",
+                type: "POST",
+                dataType: "Json",
+                contentType: "application/json",
+                data: JSON.stringify({ GoalID: GoalID, Weight: weight, ResourceId: ResourceId }),
+                beroreSend: showLoading(),
+                success: function (dt) {
+                    hideLoading();
+                    location.reload(true);
+                },
+                error: function (dt) {
+                    hideLoading();
+                    if (dt.readyState == 0) {
+                        bootbox.alert("Please check your internet connection!");
+                    }
+                }
+            });           
+        }
+    }
+
+    DeleteAssignedGoalWeight = function (id) {
+        bootbox.confirm("Are you sure to delete?", function (r) {
+            if (r) {
+                $.ajax({
+                    url: "/Home/DeleteAssignedGoal",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({ Id: id }),
+                    beforeSend: showLoading(),
+                    success: function (dt) {
+                        hideLoading();
+                        bootbox.alert(dt.message, function () {
+                            if (dt.success) {
+                                location.reload(true);
+                            }
+                        });
+                    },
+                    error: function (dt) {
+                        hideLoading();
+                        if (dt.readyState == 0) {
+                            bootbox.alert("Please check your interner connection!");
+                        }
+                        console.log(dt);
+                    }
+                });
             }
         });
     }

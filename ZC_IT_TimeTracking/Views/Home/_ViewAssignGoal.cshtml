@@ -48,8 +48,8 @@
                         <td>@dt.GoalTitle</td>
                         <td>@dt.Weight</td>
                         <td>
-                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoal(@dt.Resource_GoalID)">&nbsp;</span>
-                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoal(@dt.Resource_GoalID)"></span>
+                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoalWight(@dt.Resource_GoalID)">&nbsp;</span>
+                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoalWeight(@dt.Resource_GoalID)"></span>
                         </td>
                     </tr>
                 }
@@ -57,7 +57,7 @@
             else
             {
                 <tr>
-                    <td colspan="3"><p class="bg-warning">Please select Resouces From the Above List</p></td>
+                    <td colspan="4"><p class="bg-warning">Please select Resouces From the Above List</p></td>
                 </tr>
             }
         </table>
