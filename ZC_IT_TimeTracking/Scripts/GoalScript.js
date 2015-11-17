@@ -568,7 +568,7 @@
             }
         });
     });
-    
+
     //Assign Goal To Resourse
     $("#ButtonAssign").click(function (e) {
         e.preventDefault();
@@ -613,42 +613,13 @@
         window.location.href = "/Home/ViewAssignGoal";
     });
     
-    $("#TeamMemberName").change(function () {
+    $("#ResourceID").change(function () {
         var id = $(this).val();
-        console.log(id);
         if (id != "") {
             $("#ResId").val(id);
         }
     });
-    
-    $("#TeamName").change(function (e) {
-        e.preventDefault();
-        var TeamID = $(this).find('option:selected').val();
-        $.ajax({
-            url: "ViewAssignGoal",
-            type: "POST",
-            dataType: "json",
-            contentType: "application/json",
-            data: JSON.stringify({ TeamID: TeamID }),
-            beforeSend: showLoading(),
-            success: function (dt) {
-                hideLoading();
-                //console.log(dt)
-                if (dt.success) {
-                    console.log(dt);
-                    $("#TeamMemberName").html('');
-                    $("#TeamMemberName").html('<option value="-1">--Select TeamMember--</option>');
-                    for (var val in dt.TeamMember) {
-                        $("#TeamMemberName").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].Name + "</option>");
-                    }
-                }
-            },
-            error: function (dt) {
-                hideLoading();
-                if (dt.readyState == 0) {
-                    bootbox.alert("Please check your internet connection!");
-                }
-            }
-        });
+    $("#recordInPageDDL").change(function () {
+        
     });
 });

@@ -216,6 +216,9 @@
     <Compile Include="GetResourceByTeam_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetResourceGoalDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetSpecificRecordsOfGoal_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>

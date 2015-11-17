@@ -7,8 +7,8 @@ namespace ZC_IT_TimeTracking.Models
 {
     public class GoalRule
     {
-        public int RangeFrom { get; set; }
-        public int RangeTo { get; set; }
-        public double Rating { get; set; }
+        public float RangeFrom { get; set; }
+        public float RangeTo { get; set; }
+        public float Rating { get; set; }
     }
 }
