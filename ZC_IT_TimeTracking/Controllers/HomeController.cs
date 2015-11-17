@@ -203,32 +203,8 @@ namespace ZC_IT_TimeTracking.Controllers
                 for (int i = 0; i < count; i++)
                 {
                     var member = TeamMember.ElementAt(i);
-                
-                    DbContext.GetResourceGoalDetails(member.ResourceID, GoalID);
-                    //if (Convert.ToInt32(res.Value) > 0)
-                    //{ TeamMember.RemoveAt(i); i--; count--; }
-
-                }
-                return Json(new { TeamMember = TeamMember, success = true });
-            }
-            catch
-            {
-                return Json(new JsonResponse { message = "Error occured while Getting Team MemberList", success = false });
-            }
-        }
-        [HttpPost]
-        public ActionResult GetTeamMembers(int TeamID)
-        {
-            try
-            {
-                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, s.FirstName }).ToList();
-                int count = TeamMember.Count;
-                for (int i = 0; i < count; i++)
-                {
-                    var member = TeamMember.ElementAt(i);
-                    ObjectParameter res = new ObjectParameter("ResultCount", typeof(int));
-                    //  DbContext.GetResourceGoalDetails(member.ResourceID, GoalID, res);
-                    if (Convert.ToInt32(res.Value) > 0)
+                    var v = DbContext.GetResourceGoalDetails(member.ResourceID, GoalID).FirstOrDefault();
+                    if (v != null)
                     { TeamMember.RemoveAt(i); i--; count--; }
 
                 }
@@ -239,18 +215,28 @@ namespace ZC_IT_TimeTracking.Controllers
                 return Json(new JsonResponse { message = "Error occured while Getting Team MemberList", success = false });
             }
         }
+
         [HttpPost]
         public JsonResult AssignGoal(AssignGoal AssignData)
         {
             try
             {
+                int count = 0;
                 foreach (int id in AssignData.ResourceID)
                 {
-                    DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID);                
+                    var v = DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID).FirstOrDefault();
+                    if (v == null)
+                    {
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
                         var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
+                        count++;
+                    }
                 }
-                return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+                if (count == AssignData.ResourceID.Count())
+                    return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+                else
+                    return Json(new JsonResponse { message = "Not all Goal were assigned Succesfully", success = false });
+
             }
             catch
             {
@@ -259,20 +245,72 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult ViewAssignGoal(int ResId =-1,int TeamID=-1)
+        public ActionResult ViewAssignGoal(int ResId = -1, int TeamID = -1)
         {
             ViewBag.Team = DbContext.Teams.ToList();
             if (ResId != -1)
             {
-                ViewBag.AllGoalResource = DbContext.GetAllGoalsOfResource(ResId).ToList();
+                ViewBag.AllGoalResourse = DbContext.GetAllGoalsOfResource(ResId).ToList();
             }            
             if (TeamID != -1)
             {
                 var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
                 return Json(new { TeamMember = TeamMember, success = true });
             }
-           ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+            //ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+            //ViewBag.AllResourceGoal = DbContext.GetAllResourceForGoal(2).ToList();
             return View("_ViewAssignGoal");
+        }
+
+        [HttpPost]
+        public JsonResult GetAssignedGoal(int AssignId)
+        {
+            try
+            {
+                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignId))
+                {
+                    var AssignedGoal = DbContext.GetAssignedGoalDetails(AssignId).FirstOrDefault();
+                    //int id = AssignedGoal.Goal_MasterID;
+                    return Json(AssignedGoal);
+                }
+                return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
+            }
+            catch (Exception)
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Assigned goal", success = false });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult EditAssignedGoal(int Weight, int ResourceId, int GoalID)
+        {
+            try
+            {
+                DbContext.UpdateResourceGoal(ResourceId, GoalID, Weight);
+                return Json(new JsonResponse { message = "Weight updated successfully!", success = true });
+            }
+            catch (Exception)
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Update Weight", success = false });
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteAssignedGoal(int Id)
+        {
+            try
+            {
+                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == Id))
+                {
+                    DbContext.DeleteResourceGoal(Id);
+                    return Json(new JsonResponse { message = "Deleted Successfully!", success = true });
+                }
+                return Json(new JsonResponse { message = "No Such Goal is Assigned", success = false });
+            }
+            catch (Exception)
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Delete Assigned Goal", success = false });                
+            }
         }
     }
 }

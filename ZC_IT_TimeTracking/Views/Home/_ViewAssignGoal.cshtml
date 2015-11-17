@@ -1,15 +1,11 @@
-﻿@{
-    ViewBag.Title = "Assigned Goals";
-}
-
-<div class="row">
+﻿<div class="row">
     <h3>Goal Assigned To Resource</h3>
     <br />
     <div class="form-inline">
         <div class="form-group">
             <label class="col-md-3 control-label">Team</label>
             <div class="col-md-3">
-                @Html.DropDownList("TeamName", new SelectList(ViewBag.Team, "TeamID", "TeamName"), "----Select Team-----", new { @class = "form-control col-md-4", @id="TeamName"})
+                @Html.DropDownList("TeamName", new SelectList(ViewBag.Team, "TeamID", "TeamName"), "----Select Team-----", new { @class = "form-control col-md-4" })
             </div>
         </div>
         <div class="form-group">
@@ -30,42 +26,40 @@
             <form role="form" class="form-inline" method="post">
                 <input type="hidden" id="ResId" name="ResId" />
                 <div class="col-md-3">
-                    <button class="btn btn-default" type="submit" id="ButtonViewGoals">Find</button>
+                    <button class="btn btn-default" type="submit">Find</button>
                 </div>
             </form>
         </div>
     </div>
-     
-        <table class="table" id="tableGoalAssigned">
-            <thead>
-                <tr>
-                    <th>Resource Goal Id</th>
-                    <th>Goal Title</th>
-                    <th>Weight</th>
-                </tr>
-            </thead>
-            <tbody>
-            @if (ViewBag.AllGoalResource != null)
+    
+        <table class="table">
+            <tr>
+                <th>Resource Goal Id</th>
+                <th>Goal Title</th>
+                <th>Weight</th>
+                <th>Action</th>
+            </tr>
+            @if (ViewBag.AllGoalResourse != null)
             {
-                foreach (var goals in ViewBag.AllGoalResource)
-                {   <tr><td colspan="3"></td></tr>
+                foreach (var dt in ViewBag.AllGoalResourse)
+                {
                     <tr>
-                        <td>@goals.Resource_GoalID</td>
-                        <td>@goals.GoalTitle</td>
-                        <td>@goals.Weight</td>
+                        <td>@dt.Resource_GoalID</td>
+                        <td>@dt.GoalTitle</td>
+                        <td>@dt.Weight</td>
+                        <td>
+                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoalWight(@dt.Resource_GoalID)">&nbsp;</span>
+                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoalWeight(@dt.Resource_GoalID)"></span>
+                        </td>
                     </tr>
                 }
-
-
             }
             else
             {
                 <tr>
-                    <td colspan="3"><p class="bg-warning">Select Resource to view goals assigned</p></td>
+                    <td colspan="4"><p class="bg-warning">Please select Resouces From the Above List</p></td>
                 </tr>
-
             }
-             </tbody>
         </table>
 
     
