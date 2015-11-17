@@ -569,6 +569,8 @@
         });
     });
 
+
+
     //Assign Goal To Resourse
     $("#ButtonAssign").click(function (e) {
         e.preventDefault();
@@ -609,7 +611,8 @@
         }
     });
     //View AssignGoal
-    $("#ButtonViewAssignGoal").click(function () {
+    $("#ButtonViewAssignGoal").click(function (e) {
+        e.preventDefault();
         window.location.href = "/Home/ViewAssignGoal";
     });
     
@@ -619,7 +622,68 @@
             $("#ResId").val(id);
         }
     });
-    $("#recordInPageDDL").change(function () {
+    // team members
+    $("#TeamName").change(function (e) {
+        var TeamID = $(this).find('option:selected').val();
+        $.ajax({
+            url: "GetTeamMembers",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TeamID: TeamID}),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                //console.log(dt)
+                if (dt.success) {
+                    console.log(dt);
+                    $("#TeamMember").html('');
+                    for (var val in dt.TeamMember) {
+                        $("#TeamMemberName").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + "</option>");
+                    }
+                }
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+
+    $('#ButtonViewGoals').click(function (e)
+    {
+        alert("1");
+        e.preventDefault();
+        var ResourceID = $('#TeamMemberName').find('option:selected').val();
+        var TeamID = $('#TeamName').find('option:selected').val();
+            $.ajax({
+                url: "/Home/ViewAssignGoal",
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ ResID: ResourceID,TeamID: TeamId }),
+                beforeSend: showLoading(),
+                success: function (dt) {
+                    hideLoading();
+                    bootbox.alert(dt.message, function () {
+                        if (dt.success) {
+                            location.reload(true);
+                        }
+                    });
+                },
+                error: function (dt) {
+                    hideLoading();
+                    if (dt.readyState == 0) {
+                        bootbox.alert("Please check your internet connection!");
+                    }
+                    console.log(dt);
+                }
+            });
+            console.log(AssignData.ResourceID);
         
     });
+   
+    
 });

@@ -203,8 +203,31 @@ namespace ZC_IT_TimeTracking.Controllers
                 for (int i = 0; i < count; i++)
                 {
                     var member = TeamMember.ElementAt(i);
-                    ObjectParameter res = new ObjectParameter("ResultCount",typeof(int));
-                    DbContext.GetResourceGoalDetails(member.ResourceID, GoalID, res);
+                
+                    DbContext.GetResourceGoalDetails(member.ResourceID, GoalID);
+                    //if (Convert.ToInt32(res.Value) > 0)
+                    //{ TeamMember.RemoveAt(i); i--; count--; }
+
+                }
+                return Json(new { TeamMember = TeamMember, success = true });
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while Getting Team MemberList", success = false });
+            }
+        }
+        [HttpPost]
+        public ActionResult GetTeamMembers(int TeamID)
+        {
+            try
+            {
+                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, s.FirstName }).ToList();
+                int count = TeamMember.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    var member = TeamMember.ElementAt(i);
+                    ObjectParameter res = new ObjectParameter("ResultCount", typeof(int));
+                    //  DbContext.GetResourceGoalDetails(member.ResourceID, GoalID, res);
                     if (Convert.ToInt32(res.Value) > 0)
                     { TeamMember.RemoveAt(i); i--; count--; }
 
@@ -216,7 +239,6 @@ namespace ZC_IT_TimeTracking.Controllers
                 return Json(new JsonResponse { message = "Error occured while Getting Team MemberList", success = false });
             }
         }
-
         [HttpPost]
         public JsonResult AssignGoal(AssignGoal AssignData)
         {
@@ -224,15 +246,9 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 foreach (int id in AssignData.ResourceID)
                 {
-                    ObjectParameter res = new ObjectParameter("ResultCount", typeof(int));
-                    DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID, res);
-                    if (Convert.ToInt32(res.Value) == 0)
-                    {
+                    DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID);                
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
                         var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
-                    }
-
-
                 }
                 return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
             }
@@ -243,20 +259,19 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
-        public ActionResult ViewAssignGoal(int ResId = -1, int TeamID = -1)
+        public ActionResult ViewAssignGoal(int ResId =-1,int TeamID=-1)
         {
             ViewBag.Team = DbContext.Teams.ToList();
             if (ResId != -1)
             {
-                ViewBag.AllGoalResourse = DbContext.GetAllGoalsOfResource(ResId).ToList();
+                ViewBag.AllGoalResource = DbContext.GetAllGoalsOfResource(ResId).ToList();
             }            
             if (TeamID != -1)
             {
                 var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
                 return Json(new { TeamMember = TeamMember, success = true });
             }
-            //ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
-            //ViewBag.AllResourceGoal = DbContext.GetAllResourceForGoal(2).ToList();
+           ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
             return View("_ViewAssignGoal");
         }
     }
