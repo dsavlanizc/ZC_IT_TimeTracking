@@ -203,9 +203,8 @@ namespace ZC_IT_TimeTracking.Controllers
                 for (int i = 0; i < count; i++)
                 {
                     var member = TeamMember.ElementAt(i);
-                    ObjectParameter res = new ObjectParameter("ResultCount",typeof(int));
-                    DbContext.GetResourceGoalDetails(member.ResourceID, GoalID, res);
-                    if (Convert.ToInt32(res.Value) > 0)
+                    var v = DbContext.GetResourceGoalDetails(member.ResourceID, GoalID).FirstOrDefault();
+                    if (v != null)
                     { TeamMember.RemoveAt(i); i--; count--; }
 
                 }
@@ -222,19 +221,22 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
+                int count = 0;
                 foreach (int id in AssignData.ResourceID)
                 {
-                    ObjectParameter res = new ObjectParameter("ResultCount", typeof(int));
-                    DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID, res);
-                    if (Convert.ToInt32(res.Value) == 0)
+                    var v = DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID).FirstOrDefault();
+                    if (v == null)
                     {
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
                         var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
+                        count++;
                     }
-
-
                 }
-                return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+                if (count == AssignData.ResourceID.Count())
+                    return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+                else
+                    return Json(new JsonResponse { message = "Not all Goal were assigned Succesfully", success = false });
+
             }
             catch
             {
