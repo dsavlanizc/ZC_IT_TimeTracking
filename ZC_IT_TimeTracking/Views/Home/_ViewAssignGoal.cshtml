@@ -34,30 +34,46 @@
             </form>
         </div>
     </div>
-    @if (ViewBag.AllGoalResourse != null && ViewBag.AllGoalResourse.Count>0)
+    @if (ViewBag.AllGoalResourse != null)
     {
-        var AllGoal = ViewBag.AllGoalResourse as List<GetAllGoalsOfResource_Result>;
-        <table class="table">
-            <tr>
-                <th>Resource Goal Id</th>
-                <th>Goal Title</th>
-                <th>Weight</th>
-                <th>Action</th>
-            </tr>
-            @foreach (var dt in ViewBag.AllGoalResourse)
-            {
+        if (ViewBag.AllGoalResourse.Count == 0)
+        {
+            <h3>There is no any goal assigned to selected resource!</h3>
+        }
+        else
+        {
+            var AllGoal = ViewBag.AllGoalResourse as List<GetAllGoalsOfResource_Result>;
+            int TotalWeight = AllGoal.Sum(s => s.Weight);
+            <table class="table">
                 <tr>
-                    <td>@dt.Resource_GoalID</td>
-                    <td>@dt.GoalTitle</td>
-                    <td>@dt.Weight</td>
-                    <td>
-                        <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoalWight(@dt.Resource_GoalID)">&nbsp;</span>
-                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoalWeight(@dt.Resource_GoalID)"></span>
+                    <th>Resource Goal Id</th>
+                    <th>Goal Title</th>
+                    <th>Weight</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var dt in ViewBag.AllGoalResourse)
+                {
+                    <tr>
+                        <td>@dt.Resource_GoalID</td>
+                        <td>@dt.GoalTitle</td>
+                        <td>@dt.Weight</td>
+                        <td>
+                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoalWight(@dt.Resource_GoalID)">&nbsp;</span>
+                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoalWeight(@dt.Resource_GoalID)"></span>
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td colspan="4" align="center">
+                        <h4>Total Weight: @TotalWeight</h4>
+                        @if (TotalWeight != 100)
+                        {
+                            <div class="bg-danger">Total weight must be 100!</div>
+                        }
                     </td>
                 </tr>
-            }
-            <tr><td colspan="4" align="center"><h4>Total Weight: @AllGoal.Sum(s => s.Weight)</h4></td></tr>
-        </table>
+            </table>
+        }
     }
     else
     {
