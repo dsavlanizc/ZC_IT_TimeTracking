@@ -1014,9 +1014,6 @@
           <FunctionImport Name="GetAssignedGoalDetails" ReturnType="Collection(DatabaseModel.GetAssignedGoalDetails_Result)">
           <Parameter Name="AssignedId" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="GetAssignedGoalDetails1" ReturnType="Collection(DatabaseModel.GetAssignedGoalDetails1_Result)">
-            <Parameter Name="AssignedId" Mode="In" Type="Int32" />
-          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="CheckQuater_Result">
           <Property Type="Int32" Name="QuarterID" Nullable="false" />
@@ -1116,12 +1113,10 @@
           <Property Type="Boolean" Name="IsHigherValueGood" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GetAssignedGoalDetails_Result">
-          <Property Type="String" Name="GoalTitle" Nullable="false" MaxLength="150" />
-          <Property Type="String" Name="GoalDescription" Nullable="true" />
           <Property Type="Int32" Name="Weight" Nullable="false" />
-          <Property Type="String" Name="TeamName" Nullable="false" MaxLength="150" />
-          <Property Type="String" Name="member" Nullable="false" MaxLength="511" />
-        </ComplexType>
+          <Property Type="Int32" Name="ResourceID" Nullable="false" />
+          <Property Type="Int32" Name="Goal_MasterID" Nullable="false" />
+          </ComplexType>
         <ComplexType Name="GetAssignedGoalDetails1_Result">
           <Property Type="Int32" Name="ResourceID" Nullable="false" />
           <Property Type="Int32" Name="Goal_MasterID" Nullable="false" />
@@ -1426,12 +1421,10 @@
           <FunctionImportMapping FunctionImportName="GetAssignedGoalDetails" FunctionName="DatabaseModel.Store.GetAssignedGoalDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="DatabaseModel.GetAssignedGoalDetails_Result">
-                <ScalarProperty Name="GoalTitle" ColumnName="GoalTitle" />
-                <ScalarProperty Name="GoalDescription" ColumnName="GoalDescription" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="TeamName" ColumnName="TeamName" />
-                <ScalarProperty Name="member" ColumnName="member" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
+                <ScalarProperty Name="Goal_MasterID" ColumnName="Goal_MasterID" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

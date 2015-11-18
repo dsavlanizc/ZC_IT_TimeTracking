@@ -13,10 +13,8 @@ namespace ZC_IT_TimeTracking
     
     public partial class GetAssignedGoalDetails_Result
     {
-        public string GoalTitle { get; set; }
-        public string GoalDescription { get; set; }
         public int Weight { get; set; }
-        public string TeamName { get; set; }
-        public string member { get; set; }
+        public int ResourceID { get; set; }
+        public int Goal_MasterID { get; set; }
     }
 }

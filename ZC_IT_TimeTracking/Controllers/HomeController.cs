@@ -198,7 +198,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, s.FirstName }).ToList();
+                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName+" "+s.LastName }).ToList();
                 int count = TeamMember.Count;
                 for (int i = 0; i < count; i++)
                 {
@@ -271,7 +271,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 {
                     var AssignedGoal = DbContext.GetAssignedGoalDetails(AssignId).FirstOrDefault();
                     //int id = AssignedGoal.Goal_MasterID;
-                    return Json(AssignedGoal);
+                    return Json(new { Data = AssignedGoal, success = true });
                 }
                 return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
             }

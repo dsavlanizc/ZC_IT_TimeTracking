@@ -494,14 +494,5 @@ namespace ZC_IT_TimeTracking
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssignedGoalDetails_Result>("GetAssignedGoalDetails", assignedIdParameter);
         }
-    
-        public virtual ObjectResult<GetAssignedGoalDetails1_Result> GetAssignedGoalDetails1(Nullable<int> assignedId)
-        {
-            var assignedIdParameter = assignedId.HasValue ?
-                new ObjectParameter("AssignedId", assignedId) :
-                new ObjectParameter("AssignedId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetAssignedGoalDetails1_Result>("GetAssignedGoalDetails1", assignedIdParameter);
-        }
     }
 }

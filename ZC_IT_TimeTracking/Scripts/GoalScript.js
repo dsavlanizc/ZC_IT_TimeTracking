@@ -559,7 +559,7 @@ $(function () {
                     console.log(dt);
                     $("#TeamMember").html('');
                     for (var val in dt.TeamMember) {
-                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + "</option>");
+                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].Name + "</option>");
                     }
                 }
             },
@@ -670,7 +670,12 @@ $(function () {
             beroreSend: showLoading(),
             success: function (dt) {
                 hideLoading();
-                EditWeight(dt);
+                if (dt.success) {
+                    EditWeight(dt.Data);
+                }
+                else {
+                    bootbox.alert(dt.message);
+                }
             },
             error: function (dt) {
                 hideLoading();
