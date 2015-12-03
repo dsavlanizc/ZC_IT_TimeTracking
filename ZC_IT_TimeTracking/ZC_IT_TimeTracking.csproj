@@ -173,6 +173,7 @@
     <Compile Include="CheckQuater_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DBModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -293,6 +294,8 @@
     <Content Include="Views\Home\_AddQuarter.cshtml" />
     <Content Include="Views\Home\_AssignGoal.cshtml" />
     <Content Include="Views\Home\_ViewAssignGoal.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\_Registration.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
