@@ -263,6 +263,7 @@
     <Compile Include="Models\GoalDetail.cs" />
     <Compile Include="Models\GoalQuarters.cs" />
     <Compile Include="Models\GoalRule.cs" />
+    <Compile Include="ViewModels\AssignGoalViewModel.cs" />
     <Compile Include="ViewModels\GoalViewModel.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\Pager.cs" />
