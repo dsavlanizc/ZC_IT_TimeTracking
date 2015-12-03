@@ -34,8 +34,12 @@
         </div>
     </div>   
     <div class="form-group">
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-primary" id="ButtonAssign">Assign</button>
+        <div class="col-md-12">
+           <button type="submit" class="btn btn-primary col-md-offset-3" id="ButtonAssign">Assign</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+            
+            <button type="button" class="btn btn-primary right" style="float:right" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>
+           
         </div>
     </div>
 </form>
