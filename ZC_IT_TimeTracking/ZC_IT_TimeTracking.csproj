@@ -305,6 +305,7 @@
     <Content Include="Views\Home\_ViewAssignGoal.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\_Registration.cshtml" />
+    <Content Include="Views\Home\View.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

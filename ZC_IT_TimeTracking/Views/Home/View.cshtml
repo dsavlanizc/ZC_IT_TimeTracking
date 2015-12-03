@@ -1,0 +1,50 @@
+﻿@model ZC_IT_TimeTracking.Goal_Master
+
+<div class="form-horizontal" id="formInput">
+    <div class="form-group required">
+        @Html.DisplayFor(m => m.GoalTitle, new { @class = "col-md-3 control-label" })
+        <div class="col-md-4">
+            @Html.EditorFor(m => m.GoalTitle, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group required">
+        @Html.DisplayFor(m => m.GoalDescription, new { @class = "col-md-3 control-label" })
+        <div class="col-md-4">
+            @Html.TextAreaFor(m => m.GoalDescription, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group required">
+        @Html.Display("Year", new { @class = "col-md-3 control-label" })
+        <div class="col-md-3">
+            <select name="GoalYear" id="GoalYear" class="form-control">
+                <option id="@ViewBag.Year">@ViewBag.Year</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group required">
+        @Html.DisplayFor(m => m.Goal_Quarter.GoalQuarter, new { @class = "col-md-3 control-label" })
+        <div class="col-md-3">
+            <select name="GoalQuarter" id="GoalQuarter" class="form-control">
+                <option id="@ViewBag.Quarter">@ViewBag.Quarter</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group required">
+        @Html.DisplayFor(m => m.UnitOfMeasurement, new { @class = "col-md-3 control-label" })
+        <div class="col-md-4">
+            @Html.EditorFor(m => m.UnitOfMeasurement, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group required">
+        @Html.DisplayFor(m => m.MeasurementValue, new { @class = "col-md-3 control-label" })
+        <div class="col-md-4">
+            @Html.EditorFor(m => m.MeasurementValue, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.DisplayFor(m => m.IsHigherValueGood, new { @class = "col-md-3 control-label" })
+        <div class="col-md-2">
+            @Html.CheckBoxFor(m => m.IsHigherValueGood, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
