@@ -87,5 +87,9 @@ namespace ZC_IT_TimeTracking.Services.Interface
             finally { }
         }
 
+        public bool method()
+        {
+            return true;
+        }
     }
 }
