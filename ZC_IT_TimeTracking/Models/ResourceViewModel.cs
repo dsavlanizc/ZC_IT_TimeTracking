@@ -16,9 +16,10 @@ namespace ZC_IT_TimeTracking.Models
         public string LName { get; set; }
        
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
-        public int Email { get; set; }
+        [EmailAddress(ErrorMessage="Please enter valid email address!")]
+        [Display(Name = "Email Address")]
+        public string EmailAddress { get; set; }
+
         [Display(Name = "Role")]
         public string Role { get; set; }
         

@@ -15,9 +15,31 @@ namespace ZC_IT_TimeTracking.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel loginModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
+        }
+
         public ActionResult Registration()
         {
-            return View("_Registration");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Registration(RegisterUserViewModel registerModel)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
         }
     }
 }

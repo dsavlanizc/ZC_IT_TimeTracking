@@ -63,12 +63,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ZC_IT_TimeTracking\ZC_IT_TimeTracking.csproj">
-      <Project>{f333553d-b4e9-47b3-ae0f-8fc868570a17}</Project>
-      <Name>ZC_IT_TimeTracking</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>

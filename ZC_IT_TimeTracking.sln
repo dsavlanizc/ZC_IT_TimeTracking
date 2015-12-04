@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{783F75
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking.Test", "ZC_IT_TimeTracking.Test\ZC_IT_TimeTracking.Test.csproj", "{8ABF5E1A-ACC6-4DF2-9529-BBEB3C39CF38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking.DatabaseServices", "ZC_IT_TimeTracking.DatabaseServices\ZC_IT_TimeTracking.DatabaseServices.csproj", "{232FF5B4-1C56-4968-9FB4-B8F9DB94434F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking.Services", "ZC_IT_TimeTracking.DatabaseServices\ZC_IT_TimeTracking.Services.csproj", "{232FF5B4-1C56-4968-9FB4-B8F9DB94434F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
