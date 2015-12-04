@@ -29,7 +29,6 @@
             </div>
         </div>
         <div class="form-group required">
-            @Html.DropDownListFor(m=>m.RoleName, new SelectList(ViewBag.RoleList), "----Select Role-----", new { @class = "form-control col-md-4" })
             @Html.LabelFor(m => m.RoleName, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
                 <select id="UserRole" class="form-control" name="Role">
