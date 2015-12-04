@@ -16,7 +16,7 @@ namespace ZC_IT_TimeTracking.ViewModels
         [Display(Name = "Year")]
         public int QuarterYear { get; set; }
     }
-     public class GoalQuarterViewModel : GoalQuarterViewModel
+     public class GoalQuarterViewModel : QuarterViewModel
     {
        // public GoalQuarterViewModel GoalQuarter { get; set; }
 

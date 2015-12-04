@@ -1,5 +1,5 @@
 ﻿using System.Web.Mvc;
-using ZC_IT_TimeTracking.ViewModel;
+using ZC_IT_TimeTracking.ViewModels;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
