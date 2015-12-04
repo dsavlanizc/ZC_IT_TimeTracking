@@ -324,6 +324,7 @@
     </Compile>
     <Compile Include="ViewModels\GoalViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModel.cs" />
+    <Compile Include="ViewModels\RoleViewModel.cs" />
     <Compile Include="ViewModels\TeamDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -338,6 +339,7 @@
     <Content Include="Views\Home\_ViewAssignGoal.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Registration.cshtml" />
+    <Content Include="Views\Account\CreateRole.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

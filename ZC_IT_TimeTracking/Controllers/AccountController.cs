@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
-using ZC_IT_TimeTracking.ViewModel;
+using ZC_IT_TimeTracking.ViewModels;
+using ZC_IT_TimeTracking.Services.Role;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
@@ -24,6 +25,8 @@ namespace ZC_IT_TimeTracking.Controllers
 
         public ActionResult Registration()
         {
+            RoleService roleService = new RoleService();
+            ViewBag.RoleList = roleService.GetAvailableRoles();
             return View();
         }
 
@@ -33,7 +36,26 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             if (ModelState.IsValid)
             {
+                RoleService roleService = new RoleService();
+                bool b = roleService.CreateUser(registerModel.UserName, registerModel.Password);
+            }
+            return View();
+        }
 
+        public ActionResult CreateRole()
+        {
+            RoleService roleService = new RoleService();
+            RoleViewModel roleView = new RoleViewModel();
+            roleView.RoleList = roleService.GetAvailableRoles();
+            return View(roleView);
+        }
+
+        [HttpPost]
+        public ActionResult CreateRole(RoleViewModel roleView)
+        {
+            if (ModelState.IsValid)
+            {
+                
             }
             return View();
         }
