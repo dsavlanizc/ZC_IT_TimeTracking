@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ZC_IT_TimeTracking.ViewModel
+namespace ZC_IT_TimeTracking.ViewModels
 {
    
     public class RegisterUserViewModel

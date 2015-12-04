@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using ZC_IT_TimeTracking.Models;
+﻿using System.Web.Mvc;
+using ZC_IT_TimeTracking.ViewModel;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
