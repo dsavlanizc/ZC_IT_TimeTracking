@@ -21,7 +21,7 @@
         <div id="collapse2" class="panel-collapse collapse">
             <div class="panel-body">
                 <form role="form" id="GoalCreateForm" class="form-horizontal">
-                    @RenderPage("~/Views/Home/_CreateGoal.cshtml")
+                    @Html.Partial("~/Views/Home/_CreateGoal.cshtml", new ZC_IT_TimeTracking.ViewModels.CreateGoalViewModel())
                     <div id="accordion2">
                         <div class="panel panel-default">
                             <div class="panel-heading">

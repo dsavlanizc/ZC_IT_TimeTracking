@@ -40,6 +40,13 @@
     }
 </style>
 <div class="wrapper">
+    <center>
+        @if (ViewBag.Message != null)
+        {
+            <h4 class="text-danger">@ViewBag.Message</h4>
+        }
+        @Html.ValidationSummary()
+    </center>
     @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-signin" }))
     {
         @Html.AntiForgeryToken();

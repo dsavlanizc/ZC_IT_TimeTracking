@@ -19,7 +19,16 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             if (ModelState.IsValid)
             {
-
+                AccountService accountService = new AccountService();
+                bool isSuccess = accountService.LoginUser(loginModel.UserName, loginModel.Password);
+                if (isSuccess)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ViewBag.Message = "Invalid username or password";
+                }
             }
             return View();
         }
@@ -35,16 +44,17 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             if (ModelState.IsValid)
             {
-                AccountService roleService = new AccountService();
-                bool isSuccess = roleService.CreateUser(registerModel.UserName, registerModel.Password);
+                AccountService accountService = new AccountService();
+                bool isSuccess = accountService.CreateUser(registerModel.UserName, registerModel.Password);
                 if (isSuccess)
                 {
                     ModelState.Clear();
                     ViewBag.Message = "User Created Successfully!";
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
-                    ViewBag.Message = roleService.ValidationErrors.Errors[0].ErrorDescription;
+                    ViewBag.Message = accountService.ValidationErrors.Errors[0].ErrorDescription;
                 }
             }
             return View();
