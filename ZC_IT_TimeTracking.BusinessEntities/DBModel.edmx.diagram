@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="096bfe1b042642a7acabcc216da374a3" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseModel.Department" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Goal_Master" Width="1.5" PointX="8.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Goal_Quarter" Width="1.5" PointX="6" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Goal_Rules" Width="1.5" PointX="10.5" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Manager" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource" Width="1.5" PointX="8.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource_Goal" Width="1.5" PointX="10.5" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource_Goal_Performance" Width="1.5" PointX="12.75" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Resource_Performance" Width="1.5" PointX="13.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Role" Width="1.5" PointX="6" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Team" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.TeamLead" Width="1.5" PointX="10.5" PointY="2.875" IsExpanded="true" />
+        <AssociationConnector Association="DatabaseModel.FK_Team_DepartmentID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Goal_Master_QuaeterID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Goal_Rules_Goal_Master" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Goal_Master" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Performance_Goal_Quater" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Manager_TeamID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_TeamManager_Resource" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Resource" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Performance_Resource" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_RoleID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_TeamID" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_TeamLead_Resource" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Resource_Goal_Performance_Resource_GoalId" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_TeamLead_TeamID" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
