@@ -321,6 +321,9 @@
     <Compile Include="TeamLead.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AssignGoalViewModel.cs" />
+    <Compile Include="ViewModels\GoalViewModel.cs" />
+    <Compile Include="ViewModels\ResourceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
