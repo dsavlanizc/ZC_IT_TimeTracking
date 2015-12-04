@@ -6,6 +6,10 @@
 {
         @Html.ValidationSummary()
 }
+@if (ViewBag.Message != null)
+{
+    <h3>ViewBag.Message</h3>
+}
 @using (Html.BeginForm("Registration", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
