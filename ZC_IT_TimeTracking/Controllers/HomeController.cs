@@ -3,6 +3,7 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web.Mvc;
 using ZC_IT_TimeTracking.Models;
+using ZC_IT_TimeTracking.Services;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
@@ -11,6 +12,7 @@ namespace ZC_IT_TimeTracking.Controllers
         private DatabaseEntities DbContext = new DatabaseEntities();
 
         // GET: Home
+        [Authorize]
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult Index(int page = 1, string title = "")
         {
