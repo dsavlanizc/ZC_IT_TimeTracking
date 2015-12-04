@@ -7,7 +7,7 @@ using System.Web;
 namespace ZC_IT_TimeTracking.ViewModels
 {
 
-    public class AssignGoalViewModel
+    public class AssignGoalViewModel : TeamViewModel
     {   
         [Required]
         [Display(Name = "Title")]
@@ -21,7 +21,7 @@ namespace ZC_IT_TimeTracking.ViewModels
         [Display(Name = "Weight")]
         public int Weight { get; set; }
 
-        public TeamViewModel TeamDetail { get; set; }
+      //  public TeamViewModel TeamDetail { get; set; }
     }
 
     public class ViewAssignedGoalViewModel
