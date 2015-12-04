@@ -1,28 +1,33 @@
-﻿<h3>@ViewBag.Message</h3>
+﻿@model ZC_IT_TimeTracking.ViewModels.GoalQuarterViewModel
+<h3>@ViewBag.Message</h3>
 <form role="form" id="GoalQuarterForm" class="form-horizontal">
     <div class="form-horizontal">
         <div class="form-group required">
-            <label class="col-md-3 control-label">Quarter</label>
+            @Html.LabelFor(m => m.GoalQuarter, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
-                <input type="number" name="GoalQuarters" id="GoalQuarters" class="form-control" value="@ViewBag.Quarter"/>
+                @Html.TextBoxFor(m => m.GoalQuarter, new { @class = "form-control", required = "required", @type = "number", @value = ViewBag.Quarter })
+                @*<input type="number" name="GoalQuarters" id="GoalQuarters" class="form-control" value="@ViewBag.Quarter" />*@
             </div>
         </div>
         <div class="form-group required">
-            <label class="col-md-3 control-label">Quarter Year</label>
+            @Html.LabelFor(m => m.QuarterYear, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
-                <input type="number" name="GoalYears" id="GoalYears" class="form-control" value="@ViewBag.Year" />
+                @Html.TextBoxFor(m => m.QuarterYear, new { @class = "form-control", required = "required", @type = "number", @value = ViewBag.Year })
+                @*<input type="number" name="GoalYears" id="GoalYears" class="form-control" value="@ViewBag.Year" />*@
             </div>
         </div>
         <div class="form-group required">
-            <label class="col-md-3 control-label">Create From</label>
+            @Html.LabelFor(m => m.GoalCreateFrom, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
-                <input type="date" name="GoalCreateFrom" id="GoalCreateFrom" class="form-control" />
+                @Html.TextBoxFor(m => m.GoalCreateFrom, new { @class = "form-control", required = "required" })
+                @*<input type="date" name="GoalCreateFrom" id="GoalCreateFrom" class="form-control" />*@
             </div>
         </div>
         <div class="form-group required">
-            <label class="col-md-3 control-label">Create To</label>
+            @Html.LabelFor(m => m.GoalCreateTo, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
-                <input type="date" name="GoalCreateTo" id="GoalCreateTo" class="form-control" />
+                @Html.TextBoxFor(m => m.GoalCreateTo, new { @class = "form-control", required = "required" })
+                @*<input type="date" name="GoalCreateTo" id="GoalCreateTo" class="form-control" />*@
             </div>
         </div>
         <div class="form-group">
