@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using ZC_IT_TimeTracking.Models;
 
-namespace ZC_IT_TimeTracking.DatabaseServices.Repositories
+namespace ZC_IT_TimeTracking.Services.Repositories
 {
     public class GoalRepository
     {

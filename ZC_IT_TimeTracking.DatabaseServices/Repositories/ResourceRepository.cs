@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZC_IT_TimeTracking.DatabaseServices.Repositories
+namespace ZC_IT_TimeTracking.Services.Repositories
 {
     public class ResourceRepository
     {
