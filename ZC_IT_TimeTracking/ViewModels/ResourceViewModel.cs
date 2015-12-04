@@ -6,22 +6,22 @@ using System.Web;
 
 namespace ZC_IT_TimeTracking.Models
 {
+   
     public class RegisterUserViewModel
     {   
         [Required]
         [Display(Name = "First Name")]
-        public string FName { get; set; }
+        public string FirstName { get; set; }
         [Required]
         [Display(Name = "Last Name")]
         public string LName { get; set; }
        
         [Required]
-        [EmailAddress(ErrorMessage="Please enter valid email address!")]
-        [Display(Name = "Email Address")]
-        public string EmailAddress { get; set; }
-
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public int Email { get; set; }
         [Display(Name = "Role")]
-        public string Role { get; set; }
+        public string RoleName { get; set; }
         
         [Required]
         [Display(Name = "User Name")]
