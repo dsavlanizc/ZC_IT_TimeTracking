@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using ZC_IT_TimeTracking.ViewModels;
 
-namespace ZC_IT_TimeTracking.Models
+namespace ZC_IT_TimeTracking.ViewModel
 {
-    public class QuarterViewModel
-    {
-        [Required]
-        [Display(Name = "Quarter")]
-        public int GoalQuarter { get; set; }
-
-        [Required]
-        [Display(Name = "Year")]
-        public int QuarterYear { get; set; }
-    }
+   
     public class GoalViewModel
     {
         [Required]

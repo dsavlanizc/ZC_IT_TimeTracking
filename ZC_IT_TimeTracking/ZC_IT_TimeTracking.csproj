@@ -291,6 +291,7 @@
     <Compile Include="Models\GoalDetail.cs" />
     <Compile Include="Models\GoalQuarters.cs" />
     <Compile Include="Models\GoalRule.cs" />
+    <Compile Include="ViewModels\GoalQuarterViewModel.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\ResourceViewModel.cs" />
@@ -321,9 +322,6 @@
     <Compile Include="TeamLead.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\AssignGoalViewModel.cs" />
-    <Compile Include="ViewModels\GoalViewModel.cs" />
-    <Compile Include="ViewModels\ResourceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

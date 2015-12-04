@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ZC_IT_TimeTracking.Models
+namespace ZC_IT_TimeTracking.ViewModel
 {
    
     public class RegisterUserViewModel
@@ -14,12 +14,13 @@ namespace ZC_IT_TimeTracking.Models
         public string FirstName { get; set; }
         [Required]
         [Display(Name = "Last Name")]
-        public string LName { get; set; }
+        public string LastName { get; set; }
        
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
-        public int Email { get; set; }
+        public string EmailID { get; set; }
+      
         [Display(Name = "Role")]
         public string RoleName { get; set; }
         
