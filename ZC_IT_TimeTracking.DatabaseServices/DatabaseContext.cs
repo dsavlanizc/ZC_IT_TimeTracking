@@ -10,7 +10,6 @@ namespace ZC_IT_TimeTracking.Services
 {
     public class DatabaseContext : IdentityDbContext
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["DatabaseEntities"].ConnectionString;
-        public DatabaseContext() : base("name=DatabaseEntities") { }
+        public DatabaseContext() : base("name=DefaultConnection") { }
     }
 }
