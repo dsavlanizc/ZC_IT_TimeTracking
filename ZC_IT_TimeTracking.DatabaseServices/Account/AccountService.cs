@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace ZC_IT_TimeTracking.DatabaseServices.Account
+namespace ZC_IT_TimeTracking.Services.Account
 {
     public class AccountService : ServiceBase
     {

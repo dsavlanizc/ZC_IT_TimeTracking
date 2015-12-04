@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-//using ZC_IT_TimeTracking.Models;
+using ZC_IT_TimeTracking.BusinessEntities;
 
 namespace ZC_IT_TimeTracking.Services.Repositories
 {
     public class GoalRepository
     {
+        private DatabaseEntities dbContext = new DatabaseEntities();
+
         const string _CheckQuaterforResouces = "CheckQuater";
         const string _AddGoalToGoalMaster = "InsertGoalMaster";
         const string _AddQuarterForGoal = "InsertGoalQuarter";
@@ -31,11 +33,11 @@ namespace ZC_IT_TimeTracking.Services.Repositories
         const string _GetSpecificRecordsOfGoal = "GetSpecificRecordsOfGoal";
         const string _GetQuarterFromYear = "GetQuarterFromYear";
         const string _SearchGoalByTitle = "SearchGoalByTitle";
-    }
 
-    //public override Goal GoalDetail()
-    //{
-        
-
-    //}
+        //public override List<Goal_Quarter> GetQuarter(int year)
+        //{
+        //    var gy = dbContext.GetQuarterFromYear(year).ToList();
+        //    return gy;
+        //}
+    }        
 }

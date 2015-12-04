@@ -1,34 +1,34 @@
-﻿@{
+﻿@model ZC_IT_TimeTracking.ViewModels.AssignGoalViewModel
+@{
     ViewBag.Title = "Assign Goal";
 }
-
 <form role="form" id="GoalAssignForm" class="form-horizontal">
     <div class="form-group required">
-        <label class="col-md-3 control-label">Title</label>
+        @Html.LabelFor(m => m.GoalTitle, new { @class = "col-md-3 control-label" })
         <div class="col-md-4">
             @Html.DropDownList("Goal_MasterID", new SelectList(ViewBag.goal, "Goal_MasterID", "GoalTitle"), "----Select GoalTitle-----", new { @class = "form-control col-md-4" })
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-md-3">Description</label>
+        @Html.LabelFor(m => m.GoalDescription, new { @class = "col-md-3 control-label" })
         <div class="col-md-4">
             <textarea name="GoalDescription" id="GoalDescription" class="form-control" readonly></textarea>
         </div>
     </div>
     <div class="form-group required">
-        <label class="col-md-3 control-label">Weight</label>
+        @Html.LabelFor(m => m.Weight, new { @class = "col-md-3 control-label" })
         <div class="col-md-4">
             <input type="number" name="Weight" id="Weight" class="form-control" />
         </div>
     </div>
     <div class="form-group required">
-        <label class="control-label col-md-3">Team</label>
+        @Html.LabelFor(m => m.TeamName, new { @class = "col-md-3 control-label" })
         <div class="col-md-3">
             @Html.DropDownList("TeamID", new SelectList(ViewBag.Team, "TeamID", "TeamName"), "----Select Team-----", new { @class = "form-control col-md-4" })
         </div>
     </div>
     <div class="form-group required">
-        <label class="control-label col-md-3">TeamMember</label>
+        @Html.Label("TeamMember", new { @class = "col-md-3 control-label" })
         <div class="col-md-3">
             <select name="TeamMember" id="TeamMember" class="form-control" multiple="multiple"></select>
         </div>

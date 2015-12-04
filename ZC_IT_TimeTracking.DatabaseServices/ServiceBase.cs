@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.Services.Validations;
 
-namespace ZC_IT_TimeTracking.DatabaseServices
+namespace ZC_IT_TimeTracking.Services
 {
     public class ServiceBase : IServiceBase
     {
