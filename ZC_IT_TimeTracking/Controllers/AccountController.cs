@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using ZC_IT_TimeTracking.DatabaseServices.Account;
+using ZC_IT_TimeTracking.Services.Role;
 using ZC_IT_TimeTracking.ViewModels;
 
 namespace ZC_IT_TimeTracking.Controllers
@@ -30,6 +32,33 @@ namespace ZC_IT_TimeTracking.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Registration(RegisterUserViewModel registerModel)
+        {
+            if (ModelState.IsValid)
+            {
+                AccountService roleService = new AccountService();
+                bool isSuccess = roleService.CreateUser(registerModel.UserName, registerModel.Password);
+                if (isSuccess)
+                {
+                    ModelState.Clear();
+                    ViewBag.Message = "User Created Successfully!";
+                }
+                else
+                {
+                    ViewBag.Message = roleService.ValidationErrors.Errors[0].ErrorDescription;
+                }
+            }
+            return View();
+        }
+        public ActionResult CreateRole()
+        {
+            RoleService roleService = new RoleService();
+            RoleViewModel roleView = new RoleViewModel();
+            roleView.RoleList = roleService.GetAvailableRoles();
+            return View(roleView);
+        }
+
+        [HttpPost]
+        public ActionResult CreateRole(RoleViewModel roleView)
         {
             if (ModelState.IsValid)
             {

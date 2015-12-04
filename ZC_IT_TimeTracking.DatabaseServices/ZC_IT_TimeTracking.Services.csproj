@@ -59,12 +59,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\AccountService.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="Interface\IGoalServices.cs" />
+    <Compile Include="IServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GoalRepository.cs" />
     <Compile Include="Repositories\ResourceRepository.cs" />
     <Compile Include="Role\RoleService.cs" />
+    <Compile Include="ServiceBase.cs" />
+    <Compile Include="Validations\ValidationError.cs" />
+    <Compile Include="Validations\ValidationErrorList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
