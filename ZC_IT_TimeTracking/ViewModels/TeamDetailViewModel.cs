@@ -12,12 +12,12 @@ namespace ZC_IT_TimeTracking.ViewModels
         public string LastName { get; set; }
     }
 
-    public class TeamViewModel
+    public class TeamViewModel : TeamMembersViewModel
     {
         [Required]
         [Display(Name = "Team")]
         public string TeamName { get; set; }
 
-        public List<TeamMembersViewModel> TeamMember { get; set; }
+       // public List<TeamMembersViewModel> TeamMember { get; set; }
     }
 }

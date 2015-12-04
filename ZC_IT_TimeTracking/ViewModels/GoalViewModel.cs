@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using ZC_IT_TimeTracking.ViewModels;
 
 namespace ZC_IT_TimeTracking.ViewModels
 {
-   
-    public class GoalViewModel
+
+    public class GoalViewModel : QuarterViewModel
     {
         [Required]
         [Display(Name = "Title")]
@@ -18,7 +17,7 @@ namespace ZC_IT_TimeTracking.ViewModels
         [Display(Name = "Description")]
         public string GoalDescription { get; set; }
 
-        public QuarterViewModel GoalQuarter { get; set; }
+       // public QuarterViewModel GoalQuarter { get; set; }
 
         [Required]
         [Display(Name = "Unit Of Measurement")]
@@ -29,32 +28,31 @@ namespace ZC_IT_TimeTracking.ViewModels
         public int MeasurementValue { get; set; }
     }
 
-    public class GoalListViewModel
+    public class GoalListViewModel : GoalViewModel
     {
-        public GoalViewModel ViewGoal { get; set; }
-
+        
+      //  public GoalViewModel ViewGoal { get; set; }
         [Required]
         [Display(Name = "Create Date")]
         public DateTime Creation_Date { get; set; }
     }
 
-    public class ViewGoalViewModel
+    public class ViewGoalViewModel : GoalViewModel
     {
-        public GoalViewModel ViewGoal { get; set; }
-        
+       // public virtual GoalViewModel ViewGoal { get; set; }       
         [Required]
         [Display(Name = "Is Higher Value Appreciable?")]
         public bool IsHigherValueGood { get; set; }
     }
     
-    public class CreateGoalViewModel
+    public class CreateGoalViewModel : ViewGoalViewModel
     {
-        public ViewGoalViewModel CreateGoal { get; set; }
+        //public virtual ViewGoalViewModel CreateGoal { get; set; }
     }
 
-    public class EditGoalViewModel
+    public class EditGoalViewModel : ViewGoalViewModel
     {
-        public ViewGoalViewModel EditGoal { get; set; }
+       // public ViewGoalViewModel EditGoal { get; set; }
     }
 
     public class ViewGoalRulesViewModel
@@ -72,12 +70,12 @@ namespace ZC_IT_TimeTracking.ViewModels
         public int Rating { get; set; }
     }
 
-    public class CreateGoalRuleViewModel
+    public class CreateGoalRuleViewModel : ViewGoalRulesViewModel
     {
-        public ViewGoalRulesViewModel CreateGoalRule { get; set; }
+       // public ViewGoalRulesViewModel CreateGoalRule { get; set; }
     }
-    public class EditeGoalRuleViewModel
+    public class EditeGoalRuleViewModel : ViewGoalRulesViewModel
     {
-        public ViewGoalRulesViewModel GoalRules { get; set; }
+       // public ViewGoalRulesViewModel GoalRules { get; set; }
     }
 }
