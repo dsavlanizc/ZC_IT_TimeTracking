@@ -171,23 +171,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <EntityDeploy Include="DBModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="DBModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DBModel.edmx.diagram">
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Content>
-    <Content Include="DBModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <LastGenOutput>DBModel.cs</LastGenOutput>
-    </Content>
     <None Include="Scripts\jquery-2.1.4.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.4.js" />
     <Content Include="Scripts\jquery-2.1.4.min.js" />
@@ -206,122 +189,23 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="CheckQuater_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="DBModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DBModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DBModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Department.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllGoalsOfResource_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAllResourceForGoal_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAssignedGoalDetails1_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetAssignedGoalDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetGoalDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetGoalRuleDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetQuarterDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetQuarterFromYear_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetResouceDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetResourceByTeam_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetResourceGoalDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetSpecificRecordsOfGoal_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="GetTeamDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="getYearForQuarter_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Goal_Master.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Goal_Quarter.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Goal_Rules.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Manager.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\AssignGoal.cs" />
     <Compile Include="Models\Goal.cs" />
     <Compile Include="Models\GoalDetail.cs" />
     <Compile Include="Models\GoalQuarters.cs" />
     <Compile Include="Models\GoalRule.cs" />
-    <Compile Include="ViewModels\AssignGoalViewModel.cs" />
-    <Compile Include="ViewModels\GoalQuarterViewModel.cs" />
     <Compile Include="Models\JsonResponse.cs" />
     <Compile Include="Models\Pager.cs" />
     <Compile Include="Models\Utilities.cs" />
+    <Compile Include="ViewModels\AssignGoalViewModel.cs" />
+    <Compile Include="ViewModels\GoalQuarterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resource.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Resource_Goal.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Resource_Goal_Performance.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Resource_Performance.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Role.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="SearchGoalByTitle_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="Team.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="TeamLead.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="ViewModels\GoalViewModel.cs" />
     <Compile Include="ViewModels\ResourceViewModel.cs" />
     <Compile Include="ViewModels\RoleViewModel.cs" />
@@ -355,6 +239,10 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZC_IT_TimeTracking.BusinessEntities\ZC_IT_TimeTracking.BusinessEntities.csproj">
+      <Project>{9a6283da-218b-4c23-b169-0cab423a8e11}</Project>
+      <Name>ZC_IT_TimeTracking.BusinessEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZC_IT_TimeTracking.DatabaseServices\ZC_IT_TimeTracking.Services.csproj">
       <Project>{232ff5b4-1c56-4968-9fb4-b8f9db94434f}</Project>
       <Name>ZC_IT_TimeTracking.Services</Name>

@@ -20,7 +20,7 @@ namespace ZC_IT_TimeTracking.Controllers
             if (ModelState.IsValid)
             {
                 AccountService accountService = new AccountService();
-                bool isSuccess = accountService.LoginUser(loginModel.UserName, loginModel.Password);
+                bool isSuccess = accountService.LoginUser(loginModel.UserName, loginModel.Password, loginModel.RememberMe);
                 if (isSuccess)
                 {
                     return RedirectToAction("Index", "Home");
@@ -45,12 +45,12 @@ namespace ZC_IT_TimeTracking.Controllers
             if (ModelState.IsValid)
             {
                 AccountService accountService = new AccountService();
-                bool isSuccess = accountService.CreateUser(registerModel.UserName, registerModel.Password);
+                bool isSuccess = accountService.CreateUser(registerModel.UserName, registerModel.Password, registerModel.EmailID, registerModel.RoleName);
                 if (isSuccess)
                 {
                     ModelState.Clear();
                     ViewBag.Message = "User Created Successfully!";
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Login", "Account");
                 }
                 else
                 {
@@ -59,22 +59,40 @@ namespace ZC_IT_TimeTracking.Controllers
             }
             return View();
         }
+
         public ActionResult CreateRole()
         {
-            RoleService roleService = new RoleService();
-            RoleViewModel roleView = new RoleViewModel();
-            roleView.RoleList = roleService.GetAvailableRoles();
-            return View(roleView);
+            return View();
         }
 
         [HttpPost]
-        public ActionResult CreateRole(RoleViewModel roleView)
+        public ActionResult CreateRole(string RoleName)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-
+                AccountService accountService = new AccountService();
+                bool isSuccess = accountService.CreateRole(RoleName);
+                if (isSuccess)
+                {
+                    ViewBag.Message = "Role Created Successfully!";
+                }
+                else
+                {
+                    ViewBag.Message = accountService.ValidationErrors.Errors[0].ErrorDescription;
+                }
             }
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            AccountService accountService = new AccountService();
+            bool isSuccess = accountService.LogoutUser();
+            if (isSuccess)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+            return Content(accountService.ValidationErrors.Errors[0].ErrorDescription);
         }
     }
 }

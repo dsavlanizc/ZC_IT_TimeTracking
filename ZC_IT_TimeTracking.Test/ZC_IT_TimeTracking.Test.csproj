@@ -94,6 +94,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ZC_IT_TimeTracking.BusinessEntities\ZC_IT_TimeTracking.BusinessEntities.csproj">
+      <Project>{9a6283da-218b-4c23-b169-0cab423a8e11}</Project>
+      <Name>ZC_IT_TimeTracking.BusinessEntities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ZC_IT_TimeTracking\ZC_IT_TimeTracking.csproj">
       <Project>{f333553d-b4e9-47b3-ae0f-8fc868570a17}</Project>
       <Name>ZC_IT_TimeTracking</Name>

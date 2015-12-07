@@ -22,7 +22,7 @@ namespace ZC_IT_TimeTracking.ViewModels
         public string EmailID { get; set; }
       
         [Display(Name = "Role")]
-        public string RoleName { get; set; }
+        public string[] RoleName { get; set; }
         
         [Required]
         [Display(Name = "User Name")]
