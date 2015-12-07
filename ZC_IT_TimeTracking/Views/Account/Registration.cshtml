@@ -8,7 +8,7 @@
 }
 @if (ViewBag.Message != null)
 {
-    <h3>ViewBag.Message</h3>
+    <center><h4 class="text-danger">@ViewBag.Message</h4></center>
 }
 @using (Html.BeginForm("Registration", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
