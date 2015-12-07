@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.BusinessEntities;
 
-namespace ZC_IT_TimeTracking.Services.GoalServices
+namespace ZC_IT_TimeTracking.Services.Goal
 {
     public interface IGoalService : IServiceBase
     {

@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.Services;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.Services.GoalServices;
 
-namespace ZC_IT_TimeTracking.Services.GoalServices
+namespace ZC_IT_TimeTracking.Services.Goal
 {
-    public class GoalServices : ServiceBase
+    public class GoalServices : ServiceBase, IGoalService
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
 

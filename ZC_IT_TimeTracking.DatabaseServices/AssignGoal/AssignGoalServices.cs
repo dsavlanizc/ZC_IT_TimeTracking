@@ -11,25 +11,48 @@ using AutoMapper;
 
 namespace ZC_IT_TimeTracking.Services.AssignGoalServices
 {
-    class AssignGoalService : ServiceBase
+    public class AssignGoalService : ServiceBase, IAssignGoalServices
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
 
-           public List<GetResourceByTeam_Result> GetResourceByTeam(int teamId)
+        public List<GetResourceByTeam_Result> GetResourceByTeam(int teamId)
         {
             try
             {
                 return DbContext.GetResourceByTeam(teamId).ToList();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_TEAM_EXIST", "Error While fetching record");
+                return null;
+            }
         }
-         public List<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(int ResourceId)
+
+        public List<Team> GetTeam()
+        {
+            try
+            {
+                var team = DbContext.Teams.ToList();
+                return team;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("NO_TEAM_EXIST", "Error While fetching record");
+                return null;
+            }
+        }
+
+        public List<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(int ResourceId)
         {
             try
             {
                 return DbContext.GetAllGoalsOfResource(ResourceId).ToList();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_RES_GOAL_EXIST", "Error While fetching Resource Goal");
+                return null;
+            }
         }
         public List<GetAssignedGoalDetails_Result> GetAssignedGoalDetails(int AssignGoalId)
         {
@@ -37,19 +60,27 @@ namespace ZC_IT_TimeTracking.Services.AssignGoalServices
             {
                 return DbContext.GetAssignedGoalDetails(AssignGoalId).ToList();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_ASGN_GOAL", "Error While fetching Assigned Goal Record");
+                return null;
+            }
         }
 
-        public List<GetResourceGoalDetails_Result> GetResourceGoalDetails(int Resourceid , int GoalId)
+        public List<GetResourceGoalDetails_Result> GetResourceGoalDetails(int Resourceid, int GoalId)
         {
             try
             {
                 return DbContext.GetResourceGoalDetails(Resourceid, GoalId).ToList();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_RES_GOAL", "Error While fetching Resouce Goal Record");
+                return null;
+            }
         }
 
-        public bool AssignNewGoal(AssignGoal AssignData)
+        public bool AssignGoal(AssignGoal AssignData)
         {
             try
             {
@@ -60,13 +91,13 @@ namespace ZC_IT_TimeTracking.Services.AssignGoalServices
                     if (v == null)
                     {
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                        DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
+                        var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
                         count++;
                     }
                 }
                 if (count == AssignData.ResourceID.Count())
                     return true;
-                
+
                 else
                 {
                     this.ValidationErrors.Add("GoalNotAssigned", "Not all Goal were assigned Succesfully!");
@@ -77,29 +108,29 @@ namespace ZC_IT_TimeTracking.Services.AssignGoalServices
             {
                 this.ValidationErrors.Add("ExceptionGoalAssign", "Error occured while Assigning a Goal!");
                 return false;
-            }        
+            }
         }
 
         public AssignGoal GetAssignedGoal(int AssignGoalId)
         {
-            var GoalDetail=new AssignGoal();
+            var GoalDetail = new AssignGoal();
             try
             {
                 var AssignedGoal = GetAssignedGoalDetails(AssignGoalId).FirstOrDefault();
                 if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignedGoal.Goal_MasterID))
-                {    
-                    Mapper.CreateMap<GetResourceGoalDetails_Result,AssignGoal>();
-                    GoalDetail=Mapper.Map<AssignGoal>(AssignedGoal);
+                {
+                    Mapper.CreateMap<GetResourceGoalDetails_Result, AssignGoal>();
+                    GoalDetail = Mapper.Map<AssignGoal>(AssignedGoal);
                     return GoalDetail;
                 }
                 this.ValidationErrors.Add("GoalExistance", "No such goal does exist!");
-                return GoalDetail;
+                return null;
             }
             catch (Exception)
             {
                 this.ValidationErrors.Add("ExceptionGetGoal", "Error occured while Fetching Goal Details!");
-                return GoalDetail;
-            }        
+                return null;
+            }
         }
 
         public AssignGoal ViewAssignGoalToResource(int ResourceId)
@@ -114,7 +145,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoalServices
                     GoalDetail = Mapper.Map<AssignGoal>(AssignedGoal);
                     return GoalDetail;
                 }
-                this.ValidationErrors.Add("GoalExistance", "No such goal does exist!");
+                this.ValidationErrors.Add("GoalExistance", "No such goal exist!");
                 return GoalDetail;
             }
             catch (Exception)

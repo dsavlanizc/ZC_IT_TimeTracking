@@ -7,7 +7,7 @@ using ZC_IT_TimeTracking.BusinessEntities;
 
 namespace ZC_IT_TimeTracking.Services.AssignGoalServices
 {
-    interface IAssignGoalServices : IServiceBase
+    public interface IAssignGoalServices : IServiceBase
     {
         List<GetResourceByTeam_Result> GetResourceByTeam(int teamId);
         List<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(int ResourceId);
@@ -19,5 +19,6 @@ namespace ZC_IT_TimeTracking.Services.AssignGoalServices
         List<AssignGoal> ViewAssignGoalToTeam(int TeamId);
         bool EditAssignedGoal(int Weight, int ResourceId, int GoalID);
         bool DeleteAssignedGoal(int Id);
+        List<Team> GetTeam();
     }
 }
