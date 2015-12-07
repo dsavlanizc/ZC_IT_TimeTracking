@@ -58,6 +58,7 @@
     <Compile Include="CheckQuater_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\AssignGoal.cs" />
     <Compile Include="Model\Goal.cs" />
     <Compile Include="Model\GoalDetail.cs" />
     <Compile Include="Model\GoalQuarters.cs" />
