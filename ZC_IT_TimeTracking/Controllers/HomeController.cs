@@ -3,16 +3,18 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web.Mvc;
 using ZC_IT_TimeTracking.Services;
-using ZC_IT_TimeTracking.Services.Services;
 using ZC_IT_TimeTracking.ViewModels;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.Services.Goals;
+using ZC_IT_TimeTracking.Services.AssignGoals;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
     public class HomeController : Controller
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
-        IGoalService _goalServices = new Services.Services.GoalService();
+        GoalServices _goalServices = new GoalServices();
+        AssignGoalService _assignGoalServices = new AssignGoalService();
 
         // GET: Home
         [Authorize]
@@ -27,7 +29,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 ViewBag.page = page;
                 ViewBag.SearchString = title;
                 ViewBag.Quarter = Quarter;
-                var QY = DbContext.GetQuarterFromYear(Year);
+                var QY = _goalServices.GetQuarterFromYear(Year);
                 if (!QY.Any(a => a.GoalQuarter == Quarter))
                 {
                     ViewBag.Message = "There is no quarter available! Please create one";
@@ -38,12 +40,13 @@ namespace ZC_IT_TimeTracking.Controllers
                 if (title == "")
                 {
                     ObjectParameter count = new ObjectParameter("totalRecords", typeof(int));
-                    var GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage, count).ToList();
+                    int pageSize = Utilities.RecordPerPage;
+                    var GoalList = _goalServices.GetGoalDetail(skip, pageSize, count);
                     if ((GoalList.Count() == 0) && (page - 2) >= 0)
                     {
                         ViewBag.page = page - 1;
                         skip = (page - 2) * Utilities.RecordPerPage;
-                        GoalList = DbContext.GetSpecificRecordsOfGoal(skip, Utilities.RecordPerPage, count).ToList();
+                        GoalList = _goalServices.GetGoalDetail(skip, pageSize, count);
                     }
                     ViewBag.TotalCount = Convert.ToInt32(count.Value);
                     return View(GoalList);
@@ -75,9 +78,9 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 if (DbContext.Goal_Master.Any(a => a.Goal_MasterID == Id))
                 {
-                    var goal = DbContext.GetGoalDetails(Id).FirstOrDefault();
-                    var quarter = DbContext.GetQuarterDetails(goal.QuarterId).FirstOrDefault();
-                    var rules = DbContext.GetGoalRuleDetails(Id).ToList();
+                    var goal = _goalServices.GetGoaldetail(Id);
+                    var quarter = _goalServices.GetGoalQuarter(goal.QuarterId);
+                    var rules = _goalServices.GetGoalRules(Id);
                     var quarterList = DbContext.Goal_Quarter.Select(s => new { s.GoalQuarter, s.QuarterYear }).ToList();
                     return Json(new { goal = goal, quarter = quarter, rules = rules, quarterList = quarterList, success = true });
                 }
@@ -103,7 +106,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 else
                 {
                     return Json(new JsonResponse { message = "Error occured while creating goal!", success = false });
-                    
+
                 }
             }
             catch (Exception ex)
@@ -141,7 +144,7 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var Isdelete = _goalServices.DeleteGoal(id);
-                return Json(new JsonResponse { message = Isdelete.message,success = Isdelete.success });                
+                return Json(new JsonResponse { message = Isdelete.message, success = Isdelete.success });
             }
             catch
             {
@@ -156,7 +159,7 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var IsCreate = _goalServices.CreateQuarter(QuarterData);
-                return Json(new JsonResponse { message = IsCreate.message, success = IsCreate.success }); ;                
+                return Json(new JsonResponse { message = IsCreate.message, success = IsCreate.success }); ;
             }
             catch (Exception e)
             {
@@ -164,10 +167,11 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
+        //Using Services
         public ActionResult AssignGoal()
         {
-            ViewBag.goal = DbContext.Goal_Master.ToList();
-            ViewBag.Team = DbContext.Teams.ToList();
+            ViewBag.goal = _goalServices.GetGoalIDandTitle();
+            ViewBag.Team = _assignGoalServices.GetTeam();
             return View("_AssignGoal");
         }
 
@@ -178,10 +182,10 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var Desc = _goalServices.GetGoalDescription(TitleID);
-                if(Desc == null)
+                if (Desc == null)
                     return Json(new JsonResponse { message = "Error occured while Getting Description!", success = false });
                 else
-                    return Json(new { TitleData = Desc.GoalDescription , success = true });
+                    return Json(new { TitleData = Desc.GoalDescription, success = true });
             }
             catch
             {
@@ -194,7 +198,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName+" "+s.LastName }).ToList();
+                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
                 int count = TeamMember.Count;
                 for (int i = 0; i < count; i++)
                 {
@@ -212,27 +216,17 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
+        //using Services
         [HttpPost]
         public JsonResult AssignGoal(AssignGoal AssignData)
         {
             try
             {
-                int count = 0;
-                foreach (int id in AssignData.ResourceID)
-                {
-                    var v = DbContext.GetResourceGoalDetails(id, AssignData.Goal_MasterID).FirstOrDefault();
-                    if (v == null)
-                    {
-                        ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                        var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
-                        count++;
-                    }
-                }
-                if (count == AssignData.ResourceID.Count())
+                var ISAssign = _assignGoalServices.AssignGoal(AssignData);
+                if (ISAssign)
                     return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
                 else
                     return Json(new JsonResponse { message = "Not all Goal were assigned Succesfully", success = false });
-
             }
             catch
             {
@@ -240,14 +234,15 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
+
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult ViewAssignGoal(int ResId = -1, int TeamID = -1)
         {
-            ViewBag.Team = DbContext.Teams.ToList();
+            ViewBag.Team = _assignGoalServices.GetTeam();
             if (ResId != -1)
             {
-                ViewBag.AllGoalResourse = DbContext.GetAllGoalsOfResource(ResId).ToList();
-            }            
+                ViewBag.AllGoalResourse = _assignGoalServices.GetAllGoalsOfResource(ResId);
+            }
             if (TeamID != -1)
             {
                 var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
@@ -258,15 +253,15 @@ namespace ZC_IT_TimeTracking.Controllers
             return View("_ViewAssignGoal");
         }
 
+        //Using Services
         [HttpPost]
         public JsonResult GetAssignedGoal(int AssignId)
         {
             try
             {
-                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignId))
+                var AssignedGoal = _assignGoalServices.GetAssignedGoal(AssignId);
+                if (AssignedGoal != null)
                 {
-                    var AssignedGoal = DbContext.GetAssignedGoalDetails(AssignId).FirstOrDefault();
-                    //int id = AssignedGoal.Goal_MasterID;
                     return Json(new { Data = AssignedGoal, success = true });
                 }
                 return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
@@ -277,13 +272,17 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
+        //Using Services
         [HttpPost]
         public ActionResult EditAssignedGoal(int Weight, int ResourceId, int GoalID)
         {
             try
             {
-                DbContext.UpdateResourceGoal(ResourceId, GoalID, Weight);
-                return Json(new JsonResponse { message = "Weight updated successfully!", success = true });
+                var IsUpdate = _assignGoalServices.EditAssignedGoal(Weight, ResourceId, GoalID);
+                if (IsUpdate)
+                    return Json(new JsonResponse { message = "Weight updated successfully!", success = true });
+                else
+                    return Json(new JsonResponse { message = "No such goal exist!", success = false });
             }
             catch (Exception)
             {
@@ -291,21 +290,21 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
+        //Using Services
         [HttpPost]
         public ActionResult DeleteAssignedGoal(int Id)
         {
             try
             {
-                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == Id))
-                {
-                    DbContext.DeleteResourceGoal(Id);
+                var IsDelete = _assignGoalServices.DeleteAssignedGoal(Id);
+                if (IsDelete)
                     return Json(new JsonResponse { message = "Deleted Successfully!", success = true });
-                }
-                return Json(new JsonResponse { message = "No Such Goal is Assigned", success = false });
+                else
+                    return Json(new JsonResponse { message = "No Such Goal is Assigned", success = false });
             }
             catch (Exception)
             {
-                return Json(new JsonResponse { message = "Error occured while fetching Delete Assigned Goal", success = false });                
+                return Json(new JsonResponse { message = "Error occured while fetching Delete Assigned Goal", success = false });
             }
         }
     }

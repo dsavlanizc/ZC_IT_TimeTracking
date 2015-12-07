@@ -9,9 +9,9 @@ using System.Data.Entity;
 using AutoMapper;
 
 
-namespace ZC_IT_TimeTracking.Services.AssignGoalServices
+namespace ZC_IT_TimeTracking.Services.AssignGoals
 {
-    public class AssignGoalService : ServiceBase, IAssignGoalServices
+    public class AssignGoalService : ServiceBase
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
 

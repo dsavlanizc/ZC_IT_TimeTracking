@@ -6,11 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.Services;
 using ZC_IT_TimeTracking.BusinessEntities;
-using ZC_IT_TimeTracking.Services.GoalServices;
 
-namespace ZC_IT_TimeTracking.Services.Goal
+namespace ZC_IT_TimeTracking.Services.Goals
 {
-    public class GoalServices : ServiceBase, IGoalService
+    public class GoalServices : ServiceBase
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
 
@@ -23,6 +22,19 @@ namespace ZC_IT_TimeTracking.Services.Goal
             catch
             {
                 this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
+                return null;
+            }
+        }
+
+        public List<Goal_Master> GetGoalIDandTitle()
+        {
+            try
+            {
+                return dbContext.Goal_Master.ToList();
+            }
+            catch (Exception)
+            {
+                this.ValidationErrors.Add("NO_Goal_AVL", "No Goal Available!");
                 return null;
             }
         }
