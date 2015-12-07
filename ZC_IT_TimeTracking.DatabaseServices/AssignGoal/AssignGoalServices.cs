@@ -4,14 +4,12 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZC_IT_TimeTracking.BusinessEntities.Model;
-using ZC_IT_TimeTracking.Services;
-//using ZC_IT_TimeTracking.Models;
+using ZC_IT_TimeTracking.BusinessEntities;
 using System.Data.Entity;
 using AutoMapper;
 
 
-namespace ZC_IT_TimeTracking.Services.AssignGoals
+namespace ZC_IT_TimeTracking.Services.AssignGoalServices
 {
     class AssignGoalService : ServiceBase
     {
@@ -51,7 +49,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             finally { }
         }
 
-        public bool AssignGoal(AssignGoal AssignData)
+        public bool AssignNewGoal(AssignGoal AssignData)
         {
             try
             {
@@ -62,7 +60,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                     if (v == null)
                     {
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                        var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
+                        DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
                         count++;
                     }
                 }

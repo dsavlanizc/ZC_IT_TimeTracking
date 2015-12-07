@@ -97,6 +97,7 @@
   <ItemGroup>
     <Compile Include="Account\AccountService.cs" />
     <Compile Include="AssignGoal\AssignGoalServices.cs" />
+    <Compile Include="AssignGoal\IAssignGoalServices.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="GoalServices\IGoalService.cs" />
     <Compile Include="GoalServices\GoalServices.cs" />
