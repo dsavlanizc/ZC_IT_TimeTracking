@@ -58,7 +58,10 @@
     <Compile Include="CheckQuater_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\AssignGoal.cs" />
     <Compile Include="Model\Goal.cs" />
+    <Compile Include="Model\GoalDetail.cs" />
+    <Compile Include="Model\GoalQuarters.cs" />
     <Compile Include="Model\GoalRule.cs" />
     <Compile Include="Model\JsonResponse.cs" />
     <Compile Include="DBModel.Context.cs">
@@ -133,6 +136,8 @@
     <Compile Include="Manager.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Pager.cs" />
+    <Compile Include="Model\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs">
       <DependentUpon>DBModel.tt</DependentUpon>

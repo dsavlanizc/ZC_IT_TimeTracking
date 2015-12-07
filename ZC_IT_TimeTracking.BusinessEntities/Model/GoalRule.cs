@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ZC_IT_TimeTracking.Models
+namespace ZC_IT_TimeTracking.BusinessEntities
 {
     public class GoalRule
     {
