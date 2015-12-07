@@ -4,23 +4,26 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.Services;
-using ZC_IT_TimeTracking.Models;
+using ZC_IT_TimeTracking.BusinessEntities;
 
-namespace ZC_IT_TimeTracking.Services.Interface
+namespace ZC_IT_TimeTracking.Services.GoalServices
 {
-    public class IGoalServices : ServiceBase
+    public class GoalServices : ServiceBase
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
-        private IServiceBase Error;
+
         public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
         {
             try
             {
                 return dbContext.GetQuarterFromYear(year).ToList();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
+                return null;
+            }
         }
 
         public List<GetSpecificRecordsOfGoal_Result> GetGoalDetail(int StartFrom, int PageSize, ObjectParameter count)
@@ -29,7 +32,11 @@ namespace ZC_IT_TimeTracking.Services.Interface
             {
                 return dbContext.GetSpecificRecordsOfGoal(StartFrom, PageSize, count).ToList();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_SPF_GOAL_AVL", "Specific Goal Details are not Available!");
+                return null;
+            }   
         }
 
         public GetGoalDetails_Result GetGoaldetail(int id)
@@ -38,7 +45,11 @@ namespace ZC_IT_TimeTracking.Services.Interface
             {
                 return dbContext.GetGoalDetails(id).FirstOrDefault();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_GOAL_AVL", "No Goal Details are Available!");
+                return null;
+            } 
         }
 
         public GetQuarterDetails_Result GetGoalQuarter(int id)
@@ -47,7 +58,11 @@ namespace ZC_IT_TimeTracking.Services.Interface
             {
                 return dbContext.GetQuarterDetails(id).FirstOrDefault();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_QUA_AVL", "No Such Quarter are Available!");
+                return null;
+            }   
         }
 
         public List<GetGoalRuleDetails_Result> GetGoalRules(int Goalid)
@@ -56,7 +71,11 @@ namespace ZC_IT_TimeTracking.Services.Interface
             {
                 return dbContext.GetGoalRuleDetails(Goalid).ToList();
             }
-            finally { }
+            catch
+            {
+                this.ValidationErrors.Add("NO_RUL_DEF", "No Rules Define for Goal!");
+                return null;
+            }
         }
 
         public bool CreateGoal(Goal goal)
@@ -76,10 +95,9 @@ namespace ZC_IT_TimeTracking.Services.Interface
             }
             catch
             {
-                Error.ValidationErrors.Add("ERR_ADD_GOAL", "Error ocurred while Creating Goal!");
+                this.ValidationErrors.Add("ERR_ADD_GOAL", "Error ocurred while Creating Goal!");
                 return false;
             }
-            finally { }
         }
 
         public bool DeleteAllGoalRule(int id)
@@ -91,7 +109,7 @@ namespace ZC_IT_TimeTracking.Services.Interface
             }
             catch
             {
-                Error.ValidationErrors.Add("ERR_DEL_GOAL", "Error Ocurred while Deleting Goal Rule!");
+                this.ValidationErrors.Add("ERR_DEL_GOAL", "Error Ocurred while Deleting Goal Rule!");
                 return false;
             }
         }
@@ -109,11 +127,11 @@ namespace ZC_IT_TimeTracking.Services.Interface
                 }
                 return true;
             }
-            catch {
-                Error.ValidationErrors.Add("ERR_EDIT_GOAL", "Error Ocurred while Updating Goal!");
+            catch
+            {
+                this.ValidationErrors.Add("ERR_EDIT_GOAL", "Error Ocurred while Updating Goal!");
                 return false;
             }
-            finally { }
         }
 
         public JsonResponse DeleteGoal(int[] goalid)
@@ -146,9 +164,8 @@ namespace ZC_IT_TimeTracking.Services.Interface
             }
             catch
             {
-                js.message = "Error occured while deleting!";
-                js.success = false;
-                return js;
+                this.ValidationErrors.Add("ERR_DEL_GOAL", "Error Occured while Deleting Goal!");
+                return null;
             }
         }
 
@@ -161,12 +178,12 @@ namespace ZC_IT_TimeTracking.Services.Interface
             }
             catch
             {
-                Error.ValidationErrors.Add("No_QUT_FOUND", "Error Ocurred while Finding Querter!");
+                this.ValidationErrors.Add("NO_QUT_FOUND", "No such Quarter Available");
                 return false;
             }
         }
 
-        public JsonResponse CreateQuarter(Goal_Quarter QuarterDetail)
+        public JsonResponse CreateQuarter(GoalQuarters QuarterDetail)
         {
             JsonResponse js = new JsonResponse();
             try
@@ -187,9 +204,23 @@ namespace ZC_IT_TimeTracking.Services.Interface
             }
             catch
             {
-                js.message = "Error occured while Creating Quarter!";
-                js.success = false;
-                return js;
+                this.ValidationErrors.Add("ERR_DEL_GOAL", "Error Occured while Creating Quarter!");
+                return null;
+            }
+        }
+
+        public GetGoalDescription GetGoalDescription(int GoalID)
+        {
+            GetGoalDescription GGD = new GetGoalDescription();
+            try
+            {
+                GGD.GoalDescription = dbContext.GetGoalDetails(GoalID).Select(s => s.GoalDescription).FirstOrDefault();
+                return GGD;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("NO_DESC_AVL","No discription Available!");
+                return null;
             }
         }
     }
