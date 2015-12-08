@@ -7,14 +7,14 @@ namespace ZC_IT_TimeTracking.BusinessEntities
 {
     public class Goal
     {
-        public int ID { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public int Goal_MasterID { get; set; }
+        public string GoalTitle { get; set; }
+        public string GoalDescription { get; set; }
         public string UnitOfMeasurement { get; set; }
         public double MeasurementValue { get; set; }
-        public bool IsHigher { get; set; }
-        public int Quarter { get; set; }
-        public int Year { get; set; }
+        public bool IsHigherValueGood { get; set; }
+        public int GoalQuarter { get; set; }
+        public int QuarterYear { get; set; }
         public List<GoalRule> GoalRules { get; set; }
     }
 }

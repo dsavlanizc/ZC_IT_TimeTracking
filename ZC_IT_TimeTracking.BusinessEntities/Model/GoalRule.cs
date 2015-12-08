@@ -7,8 +7,8 @@ namespace ZC_IT_TimeTracking.BusinessEntities
 {
     public class GoalRule
     {
-        public float RangeFrom { get; set; }
-        public float RangeTo { get; set; }
-        public float Rating { get; set; }
+        public double Performance_RangeFrom { get; set; }
+        public double Performance_RangeTo { get; set; }
+        public double Rating { get; set; }
     }
 }

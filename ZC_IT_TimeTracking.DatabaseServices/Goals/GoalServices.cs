@@ -126,14 +126,13 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                var CheckQuarter = dbContext.CheckQuater(goal.Quarter, goal.Year).FirstOrDefault();
+                var CheckQuarter = dbContext.CheckQuater(goal.GoalQuarter, goal.QuarterYear).FirstOrDefault();
                 ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                dbContext.InsertGoalMaster(goal.Title, goal.Description, goal.UnitOfMeasurement, goal.MeasurementValue, goal.IsHigher, DateTime.Today, CheckQuarter.QuarterID, insertedId);
+                dbContext.InsertGoalMaster(goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, goal.IsHigherValueGood, DateTime.Today, CheckQuarter.QuarterID, insertedId);
                 Int32 goalId = Int32.Parse(insertedId.Value.ToString());
-
                 foreach (GoalRule rule in goal.GoalRules)
                 {
-                    dbContext.InsertGoalRules(rule.RangeFrom, rule.RangeTo, rule.Rating, goalId);
+                    dbContext.InsertGoalRules(rule.Performance_RangeFrom, rule.Performance_RangeTo, rule.Rating, goalId);
                 }
                 return true;
             }
@@ -162,12 +161,12 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                var quarter = dbContext.CheckQuater(goal.Quarter, goal.Year).FirstOrDefault();
-                dbContext.UpdateGoalMaster(goal.ID, goal.Title, goal.Description, goal.UnitOfMeasurement, goal.MeasurementValue, DateTime.Today, goal.IsHigher, quarter.QuarterID);
-                dbContext.Delete_AllRulesOfGoal(goal.ID);
+                var quarter = dbContext.CheckQuater(goal.GoalQuarter, goal.QuarterYear).FirstOrDefault();
+                dbContext.UpdateGoalMaster(goal.Goal_MasterID, goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, DateTime.Today, goal.IsHigherValueGood, quarter.QuarterID);
+                dbContext.Delete_AllRulesOfGoal(goal.Goal_MasterID);
                 foreach (GoalRule rule in goal.GoalRules)
                 {
-                    dbContext.InsertGoalRules(rule.RangeFrom, rule.RangeTo, rule.Rating, goal.ID);
+                    dbContext.InsertGoalRules(rule.Performance_RangeFrom, rule.Performance_RangeTo, rule.Rating, goal.Goal_MasterID);
                 }
                 return true;
             }

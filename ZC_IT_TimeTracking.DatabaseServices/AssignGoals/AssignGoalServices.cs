@@ -16,15 +16,12 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
 
-        public List<ResourcesByTeam> GetResourceByTeam(int teamId)
+        public List<GetResourceByTeam_Result> GetResourceByTeam(int teamId)
         {
-            var lst = new List<ResourcesByTeam>();
             try
             {
-                var data = DbContext.GetResourceByTeam(teamId).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
-                Mapper.CreateMap<GetResourceByTeam_Result, ResourcesByTeam>();
-                lst = Mapper.Map<List<ResourcesByTeam>>(data);
-                return lst;
+                var data = DbContext.GetResourceByTeam(teamId).ToList();
+                return data;
             }
             catch
             {
@@ -32,6 +29,23 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 return null;
             }
         }
+
+        //public List<ResourcesByTeam> GetResourceByTeam(int teamId)
+        //{
+        //    var lst = new List<ResourcesByTeam>();
+        //    try
+        //    {
+        //        var data = DbContext.GetResourceByTeam(teamId).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+        //        Mapper.CreateMap<GetResourceByTeam_Result, ResourcesByTeam>();
+        //        lst = Mapper.Map<List<ResourcesByTeam>>(data);
+        //        return lst;
+        //    }
+        //    catch
+        //    {
+        //        this.ValidationErrors.Add("NO_TEAM_EXIST", "Error While fetching record");
+        //        return null;
+        //    }
+        //}
 
         public List<Team> GetTeam()
         {
@@ -76,7 +90,11 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
         {
             try
             {
-                return DbContext.GetResourceGoalDetails(Resourceid, GoalId).ToList();
+                var ResourceGoal =DbContext.GetResourceGoalDetails(Resourceid, GoalId).ToList();
+                if (ResourceGoal.Count != 0)
+                    return ResourceGoal;
+                else
+                    return null;
             }
             catch
             {
@@ -92,7 +110,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 int count = 0;
                 foreach (int id in AssignData.ResourceID)
                 {
-                    var v = GetResourceGoalDetails(id, AssignData.Goal_MasterID).FirstOrDefault();
+                    var v = GetResourceGoalDetails(id, AssignData.Goal_MasterID);
                     if (v == null)
                     {
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));

@@ -62,22 +62,22 @@ $(function () {
         }
         if ($("#GoalCreateForm").valid()) {
             var GoalData = {};
-            if (!isCreate) GoalData.ID = updateGoalId;
-            GoalData.Title = $("#GoalTitle").val();
-            GoalData.Description = $("#GoalDescription").val();
-            GoalData.Year = $("#GoalYear option:selected").text();
-            GoalData.Quarter = $("#GoalQuarter option:selected").text();
+            if (!isCreate) GoalData.Goal_MasterID = updateGoalId;
+            GoalData.GoalTitle = $("#GoalTitle").val();
+            GoalData.GoalDescription = $("#GoalDescription").val();
+            GoalData.QuarterYear = $("#GoalYear option:selected").text();
+            GoalData.GoalQuarter = $("#GoalQuarter option:selected").text();
             GoalData.UnitOfMeasurement = $("#UnitOfMeasurement").val();
             GoalData.MeasurementValue = $("#MeasurementValue").val();
-            GoalData.IsHigher = $("#IsHigherValueGood").is(":checked");
+            GoalData.IsHigherValueGood = $("#IsHigherValueGood").is(":checked");
 
             if ($("#RuleListTable").find("tr").length > 0) {
                 //adding goal rules
                 var GoalRules = Array();
                 $("#RuleListTable").find("tr").each(function () {
                     var rule = {};
-                    rule.RangeFrom = $(this).find(".RangeFrom").text();
-                    rule.RangeTo = $(this).find(".RangeTo").text();
+                    rule.Performance_RangeFrom = $(this).find(".RangeFrom").text();
+                    rule.Performance_RangeTo = $(this).find(".RangeTo").text();
                     rule.Rating = $(this).find(".Rating").text();
                     GoalRules.push(rule);
                 });
@@ -559,7 +559,7 @@ $(function () {
                     console.log(dt);
                     $("#TeamMember").html('');
                     for (var val in dt.TeamMember) {
-                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].Name + "</option>");
+                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + " " + dt.TeamMember[val].LastName + "</option>");
                     }
                 }
             },
@@ -643,7 +643,7 @@ $(function () {
                     $("#TeamMemberName").html('');
                     $("#TeamMemberName").html('<option value="-1">--Select TeamMember--</option>');
                     for (var val in dt.TeamMember) {
-                        $("#TeamMemberName").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].Name + "</option>");
+                        $("#TeamMemberName").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + " " + dt.TeamMember[val].LastName + "</option>");
                     }
                 }
             },

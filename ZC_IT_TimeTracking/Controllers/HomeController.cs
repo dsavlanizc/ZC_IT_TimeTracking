@@ -93,11 +93,11 @@ namespace ZC_IT_TimeTracking.Controllers
 
         //Using Services
         [HttpPost]
-        public JsonResult CreateGoal(Goal goal)
+        public JsonResult CreateGoal(Goal GoalData)
         {
             try
             {
-                var IsCreate = _goalServices.CreateGoal(goal);
+                var IsCreate = _goalServices.CreateGoal(GoalData);
                 if (IsCreate)
                 {
                     return Json(new JsonResponse { message = "Goal created successfully!", success = true });
