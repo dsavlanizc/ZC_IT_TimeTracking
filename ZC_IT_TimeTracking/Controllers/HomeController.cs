@@ -5,14 +5,16 @@ using System.Web.Mvc;
 using ZC_IT_TimeTracking.Services;
 using ZC_IT_TimeTracking.ViewModels;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.Services.Goals;
+using ZC_IT_TimeTracking.Services.AssignGoals;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
     public class HomeController : Controller
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
-        IGoalService _goalServices = new Services.GoalServices();
-        IAssignGoalServices _assignGoalServices = new Services.AssignGoalService();
+        GoalServices _goalServices = new GoalServices();
+        AssignGoalService _assignGoalServices = new AssignGoalService();
 
         // GET: Home
         [Authorize]
@@ -39,7 +41,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 {
                     ObjectParameter count = new ObjectParameter("totalRecords", typeof(int));
                     int pageSize = Utilities.RecordPerPage;
-                    var GoalList = _goalServices.GetGoalDetail(skip,pageSize,count);
+                    var GoalList = _goalServices.GetGoalDetail(skip, pageSize, count);
                     if ((GoalList.Count() == 0) && (page - 2) >= 0)
                     {
                         ViewBag.page = page - 1;
@@ -104,7 +106,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 else
                 {
                     return Json(new JsonResponse { message = "Error occured while creating goal!", success = false });
-                    
+
                 }
             }
             catch (Exception ex)
@@ -142,7 +144,7 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var Isdelete = _goalServices.DeleteGoal(id);
-                return Json(new JsonResponse { message = Isdelete.message,success = Isdelete.success });                
+                return Json(new JsonResponse { message = Isdelete.message, success = Isdelete.success });
             }
             catch
             {
@@ -157,7 +159,7 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var IsCreate = _goalServices.CreateQuarter(QuarterData);
-                return Json(new JsonResponse { message = IsCreate.message, success = IsCreate.success }); ;                
+                return Json(new JsonResponse { message = IsCreate.message, success = IsCreate.success }); ;
             }
             catch (Exception e)
             {
@@ -180,10 +182,10 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var Desc = _goalServices.GetGoalDescription(TitleID);
-                if(Desc == null)
+                if (Desc == null)
                     return Json(new JsonResponse { message = "Error occured while Getting Description!", success = false });
                 else
-                    return Json(new { TitleData = Desc.GoalDescription , success = true });
+                    return Json(new { TitleData = Desc.GoalDescription, success = true });
             }
             catch
             {
@@ -196,7 +198,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName+" "+s.LastName }).ToList();
+                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
                 int count = TeamMember.Count;
                 for (int i = 0; i < count; i++)
                 {
@@ -221,7 +223,7 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var ISAssign = _assignGoalServices.AssignGoal(AssignData);
-                if(ISAssign)
+                if (ISAssign)
                     return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
                 else
                     return Json(new JsonResponse { message = "Not all Goal were assigned Succesfully", success = false });
@@ -240,7 +242,7 @@ namespace ZC_IT_TimeTracking.Controllers
             if (ResId != -1)
             {
                 ViewBag.AllGoalResourse = _assignGoalServices.GetAllGoalsOfResource(ResId);
-            }            
+            }
             if (TeamID != -1)
             {
                 var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
@@ -276,8 +278,8 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var IsUpdate = _assignGoalServices.EditAssignedGoal(Weight,ResourceId,GoalID);
-                if(IsUpdate)
+                var IsUpdate = _assignGoalServices.EditAssignedGoal(Weight, ResourceId, GoalID);
+                if (IsUpdate)
                     return Json(new JsonResponse { message = "Weight updated successfully!", success = true });
                 else
                     return Json(new JsonResponse { message = "No such goal exist!", success = false });
@@ -302,7 +304,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
             catch (Exception)
             {
-                return Json(new JsonResponse { message = "Error occured while fetching Delete Assigned Goal", success = false });                
+                return Json(new JsonResponse { message = "Error occured while fetching Delete Assigned Goal", success = false });
             }
         }
     }

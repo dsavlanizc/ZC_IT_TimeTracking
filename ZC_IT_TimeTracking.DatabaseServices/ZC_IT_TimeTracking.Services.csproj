@@ -96,10 +96,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\AccountService.cs" />
-    <Compile Include="AssignGoal\AssignGoalServices.cs" />
+    <Compile Include="AssignGoals\AssignGoalServices.cs" />
     <Compile Include="DatabaseContext.cs" />
-    <Compile Include="GoalServices\GoalServices.cs" />
-    <Compile Include="GoalServices\IGoalService.cs" />
+    <Compile Include="Goals\GoalServices.cs" />
     <Compile Include="IServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role\RoleService.cs" />

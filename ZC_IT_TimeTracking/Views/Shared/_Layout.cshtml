@@ -16,6 +16,18 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <a class="navbar-brand" href="Index">ZC IT Time Tracking</a>
+            <ul class="nav navbar-nav navbar-right">
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li style="color:white;"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Your Profile"><span class="glyphicon glyphicon-user"></span> @User.Identity.Name</a></li>
+                    <li><a href="@Url.Action("Logout","Account")" data-toggle="tooltip" data-placement="bottom" title="LogOut"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+                }
+                else
+                {
+                    <li><a href="@Url.Action("Registration","Account")"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="@Url.Action("Login","Account")"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                }
+            </ul>
         </div>
     </nav>
     <div class="container panel panel-primary">        

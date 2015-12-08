@@ -1,6 +1,8 @@
 ﻿@model ZC_IT_TimeTracking.ViewModels.RegisterUserViewModel
+@using ZC_IT_TimeTracking.Services.Role;
 @{
     ViewBag.Title = "Registration";
+    RoleService roleService = new RoleService();
 }
 @if (Html.ValidationSummary() != null)
 {
@@ -35,10 +37,7 @@
         <div class="form-group required">
             @Html.LabelFor(m => m.RoleName, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
-                <select id="UserRole" class="form-control" name="Role">
-                    <option>Manager</option>
-                    <option selected="selected">User</option>
-                </select>
+                @Html.DropDownListFor(m => m.RoleName, new SelectList(roleService.GetAvailableRoles(),"Id","Name"),null, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group required">

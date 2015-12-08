@@ -1,9 +1,14 @@
 ﻿@model ZC_IT_TimeTracking.ViewModels.RoleViewModel
 @{
     ViewBag.Title = "Create Role";
+    var roleList = new ZC_IT_TimeTracking.Services.Role.RoleService().GetAvailableRoles();
+}
+@if (ViewBag.Message != null)
+{
+    <h3>@ViewBag.Message</h3>
 }
 @Html.ValidationSummary()
-@using (Html.BeginForm("CreateRole", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+@using (Html.BeginForm("CreateRole", "Account", FormMethod.Post, new { @class = "form-horizontal", required="required" }))
 {
     <div class="form-group required">
         @Html.LabelFor(m => m.RoleName, new { @class = "col-md-3 control-label" })
@@ -20,18 +25,20 @@
     </div>
 }
 <div class="row">
-    @if (Model.RoleList.Count > 0)
+    @if (roleList.Count > 0)
     {
-        <table>
+        <table class="table table-striped">
             <thead>
-                <tr>Role Name</tr>
+                <tr>
+                    <th>Available Roles</th>
+                </tr>
             </thead>
             <tbody>
                 @{
-                    foreach (string role in Model.RoleList)
+                    foreach (var role in roleList)
                     {
                         <tr>
-                            <td>@role</td>
+                            <td>@role.Name</td>
                         </tr>
                     }
                 }

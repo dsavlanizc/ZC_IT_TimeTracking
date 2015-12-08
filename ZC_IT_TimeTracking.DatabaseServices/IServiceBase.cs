@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ZC_IT_TimeTracking.Services
 {
-    interface IServiceBase
+    public interface IServiceBase
     {
         ValidationErrorList ValidationErrors { get; set; }
         ValidationErrorList ValidationWarnings { get; set; }

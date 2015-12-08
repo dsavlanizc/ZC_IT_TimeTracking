@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZC_IT_TimeTracking.BusinessEntities.Model
+namespace ZC_IT_TimeTracking.BusinessEntities
 {
     public class JsonResponse
     {
