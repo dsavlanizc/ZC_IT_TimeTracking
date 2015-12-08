@@ -12,7 +12,6 @@ namespace ZC_IT_TimeTracking.Controllers
 {
     public class HomeController : Controller
     {
-        private DatabaseEntities DbContext = new DatabaseEntities();
         GoalServices _goalServices = new GoalServices();
         AssignGoalService _assignGoalServices = new AssignGoalService();
 
