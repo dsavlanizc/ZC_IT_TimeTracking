@@ -26,6 +26,32 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        public List<GoalQuarters> GetAllQuarters()
+        {
+            try
+            {
+                return dbContext.Goal_Quarter.Select(s => new GoalQuarters { GoalQuarter = s.GoalQuarter, QuarterYear = s.QuarterYear }).ToList();
+            }
+            catch
+            {
+                this.ValidationErrors.Add("Quarter_FETCH_ERROR", "");
+                return null;
+            }
+        }
+
+        public List<SearchGoalByTitle_Result> SearchGoalByTitle(string title, int skip, int recordPerPage, ref ObjectParameter count)
+        {
+            try
+            {
+                return dbContext.SearchGoalByTitle(title, skip, recordPerPage, count).ToList();
+            }
+            catch
+            {
+                this.ValidationErrors.Add("Goal_Search_Error", "Error occured while searching goal by id!");
+                return null;
+            }
+        }
+
         public List<Goal_Master> GetGoalIDandTitle()
         {
             try
@@ -50,6 +76,11 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 this.ValidationErrors.Add("NO_SPF_GOAL_AVL", "Specific Goal Details are not Available!");
                 return null;
             }   
+        }
+
+        public bool IsGoalExist(int id)
+        {
+            return dbContext.Goal_Master.Any(a => a.Goal_MasterID == id);
         }
 
         public GetGoalDetails_Result GetGoaldetail(int id)

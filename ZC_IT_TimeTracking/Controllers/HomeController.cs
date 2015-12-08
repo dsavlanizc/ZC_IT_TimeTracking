@@ -54,12 +54,12 @@ namespace ZC_IT_TimeTracking.Controllers
                 else
                 {
                     ObjectParameter count = new ObjectParameter("MatchedRecords", typeof(int));
-                    var GoalList = DbContext.SearchGoalByTitle(title, skip, Utilities.RecordPerPage, count).ToList();
+                    var GoalList = _goalServices.SearchGoalByTitle(title,skip,Utilities.RecordPerPage,ref count);
                     if ((GoalList.Count() == 0) && (page - 2) >= 0)
                     {
                         ViewBag.page = page - 1;
                         skip = (page - 2) * Utilities.RecordPerPage;
-                        GoalList = DbContext.SearchGoalByTitle(title, skip, Utilities.RecordPerPage, count).ToList();
+                        GoalList = _goalServices.SearchGoalByTitle(title, skip, Utilities.RecordPerPage,ref count);
                     }
                     ViewBag.TotalCount = Convert.ToInt32(count.Value);
                     return View(GoalList);
@@ -76,12 +76,12 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                if (DbContext.Goal_Master.Any(a => a.Goal_MasterID == Id))
+                if (_goalServices.IsGoalExist(Id))
                 {
                     var goal = _goalServices.GetGoaldetail(Id);
                     var quarter = _goalServices.GetGoalQuarter(goal.QuarterId);
                     var rules = _goalServices.GetGoalRules(Id);
-                    var quarterList = DbContext.Goal_Quarter.Select(s => new { s.GoalQuarter, s.QuarterYear }).ToList();
+                    var quarterList = _goalServices.GetAllQuarters();
                     return Json(new { goal = goal, quarter = quarter, rules = rules, quarterList = quarterList, success = true });
                 }
                 return Json(new JsonResponse { message = "Requested user data does not exist", success = false });
