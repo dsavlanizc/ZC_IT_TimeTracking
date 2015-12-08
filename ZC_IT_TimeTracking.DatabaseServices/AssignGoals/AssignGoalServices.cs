@@ -116,16 +116,16 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             }
         }
 
-        public AssignGoal GetAssignedGoal(int AssignGoalId)
+        public ResourceGoal GetAssignedGoal(int AssignGoalId)
         {
-            var GoalDetail = new AssignGoal();
+            var GoalDetail = new ResourceGoal();
             try
             {
                 var AssignedGoal = GetAssignedGoalDetails(AssignGoalId).FirstOrDefault();
-                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignedGoal.Goal_MasterID))
+                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignGoalId))
                 {
-                    Mapper.CreateMap<GetResourceGoalDetails_Result, AssignGoal>();
-                    GoalDetail = Mapper.Map<AssignGoal>(AssignedGoal);
+                    Mapper.CreateMap<GetAssignedGoalDetails_Result, ResourceGoal>();
+                    GoalDetail = Mapper.Map<ResourceGoal>(AssignedGoal);
                     return GoalDetail;
                 }
                 this.ValidationErrors.Add("GoalExistance", "No such goal does exist!");
