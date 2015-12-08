@@ -22,11 +22,11 @@ $(function () {
             GoalQuarter: {
                 required: true
             },
-            UnitOfMeasurement: {
+            GoalUnit: {
                 minlength: 3,
                 required: true
             },
-            MeasurementValue: {
+            GoalUnitValue: {
                 required: true
             }
         },
@@ -67,9 +67,9 @@ $(function () {
             GoalData.GoalDescription = $("#GoalDescription").val();
             GoalData.QuarterYear = $("#GoalYear option:selected").text();
             GoalData.GoalQuarter = $("#GoalQuarter option:selected").text();
-            GoalData.UnitOfMeasurement = $("#UnitOfMeasurement").val();
-            GoalData.MeasurementValue = $("#MeasurementValue").val();
-            GoalData.IsHigherValueGood = $("#IsHigherValueGood").is(":checked");
+            GoalData.UnitOfMeasurement = $("#GoalUnit").val();
+            GoalData.MeasurementValue = $("#GoalUnitValue").val();
+            GoalData.IsHigherValueGood = $("#IsHigherValue").is(":checked");
 
             if ($("#RuleListTable").find("tr").length > 0) {
                 //adding goal rules
@@ -157,12 +157,12 @@ $(function () {
                     $("#GoalDescription").val(goal.GoalDescription);
                     $("#GoalYear option:selected").text(quarter.QuarterYear);
                     $("#GoalQuarter option:selected").text(quarter.GoalQuarter);
-                    $("#UnitOfMeasurement").val(goal.UnitOfMeasurement);
-                    $("#MeasurementValue").val(goal.MeasurementValue);
+                    $("#GoalUnit").val(goal.UnitOfMeasurement);
+                    $("#GoalUnitValue").val(goal.MeasurementValue);
                     if (goal.IsHigherValueGood)
-                        $("#IsHigherValueGood").attr("checked", true);
+                        $("#IsHigherValue").attr("checked", true);
                     else
-                        $("#IsHigherValueGood").attr("checked", false);
+                        $("#IsHigherValue").attr("checked", false);
 
                     //rules filling
                     $('#RuleListTable').html("");
@@ -227,12 +227,12 @@ $(function () {
                     $("#GoalDescription").val(goal.GoalDescription);
                     $("#GoalYear").val(quarter.QuarterYear);
                     $("#GoalQuarter").val(quarter.GoalQuarter);
-                    $("#UnitOfMeasurement").val(goal.UnitOfMeasurement);
-                    $("#MeasurementValue").val(goal.MeasurementValue);
+                    $("#GoalUnit").val(goal.UnitOfMeasurement);
+                    $("#GoalUnitValue").val(goal.MeasurementValue);
                     if (goal.IsHigherValueGood)
-                        $("#IsHigherValueGood").attr("checked", true);
+                        $("#IsHigherValue").attr("checked", true);
                     else
-                        $("#IsHigherValueGood").attr("checked", false);
+                        $("#IsHigherValue").attr("checked", false);
                     //rules filling
                     $('#RuleListTable').html("");
                     $(rules).each(function () {
