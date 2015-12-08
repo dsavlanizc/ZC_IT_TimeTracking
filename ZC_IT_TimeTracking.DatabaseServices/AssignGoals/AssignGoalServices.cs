@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.BusinessEntities.Model;
 using System.Data.Entity;
 using AutoMapper;
 
@@ -15,11 +16,15 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
 
-        public List<GetResourceByTeam_Result> GetResourceByTeam(int teamId)
+        public List<ResourcesByTeam> GetResourceByTeam(int teamId)
         {
+            var lst = new List<ResourcesByTeam>();
             try
             {
-                return DbContext.GetResourceByTeam(teamId).ToList();
+                var data = DbContext.GetResourceByTeam(teamId).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+                Mapper.CreateMap<GetResourceByTeam_Result, ResourcesByTeam>();
+                lst = Mapper.Map<List<ResourcesByTeam>>(data);
+                return lst;
             }
             catch
             {
@@ -111,16 +116,16 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             }
         }
 
-        public AssignGoal GetAssignedGoal(int AssignGoalId)
+        public ResourceGoal GetAssignedGoal(int AssignGoalId)
         {
-            var GoalDetail = new AssignGoal();
+            var GoalDetail = new ResourceGoal();
             try
             {
                 var AssignedGoal = GetAssignedGoalDetails(AssignGoalId).FirstOrDefault();
-                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignedGoal.Goal_MasterID))
+                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignGoalId))
                 {
-                    Mapper.CreateMap<GetResourceGoalDetails_Result, AssignGoal>();
-                    GoalDetail = Mapper.Map<AssignGoal>(AssignedGoal);
+                    Mapper.CreateMap<GetAssignedGoalDetails_Result, ResourceGoal>();
+                    GoalDetail = Mapper.Map<ResourceGoal>(AssignedGoal);
                     return GoalDetail;
                 }
                 this.ValidationErrors.Add("GoalExistance", "No such goal does exist!");

@@ -193,17 +193,18 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
+        //Using Services
         [HttpPost]
         public ActionResult GetTeamMember(int TeamID, int Weight, int GoalID)
         {
             try
             {
-                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+                var TeamMember = _assignGoalServices.GetResourceByTeam(TeamID);
                 int count = TeamMember.Count;
                 for (int i = 0; i < count; i++)
                 {
                     var member = TeamMember.ElementAt(i);
-                    var v = DbContext.GetResourceGoalDetails(member.ResourceID, GoalID).FirstOrDefault();
+                    var v = _assignGoalServices.GetResourceGoalDetails(member.ResourceID, GoalID);
                     if (v != null)
                     { TeamMember.RemoveAt(i); i--; count--; }
 
@@ -234,7 +235,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
-
+        //Using Services
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult ViewAssignGoal(int ResId = -1, int TeamID = -1)
         {
@@ -245,7 +246,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
             if (TeamID != -1)
             {
-                var TeamMember = DbContext.GetResourceByTeam(TeamID).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+                var TeamMember = _assignGoalServices.GetResourceByTeam(TeamID);
                 return Json(new { TeamMember = TeamMember, success = true });
             }
             //ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();

@@ -1,6 +1,6 @@
 ﻿@model ZC_IT_TimeTracking.ViewModels.CreateGoalViewModel
 <div class="form-horizontal" id="formInput">
-    <div class="form-group required">
+    <div class="form-group required">      
         @Html.LabelFor(m => m.GoalTitle, new { @class = "col-md-3 control-label" })
         <div class="col-md-4">
             @Html.TextBoxFor(m => m.GoalTitle, new { @class = "form-control", required = "required" })
@@ -41,9 +41,11 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(m => m.IsHigherValueGood, new { @class = "col-md-3 control-label" })
-        <div class="col-md-2">
-            @Html.TextBoxFor(m => m.IsHigherValueGood, new { @class = "form-control", required = "required" })
+        <div class="col-md-8 col-md-offset-1" >
+
+            @Html.CheckBoxFor(m => m.IsHigherValueGood)
+
+            @Html.LabelFor(m => m.IsHigherValueGood, new { @class = "control-label" })
         </div>
     </div>
 </div>
