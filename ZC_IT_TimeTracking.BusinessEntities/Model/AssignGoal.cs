@@ -11,4 +11,11 @@ namespace ZC_IT_TimeTracking.BusinessEntities
         public int Goal_MasterID { get; set; }
         public int weight { get; set; }
     }
+
+    public class ResourceGoal
+    {
+        public int ResourceID { get; set; }
+        public int Goal_MasterID { get; set; }
+        public int weight { get; set; }
+    }
 }
