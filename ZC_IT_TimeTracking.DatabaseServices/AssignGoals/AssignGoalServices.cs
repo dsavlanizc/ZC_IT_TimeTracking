@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.BusinessEntities.Model;
 using System.Data.Entity;
 using AutoMapper;
 
@@ -15,11 +16,15 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
     {
         private DatabaseEntities DbContext = new DatabaseEntities();
 
-        public List<GetResourceByTeam_Result> GetResourceByTeam(int teamId)
+        public List<ResourcesByTeam> GetResourceByTeam(int teamId)
         {
+            var lst = new List<ResourcesByTeam>();
             try
             {
-                return DbContext.GetResourceByTeam(teamId).ToList();
+                var data = DbContext.GetResourceByTeam(teamId).Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
+                Mapper.CreateMap<GetResourceByTeam_Result, ResourcesByTeam>();
+                lst = Mapper.Map<List<ResourcesByTeam>>(data);
+                return lst;
             }
             catch
             {
