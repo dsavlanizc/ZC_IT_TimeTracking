@@ -27,15 +27,15 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void CreateGoalTest()
         {
             Goal goal = new Goal();
-            goal.GoalTitle = "Testing goal";
-            goal.GoalDescription = "goal testing description";
+            goal.Title = "Testing goal";
+            goal.Description = "goal testing description";
             goal.UnitOfMeasurement = "Days";
             goal.MeasurementValue = 12;
-            goal.GoalQuarter = 4;
-            goal.QuarterYear = 2015;
+            goal.Quarter = 4;
+            goal.Year = 2015;
             GoalRule rule = new GoalRule();
-            rule.Performance_RangeFrom = 10;
-            rule.Performance_RangeTo = 50;
+            rule.RangeFrom = 10;
+            rule.RangeTo = 50;
             rule.Rating = 60;
             goal.GoalRules = new List<GoalRule>();
             goal.GoalRules.Add(rule);
@@ -47,16 +47,16 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void UpdateGoalTest()
         {
             Goal goal = new Goal();
-            goal.Goal_MasterID = dbCtx.Goal_Master.Select(s=>s.Goal_MasterID).FirstOrDefault();
-            goal.GoalTitle = "Testing Update goal";
-            goal.GoalDescription = "Add goal description here";
+            goal.ID = dbCtx.Goal_Master.Select(s=>s.Goal_MasterID).FirstOrDefault();
+            goal.Title = "Testing Update goal";
+            goal.Description = "Add goal description here";
             goal.UnitOfMeasurement = "hours";
             goal.MeasurementValue = 40;
-            goal.GoalQuarter = 4;
-            goal.QuarterYear = 2015;
+            goal.Quarter = 4;
+            goal.Year = 2015;
             GoalRule rule = new GoalRule();
-            rule.Performance_RangeFrom = 70;
-            rule.Performance_RangeTo = 90;
+            rule.RangeFrom = 70;
+            rule.RangeTo = 90;
             rule.Rating = 80;
             goal.GoalRules = new List<GoalRule>();
             goal.GoalRules.Add(rule);
