@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZC_IT_TimeTracking
+namespace ZC_IT_TimeTracking.BusinessEntities
 {
     using System;
     using System.Data.Entity;
@@ -40,7 +40,7 @@ namespace ZC_IT_TimeTracking
         public virtual DbSet<Team> Teams { get; set; }
         public virtual DbSet<TeamLead> TeamLeads { get; set; }
     
-        public virtual int AddResource(string firstName, string lastName, Nullable<int> roleId, Nullable<int> teamId)
+        public virtual int AddResource(string firstName, string lastName, string emailid, string userName, Nullable<int> roleId)
         {
             var firstNameParameter = firstName != null ?
                 new ObjectParameter("FirstName", firstName) :
@@ -50,15 +50,19 @@ namespace ZC_IT_TimeTracking
                 new ObjectParameter("LastName", lastName) :
                 new ObjectParameter("LastName", typeof(string));
     
+            var emailidParameter = emailid != null ?
+                new ObjectParameter("Emailid", emailid) :
+                new ObjectParameter("Emailid", typeof(string));
+    
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
             var roleIdParameter = roleId.HasValue ?
                 new ObjectParameter("RoleId", roleId) :
                 new ObjectParameter("RoleId", typeof(int));
     
-            var teamIdParameter = teamId.HasValue ?
-                new ObjectParameter("TeamId", teamId) :
-                new ObjectParameter("TeamId", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddResource", firstNameParameter, lastNameParameter, roleIdParameter, teamIdParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddResource", firstNameParameter, lastNameParameter, emailidParameter, userNameParameter, roleIdParameter);
         }
     
         public virtual int AssignGoalToResource(Nullable<int> resourceId, Nullable<int> goalId, Nullable<int> weight, Nullable<System.DateTime> assignDate, ObjectParameter currentInsertedId)
