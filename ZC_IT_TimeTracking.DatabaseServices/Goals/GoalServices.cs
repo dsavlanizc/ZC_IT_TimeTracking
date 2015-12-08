@@ -75,7 +75,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             {
                 this.ValidationErrors.Add("NO_SPF_GOAL_AVL", "Specific Goal Details are not Available!");
                 return null;
-            }   
+            }
         }
 
         public bool IsGoalExist(int id)
@@ -93,7 +93,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             {
                 this.ValidationErrors.Add("NO_GOAL_AVL", "No Goal Details are Available!");
                 return null;
-            } 
+            }
         }
 
         public GetQuarterDetails_Result GetGoalQuarter(int id)
@@ -106,7 +106,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             {
                 this.ValidationErrors.Add("NO_QUA_AVL", "No Such Quarter are Available!");
                 return null;
-            }   
+            }
         }
 
         public List<GetGoalRuleDetails_Result> GetGoalRules(int Goalid)
@@ -194,12 +194,14 @@ namespace ZC_IT_TimeTracking.Services.Goals
                     js.success = true;
                     return js;
                 }
-                else if (count > 0){
+                else if (count > 0)
+                {
                     js.message = "Some of goal(s) deleted!";
                     js.success = true;
                     return js;
                 }
-                else{
+                else
+                {
                     js.message = "No such goal exist!";
                     js.success = false;
                     return js;
@@ -216,8 +218,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                dbContext.CheckQuater(Quarter, Year).FirstOrDefault();
-                return true;
+                return dbContext.Goal_Quarter.Any(a => a.QuarterYear == Year && a.GoalQuarter == Quarter);
             }
             catch
             {
@@ -239,6 +240,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                     js.success = true;
                     return js;
                 }
+                else
                 {
                     js.message = "Quarter Is already Added!";
                     js.success = false;
@@ -262,7 +264,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
             catch
             {
-                this.ValidationErrors.Add("NO_DESC_AVL","No discription Available!");
+                this.ValidationErrors.Add("NO_DESC_AVL", "No discription Available!");
                 return null;
             }
         }
