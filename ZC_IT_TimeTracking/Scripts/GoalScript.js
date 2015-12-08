@@ -559,7 +559,7 @@ $(function () {
                     console.log(dt);
                     $("#TeamMember").html('');
                     for (var val in dt.TeamMember) {
-                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].Name + " " + dt.TeamMember[val].LastName + "</option>");
+                        $("#TeamMember").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + " " + dt.TeamMember[val].LastName + "</option>");
                     }
                 }
             },

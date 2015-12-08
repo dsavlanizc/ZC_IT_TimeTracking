@@ -41,11 +41,9 @@
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-8 col-md-offset-1" >
-
-            @Html.CheckBoxFor(m => m.IsHigherValueGood)
-
-            @Html.LabelFor(m => m.IsHigherValueGood, new { @class = "control-label" })
+        @Html.LabelFor(m => m.IsHigherValueGood, new { @class = "col-md-3 control-label" })
+        <div class="col-md-1 col-md-offset-1" >
+            @Html.CheckBoxFor(m => m.IsHigherValueGood, new { @class = "checkbox" })
         </div>
     </div>
 </div>

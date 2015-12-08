@@ -90,7 +90,11 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
         {
             try
             {
-                return DbContext.GetResourceGoalDetails(Resourceid, GoalId).ToList();
+                var ResourceGoal =DbContext.GetResourceGoalDetails(Resourceid, GoalId).ToList();
+                if (ResourceGoal.Count != 0)
+                    return ResourceGoal;
+                else
+                    return null;
             }
             catch
             {
@@ -106,7 +110,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 int count = 0;
                 foreach (int id in AssignData.ResourceID)
                 {
-                    var v = GetResourceGoalDetails(id, AssignData.Goal_MasterID).FirstOrDefault();
+                    var v = GetResourceGoalDetails(id, AssignData.Goal_MasterID);
                     if (v == null)
                     {
                         ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
