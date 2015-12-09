@@ -222,11 +222,16 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
+                _assignGoalServices.ClearValidationErrors();
                 var ISAssign = _assignGoalServices.AssignGoal(AssignData);
                 if (ISAssign)
+                {                   
                     return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+                }
                 else
-                    return Json(new JsonResponse { message = "Not all Goal were assigned Succesfully", success = false });
+                {
+                    return Json(new JsonResponse { message = _assignGoalServices.ValidationErrors.Errors[0].ErrorDescription, success = false });
+                }
             }
             catch
             {

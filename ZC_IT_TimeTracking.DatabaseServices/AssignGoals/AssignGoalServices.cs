@@ -21,11 +21,19 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             try
             {
                 var data = DbContext.GetResourceByTeam(teamId).ToList();
-                return data;
+                if (data.Count != 0)
+                {
+                    return data;
+                }
+                else
+                {
+                    this.ValidationErrors.Add("NO_TEAM_EXIST", "No Any Team Member Exist");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_TEAM_EXIST", "Error While fetching record");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching record");
                 return null;
             }
         }
@@ -56,7 +64,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             }
             catch
             {
-                this.ValidationErrors.Add("NO_TEAM_EXIST", "Error While fetching record");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching record");
                 return null;
             }
         }
@@ -65,11 +73,18 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
         {
             try
             {
-                return DbContext.GetAllGoalsOfResource(ResourceId).ToList();
+                var AGOR = DbContext.GetAllGoalsOfResource(ResourceId).ToList();
+                if(AGOR.Count != 0)
+                    return AGOR;
+                else
+                {
+                    this.ValidationErrors.Add("NO_RES_GOAL_EXIST", "Resource Goal is Not exist!");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_RES_GOAL_EXIST", "Error While fetching Resource Goal");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Resource Goal");
                 return null;
             }
         }
@@ -77,11 +92,18 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
         {
             try
             {
-                return DbContext.GetAssignedGoalDetails(AssignGoalId).ToList();
+                var GAGDR = DbContext.GetAssignedGoalDetails(AssignGoalId).ToList();
+                if (GAGDR.Count != 0)
+                    return GAGDR;
+                else
+                {
+                    this.ValidationErrors.Add("NO_ASGN_GOAL", "No Assigned Goal Record found");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_ASGN_GOAL", "Error While fetching Assigned Goal Record");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Assigned Goal Record");
                 return null;
             }
         }
@@ -94,11 +116,14 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 if (ResourceGoal.Count != 0)
                     return ResourceGoal;
                 else
+                {
+                    this.ValidationErrors.Add("NO_RES_GOAL", "No Resouce Goal Detail Available!");
                     return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_RES_GOAL", "Error While fetching Resouce Goal Record");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Resouce Goal Record");
                 return null;
             }
         }
@@ -108,21 +133,44 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             try
             {
                 int count = 0;
+                bool MissingRes = false;
                 foreach (int id in AssignData.ResourceID)
                 {
                     var v = GetResourceGoalDetails(id, AssignData.Goal_MasterID);
+                    var ResGoal = GetAllGoalsOfResource(id);
+                    int TotalWeight = 0;
+                    if (ResGoal != null) 
+                    {
+                        TotalWeight = ResGoal.Sum(s => s.Weight) + AssignData.weight;
+                    }
                     if (v == null)
                     {
-                        ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                        var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
-                        count++;
+                        if (TotalWeight >= 100)
+                        {
+                            MissingRes = true;
+                            count++;
+                        }
+                        else
+                        {
+                            ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
+                            var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
+                            count++;
+                        }                        
                     }
                 }
                 if (count == AssignData.ResourceID.Count())
+                {
+                    if(MissingRes)
+                    {
+                        this.ClearValidationErrors();
+                        this.ValidationErrors.Add("ERR_GRT_TRGT", "Some Resouce weight is greter than 100 !");
+                        return false;
+                    }
                     return true;
-
+                }
                 else
                 {
+                    this.ClearValidationErrors();
                     this.ValidationErrors.Add("GoalNotAssigned", "Not all Goal were assigned Succesfully!");
                     return false;
                 }
