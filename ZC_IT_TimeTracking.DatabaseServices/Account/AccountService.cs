@@ -34,7 +34,7 @@ namespace ZC_IT_TimeTracking.Services.Account
             }
             catch (Exception)
             {
-                this.ValidationErrors.Add("LoginError","Error while login!");
+                this.ValidationErrors.Add("LoginError","Error while creating user!");
                 return false;
             }
         }

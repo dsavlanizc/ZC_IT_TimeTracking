@@ -286,8 +286,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                dbContext.CheckQuater(Quarter, Year).FirstOrDefault();
-                return true;
+                return dbContext.Goal_Quarter.Any(a => a.QuarterYear == Year && a.GoalQuarter == Quarter);
             }
             catch
             {
@@ -309,6 +308,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                     js.success = true;
                     return js;
                 }
+                else
                 {
                     js.message = "Quarter Is already Added!";
                     js.success = false;

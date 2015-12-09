@@ -37,7 +37,7 @@
         <div class="form-group required">
             @Html.LabelFor(m => m.RoleName, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
-                @Html.DropDownListFor(m => m.RoleName, new SelectList(roleService.GetAvailableRoles(),"Id","Name"),null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RoleName, new SelectList(roleService.GetAvailableRoles(), "Name", "Name"), null, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group required">
