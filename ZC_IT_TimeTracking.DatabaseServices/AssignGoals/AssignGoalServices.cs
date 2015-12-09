@@ -156,16 +156,16 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             }
         }
 
-        public AssignGoal ViewAssignGoalToResource(int ResourceId)
+        public List<AssignGoal> ViewAssignGoalToResource(int ResourceId)
         {
-            var GoalDetail = new AssignGoal();
+            var GoalDetail = new List<AssignGoal>();
             try
             {
-                var AssignedGoal = GetAllGoalsOfResource(ResourceId).FirstOrDefault();
-                if (DbContext.Resource_Goal.Any(m => m.Resource_GoalID == AssignedGoal.Goal_MasterID))
+                var AssignedGoals = GetAllGoalsOfResource(ResourceId);
+                if (AssignedGoals.Count()>0)
                 {
-                    Mapper.CreateMap<GetResourceGoalDetails_Result, AssignGoal>();
-                    GoalDetail = Mapper.Map<AssignGoal>(AssignedGoal);
+                    Mapper.CreateMap<GetAllGoalsOfResource_Result, AssignGoal>();
+                    GoalDetail = Mapper.Map<List<AssignGoal>>(AssignedGoals);
                     return GoalDetail;
                 }
                 this.ValidationErrors.Add("GoalExistance", "No such goal exist!");
@@ -188,7 +188,8 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 {
                     int resourceId = member.ResourceID;
                     var ResGoal = ViewAssignGoalToResource(resourceId);
-                    GoalDetails.Add(ResGoal);
+                    foreach (var i in ResGoal)
+                        GoalDetails.Add(i);
                 }
                 return GoalDetails;
             }

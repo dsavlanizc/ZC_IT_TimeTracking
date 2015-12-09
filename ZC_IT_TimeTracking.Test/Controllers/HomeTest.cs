@@ -116,18 +116,64 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         Assert.AreEqual(IsDeleted , true);
         }
 
-        //[TestMethod]
-        //public void GetAssignedGoalTest()
-        //{
-        //    int AssignedGoalId = dbCtx.Resource_Goal.Select(s => s.Resource_GoalID).FirstOrDefault();
-        //    ResourceGoal AssignedGoal = _goalAssignServices.GetAssignedGoal(AssignedGoalId);
-        //    int GoalId =dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Goal_MasterID);
-        //    int ResId = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.ResourceID);
-        //    int Weight = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Weight);
-        //    Assert.AreEqual(AssignedGoal.Goal_MasterID, GoalId);
-        //    Assert.AreEqual(AssignedGoal.ResourceID, ResId);
-        //    Assert.AreEqual(AssignedGoal.weight, Weight);
-        //}
+        [TestMethod]
+        public void GetAssignedGoalTest()
+        {
+            int AssignedGoalId = dbCtx.Resource_Goal.Select(s => s.Resource_GoalID).FirstOrDefault();
+            ResourceGoal AssignedGoal = _goalAssignServices.GetAssignedGoal(AssignedGoalId);
+            int GoalId = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Goal_MasterID).FirstOrDefault();
+            int ResId = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.ResourceID).FirstOrDefault();
+            int Weight = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Weight).FirstOrDefault();
+            Assert.AreEqual(AssignedGoal.Goal_MasterID, GoalId);
+            Assert.AreEqual(AssignedGoal.ResourceID, ResId);
+            Assert.AreEqual(AssignedGoal.weight, Weight);
+        }
 
+        [TestMethod]
+        public void ViewAssignGoalToResourceTest()
+        {
+            int count = 0;
+            int ResId = dbCtx.Resource_Goal.Select(s => s.ResourceID).FirstOrDefault();
+            var Goals = _goalAssignServices.ViewAssignGoalToResource(ResId);
+            int[] GoalId = dbCtx.Resource_Goal.Where(s => s.ResourceID == ResId).Select(s => s.Goal_MasterID).ToArray();
+            foreach (var i in Goals)
+            {
+                Assert.AreEqual(GoalId[count], Goals[count].Goal_MasterID);
+                count++;
+            }
+        }
+
+        [TestMethod]
+        public void ViewAssignGoalToTeamTest()
+        {
+            int cnt = 0;
+            int TeamId = dbCtx.Teams.Select(s => s.TeamID).FirstOrDefault();
+            var Goals = _goalAssignServices.ViewAssignGoalToTeam(TeamId);
+            int[] ResId = dbCtx.GetResourceByTeam(TeamId).Select(s=>s.ResourceID).ToArray();
+            foreach (int i in ResId)
+            {
+                int[] GoalId = dbCtx.Resource_Goal.Where(s => s.ResourceID == i).Select(s => s.Goal_MasterID).ToArray();
+                int count = 0; 
+                foreach (var j in GoalId)
+                {
+                    Assert.AreEqual(GoalId[count], Goals[cnt].Goal_MasterID);
+                    count++;
+                    cnt++;
+                }
+            }
+        }
+        [TestMethod]
+        public void GetResourceByTeamTest()
+        {
+            int count = 0;
+            int TeamId = dbCtx.Teams.Select(s => s.TeamID).FirstOrDefault();
+            var TeamDetails = _goalAssignServices.GetResourceByTeam(TeamId);
+            int[] ResId = dbCtx.Resources.Where(s => s.TeamID == TeamId).Select(s => s.ResourceID).ToArray() ;
+            foreach (var i in TeamDetails)
+            {
+                Assert.AreEqual(ResId[count], TeamDetails[count].ResourceID);
+                count++;
+            }
+       }
     }
 }
