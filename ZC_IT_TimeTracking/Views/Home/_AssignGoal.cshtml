@@ -2,6 +2,10 @@
 @{
     ViewBag.Title = "Assign Goal";
 }
+@if (ViewBag.MissingRes != null)
+{
+    <h3>@ViewBag.MissingRes</h3>
+}
 <form role="form" id="GoalAssignForm" class="form-horizontal">
     <div class="form-group required">
         @Html.LabelFor(m => m.GoalTitle, new { @class = "col-md-3 control-label" })

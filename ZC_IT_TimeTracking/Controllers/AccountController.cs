@@ -10,7 +10,10 @@ namespace ZC_IT_TimeTracking.Controllers
         // GET: Account
         public ActionResult Login()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -23,6 +26,9 @@ namespace ZC_IT_TimeTracking.Controllers
                 bool isSuccess = accountService.LoginUser(loginModel.UserName, loginModel.Password, loginModel.RememberMe);
                 if (isSuccess)
                 {
+                    string returnUrl = Request.QueryString["ReturnUrl"];
+                    if (!string.IsNullOrEmpty(returnUrl))
+                        return Redirect(returnUrl);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -86,13 +92,18 @@ namespace ZC_IT_TimeTracking.Controllers
 
         public ActionResult Logout()
         {
-            AccountService accountService = new AccountService();
-            bool isSuccess = accountService.LogoutUser();
-            if (isSuccess)
+            if (User.Identity.IsAuthenticated)
+            {
+                AccountService accountService = new AccountService();
+                bool isSuccess = accountService.LogoutUser();
+                if (isSuccess)
+                    return RedirectToAction("Login", "Account");
+                return Content(accountService.ValidationErrors.Errors[0].ErrorDescription);
+            }
+            else
             {
                 return RedirectToAction("Login", "Account");
             }
-            return Content(accountService.ValidationErrors.Errors[0].ErrorDescription);
         }
     }
 }

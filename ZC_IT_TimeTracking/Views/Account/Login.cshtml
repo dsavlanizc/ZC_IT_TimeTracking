@@ -47,7 +47,7 @@
         }
         @Html.ValidationSummary()
     </center>
-    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-signin" }))
+    @using (Html.BeginForm("Login", "Account", new { returnUrl = Request["returnUrl"] }, FormMethod.Post, new { @class = "form-signin" }))
     {
         @Html.AntiForgeryToken();
         <h2 class="form-signin-heading">Please login</h2>

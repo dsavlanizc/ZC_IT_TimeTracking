@@ -10,13 +10,13 @@ using ZC_IT_TimeTracking.Services.AssignGoals;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         GoalServices _goalServices = new GoalServices();
         AssignGoalService _assignGoalServices = new AssignGoalService();
 
         // GET: Home
-        [Authorize]
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult Index(int page = 1, string title = "")
         {
@@ -222,11 +222,16 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
+                _assignGoalServices.ClearValidationErrors();
                 var ISAssign = _assignGoalServices.AssignGoal(AssignData);
                 if (ISAssign)
+                {                   
                     return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+                }
                 else
-                    return Json(new JsonResponse { message = "Not all Goal were assigned Succesfully", success = false });
+                {
+                    return Json(new JsonResponse { message = _assignGoalServices.ValidationErrors.Errors[0].ErrorDescription, success = false });
+                }
             }
             catch
             {
