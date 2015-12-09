@@ -37,44 +37,41 @@
     </div>
     @if (ViewBag.AllGoalResourse != null)
     {
-        if (ViewBag.AllGoalResourse.Count == 0)
-        {
-            <h3>There is no goal assigned to selected resource!</h3>
-        }
-        else
-        {
-            var AllGoal = ViewBag.AllGoalResourse as List<GetAllGoalsOfResource_Result>;
-            int TotalWeight = AllGoal.Sum(s => s.Weight);
-            <table class="table">
+        var AllGoal = ViewBag.AllGoalResourse as List<GetAllGoalsOfResource_Result>;
+        int TotalWeight = AllGoal.Sum(s => s.Weight);
+        <table class="table">
+            <tr>
+                <th>Resource Goal Id</th>
+                <th>Goal Title</th>
+                <th>Weight</th>
+                <th>Action</th>
+            </tr>
+            @foreach (var dt in ViewBag.AllGoalResourse)
+            {
                 <tr>
-                    <th>Resource Goal Id</th>
-                    <th>Goal Title</th>
-                    <th>Weight</th>
-                    <th>Action</th>
-                </tr>
-                @foreach (var dt in ViewBag.AllGoalResourse)
-                {
-                    <tr>
-                        <td>@dt.Resource_GoalID</td>
-                        <td>@dt.GoalTitle</td>
-                        <td>@dt.Weight</td>
-                        <td>
-                            <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoalWight(@dt.Resource_GoalID)">&nbsp;</span>
-                            <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoalWeight(@dt.Resource_GoalID)"></span>
-                        </td>
-                    </tr>
-                }
-                <tr>
-                    <td colspan="4" align="center">
-                        <h4>Total Weight: @TotalWeight</h4>
-                        @if (TotalWeight != 100)
-                        {
-                            <div class="bg-danger">Total weight must be 100!</div>
-                        }
+                    <td>@dt.Resource_GoalID</td>
+                    <td>@dt.GoalTitle</td>
+                    <td>@dt.Weight</td>
+                    <td>
+                        <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Assigned Goal" onclick="EditAssignedGoalWight(@dt.Resource_GoalID)">&nbsp;</span>
+                        <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Assigned Goal" onclick="DeleteAssignedGoalWeight(@dt.Resource_GoalID)"></span>
                     </td>
                 </tr>
-            </table>
-        }
+            }
+            <tr>
+                <td colspan="4" align="center">
+                    <h4>Total Weight: @TotalWeight</h4>
+                    @if (TotalWeight != 100)
+                    {
+                        <div class="bg-danger">Total weight must be 100!</div>
+                    }
+                </td>
+            </tr>
+        </table>
+    }
+    else if (ViewBag.ResId != null)
+    {
+        <h3>There is no goal assigned to selected resource!</h3>
     }
     else
     {
@@ -82,9 +79,9 @@
     }
 
     <div class="form-inline">
-      
-            <button type="button" class="form-group btn btn-primary" style="float:right" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>
-     
+
+        <button type="button" class="form-group btn btn-primary" style="float:right" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>
+
     </div>
     @*<h3>Resource Assigned to Goal</h3>
         <table>

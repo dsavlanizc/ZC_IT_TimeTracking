@@ -247,6 +247,7 @@ namespace ZC_IT_TimeTracking.Controllers
             if (ResId != -1)
             {
                 ViewBag.AllGoalResourse = _assignGoalServices.GetAllGoalsOfResource(ResId);
+                ViewBag.ResId = ResId;
             }
             if (TeamID != -1)
             {
