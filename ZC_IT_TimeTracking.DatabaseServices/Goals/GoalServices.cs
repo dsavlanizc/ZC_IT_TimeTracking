@@ -17,11 +17,18 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                return dbContext.GetQuarterFromYear(year).ToList();
+                var GQFY = dbContext.GetQuarterFromYear(year).ToList();
+                if (GQFY.Count != 0)
+                    return GQFY;
+                else
+                {
+                    this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error whle fetching data!");
                 return null;
             }
         }
@@ -30,7 +37,14 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                return dbContext.Goal_Quarter.Select(s => new GoalQuarters { GoalQuarter = s.GoalQuarter, QuarterYear = s.QuarterYear }).ToList();
+                var GAQ = dbContext.Goal_Quarter.Select(s => new GoalQuarters { GoalQuarter = s.GoalQuarter, QuarterYear = s.QuarterYear }).ToList();
+                if (GAQ.Count != 0)
+                    return GAQ;
+                else
+                {
+                    this.ValidationErrors.Add("NO_QUA_AVL", "No Quarters are available!");
+                    return null;
+                }
             }
             catch
             {
@@ -43,7 +57,14 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                return dbContext.SearchGoalByTitle(title, skip, recordPerPage, count).ToList();
+                var SGBT = dbContext.SearchGoalByTitle(title, skip, recordPerPage, count).ToList();
+                if (SGBT.Count != 0)
+                    return SGBT;
+                else
+                {
+                    this.ValidationErrors.Add("NO_DATA_AVL", "String not found in any Title");
+                    return null;
+                }
             }
             catch
             {
@@ -56,11 +77,21 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                return dbContext.Goal_Master.ToList();
+                int Quarter = Utilities.GetQuarter();
+                int Year = DateTime.Now.Year;
+                int QuaterId = dbContext.Goal_Quarter.Where(q => q.GoalQuarter == Quarter && q.QuarterYear == Year).Select(q => q.QuarterID).FirstOrDefault();
+                var Glist = dbContext.Goal_Master.Where(g => g.QuarterId == QuaterId).ToList();
+                if (Glist.Count != 0)
+                    return Glist;
+                else
+                {
+                    this.ValidationErrors.Add("NO_Goal_AVL", "No Goal Available!");
+                    return null;
+                }
             }
             catch (Exception)
             {
-                this.ValidationErrors.Add("NO_Goal_AVL", "No Goal Available!");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal List!");
                 return null;
             }
         }
@@ -69,29 +100,52 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                return dbContext.GetSpecificRecordsOfGoal(StartFrom, PageSize, count).ToList();
+                var GSROG = dbContext.GetSpecificRecordsOfGoal(StartFrom, PageSize, count).ToList();
+                if (GSROG.Count != 0)
+                    return GSROG;
+                else
+                {
+                    this.ValidationErrors.Add("NO_SPF_GOAL_AVL", "Specific Goal Details are not Available!");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_SPF_GOAL_AVL", "Specific Goal Details are not Available!");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal List!");
                 return null;
             }
         }
 
         public bool IsGoalExist(int id)
         {
-            return dbContext.Goal_Master.Any(a => a.Goal_MasterID == id);
+            try
+            {
+                var IGE = dbContext.Goal_Master.Any(a => a.Goal_MasterID == id);
+                return IGE;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal!");
+                return false;
+            }
         }
 
         public GetGoalDetails_Result GetGoaldetail(int id)
         {
             try
             {
-                return dbContext.GetGoalDetails(id).FirstOrDefault();
+                var GGDR = dbContext.GetGoalDetails(id).FirstOrDefault();
+                if (GGDR != null)
+                    return GGDR;
+                else
+                {
+                    this.ValidationErrors.Add("NO_GOAL_AVL", "No Goal Details are Available!");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_GOAL_AVL", "No Goal Details are Available!");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal Detail!");
                 return null;
             }
         }
@@ -100,11 +154,18 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                return dbContext.GetQuarterDetails(id).FirstOrDefault();
+                var GQD = dbContext.GetQuarterDetails(id).FirstOrDefault();
+                if (GQD != null)
+                    return GQD;
+                else
+                {
+                    this.ValidationErrors.Add("NO_QUA_AVL", "No Such Quarter are Available!");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_QUA_AVL", "No Such Quarter are Available!");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Quarter!");
                 return null;
             }
         }
@@ -113,11 +174,18 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                return dbContext.GetGoalRuleDetails(Goalid).ToList();
+                var GGRD = dbContext.GetGoalRuleDetails(Goalid).ToList();
+                if (GGRD.Count != 0)
+                    return GGRD;
+                else
+                {
+                    this.ValidationErrors.Add("NO_RUL_DEF", "No Rules Define for Goal!");
+                    return null;
+                }
             }
             catch
             {
-                this.ValidationErrors.Add("NO_RUL_DEF", "No Rules Define for Goal!");
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal Rule!");
                 return null;
             }
         }
