@@ -60,6 +60,8 @@
           <Property Name="ResourceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="EMailID" Type="varchar" MaxLength="255" />
+          <Property Name="UserName" Type="varchar" MaxLength="255" />
           <Property Name="RoleID" Type="int" />
           <Property Name="TeamID" Type="int" />
         </EntityType>
@@ -285,8 +287,9 @@
         <Function Name="AddResource" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FirstName" Type="varchar" Mode="In" />
           <Parameter Name="LastName" Type="varchar" Mode="In" />
+          <Parameter Name="Emailid" Type="varchar" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="RoleId" Type="int" Mode="In" />
-          <Parameter Name="TeamId" Type="int" Mode="In" />
         </Function>
         <Function Name="AssignGoalToResource" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ResourceId" Type="int" Mode="In" />
@@ -570,6 +573,8 @@
           <NavigationProperty Name="Role" Relationship="Self.FK_Resource_RoleID" FromRole="Resource" ToRole="Roles" />
           <NavigationProperty Name="Team" Relationship="Self.FK_Resource_TeamID" FromRole="Resource" ToRole="Team" />
           <NavigationProperty Name="TeamLeads" Relationship="Self.FK_TeamLead_Resource" FromRole="Resource" ToRole="TeamLead" />
+          <Property Name="EMailID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="UserName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Resource_Goal">
           <Key>
@@ -875,8 +880,9 @@
           <FunctionImport Name="AddResource">
             <Parameter Name="FirstName" Mode="In" Type="String" />
             <Parameter Name="LastName" Mode="In" Type="String" />
+            <Parameter Name="Emailid" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="RoleId" Mode="In" Type="Int32" />
-            <Parameter Name="TeamId" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="AssignGoalToResource">
             <Parameter Name="ResourceId" Mode="In" Type="Int32" />
@@ -1184,6 +1190,8 @@
           <EntitySetMapping Name="Resources">
             <EntityTypeMapping TypeName="DatabaseModel.Resource">
               <MappingFragment StoreEntitySet="Resource">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="EMailID" ColumnName="EMailID" />
                 <ScalarProperty Name="ResourceID" ColumnName="ResourceID" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />

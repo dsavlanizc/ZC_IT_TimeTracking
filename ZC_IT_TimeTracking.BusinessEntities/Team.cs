@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZC_IT_TimeTracking
+namespace ZC_IT_TimeTracking.BusinessEntities
 {
     using System;
     using System.Collections.Generic;

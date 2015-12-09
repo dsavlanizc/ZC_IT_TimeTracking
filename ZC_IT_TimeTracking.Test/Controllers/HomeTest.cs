@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Goals;
 
 namespace ZC_IT_TimeTracking.Test.Controllers
@@ -13,6 +14,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
     public class HomeTest
     {
         GoalServices _goalServices = new GoalServices();
+        AssignGoalService _goalAssignServices = new AssignGoalService();
         DatabaseEntities dbCtx = new DatabaseEntities();
         [TestMethod]
         public void GetGoalByIDTest()
@@ -82,5 +84,49 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             JsonResponse obj = _goalServices.CreateQuarter(Quarter);
             Assert.AreEqual(true, obj.success);
         }
+
+        [TestMethod]
+        public void AssignGoalTest()
+        {
+            int[] ResId = { dbCtx.Resources.Select(s => s.ResourceID).FirstOrDefault() };
+            AssignGoal Goal = new AssignGoal();
+            Goal.Goal_MasterID = 3;
+            Goal.ResourceID = ResId ;
+            Goal.weight = 60;
+            bool  isAssigned = _goalAssignServices.AssignGoal(Goal);
+            Assert.AreEqual(isAssigned , true);
+        }
+
+        [TestMethod]
+        public void EditAssignedGoalTest()
+        {
+            int Weight = 10;
+            int ResId = dbCtx.Resource_Goal.Select(s => s.ResourceID).FirstOrDefault();
+            int GoalId = dbCtx.Resource_Goal.Select(s => s.Goal_MasterID).FirstOrDefault();
+            bool IsUpdated = _goalAssignServices.EditAssignedGoal(Weight, ResId, GoalId);
+            Assert.AreEqual(IsUpdated, true);
+        }
+
+        [TestMethod]
+        public void DeleteAssignedGoalTest()
+        { 
+        int Resource_GoalId=dbCtx.Resource_Goal.Select(m=>m.Resource_GoalID).FirstOrDefault();
+        bool IsDeleted = _goalAssignServices.DeleteAssignedGoal(Resource_GoalId);
+        Assert.AreEqual(IsDeleted , true);
+        }
+
+        //[TestMethod]
+        //public void GetAssignedGoalTest()
+        //{
+        //    int AssignedGoalId = dbCtx.Resource_Goal.Select(s => s.Resource_GoalID).FirstOrDefault();
+        //    ResourceGoal AssignedGoal = _goalAssignServices.GetAssignedGoal(AssignedGoalId);
+        //    int GoalId =dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Goal_MasterID);
+        //    int ResId = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.ResourceID);
+        //    int Weight = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Weight);
+        //    Assert.AreEqual(AssignedGoal.Goal_MasterID, GoalId);
+        //    Assert.AreEqual(AssignedGoal.ResourceID, ResId);
+        //    Assert.AreEqual(AssignedGoal.weight, Weight);
+        //}
+
     }
 }

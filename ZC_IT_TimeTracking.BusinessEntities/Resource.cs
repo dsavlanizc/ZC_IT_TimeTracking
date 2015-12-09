@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZC_IT_TimeTracking
+namespace ZC_IT_TimeTracking.BusinessEntities
 {
     using System;
     using System.Collections.Generic;
@@ -28,6 +28,8 @@ namespace ZC_IT_TimeTracking
         public string LastName { get; set; }
         public Nullable<int> RoleID { get; set; }
         public Nullable<int> TeamID { get; set; }
+        public string EMailID { get; set; }
+        public string UserName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Manager> Managers { get; set; }
