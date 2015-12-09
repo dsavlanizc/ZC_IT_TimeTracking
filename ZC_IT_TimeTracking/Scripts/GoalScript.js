@@ -540,10 +540,17 @@ $(function () {
     });
 
     //Get TeamMember from Selected Team
-    $("#TeamID").change(function (e) {
+    $("#TeamID").focus(function () {
+        $(this).attr("oldValue", $(this).val());
+    }).change(function (e) {
         e.preventDefault();
         var TeamID = $(this).find('option:selected').val();
-        var Weight = $("#Weight").val();
+        var Weight = parseFloat($("#Weight").val());
+        if (isNaN(Weight)) {
+            $("#TeamID").val($(this).attr("oldValue"));
+            bootbox.alert("Please enter the weight for goal!");
+            return;
+        }
         var GoalID = $("#Goal_MasterID option:selected").val();
         $.ajax({
             url: "GetTeamMember",

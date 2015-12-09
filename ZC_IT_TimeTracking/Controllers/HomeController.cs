@@ -10,13 +10,13 @@ using ZC_IT_TimeTracking.Services.AssignGoals;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         GoalServices _goalServices = new GoalServices();
         AssignGoalService _assignGoalServices = new AssignGoalService();
 
         // GET: Home
-        [Authorize]
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult Index(int page = 1, string title = "")
         {
