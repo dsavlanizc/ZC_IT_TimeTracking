@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking", "ZC_IT_TimeTracking\ZC_IT_TimeTracking.csproj", "{F333553D-B4E9-47B3-AE0F-8FC868570A17}"
 EndProject
@@ -17,6 +17,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking.Services", "ZC_IT_TimeTracking.DatabaseServices\ZC_IT_TimeTracking.Services.csproj", "{232FF5B4-1C56-4968-9FB4-B8F9DB94434F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking.BusinessEntities", "ZC_IT_TimeTracking.BusinessEntities\ZC_IT_TimeTracking.BusinessEntities.csproj", "{9A6283DA-218B-4C23-B169-0CAB423A8E11}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking.DataAccess", "ZC_IT_TimeTracking.DataAccess\ZC_IT_TimeTracking.DataAccess.csproj", "{F42382F2-C229-4CB0-9AD9-611E7D0A09E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ZC_IT_TimeTracking.DataAccess.Library", "ZC_IT_TimeTracking.DataAccess.Library\ZC_IT_TimeTracking.DataAccess.Library.csproj", "{9621B42D-E0A0-4E60-AE30-74E9525412D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +44,14 @@ Global
 		{9A6283DA-218B-4C23-B169-0CAB423A8E11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A6283DA-218B-4C23-B169-0CAB423A8E11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A6283DA-218B-4C23-B169-0CAB423A8E11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F42382F2-C229-4CB0-9AD9-611E7D0A09E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F42382F2-C229-4CB0-9AD9-611E7D0A09E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F42382F2-C229-4CB0-9AD9-611E7D0A09E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F42382F2-C229-4CB0-9AD9-611E7D0A09E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9621B42D-E0A0-4E60-AE30-74E9525412D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9621B42D-E0A0-4E60-AE30-74E9525412D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9621B42D-E0A0-4E60-AE30-74E9525412D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9621B42D-E0A0-4E60-AE30-74E9525412D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

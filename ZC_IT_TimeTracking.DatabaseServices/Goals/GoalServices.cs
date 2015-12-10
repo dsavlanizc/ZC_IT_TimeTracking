@@ -2,36 +2,51 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZC_IT_TimeTracking.Services;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.DataAccess.Interfaces;
 
 namespace ZC_IT_TimeTracking.Services.Goals
 {
     public class GoalServices : ServiceBase
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
+        private IGoalRepository _repository;
+        public GoalServices()
+        {
+            _repository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetGoalRepository();
+        }
 
-        public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
+        public void GetQuarterFromYear(int year)
         {
             try
             {
-                var GQFY = dbContext.GetQuarterFromYear(year).ToList();
-                if (GQFY.Count != 0)
-                    return GQFY;
-                else
-                {
-                    this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
-                    return null;
-                }
+
             }
             catch
             {
-                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error whle fetching data!");
-                return null;
+
             }
         }
+
+        //public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
+        //{
+        //    try
+        //    {
+        //        var GQFY = dbContext.GetQuarterFromYear(year).ToList();
+        //        if (GQFY.Count != 0)
+        //            return GQFY;
+        //        else
+        //        {
+        //            this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
+        //            return null;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        this.ValidationErrors.Add("ERR_FETCH_DATA", "Error whle fetching data!");
+        //        return null;
+        //    }
+        //}
 
         public List<GoalQuarters> GetAllQuarters()
         {

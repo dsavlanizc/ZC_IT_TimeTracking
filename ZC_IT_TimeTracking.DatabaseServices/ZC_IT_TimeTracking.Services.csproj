@@ -118,6 +118,14 @@
       <Project>{9a6283da-218b-4c23-b169-0cab423a8e11}</Project>
       <Name>ZC_IT_TimeTracking.BusinessEntities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ZC_IT_TimeTracking.DataAccess.Library\ZC_IT_TimeTracking.DataAccess.Library.csproj">
+      <Project>{9621b42d-e0a0-4e60-ae30-74e9525412d4}</Project>
+      <Name>ZC_IT_TimeTracking.DataAccess.Library</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZC_IT_TimeTracking.DataAccess\ZC_IT_TimeTracking.DataAccess.csproj">
+      <Project>{f42382f2-c229-4cb0-9ad9-611e7d0a09e5}</Project>
+      <Name>ZC_IT_TimeTracking.DataAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

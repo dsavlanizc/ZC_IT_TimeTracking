@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.DataAccess.Factory;
 using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Goals;
 
@@ -16,6 +17,13 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         GoalServices _goalServices = new GoalServices();
         AssignGoalService _goalAssignServices = new AssignGoalService();
         DatabaseEntities dbCtx = new DatabaseEntities();
+
+        [TestMethod]
+        public void RepoTest()
+        {
+            RepositoryFactory repo = RepositoryFactory.GetInstance();
+        }
+
         [TestMethod]
         public void GetGoalByIDTest()
         {
