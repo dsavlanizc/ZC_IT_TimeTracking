@@ -10,16 +10,15 @@ using ZC_IT_TimeTracking.DataAccess.Library.Repository;
 
 namespace ZC_IT_TimeTracking.DataAccess.Repositories
 {
-    public class GoalRepository : RepositoryBase<GoalQuarters>, IGoalRepository
+    public class GoalRepository : RepositoryBase<GoalQuarterModel>, IGoalRepository
     {
         const string _CheckQuater = "CheckQuater";
         const string _GetQuarterFromYear = "GetQuarterFromYear";
 
-        public List<GoalQuarters> GetQuarterFromYearDB(int year)
+        public List<GoalQuarterModel> GetQuarterFromYearDB(int year)
         {
-            GoalQuarters quarters = new GoalQuarters();
-            quarters.QuarterYear = year;
-            return this.GetEntityCollection<GoalQuarters>(quarters, _GetQuarterFromYear);
+            GoalQuarterModel quarters = new GoalQuarterModel();
+            return this.GetEntityCollection<GoalQuarterModel>(quarters, _GetQuarterFromYear);
         }
     }
 }

@@ -59,6 +59,7 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\AssignGoal.cs" />
+    <Compile Include="Model\GoalQuarterModel.cs" />
     <Compile Include="Model\ResourcesByTeam.cs" />
     <Compile Include="Model\Goal.cs" />
     <Compile Include="Model\GoalDetail.cs" />

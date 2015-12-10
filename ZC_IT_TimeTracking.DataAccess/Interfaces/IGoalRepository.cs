@@ -4,8 +4,8 @@ using ZC_IT_TimeTracking.DataAccess.Library.Repository;
 
 namespace ZC_IT_TimeTracking.DataAccess.Interfaces
 {
-    public interface IGoalRepository : IRepositoryBase<GoalQuarters>
+    public interface IGoalRepository : IRepositoryBase<GoalQuarterModel>
     {
-        List<GoalQuarters> GetQuarterFromYearDB(int year);
+        List<GoalQuarterModel> GetQuarterFromYearDB(int year);
     }
 }

@@ -19,7 +19,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             this.ValidationErrors = _repository.ValidationErrors;
         }
 
-        public List<GoalQuarters> GetQuarterFromYear(int year)
+        public List<GoalQuarterModel> GetQuarterFromYear(int year)
         {
             return _repository.GetQuarterFromYearDB(year);
         }
