@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ZC_IT_TimeTracking.Services.Validations;
 using System.Threading.Tasks;
+using ZC_IT_TimeTracking.DataAccess.Library.Validations;
 
 namespace ZC_IT_TimeTracking.Services
 {

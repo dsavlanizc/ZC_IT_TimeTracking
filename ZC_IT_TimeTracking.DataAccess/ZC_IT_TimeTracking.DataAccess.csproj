@@ -58,11 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="SQLParamFinder\SP_Map_Template.json">
+    <EmbeddedResource Include="SQLParamFinder\SP_Map_Template.json">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SP_Map_Template.tt</DependentUpon>
-    </None>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <None Include="SQLParamFinder\SP_Map_Template.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>SP_Map_Template.json</LastGenOutput>

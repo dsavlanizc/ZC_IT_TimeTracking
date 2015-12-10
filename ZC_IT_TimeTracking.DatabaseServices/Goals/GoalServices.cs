@@ -4,28 +4,24 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.DataAccess.Interfaces;
+using ZC_IT_TimeTracking.DataAccess.Library.Validations;
+using ZC_IT_TimeTracking.Services.Interfaces;
 
 namespace ZC_IT_TimeTracking.Services.Goals
 {
-    public class GoalServices : ServiceBase
+    public class GoalServices : ServiceBase, IGoalServices
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
         private IGoalRepository _repository;
         public GoalServices()
         {
             _repository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetGoalRepository();
+            this.ValidationErrors = _repository.ValidationErrors;
         }
 
-        public void GetQuarterFromYear(int year)
+        public List<GoalQuarters> GetQuarterFromYear(int year)
         {
-            try
-            {
-
-            }
-            catch
-            {
-
-            }
+            return _repository.GetQuarterFromYearDB(year);
         }
 
         //public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)

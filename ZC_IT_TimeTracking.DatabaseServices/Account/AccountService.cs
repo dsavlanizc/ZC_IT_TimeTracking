@@ -89,7 +89,7 @@ namespace ZC_IT_TimeTracking.Services.Account
                 authenticationManager.SignOut();
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 this.ValidationErrors.Add("Logout_failed","Requested logout failed!");
                 return false;

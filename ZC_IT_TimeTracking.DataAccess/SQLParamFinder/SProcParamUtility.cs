@@ -31,11 +31,19 @@ namespace ZC_IT_TimeTracking.DataAccess.SQLParamFinder
         /// <returns></returns>
         public static List<Sproc> GetSprocParamsXMLDocument()
         {
-            using (StreamReader reader = new StreamReader("SP_Map_Template.json"))
+            SProcParamUtility spr = new SProcParamUtility();
+            using (StreamReader reader = new StreamReader(spr.GetResourceStream("SP_Map_Template.json")))
             {
                 string json = reader.ReadToEnd();
                 return JsonConvert.DeserializeObject<List<Sproc>>(json);
             }
+        }
+
+        public Stream GetResourceStream(string fileName)
+        {
+            string asdf = this.GetType().Namespace;
+            Stream asd = this.GetType().Assembly.GetManifestResourceStream(asdf + "." + fileName);
+            return asd;
         }
 
         /// <summary>
@@ -62,7 +70,7 @@ namespace ZC_IT_TimeTracking.DataAccess.SQLParamFinder
             try
             {
                 // get the parameter XML
-                List<Sproc> doc = SProcParamUtility.SQLParameterXML;
+                List<Sproc> doc = GetSprocParamsXMLDocument();//SProcParamUtility.SQLParameterXML;
 
                 // get the list of parameters defined for the given sproc
                 //var selectors = (from elements in doc.Elements("sprocs").Elements("sproc")

@@ -64,7 +64,7 @@ namespace ZC_IT_TimeTracking.Controllers
                     return View(GoalList);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return View("~/Views/Shared/_ErrorView.cshtml");
             }
@@ -85,7 +85,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 }
                 return Json(new JsonResponse { message = "Requested user data does not exist", success = false });
             }
-            catch (Exception ex)
+            catch
             {
                 return Json(new JsonResponse { message = "Error occured while fetching user data", success = false });
             }
@@ -108,7 +108,7 @@ namespace ZC_IT_TimeTracking.Controllers
 
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return Json(new JsonResponse { message = "Error occured while creating goal!", success = false });
             }
@@ -130,7 +130,7 @@ namespace ZC_IT_TimeTracking.Controllers
                     return Json(new JsonResponse { message = "Error occured while updating goal!", success = false });
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 return Json(new JsonResponse { message = "Error occured while updating goal!", success = false });
             }
@@ -160,7 +160,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 var IsCreate = _goalServices.CreateQuarter(QuarterData);
                 return Json(new JsonResponse { message = IsCreate.message, success = IsCreate.success }); ;
             }
-            catch (Exception e)
+            catch
             {
                 return Json(new JsonResponse { message = "Error occured while creating Quarter!", success = false });
             }

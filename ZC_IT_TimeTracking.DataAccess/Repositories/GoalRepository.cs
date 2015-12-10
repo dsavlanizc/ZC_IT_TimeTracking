@@ -15,7 +15,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories
         const string _CheckQuater = "CheckQuater";
         const string _GetQuarterFromYear = "GetQuarterFromYear";
 
-        public List<GoalQuarters> GetQuarterFromYear(int year)
+        public List<GoalQuarters> GetQuarterFromYearDB(int year)
         {
             GoalQuarters quarters = new GoalQuarters();
             quarters.QuarterYear = year;

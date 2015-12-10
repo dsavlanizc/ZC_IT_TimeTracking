@@ -21,7 +21,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void RepoTest()
         {
-            RepositoryFactory repo = RepositoryFactory.GetInstance();
+            var asdf = _goalServices.GetQuarterFromYear(2015);
         }
 
         [TestMethod]
