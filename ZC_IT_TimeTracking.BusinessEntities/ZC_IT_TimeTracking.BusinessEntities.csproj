@@ -57,145 +57,138 @@
   <ItemGroup>
     <Compile Include="CheckQuater_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="DBModel.Context.cs">
-      <DependentUpon>DBModel.Context.tt</DependentUpon>
-      <SubType>Code</SubType>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="DBModel.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="DBModel.Designer.cs">
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Department.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetAllGoalsOfResource_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetAllResourceForGoal_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetAssignedGoalDetails1_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetAssignedGoalDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetGoalDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetGoalRuleDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetQuarterDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetQuarterFromYear_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetResouceDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetResourceByTeam_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetResourceGoalDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetSpecificRecordsOfGoal_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="GetTeamDetails_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="getYearForQuarter_Result.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Goal_Master.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Goal_Quarter.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Goal_Rules.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Manager.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Model\AssignGoal.cs" />
-    <Compile Include="Model\GenericModel.cs" />
-    <Compile Include="Model\GoalMasters.cs" />
-    <Compile Include="Model\GoalQuarterModel.cs" />
     <Compile Include="Model\ResourcesByTeam.cs" />
     <Compile Include="Model\Goal.cs" />
     <Compile Include="Model\GoalDetail.cs" />
     <Compile Include="Model\GoalQuarters.cs" />
     <Compile Include="Model\GoalRule.cs" />
     <Compile Include="Model\JsonResponse.cs" />
+    <Compile Include="DBModel.Context.cs">
+      <DependentUpon>DBModel.Context.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DBModel.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="DBModel.Designer.cs">
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Department.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllGoalsOfResource_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAllResourceForGoal_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAssignedGoalDetails1_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetAssignedGoalDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetGoalDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetGoalRuleDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetQuarterDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetQuarterFromYear_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetResouceDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetResourceByTeam_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetResourceGoalDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetSpecificRecordsOfGoal_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetTeamDetails_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="getYearForQuarter_Result.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Goal_Master.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Goal_Quarter.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Goal_Rules.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Manager.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Pager.cs" />
     <Compile Include="Model\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resource_Goal.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resource_Goal_Performance.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Resource_Performance.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Role.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="SearchGoalByTitle_Result.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="Team.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="TeamLead.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="DBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBModel.edmx.diagram">
+      <DependentUpon>DBModel.edmx</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DBModel.edmx</DependentUpon>
+      <LastGenOutput>DBModel.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -203,30 +196,6 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ZC_IT_TimeTracking.DataAccess.Library\ZC_IT_TimeTracking.DataAccess.Library.csproj">
-      <Project>{9621b42d-e0a0-4e60-ae30-74e9525412d4}</Project>
-      <Name>ZC_IT_TimeTracking.DataAccess.Library</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="DBModel.Context.tt">
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DBModel.tt">
-      <DependentUpon>DBModel.edmx</DependentUpon>
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DBModel.cs</LastGenOutput>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <EntityDeploy Include="DBModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DBModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

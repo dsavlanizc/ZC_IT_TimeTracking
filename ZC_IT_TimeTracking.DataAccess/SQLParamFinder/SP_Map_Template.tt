@@ -7,7 +7,6 @@
 <#@ assembly name="$(ProjectDir)\bin\Debug\Newtonsoft.Json.dll" #>
 <#@ import namespace="System.Data.SqlClient" #>
 <#@ import namespace="Newtonsoft.Json" #>
-<#@ import namespace="System.Xml" #>
 <#@ import namespace="System.Data" #>
 <#@ import namespace="ZC_IT_TimeTracking.DataAccess.SQLParamFinder" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -48,6 +47,6 @@
             }
             _sproc.Add(sp);
         }
-        string json = JsonConvert.SerializeObject(_sproc);
+        string json = JsonConvert.SerializeObject(_sproc, Formatting.Indented);
 		WriteLine(json);
 #>

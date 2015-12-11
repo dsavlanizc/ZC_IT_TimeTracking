@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZC_IT_TimeTracking.DataAccess.Interfaces;
-using ZC_IT_TimeTracking.DataAccess.Repositories;
+using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
+using ZC_IT_TimeTracking.DataAccess.Repositories.Quarters;
 
 namespace ZC_IT_TimeTracking.DataAccess.Factory
 {
@@ -56,10 +52,12 @@ namespace ZC_IT_TimeTracking.DataAccess.Factory
         }
 
         #region interfaces
-        public IGoalRepository GetGoalRepository()
+        public IQuarterRepository GetQuarterRepository()
         {
-            return new GoalRepository() { ConnectionString = _ConnectionString };
+            return new QuarterRepository() { ConnectionString = _ConnectionString };
         }
+
+
         #endregion
     }
 }

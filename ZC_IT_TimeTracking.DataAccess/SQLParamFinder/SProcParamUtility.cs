@@ -79,8 +79,6 @@ namespace ZC_IT_TimeTracking.DataAccess.SQLParamFinder
                 var selectors = doc.Where(w => w.Name.ToLower() == sprocName.ToLower()).FirstOrDefault();
                 if (selectors != null)
                 {
-
-
                     var list = selectors.Params;
 
                     // for each paramenter, if the given object has a property use it
@@ -107,24 +105,16 @@ namespace ZC_IT_TimeTracking.DataAccess.SQLParamFinder
                         {
                             direction = (int)ParameterDirection.Input;
                         }
-                        //size = item.Attribute("size") != null ? item.Attribute("size").Value : null;
 
                         PropertyInfo property = null;
-                        //if (entity != null)
-                        //{
-                        //    property = entity.GetType().GetProperty(entityProperty);
-                        //    if (property != null)
-                        //    {
-                        //        paramValue = property.GetValue(entity, null);
-                        //    }
-                        //}
-                        //if (property == null && sqlParametersDictionary != null)
-                        //{
-                        //    if (sqlParametersDictionary.ContainsKey(entityProperty))
-                        //    {
-                        //        paramValue = sqlParametersDictionary[entityProperty];
-                        //    }
-                        //}
+                        if (entity != null)
+                        {
+                            property = entity.GetType().GetProperty(paramName);
+                            if (property != null)
+                            {
+                                paramValue = property.GetValue(entity, null);
+                            }
+                        }
 
                         if (direction == (int)ParameterDirection.ReturnValue || direction == (int)ParameterDirection.Output)
                         {
