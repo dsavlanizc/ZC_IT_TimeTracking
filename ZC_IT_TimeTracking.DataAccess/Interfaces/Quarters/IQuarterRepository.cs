@@ -11,5 +11,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters
     public interface IQuarterRepository : IRepositoryBase<GoalQuarters>
     {
         List<GoalQuarters> GetQuarterFromYearDB(int year);
+        List<GoalQuarters> GetAllQuartersDB();
+        //GoalQuarters GetQuarterByIdDB(int id);
     }
 }

@@ -1,5 +1,9 @@
 ﻿[
   {
+    "Name": "sp_GetAllQuarters",
+    "Params": []
+  },
+  {
     "Name": "AddResource",
     "Params": [
       {
@@ -168,7 +172,7 @@
     "Name": "GetQuarterDetails",
     "Params": [
       {
-        "Name": "QuaterId",
+        "Name": "QuarterID",
         "sqlDbType": 8,
         "direction": 1
       }

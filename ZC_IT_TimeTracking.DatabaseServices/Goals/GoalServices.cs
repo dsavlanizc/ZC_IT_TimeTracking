@@ -4,6 +4,7 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.DataAccess.Interfaces;
+using ZC_IT_TimeTracking.DataAccess.Interfaces.Goal;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Library.Validations;
 using ZC_IT_TimeTracking.Services.Interfaces;
@@ -13,37 +14,32 @@ namespace ZC_IT_TimeTracking.Services.Goals
     public class GoalServices : ServiceBase, IGoalServices
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
-        private IQuarterRepository _quarterRepository;
+        IGoalRepository _repository;
         public GoalServices()
         {
-            _quarterRepository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetQuarterRepository();
-            this.ValidationErrors = _quarterRepository.ValidationErrors;
+            _repository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetGoalRepository();
+            this.ValidationErrors = _repository.ValidationErrors;
         }
 
-        public List<GoalQuarters> GetQuarterFromYear(int year)
+        public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
         {
-            return _quarterRepository.GetQuarterFromYearDB(year);
+            try
+            {
+                var GQFY = dbContext.GetQuarterFromYear(year).ToList();
+                if (GQFY.Count != 0)
+                    return GQFY;
+                else
+                {
+                    this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
+                    return null;
+                }
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error whle fetching data!");
+                return null;
+            }
         }
-
-        //public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
-        //{
-        //    try
-        //    {
-        //        var GQFY = dbContext.GetQuarterFromYear(year).ToList();
-        //        if (GQFY.Count != 0)
-        //            return GQFY;
-        //        else
-        //        {
-        //            this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
-        //            return null;
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        this.ValidationErrors.Add("ERR_FETCH_DATA", "Error whle fetching data!");
-        //        return null;
-        //    }
-        //}
 
         public List<GoalQuarters> GetAllQuarters()
         {

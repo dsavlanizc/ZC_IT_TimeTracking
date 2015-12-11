@@ -9,6 +9,5 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
 {
     public interface IGoalServices : IServiceBase
     {
-        //List<GoalQuarters> GetQuarterFromYear(int year);
     }
 }

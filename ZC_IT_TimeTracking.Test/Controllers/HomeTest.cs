@@ -8,20 +8,23 @@ using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.DataAccess.Factory;
 using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Goals;
+using ZC_IT_TimeTracking.Services.Quarters;
 
 namespace ZC_IT_TimeTracking.Test.Controllers
 {
     [TestClass]
     public class HomeTest
     {
-        GoalServices _goalServices = new GoalServices();
+        QuarterService _quarterService = new QuarterService();
         AssignGoalService _goalAssignServices = new AssignGoalService();
+        GoalServices _goalServices = new GoalServices();
         DatabaseEntities dbCtx = new DatabaseEntities();
 
         [TestMethod]
         public void RepoTest()
         {
-            var asdf = _goalServices.GetQuarterFromYear(2015);
+            var allq = _quarterService.GetAllQuarters();
+            var asdf = _quarterService.GetQuarterFromYear(2015);
         }
 
         [TestMethod]
