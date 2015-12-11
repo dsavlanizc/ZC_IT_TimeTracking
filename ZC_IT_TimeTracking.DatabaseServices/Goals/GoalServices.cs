@@ -10,40 +10,30 @@ using ZC_IT_TimeTracking.Services.Interfaces;
 
 namespace ZC_IT_TimeTracking.Services.Goals
 {
-    public class GoalServices : ServiceBase, IGoalServices
+    public class GoalServices : ServiceBase
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
-        private IQuarterRepository _quarterRepository;
-        public GoalServices()
-        {
-            _quarterRepository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetQuarterRepository();
-            this.ValidationErrors = _quarterRepository.ValidationErrors;
-        }
 
-        public List<GoalQuarters> GetQuarterFromYear(int year)
-        {
-            return _quarterRepository.GetQuarterFromYearDB(year);
-        }
 
-        //public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
-        //{
-        //    try
-        //    {
-        //        var GQFY = dbContext.GetQuarterFromYear(year).ToList();
-        //        if (GQFY.Count != 0)
-        //            return GQFY;
-        //        else
-        //        {
-        //            this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
-        //            return null;
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        this.ValidationErrors.Add("ERR_FETCH_DATA", "Error whle fetching data!");
-        //        return null;
-        //    }
-        //}
+        public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
+        {
+            try
+            {
+                var GQFY = dbContext.GetQuarterFromYear(year).ToList();
+                if (GQFY.Count != 0)
+                    return GQFY;
+                else
+                {
+                    this.ValidationErrors.Add("NO_QUA_AVL", "No Quarter Available!");
+                    return null;
+                }
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error whle fetching data!");
+                return null;
+            }
+        }
 
         public List<GoalQuarters> GetAllQuarters()
         {
@@ -65,6 +55,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //completed SearchGoalByTitleDB()
         public List<SearchGoalByTitle_Result> SearchGoalByTitle(string title, int skip, int recordPerPage, ref ObjectParameter count)
         {
             try
@@ -108,6 +99,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //completed GetSpecificRecordsOfGoalDB()
         public List<GetSpecificRecordsOfGoal_Result> GetGoalDetail(int StartFrom, int PageSize, ObjectParameter count)
         {
             try
@@ -142,6 +134,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //Completed GetGoaldetailByGoalID()
         public GetGoalDetails_Result GetGoaldetail(int id)
         {
             try
@@ -182,6 +175,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //completed GoalRuleDetailByIDDB
         public List<GetGoalRuleDetails_Result> GetGoalRules(int Goalid)
         {
             try
