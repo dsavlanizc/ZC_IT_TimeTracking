@@ -202,7 +202,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
-        public bool CreateGoal(Goal goal)
+        public bool CreateGoal(GoalMaster goal)
         {
             try
             {
@@ -237,7 +237,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
-        public bool UpdateGoal(Goal goal)
+        public bool UpdateGoal(GoalMaster goal)
         {
             try
             {

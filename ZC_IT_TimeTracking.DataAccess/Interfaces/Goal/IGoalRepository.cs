@@ -4,7 +4,7 @@ using ZC_IT_TimeTracking.DataAccess.Library.Repository;
 
 namespace ZC_IT_TimeTracking.DataAccess.Interfaces.Goal
 {
-    public interface IGoalRepository : IRepositoryBase<GoalQuarters>
+    public interface IGoalRepository : IRepositoryBase<GoalMaster>
     {
     }
 }

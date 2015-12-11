@@ -93,7 +93,7 @@ namespace ZC_IT_TimeTracking.Controllers
 
         //Using Services
         [HttpPost]
-        public JsonResult CreateGoal(Goal GoalData)
+        public JsonResult CreateGoal(GoalMaster GoalData)
         {
             try
             {
@@ -116,7 +116,7 @@ namespace ZC_IT_TimeTracking.Controllers
 
         //Using Services
         [HttpPost]
-        public JsonResult UpdateGoal(Goal GoalData)
+        public JsonResult UpdateGoal(GoalMaster GoalData)
         {
             try
             {

@@ -5,16 +5,25 @@ using System.Web;
 
 namespace ZC_IT_TimeTracking.BusinessEntities
 {
-    public class Goal
+    public class GoalMaster
     {
-        public int Goal_MasterID { get; set; }
+        public GoalMaster()
+        {
+            this.GoalRules = new List<GoalRule>();
+            this.Quarter = new GoalQuarters();
+        }
+        public Int32 Goal_MasterID { get; set; }
         public string GoalTitle { get; set; }
         public string GoalDescription { get; set; }
         public string UnitOfMeasurement { get; set; }
         public double MeasurementValue { get; set; }
+        public DateTime Creation_Date { get; set; }
         public bool IsHigherValueGood { get; set; }
-        public int GoalQuarter { get; set; }
-        public int QuarterYear { get; set; }
+
+        public Int32 GoalQuarter { get; set; }
+        public Int32 QuarterYear { get; set; }
+        
+        public GoalQuarters Quarter { get; set; }
         public List<GoalRule> GoalRules { get; set; }
     }
 }

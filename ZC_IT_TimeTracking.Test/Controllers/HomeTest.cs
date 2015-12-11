@@ -35,7 +35,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void CreateGoalTest()
         {
-            Goal goal = new Goal();
+            GoalMaster goal = new GoalMaster();
             goal.GoalTitle = "Testing goal";
             goal.GoalDescription = "goal testing description";
             goal.UnitOfMeasurement = "Days";
@@ -55,7 +55,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void UpdateGoalTest()
         {
-            Goal goal = new Goal();
+            GoalMaster goal = new GoalMaster();
             goal.Goal_MasterID = dbCtx.Goal_Master.Select(s=>s.Goal_MasterID).FirstOrDefault();
             goal.GoalTitle = "Testing Update goal";
             goal.GoalDescription = "Add goal description here";
