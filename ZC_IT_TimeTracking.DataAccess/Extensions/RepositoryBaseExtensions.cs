@@ -79,15 +79,16 @@ namespace ZC_IT_TimeTracking.DataAccess.Extensions
 
         public static bool Delete<T>(this RepositoryBase<T> repository, T entity, string sprocName)
         {
+            int ResultCount;
             try
-            {                
+            {     
                 IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, sprocName);
                 SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
                 command.Connection = conn;
-                command.ExecuteNonQuery();
+                ResultCount = command.ExecuteNonQuery();
                 DBConnectionHelper.CloseSqlConnection(conn);
                 //Debug.WriteLine(String.Format("{0} took {1} seconds to finish", sprocName, sw.ElapsedMilliseconds / 1000));
-                return true;
+                return ResultCount > 0;
             }
             catch (SqlException ex)
             {
@@ -105,16 +106,16 @@ namespace ZC_IT_TimeTracking.DataAccess.Extensions
 
         public static bool InsertOrUpdate<T>(this RepositoryBase<T> repository, T entity, string sprocName)
         {
-            int isSuccess;
+            int ResultCount;            
             try
             {
                 IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, sprocName);
                 SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
                 command.Connection = conn;
-                isSuccess = command.ExecuteNonQuery();
+                ResultCount = command.ExecuteNonQuery();
                 DBConnectionHelper.CloseSqlConnection(conn);
                 //Debug.WriteLine(String.Format("{0} took {1} seconds to finish", sprocName, sw.ElapsedMilliseconds / 1000));
-                return isSuccess > 0;
+                return ResultCount > 0;
             }
             catch (SqlException ex)
             {

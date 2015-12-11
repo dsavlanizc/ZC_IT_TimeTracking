@@ -1,4 +1,9 @@
-﻿[
+﻿
+[
+  {
+    "Name": "sp_GetAllQuarters",
+    "Params": []
+  },
   {
     "Name": "AddResource",
     "Params": [
@@ -60,15 +65,15 @@
     ]
   },
   {
-    "Name": "CheckQuater",
+    "Name": "CheckQuarter",
     "Params": [
       {
-        "Name": "Quater",
+        "Name": "GoalQuarter",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "QYear",
+        "Name": "QuarterYear",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -78,7 +83,7 @@
     "Name": "Delete_AllRulesOfGoal",
     "Params": [
       {
-        "Name": "goalID",
+        "Name": "GoalId",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -168,7 +173,7 @@
     "Name": "GetQuarterDetails",
     "Params": [
       {
-        "Name": "QuaterId",
+        "Name": "QuarterID",
         "sqlDbType": 8,
         "direction": 1
       }

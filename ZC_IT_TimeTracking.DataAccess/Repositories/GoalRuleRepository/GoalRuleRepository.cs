@@ -26,14 +26,21 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.GoalRuleRepository
             return this.GetEntityCollection<GoalRule>(gr, _GetGoalRuleDetailsByGoalID);
         }
 
-        public bool InsertGoalRule(GoalRule gr)
+        public bool InsertGoalRuleDB(GoalRule gr)
         {
             GoalRule goalRule = new GoalRule();
             goalRule.Performance_RangeFrom = gr.Performance_RangeFrom;
             goalRule.Performance_RangeTo = gr.Performance_RangeTo;
             goalRule.Rating = gr.Rating;
             goalRule.GoalId = gr.GoalId;
-            return this.InsertOrUpdate<GoalRule>(goalRule,_InsertGoalRules);
+            return this.InsertOrUpdate<GoalRule>(goalRule, _InsertGoalRules);
+        }
+
+        public bool DeleteAllRulesOfGoalByGoalID(int goalID)
+        {
+            GoalRule gr = new GoalRule();
+            gr.GoalId = goalID;
+            return this.Delete<GoalRule>(gr,_DeleteAllRulesOfGoalByGoalID);
         }
     }
 }
