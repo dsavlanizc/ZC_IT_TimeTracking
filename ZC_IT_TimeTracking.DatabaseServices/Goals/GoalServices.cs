@@ -4,22 +4,16 @@ using System.Data.Entity.Core.Objects;
 using System.Linq;
 using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.DataAccess.Interfaces;
-using ZC_IT_TimeTracking.DataAccess.Interfaces.Goal;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Library.Validations;
 using ZC_IT_TimeTracking.Services.Interfaces;
 
 namespace ZC_IT_TimeTracking.Services.Goals
 {
-    public class GoalServices : ServiceBase, IGoalServices
+    public class GoalServices : ServiceBase
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
-        IGoalRepository _repository;
-        public GoalServices()
-        {
-            _repository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetGoalRepository();
-            this.ValidationErrors = _repository.ValidationErrors;
-        }
+
 
         public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
         {
@@ -61,6 +55,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //completed SearchGoalByTitleDB()
         public List<SearchGoalByTitle_Result> SearchGoalByTitle(string title, int skip, int recordPerPage, ref ObjectParameter count)
         {
             try
@@ -104,6 +99,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //completed GetSpecificRecordsOfGoalDB()
         public List<GetSpecificRecordsOfGoal_Result> GetGoalDetail(int StartFrom, int PageSize, ObjectParameter count)
         {
             try
@@ -138,6 +134,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //Completed GetGoaldetailByGoalID()
         public GetGoalDetails_Result GetGoaldetail(int id)
         {
             try
@@ -178,6 +175,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //completed GoalRuleDetailByIDDB
         public List<GetGoalRuleDetails_Result> GetGoalRules(int Goalid)
         {
             try

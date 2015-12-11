@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Web;
 
@@ -25,5 +26,12 @@ namespace ZC_IT_TimeTracking.BusinessEntities
         
         public GoalQuarters Quarter { get; set; }
         public List<GoalRule> GoalRules { get; set; }
+
+        #region NonTableProperty
+
+        public int skip{get; set;}
+        public int recordPerPage{get; set;}
+        public int count { get; set; }
+        #endregion
     }
 }

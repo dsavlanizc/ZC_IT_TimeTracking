@@ -17,12 +17,24 @@ namespace ZC_IT_TimeTracking.DataAccess.Extensions
         {
             try
             {
-                //IDbCommand command = new SqlCommand().get
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, spName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                entity = EntityMapper.MapSingle<T>(command.ExecuteReader());
+                DBConnectionHelper.CloseSqlConnection(conn);
                 return entity;
             }
-            catch(SqlException)
+            catch(SqlException ex)
             {
-                return entity;
+                if (ex.Message.ToLower().Contains("because the database is read-only"))
+                {
+                    repository.ValidationErrors.Add("APPLICATION_ARCHIVE_MODE_WARNING_MESSAGE", "Changes to data are not allowed within the archiving system.");
+                    throw; //new DataBaseAccessException("DATABASE_IS_IN_READ_ONLY_MODE", ex.InnerException);
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 
@@ -57,6 +69,59 @@ namespace ZC_IT_TimeTracking.DataAccess.Extensions
                     repository.ValidationErrors.Add("APPLICATION_ARCHIVE_MODE_WARNING_MESSAGE", "Changes to data are not allowed within the archiving system.");
                     throw;
                     //throw new DataBaseAccessException("DATABASE_IS_IN_READ_ONLY_MODE", ex.InnerException);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        public static bool Delete<T>(this RepositoryBase<T> repository, T entity, string sprocName)
+        {
+            try
+            {                
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, sprocName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                command.ExecuteNonQuery();
+                DBConnectionHelper.CloseSqlConnection(conn);
+                //Debug.WriteLine(String.Format("{0} took {1} seconds to finish", sprocName, sw.ElapsedMilliseconds / 1000));
+                return true;
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.ToLower().Contains("because the database is read-only"))
+                {
+                    repository.ValidationErrors.Add("APPLICATION_ARCHIVE_MODE_WARNING_MESSAGE", "Changes to data are not allowed within the archiving system.");
+                    throw;// new DataBaseAccessException("DATABASE_IS_IN_READ_ONLY_MODE", ex.InnerException);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
+
+        public static bool InsertOrUpdate<T>(this RepositoryBase<T> repository, T entity, string sprocName)
+        {
+            int isSuccess;
+            try
+            {
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, sprocName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                isSuccess = command.ExecuteNonQuery();
+                DBConnectionHelper.CloseSqlConnection(conn);
+                //Debug.WriteLine(String.Format("{0} took {1} seconds to finish", sprocName, sw.ElapsedMilliseconds / 1000));
+                return isSuccess > 0;
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.ToLower().Contains("because the database is read-only"))
+                {
+                    repository.ValidationErrors.Add("APPLICATION_ARCHIVE_MODE_WARNING_MESSAGE", "Changes to data are not allowed within the archiving system.");
+                    throw;// new DataBaseAccessException("DATABASE_IS_IN_READ_ONLY_MODE", ex.InnerException);
                 }
                 else
                 {
