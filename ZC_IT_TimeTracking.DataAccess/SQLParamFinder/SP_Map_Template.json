@@ -5,6 +5,10 @@
     "Params": []
   },
   {
+    "Name": "sp_GetAllQuarters",
+    "Params": []
+  },
+  {
     "Name": "AddResource",
     "Params": [
       {

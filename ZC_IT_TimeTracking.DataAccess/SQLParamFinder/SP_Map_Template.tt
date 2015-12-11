@@ -15,7 +15,6 @@
 <#
 		string connectionString = @"data source=INDINA04204VW\SQLEXPRESS;initial catalog=IT-Tracking;integrated security=True";
         SqlConnection conn = new SqlConnection(connectionString);
-		Console.WriteLine("Hihi");
         Dictionary<string, string> sprocList = new Dictionary<string, string>();
         SqlDataAdapter adapter = new SqlDataAdapter("select * from sys.procedures", conn);
         DataSet set = new DataSet();
