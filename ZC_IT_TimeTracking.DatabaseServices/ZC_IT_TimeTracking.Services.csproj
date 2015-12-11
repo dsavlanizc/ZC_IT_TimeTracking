@@ -103,14 +103,16 @@
     <Compile Include="Account\AccountService.cs" />
     <Compile Include="AssignGoals\AssignGoalServices.cs" />
     <Compile Include="DatabaseContext.cs" />
-    <Compile Include="GoalRule\GoalRuleService.cs" />
+    <Compile Include="GoalRuleServices\GoalRuleService.cs" />
+    <Compile Include="Goals\GoalService.cs" />
     <Compile Include="Goals\GoalServices.cs" />
+    <Compile Include="Interfaces\IGoalRuleServices.cs" />
     <Compile Include="Interfaces\IGoalServices.cs" />
     <Compile Include="IServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Role\RoleService.cs" />
     <Compile Include="ServiceBase.cs" />
-    <Compile Include="Team\TeamServices.cs" />
+    <Compile Include="Teamservices\TeamServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

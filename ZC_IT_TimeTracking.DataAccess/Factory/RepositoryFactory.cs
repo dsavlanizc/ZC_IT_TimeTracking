@@ -2,7 +2,11 @@
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using ZC_IT_TimeTracking.DataAccess.Interfaces.Goal;
+using ZC_IT_TimeTracking.DataAccess.Interfaces.GoalRepository;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
+using ZC_IT_TimeTracking.DataAccess.Repositories.Goal;
+using ZC_IT_TimeTracking.DataAccess.Repositories.GoalRuleRepository;
 using ZC_IT_TimeTracking.DataAccess.Repositories.Quarters;
 
 namespace ZC_IT_TimeTracking.DataAccess.Factory
@@ -55,6 +59,16 @@ namespace ZC_IT_TimeTracking.DataAccess.Factory
         public IQuarterRepository GetQuarterRepository()
         {
             return new QuarterRepository() { ConnectionString = _ConnectionString };
+        }
+
+        public IGoalRepository GetGoalRepository()
+        {
+            return new GoalRepository() { ConnectionString = _ConnectionString };
+        }
+
+        public IGoalRuleRepository GetGoalRuleRepository()
+        {
+            return new GoalRuleRepository() { ConnectionString = _ConnectionString };
         }
 
 

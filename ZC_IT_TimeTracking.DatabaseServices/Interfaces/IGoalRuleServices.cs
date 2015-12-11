@@ -7,8 +7,7 @@ using ZC_IT_TimeTracking.BusinessEntities;
 
 namespace ZC_IT_TimeTracking.Services.Interfaces
 {
-    public interface IGoalServices : IServiceBase
+    public interface IGoalRuleServices :IServiceBase
     {
-        //List<GoalQuarters> GetQuarterFromYear(int year);
     }
 }

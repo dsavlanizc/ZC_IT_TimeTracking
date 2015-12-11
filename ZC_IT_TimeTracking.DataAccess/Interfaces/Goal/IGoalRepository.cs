@@ -6,5 +6,6 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.Goal
 {
     public interface IGoalRepository : IRepositoryBase<GoalMaster>
     {
+
     }
 }

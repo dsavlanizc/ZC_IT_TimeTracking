@@ -49,10 +49,12 @@
     <Compile Include="Extensions\IDbCommandExtensions.cs" />
     <Compile Include="Extensions\RepositoryBaseExtensions.cs" />
     <Compile Include="Factory\RepositoryFactory.cs" />
+    <Compile Include="Interfaces\GoalRule\IGoalRuleRepository.cs" />
     <Compile Include="Interfaces\Goal\IGoalRepository.cs" />
     <Compile Include="Interfaces\Quarters\IQuarterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Goal\GoalRepository.cs" />
+    <Compile Include="Repositories\GoalRuleRepository\GoalRuleRepository.cs" />
+    <Compile Include="Repositories\GoalRepository\GoalRepository.cs" />
     <Compile Include="Repositories\Quarters\QuarterRepository.cs" />
     <Compile Include="SQLParamFinder\Program.cs" />
     <Compile Include="SQLParamFinder\SProcParamUtility.cs" />
