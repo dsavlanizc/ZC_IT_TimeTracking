@@ -7,9 +7,9 @@ namespace ZC_IT_TimeTracking.BusinessEntities
 {
     public class GoalQuarters
     {
-        public int QuarterID { get; set; }
-        public int GoalQuarter { get; set; }
-        public int QuarterYear { get; set; }
+        public Int32 QuarterID { get; set; }
+        public Int32 GoalQuarter { get; set; }
+        public Int32 QuarterYear { get; set; }
         public DateTime GoalCreateFrom { get; set; }
         public DateTime GoalCreateTo { get; set; }
     }
