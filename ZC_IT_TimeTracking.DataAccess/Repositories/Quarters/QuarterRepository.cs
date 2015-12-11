@@ -12,6 +12,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Quarters
         const string _getAllQuarters = "sp_GetAllQuarters";
         const string _getQuarterById = "GetQuarterDetails";
         const string _isQuarterExist = "CheckQuarter";
+        const string _createQuarter = "InsertGoalQuarter";
 
         public List<GoalQuarters> GetQuarterFromYearDB(int year)
         {
@@ -44,6 +45,12 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Quarters
                 return false;
             else
                 return true;
+        }
+
+        public bool CreateQuarterDB(GoalQuarters QuarterDetail)
+        {
+            var result = this.InsertOrUpdate<GoalQuarters>(QuarterDetail, _createQuarter);
+            return result;
         }
     }
 }

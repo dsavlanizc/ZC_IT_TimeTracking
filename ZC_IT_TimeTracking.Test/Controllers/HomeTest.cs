@@ -88,11 +88,11 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void AddQuarterTest()
         {
             GoalQuarters Quarter = new GoalQuarters();
-            Quarter.GoalQuarter = 3;
+            Quarter.GoalQuarter = 4;
             Quarter.QuarterYear = 2010;
             Quarter.GoalCreateFrom = DateTime.Today.AddYears(-5);
             Quarter.GoalCreateTo = DateTime.Today.AddYears(-5);
-            JsonResponse obj = _goalServices.CreateQuarter(Quarter);
+            JsonResponse obj = _quarterService.CreateQuarter(Quarter);
             Assert.AreEqual(true, obj.success);
         }
 
