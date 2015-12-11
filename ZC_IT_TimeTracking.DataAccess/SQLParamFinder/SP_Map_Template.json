@@ -1,4 +1,9 @@
-﻿[
+﻿
+[
+  {
+    "Name": "sp_GetAllQuarters",
+    "Params": []
+  },
   {
     "Name": "sp_GetAllQuarters",
     "Params": []
@@ -82,7 +87,7 @@
     "Name": "Delete_AllRulesOfGoal",
     "Params": [
       {
-        "Name": "goalID",
+        "Name": "GoalId",
         "sqlDbType": 8,
         "direction": 1
       }

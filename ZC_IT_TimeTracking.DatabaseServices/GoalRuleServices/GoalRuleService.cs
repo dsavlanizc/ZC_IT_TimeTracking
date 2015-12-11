@@ -37,5 +37,30 @@ namespace ZC_IT_TimeTracking.Services.GoalRuleServices
                 return null;
             }
         }
+
+        public bool InsertGoalRules(GoalRule gr)
+        {
+            GoalRule goalrule = new GoalRule();
+            goalrule.Performance_RangeFrom = gr.Performance_RangeFrom;
+            goalrule.Performance_RangeTo = gr.Performance_RangeTo;
+            goalrule.Rating = gr.Rating;
+            goalrule.GoalId = gr.GoalId;
+            return this._goalruleRepository.InsertGoalRuleDB(goalrule);
+
+        }
+
+        public bool DeleteAllGoalRule(int goalid)
+        {
+            try
+            {
+                var delete_rule = _goalruleRepository.DeleteAllRulesOfGoalByGoalID(goalid);
+                return true;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_DEL_GOAL", "Error Ocurred while Deleting Goal Rule!");
+                return false;
+            }
+        }
     }
 }

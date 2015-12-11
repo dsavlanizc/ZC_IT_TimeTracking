@@ -11,6 +11,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.GoalRepository
     public interface IGoalRuleRepository : IRepositoryBase<GoalRule>
     {
         List<GoalRule> GoalRuleDetailByIDDB(int goalID);
-        bool InsertGoalRule(GoalRule gr);
+        bool InsertGoalRuleDB(GoalRule gr);
+        bool DeleteAllRulesOfGoalByGoalID(int goalID);
     }
 }

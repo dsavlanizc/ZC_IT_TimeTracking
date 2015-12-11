@@ -10,5 +10,7 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
     public interface IGoalRuleServices :IServiceBase
     {
         List<GoalRule> GetGoalRules(int Goalid);
+        bool InsertGoalRules(GoalRule gr);
+        bool DeleteAllGoalRule(int goalid);
     }
 }
