@@ -14,7 +14,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
 
-
+        //completed
         public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
         {
             try
@@ -34,7 +34,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return null;
             }
         }
-
+        //completed
         public List<GoalQuarters> GetAllQuarters()
         {
             try
@@ -154,7 +154,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return null;
             }
         }
-
+        //completed GetQuarterById
         public GetQuarterDetails_Result GetGoalQuarter(int id)
         {
             try
@@ -287,7 +287,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return null;
             }
         }
-
+        //completed
         public bool CheckQuarter(int Quarter, int Year)
         {
             try

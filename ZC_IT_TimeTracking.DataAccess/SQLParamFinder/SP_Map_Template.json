@@ -64,15 +64,15 @@
     ]
   },
   {
-    "Name": "CheckQuater",
+    "Name": "CheckQuarter",
     "Params": [
       {
-        "Name": "Quater",
+        "Name": "GoalQuarter",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "QYear",
+        "Name": "QuarterYear",
         "sqlDbType": 8,
         "direction": 1
       }

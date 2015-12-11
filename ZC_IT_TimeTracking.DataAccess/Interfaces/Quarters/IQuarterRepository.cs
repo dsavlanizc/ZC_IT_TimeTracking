@@ -12,6 +12,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters
     {
         List<GoalQuarters> GetQuarterFromYearDB(int year);
         List<GoalQuarters> GetAllQuartersDB();
-        //GoalQuarters GetQuarterByIdDB(int id);
+        GoalQuarters GetQuarterByIdDB(int id);
+        bool CheckQuarterDB(int quarter, int year);
     }
 }

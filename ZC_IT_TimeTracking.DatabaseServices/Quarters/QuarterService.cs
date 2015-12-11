@@ -28,9 +28,14 @@ namespace ZC_IT_TimeTracking.Services.Quarters
             return _repository.GetAllQuartersDB();
         }
 
-        //public GoalQuarters GetQuarterById(int id)
-        //{
-        //    return _repository.GetQuarterByIdDB(id);
-        //}
+        public GoalQuarters GetQuarterById(int id)
+        {
+            return _repository.GetQuarterByIdDB(id);
+        }
+
+        public bool CheckQuarter(int quarter, int year)
+        {
+            return _repository.CheckQuarterDB(quarter, year);
+        }
     }
 }
