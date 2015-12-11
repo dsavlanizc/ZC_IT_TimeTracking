@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ZC_IT_TimeTracking.DataAccess.Extensions;
-using ZC_IT_TimeTracking.DataAccess.Interfaces;
+﻿using System.Collections.Generic;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Library.Repository;
+using ZC_IT_TimeTracking.DataAccess.Extensions;
 
-namespace ZC_IT_TimeTracking.DataAccess.Repositories
+namespace ZC_IT_TimeTracking.DataAccess.Repositories.Quarters
 {
-    public class GoalRepository : RepositoryBase<GoalQuarters>, IGoalRepository
+    public class QuarterRepository : RepositoryBase<GoalQuarters>, IQuarterRepository
     {
         const string _CheckQuater = "CheckQuater";
         const string _GetQuarterFromYear = "GetQuarterFromYear";
