@@ -16,6 +16,7 @@ namespace ZC_IT_TimeTracking.BusinessEntities
         public Int32 Resource_GoalID { get; set; }
         public Int32[] ResourceID { get; set; }
         public Int32 Goal_MasterID { get; set; }
+        public string GoalTitle { get; set; }
         public Int32 Weight { get; set; }
         public DateTime GoalAssignDate { get; set; }
 
@@ -42,9 +43,9 @@ namespace ZC_IT_TimeTracking.BusinessEntities
 
     public class ResourceGoal
     {
-        public int ResourceID { get; set; }
-        public int Goal_MasterID { get; set; }
-        public int weight { get; set; }
-        public int Resource_GoalID { get; set; }
+        public Int32 ResourceID { get; set; }
+        public Int32  Goal_MasterID { get; set; }
+        public Int32 weight { get; set; }
+        public Int32 Resource_GoalID { get; set; }
     }
 }

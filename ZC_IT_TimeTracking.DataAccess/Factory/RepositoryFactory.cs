@@ -5,11 +5,13 @@ using System.Data.SqlClient;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Goal;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.GoalRepository;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
+using ZC_IT_TimeTracking.DataAccess.Interfaces.Resource;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.ResourceGoalRepo;
 using ZC_IT_TimeTracking.DataAccess.Repositories.Goal;
 using ZC_IT_TimeTracking.DataAccess.Repositories.GoalRuleRepository;
 using ZC_IT_TimeTracking.DataAccess.Repositories.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository;
+using ZC_IT_TimeTracking.DataAccess.Repositories.ResourceRepository;
 
 namespace ZC_IT_TimeTracking.DataAccess.Factory
 {
@@ -71,6 +73,10 @@ namespace ZC_IT_TimeTracking.DataAccess.Factory
         public IGoalRuleRepository GetGoalRuleRepository()
         {
             return new GoalRuleRepository() { ConnectionString = _ConnectionString };
+        }
+        public IResourceRepository GetResourceRepository()
+        {
+            return new ResourceRepository() { ConnectionString = _ConnectionString };
         }
 
         public IResourceGoalRepository GetResourceGoalRepository()

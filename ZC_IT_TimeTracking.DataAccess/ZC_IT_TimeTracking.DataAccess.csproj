@@ -54,11 +54,13 @@
     <Compile Include="Interfaces\Goal\IGoalRepository.cs" />
     <Compile Include="Interfaces\Quarters\IQuarterRepository.cs" />
     <Compile Include="Interfaces\ResourceGoalRepo\IResourceGoalRepository.cs" />
+    <Compile Include="Interfaces\Resource\IResourceRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GoalRuleRepository\GoalRuleRepository.cs" />
     <Compile Include="Repositories\GoalRepository\GoalRepository.cs" />
     <Compile Include="Repositories\Quarters\QuarterRepository.cs" />
     <Compile Include="Repositories\ResourceGoalRepository\ResourceGoalRepository.cs" />
+    <Compile Include="Repositories\ResourceRepository\ResourceRepository.cs" />
     <Compile Include="SQLParamFinder\Program.cs" />
     <Compile Include="SQLParamFinder\SProcParamUtility.cs" />
     <Compile Include="SQLParamFinder\SP_Class.cs" />
