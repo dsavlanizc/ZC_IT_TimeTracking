@@ -1,9 +1,4 @@
-﻿
-[
-  {
-    "Name": "sp_GetAllQuarters",
-    "Params": []
-  },
+﻿[
   {
     "Name": "sp_GetAllQuarters",
     "Params": []
@@ -377,22 +372,22 @@
     "Name": "InsertGoalQuarter",
     "Params": [
       {
-        "Name": "Quater",
+        "Name": "GoalQuarter",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "Year",
+        "Name": "QuarterYear",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "GoalCreate_From",
+        "Name": "GoalCreateFrom",
         "sqlDbType": 31,
         "direction": 1
       },
       {
-        "Name": "GoalCreate_To",
+        "Name": "GoalCreateTo",
         "sqlDbType": 31,
         "direction": 1
       }

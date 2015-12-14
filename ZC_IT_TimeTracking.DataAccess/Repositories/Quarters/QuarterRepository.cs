@@ -11,6 +11,8 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Quarters
         const string _getQuarterFromYear = "GetQuarterFromYear";
         const string _getAllQuarters = "sp_GetAllQuarters";
         const string _getQuarterById = "GetQuarterDetails";
+        const string _isQuarterExist = "CheckQuarter";
+        const string _createQuarter = "InsertGoalQuarter";
 
         public List<GoalQuarters> GetQuarterFromYearDB(int year)
         {
@@ -25,10 +27,30 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Quarters
             return this.GetEntityCollection<GoalQuarters>(quarters, _getAllQuarters);
         }
 
-        //public GoalQuarters GetQuarterByIdDB(int id)
-        //{
-        //    GoalQuarters quarters = new GoalQuarters();
-        //    return new GoalQuarters();//this.GetEntityCollection<GoalQuarters>(quarters, _getQuarterById);
-        //}
+        public GoalQuarters GetQuarterByIdDB(int id)
+        {
+            GoalQuarters quarters = new GoalQuarters();
+            quarters.QuarterID = id;
+            return this.GetEntity<GoalQuarters>(quarters, _getQuarterById);
+        }
+
+        public bool CheckQuarterDB(int quarter, int year)
+        {
+            GoalQuarters quarters = new GoalQuarters();
+            quarters.GoalQuarter = quarter;
+            quarters.QuarterYear = year;
+
+            var result = this.GetEntity<GoalQuarters>(quarters, _isQuarterExist);
+            if (result == null)
+                return false;
+            else
+                return true;
+        }
+
+        public bool CreateQuarterDB(GoalQuarters QuarterDetail)
+        {
+            var result = this.InsertOrUpdate<GoalQuarters>(QuarterDetail, _createQuarter);
+            return result;
+        }
     }
 }

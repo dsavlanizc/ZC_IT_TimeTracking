@@ -2,12 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ZC_IT_TimeTracking.BusinessEntities;
-using ZC_IT_TimeTracking.DataAccess.Factory;
 using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Goals;
+using ZC_IT_TimeTracking.Services.Interfaces;
 using ZC_IT_TimeTracking.Services.Quarters;
 
 namespace ZC_IT_TimeTracking.Test.Controllers
@@ -15,7 +13,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
     [TestClass]
     public class HomeTest
     {
-        QuarterService _quarterService = new QuarterService();
+        IQuarterService _quarterService = new QuarterService();
         AssignGoalService _goalAssignServices = new AssignGoalService();
         GoalServices _goalServices = new GoalServices();
         DatabaseEntities dbCtx = new DatabaseEntities();
@@ -23,6 +21,8 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void RepoTest()
         {
+            bool isExist = _quarterService.CheckQuarter(5, 2015);
+            var qbyid = _quarterService.GetQuarterById(1);
             var allq = _quarterService.GetAllQuarters();
             var asdf = _quarterService.GetQuarterFromYear(2015);
         }
@@ -88,11 +88,11 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void AddQuarterTest()
         {
             GoalQuarters Quarter = new GoalQuarters();
-            Quarter.GoalQuarter = 3;
+            Quarter.GoalQuarter = 4;
             Quarter.QuarterYear = 2010;
             Quarter.GoalCreateFrom = DateTime.Today.AddYears(-5);
             Quarter.GoalCreateTo = DateTime.Today.AddYears(-5);
-            JsonResponse obj = _goalServices.CreateQuarter(Quarter);
+            JsonResponse obj = _quarterService.CreateQuarter(Quarter);
             Assert.AreEqual(true, obj.success);
         }
 
