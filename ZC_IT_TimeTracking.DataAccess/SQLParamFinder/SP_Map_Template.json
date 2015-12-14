@@ -42,17 +42,17 @@
         "direction": 1
       },
       {
-        "Name": "GoalId",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "weight",
+        "Name": "Weight",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "assignDate",
+        "Name": "GoalAssignDate",
         "sqlDbType": 31,
         "direction": 1
       },
@@ -375,11 +375,6 @@
         "Name": "QuarterId",
         "sqlDbType": 8,
         "direction": 1
-      },
-      {
-        "Name": "Goal_MasterID",
-        "sqlDbType": 8,
-        "direction": 3
       }
     ]
   },

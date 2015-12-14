@@ -34,17 +34,14 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Quarters
             return this.GetEntity<GoalQuarters>(quarters, _getQuarterById);
         }
 
-        public bool CheckQuarterDB(int quarter, int year)
+        public GoalQuarters CheckQuarterDB(int quarter, int year)
         {
             GoalQuarters quarters = new GoalQuarters();
             quarters.GoalQuarter = quarter;
             quarters.QuarterYear = year;
 
             var result = this.GetEntity<GoalQuarters>(quarters, _isQuarterExist);
-            if (result == null)
-                return false;
-            else
-                return true;
+            return result;
         }
 
         public bool CreateQuarterDB(GoalQuarters QuarterDetail)

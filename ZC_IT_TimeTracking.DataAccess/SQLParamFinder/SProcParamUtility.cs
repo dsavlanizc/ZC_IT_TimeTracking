@@ -13,23 +13,23 @@ namespace ZC_IT_TimeTracking.DataAccess.SQLParamFinder
 {
     public class SProcParamUtility
     {
-        private static List<Sproc> _SQLParameterXML;
-        private static List<Sproc> SQLParameterXML
+        private static List<Sproc> _SQLParameterJSON;
+        private static List<Sproc> SQLParameterJSON
         {
             get
             {
-                if (_SQLParameterXML == null)
+                if (_SQLParameterJSON == null)
                 {
-                    _SQLParameterXML = GetSprocParamsXMLDocument();
+                    _SQLParameterJSON = GetSprocParamsJSONDocument();
                 }
-                return _SQLParameterXML;
+                return _SQLParameterJSON;
             }
         }
         /// <summary>
         /// Gets the Stored Procedure parameters xml document
         /// </summary>
         /// <returns></returns>
-        public static List<Sproc> GetSprocParamsXMLDocument()
+        public static List<Sproc> GetSprocParamsJSONDocument()
         {
             SProcParamUtility spr = new SProcParamUtility();
             using (StreamReader reader = new StreamReader(spr.GetResourceStream("SP_Map_Template.json")))
@@ -70,7 +70,7 @@ namespace ZC_IT_TimeTracking.DataAccess.SQLParamFinder
             try
             {
                 // get the parameter XML
-                List<Sproc> doc = GetSprocParamsXMLDocument();//SProcParamUtility.SQLParameterXML;
+                List<Sproc> doc = GetSprocParamsJSONDocument();//SProcParamUtility.SQLParameterJSON;
 
                 // get the list of parameters defined for the given sproc
                 //var selectors = (from elements in doc.Elements("sprocs").Elements("sproc")

@@ -78,7 +78,7 @@ namespace ZC_IT_TimeTracking.Services.Quarters
             }
         }
 
-        public bool CheckQuarter(int quarter, int year)
+        public GoalQuarters CheckQuarter(int quarter, int year)
         {
             return _repository.CheckQuarterDB(quarter, year);
         }
@@ -89,12 +89,21 @@ namespace ZC_IT_TimeTracking.Services.Quarters
             try
             {
                 var Cq = CheckQuarter(QuarterDetail.GoalQuarter, QuarterDetail.QuarterYear);
-                if (!Cq)
+                if (Cq != null)
                 {
                     var qurter = _repository.CreateQuarterDB(QuarterDetail);
-                    js.message = "Quarter created successfully!";
-                    js.success = true;
-                    return js;
+                    if (qurter)
+                    {
+                        js.message = "Quarter created successfully!";
+                        js.success = true;
+                        return js;
+                    }
+                    else
+                    {
+                        js.message = "Error while creating quarter!";
+                        js.success = false;
+                        return js;
+                    }
                 }
                 else
                 {

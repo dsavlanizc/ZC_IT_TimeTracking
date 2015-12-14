@@ -9,14 +9,15 @@ using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Library.Validations;
 using ZC_IT_TimeTracking.Services.GoalRuleServices;
 using ZC_IT_TimeTracking.Services.Interfaces;
+using ZC_IT_TimeTracking.Services.Quarters;
 
 namespace ZC_IT_TimeTracking.Services.Goals
 {
     public class GoalService : ServiceBase, IGoalServices
     {
         private IGoalRepository _goalRepository;
-        private IGoalRuleServices _ruleServices;
-        private IQuarterService _quarterServices;
+        private IGoalRuleServices _ruleServices = new GoalRuleService();
+        private IQuarterService _quarterServices = new QuarterService();
         public GoalService()
         {
             _goalRepository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetGoalRepository();
@@ -88,19 +89,29 @@ namespace ZC_IT_TimeTracking.Services.Goals
             try
             {
                 var CheckQuarter = _quarterServices.CheckQuarter(goal.GoalQuarter, goal.QuarterYear);
-                ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                _goalRepository.InsertGoalMasterDB(goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, goal.IsHigherValueGood, DateTime.Today, CheckQuarter.QuarterID, insertedId);
-                Int32 goalId = Int32.Parse(insertedId.Value.ToString());
-                foreach (GoalRule rule in goal.GoalRules)
+                if (CheckQuarter != null)
                 {
-                    GoalRule gr = new GoalRule();
-                    gr.Performance_RangeFrom = rule.Performance_RangeFrom;
-                    gr.Performance_RangeTo = rule.Performance_RangeTo;
-                    gr.Rating = rule.Rating;
-                    gr.GoalId = rule.GoalId;
-                    _ruleServices.InsertGoalRules(gr);
+                    goal.QuarterId = CheckQuarter.QuarterID;
+                    int goalId = _goalRepository.InsertGoalMasterDB(goal);
+                    if (goalId != -1)
+                    {
+                        foreach (GoalRule rule in goal.GoalRules)
+                        {
+                            GoalRule gr = new GoalRule();
+                            gr.Performance_RangeFrom = rule.Performance_RangeFrom;
+                            gr.Performance_RangeTo = rule.Performance_RangeTo;
+                            gr.Rating = rule.Rating;
+                            gr.GoalID = goalId;
+                            _ruleServices.InsertGoalRules(gr);
+                        }
+                        return true;
+                    }
+                    else
+                    {
+                        this.ValidationErrors.Add("ERR_GOAL_ID", "Inserted goal id not found!");
+                    }
                 }
-                return true;
+                return false;
             }
             catch
             {
@@ -114,7 +125,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             try
             {
                 var quarter = _quarterServices.CheckQuarter(goal.GoalQuarter, goal.QuarterYear);
-                _goalRepository.UpdateGoalMasterDB(goal.Goal_MasterID, goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, DateTime.Today, goal.IsHigherValueGood, quarter.QuarterID);
+                _goalRepository.UpdateGoalMasterDB(goal);
                 _ruleServices.DeleteAllGoalRule(goal.Goal_MasterID);
                 foreach (GoalRule rule in goal.GoalRules)
                 {
@@ -122,7 +133,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                     gr.Performance_RangeFrom = rule.Performance_RangeFrom;
                     gr.Performance_RangeTo = rule.Performance_RangeTo;
                     gr.Rating = rule.Rating;
-                    gr.GoalId = rule.GoalId;
+                    gr.GoalID = rule.GoalID;
                     _ruleServices.InsertGoalRules(gr);
                 }
                 return true;
@@ -191,7 +202,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             {
                 int Quarter = Utilities.GetQuarter();
                 int Year = DateTime.Now.Year;
-                var Glist = _goalRepository.GoalListByQuarterDB(Quarter,Year);
+                var Glist = _goalRepository.GoalListByQuarterDB(Quarter, Year);
                 if (Glist.Count != 0)
                     return Glist;
                 else

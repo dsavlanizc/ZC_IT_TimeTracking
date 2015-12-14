@@ -44,7 +44,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
             return this.GetEntity<GoalMaster>(gm, _GetGoalDetailsByGoalID);
         }
 
-        public bool InsertGoalMasterDB(GoalMaster gm)
+        public int InsertGoalMasterDB(GoalMaster gm)
         {
             GoalMaster goal = new GoalMaster();
             goal.GoalTitle = gm.GoalTitle;
@@ -53,8 +53,9 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
             goal.MeasurementValue = gm.MeasurementValue;
             goal.IsHigherValueGood = gm.IsHigherValueGood;
             goal.Creation_Date = DateTime.Today;
-            goal.Quarters.QuarterID = gm.Quarters.QuarterID;
-            return this.InsertOrUpdate<GoalMaster>(goal, _InsertGoalMaster);
+            goal.QuarterId = gm.QuarterId;
+            var result = this.GetEntity<GoalMaster>(goal, _InsertGoalMaster);
+            return result != null ? result.Goal_MasterID : -1;
         }
 
         public bool UpdateGoalMasterDB(GoalMaster gm)
