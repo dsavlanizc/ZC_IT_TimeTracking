@@ -105,13 +105,13 @@
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="GoalRuleServices\GoalRuleService.cs" />
     <Compile Include="Goals\GoalService.cs" />
-    <Compile Include="Goals\GoalServices.cs" />
     <Compile Include="Interfaces\IGoalRuleServices.cs" />
     <Compile Include="Interfaces\IGoalServices.cs" />
     <Compile Include="Interfaces\IQuarterService.cs" />
     <Compile Include="IServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quarters\QuarterService.cs" />
+    <Compile Include="Resources\ResourceServices.cs" />
     <Compile Include="Role\RoleService.cs" />
     <Compile Include="ServiceBase.cs" />
     <Compile Include="Teamservices\TeamServices.cs" />
