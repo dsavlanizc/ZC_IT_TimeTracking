@@ -7,6 +7,7 @@ using ZC_IT_TimeTracking.ViewModels;
 using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.Services.Goals;
 using ZC_IT_TimeTracking.Services.AssignGoals;
+using ZC_IT_TimeTracking.Services.Quarters;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
@@ -14,6 +15,7 @@ namespace ZC_IT_TimeTracking.Controllers
     public class HomeController : Controller
     {
         GoalServices _goalServices = new GoalServices();
+        QuarterService _quarterService = new QuarterService();
         AssignGoalService _assignGoalServices = new AssignGoalService();
 
         // GET: Home
@@ -157,7 +159,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var IsCreate = _goalServices.CreateQuarter(QuarterData);
+                var IsCreate = _quarterService.CreateQuarter(QuarterData);
                 return Json(new JsonResponse { message = IsCreate.message, success = IsCreate.success }); ;
             }
             catch

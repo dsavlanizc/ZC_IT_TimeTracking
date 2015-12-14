@@ -44,7 +44,7 @@ namespace ZC_IT_TimeTracking.Services.GoalRuleServices
             goalrule.Performance_RangeFrom = gr.Performance_RangeFrom;
             goalrule.Performance_RangeTo = gr.Performance_RangeTo;
             goalrule.Rating = gr.Rating;
-            goalrule.GoalId = gr.GoalId;
+            goalrule.GoalID = gr.GoalID;
             return this._goalruleRepository.InsertGoalRuleDB(goalrule);
 
         }

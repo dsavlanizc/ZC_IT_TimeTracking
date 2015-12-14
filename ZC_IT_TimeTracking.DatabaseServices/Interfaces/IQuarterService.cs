@@ -7,7 +7,7 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
         List<GoalQuarters> GetQuarterFromYear(int year);
         List<GoalQuarters> GetAllQuarters();
         GoalQuarters GetQuarterById(int id);
-        bool CheckQuarter(int quarter, int year);
+        GoalQuarters CheckQuarter(int quarter, int year);
         JsonResponse CreateQuarter(GoalQuarters QuarterDetail);
     }
 }
