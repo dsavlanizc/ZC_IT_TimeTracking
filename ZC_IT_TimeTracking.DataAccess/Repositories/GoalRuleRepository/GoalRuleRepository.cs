@@ -22,7 +22,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.GoalRuleRepository
         public List<GoalRule> GoalRuleDetailByIDDB(int goalID)
         {
             GoalRule gr = new GoalRule();
-            gr.GoalID = goalID;
+            gr.GoalId = goalID;
             return this.GetEntityCollection<GoalRule>(gr, _GetGoalRuleDetailsByGoalID);
         }
 
@@ -32,14 +32,14 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.GoalRuleRepository
             goalRule.Performance_RangeFrom = gr.Performance_RangeFrom;
             goalRule.Performance_RangeTo = gr.Performance_RangeTo;
             goalRule.Rating = gr.Rating;
-            goalRule.GoalID = gr.GoalID;
+            goalRule.GoalId = gr.GoalId;
             return this.InsertOrUpdate<GoalRule>(goalRule, _InsertGoalRules);
         }
 
         public bool DeleteAllRulesOfGoalByGoalID(int goalID)
         {
             GoalRule gr = new GoalRule();
-            gr.GoalID = goalID;
+            gr.GoalId = goalID;
             return this.Delete<GoalRule>(gr,_DeleteAllRulesOfGoalByGoalID);
         }
     }

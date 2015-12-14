@@ -134,11 +134,25 @@
     ]
   },
   {
+    "Name": "GetTotalGoalCount",
+    "Params": []
+  },
+  {
     "Name": "GetAllGoalsOfResource",
     "Params": [
       {
         "Name": "ResourceId",
         "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "SearchGoalByTitleCount",
+    "Params": [
+      {
+        "Name": "GoalTitle",
+        "sqlDbType": 22,
         "direction": 1
       }
     ]
@@ -157,7 +171,7 @@
     "Name": "GetAssignedGoalDetails",
     "Params": [
       {
-        "Name": "AssignedId",
+        "Name": "Resource_GoalID",
         "sqlDbType": 8,
         "direction": 1
       }

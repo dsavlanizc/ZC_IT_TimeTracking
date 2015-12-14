@@ -11,11 +11,12 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
     public interface IGoalServices : IServiceBase
     {
         //List<GoalQuarters> GetQuarterFromYear(int year);
-        List<GoalMaster> SearchGoalByTitle(string title, int skip, int recordPerPage, int count);
+        List<GoalMaster> SearchGoalByTitle(string title, int skip, int recordPerPage);
         GoalMaster GetGoaldetailByGoalID(int id);
         bool CreateGoal(GoalMaster goal);
         bool UpdateGoal(GoalMaster goal);
         JsonResponse DeleteGoal(int[] goalid);
         List<GoalMaster> GetGoalIDandTitle();
+        int TotalRecordsOfGoal();
     }
 }

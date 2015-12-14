@@ -24,11 +24,21 @@ namespace ZC_IT_TimeTracking.Services.Goals
             this.ValidationErrors = _goalRepository.ValidationErrors;
         }
 
-        public List<GoalMaster> SearchGoalByTitle(string title, int skip, int recordPerPage,int count)
+        public int TotalRecordsOfGoal()
+        {
+            return _goalRepository.TotalRecordsOfGoal().totalRecords;
+        }
+
+        public int SearchGoalByTitleCount(string title)
+        {
+            return _goalRepository.SearchGoalByTitleCount(title).totalRecords;
+        }
+
+        public List<GoalMaster> SearchGoalByTitle(string title, int skip, int recordPerPage)
         {
             try
             {
-                var SGBT = _goalRepository.SearchGoalByTitleDB(title, skip, recordPerPage, count).ToList();
+                var SGBT = _goalRepository.SearchGoalByTitleDB(title, skip, recordPerPage).ToList();
                 if (SGBT.Count != 0)
                     return SGBT;
                 else
@@ -44,11 +54,11 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
-        public List<GoalMaster> GetGoalDetail(int StartFrom, int PageSize, int count)
+        public List<GoalMaster> GetGoalDetail(int StartFrom, int PageSize)
         {
             try
             {
-                var GSROG = _goalRepository.GetSpecificRecordsOfGoalDB(StartFrom, PageSize, count).ToList();
+                var GSROG = _goalRepository.GetSpecificRecordsOfGoalDB(StartFrom, PageSize);
                 if (GSROG.Count != 0)
                     return GSROG;
                 else
@@ -101,7 +111,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                             gr.Performance_RangeFrom = rule.Performance_RangeFrom;
                             gr.Performance_RangeTo = rule.Performance_RangeTo;
                             gr.Rating = rule.Rating;
-                            gr.GoalID = goalId;
+                            gr.GoalId = goalId;
                             _ruleServices.InsertGoalRules(gr);
                         }
                         return true;
@@ -133,7 +143,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                     gr.Performance_RangeFrom = rule.Performance_RangeFrom;
                     gr.Performance_RangeTo = rule.Performance_RangeTo;
                     gr.Rating = rule.Rating;
-                    gr.GoalID = rule.GoalID;
+                    gr.GoalId = rule.GoalId;
                     _ruleServices.InsertGoalRules(gr);
                 }
                 return true;

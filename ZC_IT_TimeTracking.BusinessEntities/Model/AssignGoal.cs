@@ -10,7 +10,24 @@ namespace ZC_IT_TimeTracking.BusinessEntities
     {
         public AssignGoal()
         {
-            this.GoalMaster = new GoalMaster();
+            this.GoalMaster = new List<GoalMaster>();
+            this.Resource = new Resources();
+        }
+        public Int32 Resource_GoalID { get; set; }
+        public Int32[] ResourceID { get; set; }
+        public Int32 Goal_MasterID { get; set; }
+        public Int32 Weight { get; set; }
+        public DateTime GoalAssignDate { get; set; }
+
+        public List<GoalMaster> GoalMaster { get; set; }
+        public Resources Resource { get; set; }   
+    }
+
+    public class AssignGoalResources
+    {
+        public AssignGoalResources()
+        {
+            this.GoalMaster = new List<GoalMaster>();
             this.Resource = new Resources();
         }
         public Int32 Resource_GoalID { get; set; }
@@ -19,8 +36,8 @@ namespace ZC_IT_TimeTracking.BusinessEntities
         public Int32 Weight { get; set; }
         public DateTime GoalAssignDate { get; set; }
 
-        public GoalMaster GoalMaster { get; set; }
-        public Resources Resource { get; set; }   
+        public List<GoalMaster> GoalMaster { get; set; }
+        public Resources Resource { get; set; }
     }
 
     public class ResourceGoal

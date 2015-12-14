@@ -21,6 +21,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void RepoTest()
         {
+            var asas = _goalServices.TotalRecordsOfGoal();
             var isExist = _quarterService.CheckQuarter(5, 2015);
             var qbyid = _quarterService.GetQuarterById(1);
             var allq = _quarterService.GetAllQuarters();
@@ -103,7 +104,7 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             AssignGoal Goal = new AssignGoal();
             Goal.Goal_MasterID = 3;
             Goal.ResourceID = ResId ;
-            Goal.weight = 60;
+            Goal.Weight = 60;
             bool  isAssigned = _goalAssignServices.AssignGoal(Goal);
             Assert.AreEqual(isAssigned , true);
         }

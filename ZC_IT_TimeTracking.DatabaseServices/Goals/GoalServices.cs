@@ -7,19 +7,21 @@ using ZC_IT_TimeTracking.DataAccess.Interfaces;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Library.Validations;
 using ZC_IT_TimeTracking.Services.Interfaces;
+using ZC_IT_TimeTracking.Services.Quarters;
 
 namespace ZC_IT_TimeTracking.Services.Goals
 {
     public class GoalServices : ServiceBase
     {
         private DatabaseEntities dbContext = new DatabaseEntities();
-
+        GoalService _goalService = new GoalService();
+        IQuarterService _quarterService = new QuarterService();
         //completed
-        public List<GetQuarterFromYear_Result> GetQuarterFromYear(int year)
+        public List<GoalQuarters> GetQuarterFromYear(int year)
         {
             try
             {
-                var GQFY = dbContext.GetQuarterFromYear(year).ToList();
+                var GQFY = _quarterService.GetQuarterFromYear(year).ToList();
                 if (GQFY.Count != 0)
                     return GQFY;
                 else

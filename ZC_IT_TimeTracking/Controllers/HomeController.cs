@@ -8,15 +8,17 @@ using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.Services.Goals;
 using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Quarters;
+using ZC_IT_TimeTracking.Services.GoalRuleServices;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        GoalServices _goalServices = new GoalServices();
+        GoalService _goalServices = new GoalService();
         QuarterService _quarterService = new QuarterService();
         AssignGoalService _assignGoalServices = new AssignGoalService();
+        GoalRuleService _ruleService = new GoalRuleService();
 
         // GET: Home
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
@@ -30,7 +32,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 ViewBag.page = page;
                 ViewBag.SearchString = title;
                 ViewBag.Quarter = Quarter;
-                var QY = _goalServices.GetQuarterFromYear(Year);
+                var QY = _quarterService.GetQuarterFromYear(Year);
                 if (!QY.Any(a => a.GoalQuarter == Quarter))
                 {
                     ViewBag.Message = "There is no quarter available! Please create one";
@@ -40,29 +42,28 @@ namespace ZC_IT_TimeTracking.Controllers
                 int skip = (page - 1) * Utilities.RecordPerPage;
                 if (title == "")
                 {
-                    ObjectParameter count = new ObjectParameter("totalRecords", typeof(int));
+                    int count = _goalServices.TotalRecordsOfGoal();
                     int pageSize = Utilities.RecordPerPage;
-                    var GoalList = _goalServices.GetGoalDetail(skip, pageSize, count);
-                    if ((GoalList.Count() == 0) && (page - 2) >= 0)
+                    var GoalList = _goalServices.GetGoalDetail(skip, pageSize);
+                    if (GoalList == null && (page - 2) >= 0)
                     {
                         ViewBag.page = page - 1;
                         skip = (page - 2) * Utilities.RecordPerPage;
-                        GoalList = _goalServices.GetGoalDetail(skip, pageSize, count);
+                        GoalList = _goalServices.GetGoalDetail(skip, pageSize);
                     }
-                    ViewBag.TotalCount = Convert.ToInt32(count.Value);
+                    ViewBag.TotalCount = _goalServices.TotalRecordsOfGoal();
                     return View(GoalList);
                 }
                 else
                 {
-                    ObjectParameter count = new ObjectParameter("MatchedRecords", typeof(int));
-                    var GoalList = _goalServices.SearchGoalByTitle(title,skip,Utilities.RecordPerPage,ref count);
+                    var GoalList = _goalServices.SearchGoalByTitle(title,skip,Utilities.RecordPerPage);
                     if ((GoalList.Count() == 0) && (page - 2) >= 0)
                     {
                         ViewBag.page = page - 1;
                         skip = (page - 2) * Utilities.RecordPerPage;
-                        GoalList = _goalServices.SearchGoalByTitle(title, skip, Utilities.RecordPerPage,ref count);
+                        GoalList = _goalServices.SearchGoalByTitle(title, skip, Utilities.RecordPerPage);
                     }
-                    ViewBag.TotalCount = Convert.ToInt32(count.Value);
+                    ViewBag.TotalCount = _goalServices.SearchGoalByTitleCount(title);
                     return View(GoalList);
                 }
             }
@@ -79,10 +80,10 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 if (_goalServices.IsGoalExist(Id))
                 {
-                    var goal = _goalServices.GetGoaldetail(Id);
-                    var quarter = _goalServices.GetGoalQuarter(goal.QuarterId);
-                    var rules = _goalServices.GetGoalRules(Id);
-                    var quarterList = _goalServices.GetAllQuarters();
+                    var goal = _goalServices.GetGoaldetailByGoalID(Id);
+                    var quarter = _quarterService.GetQuarterById(goal.QuarterId);
+                    var rules = _ruleService.GetGoalRules(Id);
+                    var quarterList = _quarterService.GetAllQuarters();
                     return Json(new { goal = goal, quarter = quarter, rules = rules, quarterList = quarterList, success = true });
                 }
                 return Json(new JsonResponse { message = "Requested user data does not exist", success = false });
@@ -182,7 +183,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var Desc = _goalServices.GetGoalDescription(TitleID);
+                var Desc = _goalServices.GetGoaldetailByGoalID(TitleID);
                 if (Desc == null)
                     return Json(new JsonResponse { message = "Error occured while Getting Description!", success = false });
                 else

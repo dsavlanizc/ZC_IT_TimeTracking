@@ -17,23 +17,34 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
         const string _UpdateGoalMaster = "UpdateGoalMaster";
         const string _DeleteGoalMasterByGoalID = "DeleteGoalMaster";
         const string _GetAllGoalsOfQuarter = "GetAllGoalsOfQuarter";
+        const string _TotalGoalCount = "GetTotalGoalCount";
+        const string _SearchGoalByTitleCount = "SearchGoalByTitleCount";
 
-        public List<GoalMaster> SearchGoalByTitleDB(string title, int skip, int recordPerPage, int count)
+        public List<GoalMaster> SearchGoalByTitleDB(string title, int skip, int recordPerPage)
         {
             GoalMaster gm = new GoalMaster();
             gm.GoalTitle = title;
             gm.startFrom = skip;
             gm.NoOfRecords = recordPerPage;
-            gm.totalRecords = count;
             return this.GetEntityCollection<GoalMaster>(gm, _SearchGoalByTitle);
         }
+        public GoalMaster SearchGoalByTitleCount(string title)
+        {
+            GoalMaster gm = new GoalMaster();
+            gm.GoalTitle = title;
+            return this.GetEntity<GoalMaster>(gm, _SearchGoalByTitleCount);
+        }
+        public GoalMaster TotalRecordsOfGoal()
+        {
+            GoalMaster gm = new GoalMaster();
+            return this.GetEntity<GoalMaster>(gm, _TotalGoalCount);
+        }
 
-        public List<GoalMaster> GetSpecificRecordsOfGoalDB(int StartFrom, int PageSize, int count)
+        public List<GoalMaster> GetSpecificRecordsOfGoalDB(int StartFrom, int PageSize)
         {
             GoalMaster gm = new GoalMaster();
             gm.startFrom = StartFrom;
             gm.NoOfRecords = PageSize;
-            gm.totalRecords = count;
             return this.GetEntityCollection<GoalMaster>(gm, _GetSpecificRecordsOfGoalPagination);
         }
 
