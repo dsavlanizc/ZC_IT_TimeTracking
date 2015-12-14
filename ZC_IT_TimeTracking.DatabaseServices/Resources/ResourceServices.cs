@@ -9,7 +9,7 @@ using ZC_IT_TimeTracking.DataAccess.Interfaces.Resource;
 using ZC_IT_TimeTracking.DataAccess.Library.Validations;
 using ZC_IT_TimeTracking.DataAccess.Library.Repository;
 
-namespace ZC_IT_TimeTracking.Services.ResourceServices
+namespace ZC_IT_TimeTracking.Services.Resource
 {
     class ResourceServices : ServiceBase, IResourceRepository
     {
@@ -17,7 +17,7 @@ namespace ZC_IT_TimeTracking.Services.ResourceServices
 
         ResourceServices()
         {
-            _ResourceRepository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetResourceRepository();
+            _ResourceRepository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().getResourceRepository();
             this.ValidationErrors = _ResourceRepository.ValidationErrors;
         }
        
