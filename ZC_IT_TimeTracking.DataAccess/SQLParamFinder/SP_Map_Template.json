@@ -92,7 +92,7 @@
     "Name": "DeleteGoalRule",
     "Params": [
       {
-        "Name": "GoalRuleId",
+        "Name": "Goal_RuleID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -109,10 +109,25 @@
     ]
   },
   {
+    "Name": "GetAllGoalsOfQuarter",
+    "Params": [
+      {
+        "Name": "GoalQuarter",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "QuarterYear",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "DeleteGoalMaster",
     "Params": [
       {
-        "Name": "GoalId",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -152,7 +167,7 @@
     "Name": "GetGoalDetails",
     "Params": [
       {
-        "Name": "Goal_Id",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -327,42 +342,42 @@
     "Name": "InsertGoalMaster",
     "Params": [
       {
-        "Name": "Goal_Title",
+        "Name": "GoalTitle",
         "sqlDbType": 22,
         "direction": 1
       },
       {
-        "Name": "Goal_Description",
+        "Name": "GoalDescription",
         "sqlDbType": 22,
         "direction": 1
       },
       {
-        "Name": "Unit_Of_Measurement",
+        "Name": "UnitOfMeasurement",
         "sqlDbType": 22,
         "direction": 1
       },
       {
-        "Name": "Measurement_Value",
+        "Name": "MeasurementValue",
         "sqlDbType": 6,
         "direction": 1
       },
       {
-        "Name": "Is_HigherValueGood",
+        "Name": "IsHigherValueGood",
         "sqlDbType": 2,
         "direction": 1
       },
       {
-        "Name": "creationDate",
+        "Name": "Creation_Date",
         "sqlDbType": 31,
         "direction": 1
       },
       {
-        "Name": "QuarterID",
+        "Name": "QuarterId",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "CurrentInsertedId",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 3
       }
@@ -397,12 +412,12 @@
     "Name": "InsertGoalRules",
     "Params": [
       {
-        "Name": "PerformanceRangeFrom",
+        "Name": "Performance_RangeFrom",
         "sqlDbType": 6,
         "direction": 1
       },
       {
-        "Name": "PerformanceRangeTo",
+        "Name": "Performance_RangeTo",
         "sqlDbType": 6,
         "direction": 1
       },
@@ -422,7 +437,7 @@
     "Name": "SearchGoalByTitle",
     "Params": [
       {
-        "Name": "title",
+        "Name": "GoalTitle",
         "sqlDbType": 22,
         "direction": 1
       },
@@ -437,7 +452,7 @@
         "direction": 1
       },
       {
-        "Name": "MatchedRecords",
+        "Name": "totalRecords",
         "sqlDbType": 8,
         "direction": 3
       }
@@ -447,42 +462,42 @@
     "Name": "UpdateGoalMaster",
     "Params": [
       {
-        "Name": "Goal_Id",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "Goal_Title",
+        "Name": "GoalTitle",
         "sqlDbType": 22,
         "direction": 1
       },
       {
-        "Name": "Goal_Description",
+        "Name": "GoalDescription",
         "sqlDbType": 22,
         "direction": 1
       },
       {
-        "Name": "Unit_Of_Measurement",
+        "Name": "UnitOfMeasurement",
         "sqlDbType": 22,
         "direction": 1
       },
       {
-        "Name": "Measurement_Value",
+        "Name": "MeasurementValue",
         "sqlDbType": 6,
         "direction": 1
       },
       {
-        "Name": "CreateDate",
+        "Name": "Creation_Date",
         "sqlDbType": 31,
         "direction": 1
       },
       {
-        "Name": "Is_HigherValueGood",
+        "Name": "IsHigherValueGood",
         "sqlDbType": 2,
         "direction": 1
       },
       {
-        "Name": "QuaterID",
+        "Name": "QuarterId",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -492,12 +507,12 @@
     "Name": "UpdateGoalRules",
     "Params": [
       {
-        "Name": "PerformanceRangeFrom",
+        "Name": "Performance_RangeFrom",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "PerformanceRangeTo",
+        "Name": "Performance_RangeTo",
         "sqlDbType": 8,
         "direction": 1
       },

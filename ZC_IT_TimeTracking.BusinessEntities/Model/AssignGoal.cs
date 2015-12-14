@@ -2,14 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ZC_IT_TimeTracking.BusinessEntities.Model;
 
 namespace ZC_IT_TimeTracking.BusinessEntities
 {
     public class AssignGoal
     {
-        public int[] ResourceID { get; set; }
-        public int Goal_MasterID { get; set; }
-        public int weight { get; set; }
+        public AssignGoal()
+        {
+            this.GoalMaster = new GoalMaster();
+            this.Resource = new Resources();
+        }
+        public Int32 Resource_GoalID { get; set; }
+        public Int32 ResourceID { get; set; }
+        public Int32 Goal_MasterID { get; set; }
+        public Int32 Weight { get; set; }
+        public DateTime GoalAssignDate { get; set; }
+
+        public GoalMaster GoalMaster { get; set; }
+        public Resources Resource { get; set; }   
     }
 
     public class ResourceGoal

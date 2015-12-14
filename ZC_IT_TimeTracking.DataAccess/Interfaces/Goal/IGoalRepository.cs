@@ -12,5 +12,8 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.Goal
         GoalMaster GetGoalDetailsByIDDB(int goalID);
         bool InsertGoalMasterDB(GoalMaster gm);
         bool UpdateGoalMasterDB(GoalMaster gm);
+        int DeleteGoalMasterDB(int goalID);
+        bool IsGoalExistDB(int goalID);
+        List<GoalMaster> GoalListByQuarterDB(int goalQuarter, int quarterYear);
     }
 }

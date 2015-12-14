@@ -75,7 +75,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return null;
             }
         }
-
+        //Completed
         public List<Goal_Master> GetGoalIDandTitle()
         {
             try
@@ -120,6 +120,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
+        //Completed
         public bool IsGoalExist(int id)
         {
             try
@@ -250,7 +251,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return false;
             }
         }
-
+        //completed
         public JsonResponse DeleteGoal(int[] goalid)
         {
             JsonResponse js = new JsonResponse();
@@ -327,7 +328,8 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return null;
             }
         }
-
+        //Hint: use Repo GetGoaldetailByGoalID()
+        //completed
         public GetGoalDescription GetGoalDescription(int GoalID)
         {
             GetGoalDescription GGD = new GetGoalDescription();

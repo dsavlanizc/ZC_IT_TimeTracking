@@ -16,24 +16,25 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
         const string _InsertGoalMaster = "InsertGoalMaster";
         const string _UpdateGoalMaster = "UpdateGoalMaster";
         const string _DeleteGoalMasterByGoalID = "DeleteGoalMaster";
+        const string _GetAllGoalsOfQuarter = "GetAllGoalsOfQuarter";
 
-        public List<GoalMaster> SearchGoalByTitleDB(string title, int skip, int recordPerPage,int count)
+        public List<GoalMaster> SearchGoalByTitleDB(string title, int skip, int recordPerPage, int count)
         {
             GoalMaster gm = new GoalMaster();
             gm.GoalTitle = title;
-            gm.skip = skip;
-            gm.recordPerPage = recordPerPage;
-            gm.count = count;
-            return this.GetEntityCollection<GoalMaster>(gm,_SearchGoalByTitle);
+            gm.startFrom = skip;
+            gm.NoOfRecords = recordPerPage;
+            gm.totalRecords = count;
+            return this.GetEntityCollection<GoalMaster>(gm, _SearchGoalByTitle);
         }
 
         public List<GoalMaster> GetSpecificRecordsOfGoalDB(int StartFrom, int PageSize, int count)
         {
             GoalMaster gm = new GoalMaster();
-            gm.skip = StartFrom;
-            gm.recordPerPage = PageSize;
-            gm.count = count;
-            return this.GetEntityCollection<GoalMaster>(gm,_GetSpecificRecordsOfGoalPagination);
+            gm.startFrom = StartFrom;
+            gm.NoOfRecords = PageSize;
+            gm.totalRecords = count;
+            return this.GetEntityCollection<GoalMaster>(gm, _GetSpecificRecordsOfGoalPagination);
         }
 
         public GoalMaster GetGoalDetailsByIDDB(int goalID)
@@ -67,6 +68,32 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
             goal.Creation_Date = DateTime.Today;
             goal.Quarters.QuarterID = gm.Quarters.QuarterID;
             return this.InsertOrUpdate<GoalMaster>(goal, _UpdateGoalMaster);
+        }
+
+        public int DeleteGoalMasterDB(int goalID)
+        {
+            GoalMaster gm = new GoalMaster();
+            gm.Goal_MasterID = goalID;
+            return this.Deletes<GoalMaster>(gm, _DeleteGoalMasterByGoalID);
+        }
+
+        public bool IsGoalExistDB(int goalID)
+        {
+            GoalMaster gm = new GoalMaster();
+            gm.Goal_MasterID = goalID;
+            var dt = this.GetEntity<GoalMaster>(gm, _GetGoalDetailsByGoalID);
+            if (dt != null)
+                return true;
+            else
+                return false;
+        }
+
+        public List<GoalMaster> GoalListByQuarterDB(int goalQuarter,int quarterYear)
+        {
+            GoalMaster gm = new GoalMaster();
+            gm.GoalQuarter = goalQuarter;
+            gm.QuarterYear = quarterYear;
+            return this.GetEntityCollection<GoalMaster>(gm, _GetAllGoalsOfQuarter);
         }
     }
 }

@@ -87,7 +87,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                var CheckQuarter = _quarterServices.CheckQuater(goal.GoalQuarter, goal.QuarterYear).FirstOrDefault();
+                var CheckQuarter = _quarterServices.CheckQuarter(goal.GoalQuarter, goal.QuarterYear);
                 ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
                 _goalRepository.InsertGoalMasterDB(goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, goal.IsHigherValueGood, DateTime.Today, CheckQuarter.QuarterID, insertedId);
                 Int32 goalId = Int32.Parse(insertedId.Value.ToString());
@@ -113,7 +113,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
         {
             try
             {
-                var quarter = _quarterServices.CheckQuater(goal.GoalQuarter, goal.QuarterYear).FirstOrDefault();
+                var quarter = _quarterServices.CheckQuarter(goal.GoalQuarter, goal.QuarterYear);
                 _goalRepository.UpdateGoalMasterDB(goal.Goal_MasterID, goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, DateTime.Today, goal.IsHigherValueGood, quarter.QuarterID);
                 _ruleServices.DeleteAllGoalRule(goal.Goal_MasterID);
                 foreach (GoalRule rule in goal.GoalRules)
@@ -131,6 +131,79 @@ namespace ZC_IT_TimeTracking.Services.Goals
             {
                 this.ValidationErrors.Add("ERR_EDIT_GOAL", "Error Ocurred while Updating Goal!");
                 return false;
+            }
+        }
+
+        public JsonResponse DeleteGoal(int[] goalid)
+        {
+            JsonResponse js = new JsonResponse();
+            try
+            {
+                int count = 0;
+                foreach (int i in goalid)
+                {
+                    int res = _goalRepository.DeleteGoalMasterDB(i);
+                    if (res > 0) count++;
+                }
+                if (count == goalid.Length)
+                {
+                    js.message = "Goal(s) Deleted Successfully!";
+                    js.success = true;
+                    return js;
+                }
+                else if (count > 0)
+                {
+                    js.message = "Some of goal(s) deleted!";
+                    js.success = true;
+                    return js;
+                }
+                else
+                {
+                    js.message = "No such goal exist!";
+                    js.success = false;
+                    return js;
+                }
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_DEL_GOAL", "Error Occured while Deleting Goal!");
+                return null;
+            }
+        }
+
+        public bool IsGoalExist(int goalID)
+        {
+            try
+            {
+                var IGE = _goalRepository.IsGoalExistDB(goalID);
+                return IGE;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal!");
+                return false;
+            }
+        }
+
+        public List<GoalMaster> GetGoalIDandTitle()
+        {
+            try
+            {
+                int Quarter = Utilities.GetQuarter();
+                int Year = DateTime.Now.Year;
+                var Glist = _goalRepository.GoalListByQuarterDB(Quarter,Year);
+                if (Glist.Count != 0)
+                    return Glist;
+                else
+                {
+                    this.ValidationErrors.Add("NO_Goal_AVL", "No Goal Available!");
+                    return null;
+                }
+            }
+            catch (Exception)
+            {
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal List!");
+                return null;
             }
         }
     }
