@@ -102,12 +102,14 @@
   <ItemGroup>
     <Compile Include="Account\AccountService.cs" />
     <Compile Include="AssignGoals\AssignGoalServices.cs" />
+    <Compile Include="AssignGoals\ResourceGoalService.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="GoalRuleServices\GoalRuleService.cs" />
     <Compile Include="Goals\GoalService.cs" />
     <Compile Include="Goals\GoalServices.cs" />
     <Compile Include="Interfaces\IGoalRuleServices.cs" />
     <Compile Include="Interfaces\IGoalServices.cs" />
+    <Compile Include="Interfaces\IResourceGoalService.cs" />
     <Compile Include="Interfaces\IQuarterService.cs" />
     <Compile Include="IServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

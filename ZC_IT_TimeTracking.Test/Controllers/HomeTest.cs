@@ -17,15 +17,17 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         AssignGoalService _goalAssignServices = new AssignGoalService();
         GoalService _goalServices = new GoalService();
         DatabaseEntities dbCtx = new DatabaseEntities();
+        ResourceGoalService _rgService = new ResourceGoalService();
 
         [TestMethod]
         public void RepoTest()
         {
+            var asdf = _rgService.EditAssignedGoal(70, 1004, 3);
             var asas = _goalServices.TotalRecordsOfGoal();
             var isExist = _quarterService.CheckQuarter(5, 2015);
             var qbyid = _quarterService.GetQuarterById(1);
             var allq = _quarterService.GetAllQuarters();
-            var asdf = _quarterService.GetQuarterFromYear(2015);
+            var asdfd = _quarterService.GetQuarterFromYear(2015);
         }
 
         [TestMethod]

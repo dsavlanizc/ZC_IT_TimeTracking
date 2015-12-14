@@ -1,4 +1,5 @@
-﻿[
+﻿
+[
   {
     "Name": "sp_GetAllQuarters",
     "Params": []
@@ -37,7 +38,7 @@
     "Name": "AssignGoalToResource",
     "Params": [
       {
-        "Name": "ResourceId",
+        "Name": "ResourceID",
         "sqlDbType": 8,
         "direction": 1
       },
@@ -102,7 +103,7 @@
     "Name": "DeleteResourceGoal",
     "Params": [
       {
-        "Name": "resource_GoalId",
+        "Name": "Resource_GoalID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -141,7 +142,7 @@
     "Name": "GetAllGoalsOfResource",
     "Params": [
       {
-        "Name": "ResourceId",
+        "Name": "ResourceID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -162,6 +163,16 @@
     "Params": [
       {
         "Name": "Goal_id",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "GetResourceGoalById",
+    "Params": [
+      {
+        "Name": "Resource_GoalID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -571,17 +582,17 @@
     "Name": "UpdateResourceGoal",
     "Params": [
       {
-        "Name": "ResourceId",
+        "Name": "ResourceID",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "GoalId",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "weight",
+        "Name": "Weight",
         "sqlDbType": 8,
         "direction": 1
       }

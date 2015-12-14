@@ -14,24 +14,9 @@ namespace ZC_IT_TimeTracking.BusinessEntities
     
     public partial class Team
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Team()
-        {
-            this.Managers = new HashSet<Manager>();
-            this.Resources = new HashSet<Resource>();
-            this.TeamLeads = new HashSet<TeamLead>();
-        }
-    
         public int TeamID { get; set; }
         public string TeamName { get; set; }
         public int DepartmentID { get; set; }
-    
-        public virtual Department Department { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Manager> Managers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Resource> Resources { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeamLead> TeamLeads { get; set; }
+        public Department Department { get; set; }
     }
 }

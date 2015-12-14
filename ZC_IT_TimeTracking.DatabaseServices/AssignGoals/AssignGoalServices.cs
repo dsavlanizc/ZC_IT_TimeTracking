@@ -184,6 +184,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             }
         }
 
+        //completed : get resourcegoal by id
         public ResourceGoal GetAssignedGoal(int AssignGoalId)
         {
             var GoalDetail = new ResourceGoal();
@@ -250,6 +251,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             }
         }
 
+        //completed
         public bool EditAssignedGoal(int Weight, int ResourceId, int GoalID)
         {
             try
@@ -268,7 +270,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 return false;
             }
         }
-
+        //completed
         public bool DeleteAssignedGoal(int Id)
         {
             try
