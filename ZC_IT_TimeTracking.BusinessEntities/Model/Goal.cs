@@ -30,9 +30,9 @@ namespace ZC_IT_TimeTracking.BusinessEntities
 
         #region NonTableProperty
 
-        public int skip{get; set;}
-        public int recordPerPage{get; set;}
-        public int count { get; set; }
+        public int startFrom{ get; set; }
+        public int NoOfRecords { get; set; }
+        public int totalRecords { get; set; }
         #endregion
     }
 }

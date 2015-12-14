@@ -68,7 +68,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 return null;
             }
         }
-
+        //ResourceModel
         public List<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(int ResourceId)
         {
             try
@@ -88,6 +88,8 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 return null;
             }
         }
+
+        //Completed
         public List<GetAssignedGoalDetails_Result> GetAssignedGoalDetails(int AssignGoalId)
         {
             try
@@ -107,7 +109,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 return null;
             }
         }
-
+        //Completed
         public List<GetResourceGoalDetails_Result> GetResourceGoalDetails(int Resourceid, int GoalId)
         {
             try
@@ -141,7 +143,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                     int TotalWeight = 0;
                     if (ResGoal != null) 
                     {
-                        TotalWeight = ResGoal.Sum(s => s.Weight) + AssignData.weight;
+                        TotalWeight = ResGoal.Sum(s => s.Weight) + AssignData.Weight;
                     }
                     if (v == null)
                     {
@@ -153,7 +155,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                         else
                         {
                             ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
-                            var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.weight, DateTime.Now.Date, insertedId);
+                            var AssignGoal = DbContext.AssignGoalToResource(id, AssignData.Goal_MasterID, AssignData.Weight, DateTime.Now.Date, insertedId);
                             count++;
                         }                        
                     }

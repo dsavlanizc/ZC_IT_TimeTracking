@@ -103,6 +103,33 @@ namespace ZC_IT_TimeTracking.DataAccess.Extensions
                 }
             }
         }
+        //Return Interger value
+        public static int Deletes<T>(this RepositoryBase<T> repository, T entity, string sprocName)
+        {
+            int ResultCount;
+            try
+            {
+                IDbCommand command = new SqlCommand().GetCommandWithParameters(entity, sprocName);
+                SqlConnection conn = DBConnectionHelper.OpenNewSqlConnection(repository.ConnectionString);
+                command.Connection = conn;
+                ResultCount = command.ExecuteNonQuery();
+                DBConnectionHelper.CloseSqlConnection(conn);
+                //Debug.WriteLine(String.Format("{0} took {1} seconds to finish", sprocName, sw.ElapsedMilliseconds / 1000));
+                return ResultCount;
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.ToLower().Contains("because the database is read-only"))
+                {
+                    repository.ValidationErrors.Add("APPLICATION_ARCHIVE_MODE_WARNING_MESSAGE", "Changes to data are not allowed within the archiving system.");
+                    throw;// new DataBaseAccessException("DATABASE_IS_IN_READ_ONLY_MODE", ex.InnerException);
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
 
         public static bool InsertOrUpdate<T>(this RepositoryBase<T> repository, T entity, string sprocName)
         {
