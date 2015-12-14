@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using ZC_IT_TimeTracking.BusinessEntities;
 using ZC_IT_TimeTracking.DataAccess.Interfaces;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Goal;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Library.Validations;
+using ZC_IT_TimeTracking.Services.GoalRuleServices;
 using ZC_IT_TimeTracking.Services.Interfaces;
 
 namespace ZC_IT_TimeTracking.Services.Goals
@@ -13,6 +15,8 @@ namespace ZC_IT_TimeTracking.Services.Goals
     public class GoalService : ServiceBase, IGoalServices
     {
         private IGoalRepository _goalRepository;
+        private IGoalRuleServices _ruleServices;
+        private IQuarterService _quarterServices;
         public GoalService()
         {
             _goalRepository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetGoalRepository();
@@ -76,6 +80,57 @@ namespace ZC_IT_TimeTracking.Services.Goals
             {
                 this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching Goal Detail!");
                 return null;
+            }
+        }
+
+        public bool CreateGoal(GoalMaster goal)
+        {
+            try
+            {
+                var CheckQuarter = _quarterServices.CheckQuater(goal.GoalQuarter, goal.QuarterYear).FirstOrDefault();
+                ObjectParameter insertedId = new ObjectParameter("CurrentInsertedId", typeof(int));
+                _goalRepository.InsertGoalMasterDB(goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, goal.IsHigherValueGood, DateTime.Today, CheckQuarter.QuarterID, insertedId);
+                Int32 goalId = Int32.Parse(insertedId.Value.ToString());
+                foreach (GoalRule rule in goal.GoalRules)
+                {
+                    GoalRule gr = new GoalRule();
+                    gr.Performance_RangeFrom = rule.Performance_RangeFrom;
+                    gr.Performance_RangeTo = rule.Performance_RangeTo;
+                    gr.Rating = rule.Rating;
+                    gr.GoalId = rule.GoalId;
+                    _ruleServices.InsertGoalRules(gr);
+                }
+                return true;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_ADD_GOAL", "Error ocurred while Creating Goal!");
+                return false;
+            }
+        }
+
+        public bool UpdateGoal(GoalMaster goal)
+        {
+            try
+            {
+                var quarter = _quarterServices.CheckQuater(goal.GoalQuarter, goal.QuarterYear).FirstOrDefault();
+                _goalRepository.UpdateGoalMasterDB(goal.Goal_MasterID, goal.GoalTitle, goal.GoalDescription, goal.UnitOfMeasurement, goal.MeasurementValue, DateTime.Today, goal.IsHigherValueGood, quarter.QuarterID);
+                _ruleServices.DeleteAllGoalRule(goal.Goal_MasterID);
+                foreach (GoalRule rule in goal.GoalRules)
+                {
+                    GoalRule gr = new GoalRule();
+                    gr.Performance_RangeFrom = rule.Performance_RangeFrom;
+                    gr.Performance_RangeTo = rule.Performance_RangeTo;
+                    gr.Rating = rule.Rating;
+                    gr.GoalId = rule.GoalId;
+                    _ruleServices.InsertGoalRules(gr);
+                }
+                return true;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_EDIT_GOAL", "Error Ocurred while Updating Goal!");
+                return false;
             }
         }
     }

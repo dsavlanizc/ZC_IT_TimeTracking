@@ -13,5 +13,7 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
         //List<GoalQuarters> GetQuarterFromYear(int year);
         List<GoalMaster> SearchGoalByTitle(string title, int skip, int recordPerPage, int count);
         GoalMaster GetGoaldetailByGoalID(int id);
+        bool CreateGoal(GoalMaster goal);
+        bool UpdateGoal(GoalMaster goal);
     }
 }

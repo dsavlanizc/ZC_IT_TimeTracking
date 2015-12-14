@@ -195,7 +195,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return null;
             }
         }
-
+        //completed
         public bool CreateGoal(GoalMaster goal)
         {
             try
@@ -216,7 +216,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return false;
             }
         }
-
+        //completed
         public bool DeleteAllGoalRule(int id)
         {
             try
@@ -230,7 +230,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 return false;
             }
         }
-
+        //Completed
         public bool UpdateGoal(GoalMaster goal)
         {
             try

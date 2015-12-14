@@ -11,7 +11,7 @@ namespace ZC_IT_TimeTracking.BusinessEntities
         public GoalMaster()
         {
             this.GoalRules = new List<GoalRule>();
-            this.Quarter = new GoalQuarters();
+            this.Quarters = new GoalQuarters();
         }
         public Int32 Goal_MasterID { get; set; }
         public string GoalTitle { get; set; }
@@ -24,7 +24,7 @@ namespace ZC_IT_TimeTracking.BusinessEntities
         public Int32 GoalQuarter { get; set; }
         public Int32 QuarterYear { get; set; }
         
-        public GoalQuarters Quarter { get; set; }
+        public GoalQuarters Quarters { get; set; }
         public List<GoalRule> GoalRules { get; set; }
 
         #region NonTableProperty

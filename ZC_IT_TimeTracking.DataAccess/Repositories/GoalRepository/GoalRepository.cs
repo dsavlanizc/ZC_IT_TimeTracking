@@ -4,6 +4,7 @@ using ZC_IT_TimeTracking.DataAccess.Interfaces.Goal;
 using System.Collections.Generic;
 using ZC_IT_TimeTracking.DataAccess.Extensions;
 using System.Data.Objects;
+using System;
 
 namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
 {
@@ -40,6 +41,32 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
             GoalMaster gm = new GoalMaster();
             gm.Goal_MasterID = goalID;
             return this.GetEntity<GoalMaster>(gm, _GetGoalDetailsByGoalID);
+        }
+
+        public bool InsertGoalMasterDB(GoalMaster gm)
+        {
+            GoalMaster goal = new GoalMaster();
+            goal.GoalTitle = gm.GoalTitle;
+            goal.GoalDescription = gm.GoalDescription;
+            goal.UnitOfMeasurement = gm.UnitOfMeasurement;
+            goal.MeasurementValue = gm.MeasurementValue;
+            goal.IsHigherValueGood = gm.IsHigherValueGood;
+            goal.Creation_Date = DateTime.Today;
+            goal.Quarters.QuarterID = gm.Quarters.QuarterID;
+            return this.InsertOrUpdate<GoalMaster>(goal, _InsertGoalMaster);
+        }
+
+        public bool UpdateGoalMasterDB(GoalMaster gm)
+        {
+            GoalMaster goal = new GoalMaster();
+            goal.GoalTitle = gm.GoalTitle;
+            goal.GoalDescription = gm.GoalDescription;
+            goal.UnitOfMeasurement = gm.UnitOfMeasurement;
+            goal.MeasurementValue = gm.MeasurementValue;
+            goal.IsHigherValueGood = gm.IsHigherValueGood;
+            goal.Creation_Date = DateTime.Today;
+            goal.Quarters.QuarterID = gm.Quarters.QuarterID;
+            return this.InsertOrUpdate<GoalMaster>(goal, _UpdateGoalMaster);
         }
     }
 }
