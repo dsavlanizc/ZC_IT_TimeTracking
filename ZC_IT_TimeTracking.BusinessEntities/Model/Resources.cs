@@ -23,7 +23,6 @@ namespace ZC_IT_TimeTracking.BusinessEntities
             public string Name { get { return Name; } set { Name = FirstName + " " + LastName; } }
           
             public List<AssignGoal> AssignGoal { get; set; }
-            public Team Team { get; set; }
 
             public Int32 Goal_MasterID { get; set; }
             public string  GoalTitle { get; set; }
