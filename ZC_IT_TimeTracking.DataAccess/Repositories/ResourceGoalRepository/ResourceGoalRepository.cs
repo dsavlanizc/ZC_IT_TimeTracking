@@ -13,12 +13,19 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository
         const string _DeleteResourceGoal = "DeleteResourceGoal";
         const string _GetResourceGoalById = "GetResourceGoalById";
         const string _UpdateResourceGoal = "UpdateResourceGoal";
+        const string _AssignGoalToResource = "AssignGoalToResource";
 
         public List<ResourceGoalModel> GetAllGoalsOfResourceDB(int resourceId)
         {
             ResourceGoalModel rg = new ResourceGoalModel();
             rg.ResourceID = resourceId;
             return this.GetEntityCollection<ResourceGoalModel>(rg, _GetAllGoalsOfResource);
+        }
+
+        public int AssignGoalToResourceDB(ResourceGoalModel rgm)
+        {
+            var result = this.GetEntity<ResourceGoalModel>(rgm, _AssignGoalToResource);
+            return result.Resource_GoalID;
         }
 
         public bool DeleteResourceGoalDB(int resGoalId)

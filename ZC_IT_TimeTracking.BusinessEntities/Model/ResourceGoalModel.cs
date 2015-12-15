@@ -8,8 +8,9 @@ namespace ZC_IT_TimeTracking.BusinessEntities.Model
 {
     public class ResourceGoalModel
     {
-        public int ResourceID { get; set; }
         public int Resource_GoalID { get; set; }
+        public DateTime GoalAssignDate { get; set; }
+        public int ResourceID { get; set; }
         public int Goal_MasterID { get; set; }
         public string GoalTitle { get; set; }
         public string Name { get; set; }

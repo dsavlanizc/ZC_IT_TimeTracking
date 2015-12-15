@@ -9,6 +9,7 @@ using ZC_IT_TimeTracking.Services.Goals;
 using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Quarters;
 using ZC_IT_TimeTracking.Services.GoalRuleServices;
+using ZC_IT_TimeTracking.Services.Resource;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
@@ -17,8 +18,10 @@ namespace ZC_IT_TimeTracking.Controllers
     {
         GoalService _goalServices = new GoalService();
         QuarterService _quarterService = new QuarterService();
-        AssignGoalService _assignGoalServices = new AssignGoalService();
+        ResourceGoalService _resourceGoalServices = new ResourceGoalService();
         GoalRuleService _ruleService = new GoalRuleService();
+        ResourceServices _resourceService = new ResourceServices();
+        AssignGoalService _assignGoalServices = new AssignGoalService();
 
         // GET: Home
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
@@ -201,12 +204,12 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var TeamMember = _assignGoalServices.GetResourceByTeam(TeamID);
+                var TeamMember = _resourceService.GetResourceByTeam(TeamID);
                 int count = TeamMember.Count;
                 for (int i = 0; i < count; i++)
                 {
                     var member = TeamMember.ElementAt(i);
-                    var v = _assignGoalServices.GetResourceGoalDetails(member.ResourceID, GoalID);
+                    var v = _resourceService.GetResourceGoalDetails(member.ResourceID, GoalID);
                     if (v != null)
                     { TeamMember.RemoveAt(i); i--; count--; }
 
@@ -225,7 +228,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                _assignGoalServices.ClearValidationErrors();
+                _resourceGoalServices.ClearValidationErrors();
                 var ISAssign = _assignGoalServices.AssignGoal(AssignData);
                 if (ISAssign)
                 {                   
