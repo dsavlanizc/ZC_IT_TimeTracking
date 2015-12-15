@@ -101,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Account\AccountService.cs" />
-    <Compile Include="AssignGoals\AssignGoalServices.cs" />
     <Compile Include="AssignGoals\ResourceGoalService.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="GoalRuleServices\GoalRuleService.cs" />
