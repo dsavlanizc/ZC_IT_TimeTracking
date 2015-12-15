@@ -9,6 +9,8 @@ using ZC_IT_TimeTracking.Services.Goals;
 using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Quarters;
 using ZC_IT_TimeTracking.Services.GoalRuleServices;
+using ZC_IT_TimeTracking.Services.Resource;
+using ZC_IT_TimeTracking.Services.Team;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
@@ -17,8 +19,10 @@ namespace ZC_IT_TimeTracking.Controllers
     {
         GoalService _goalServices = new GoalService();
         QuarterService _quarterService = new QuarterService();
-        AssignGoalService _assignGoalServices = new AssignGoalService();
+        ResourceGoalService _assignGoalServices = new ResourceGoalService();
         GoalRuleService _ruleService = new GoalRuleService();
+        ResourceService _resourceServices = new ResourceService();
+        TeamServices _teamService = new TeamServices();
 
         // GET: Home
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
@@ -173,7 +177,7 @@ namespace ZC_IT_TimeTracking.Controllers
         public ActionResult AssignGoal()
         {
             ViewBag.goal = _goalServices.GetGoalIDandTitle();
-            ViewBag.Team = _assignGoalServices.GetTeam();
+            ViewBag.Team = _teamService.GetTeam();
             return View("_AssignGoal");
         }
 
@@ -190,7 +194,7 @@ namespace ZC_IT_TimeTracking.Controllers
                     return Json(new { TitleData = Desc.GoalDescription, success = true });
             }
             catch
-            {
+            thay js{
                 return Json(new JsonResponse { message = "Error occured while Getting Description!", success = false });
             }
         }
