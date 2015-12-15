@@ -211,7 +211,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 {
                     var member = TeamMember.ElementAt(i);
                     var v = _resourceServices.GetResourceGoalDetails(member.ResourceID, GoalID);
-                    if (v != null)
+                    if (v != null && v.Count > 0)
                     { TeamMember.RemoveAt(i); i--; count--; }
 
                 }
@@ -223,28 +223,27 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
-        //using Services
-        //[HttpPost]
-        //public JsonResult AssignGoal(AssignGoal AssignData)
-        //{
-        //    try
-        //    {
-        //        _assignGoalServices.ClearValidationErrors();
-        //        var ISAssign = _assignGoalServices.AssignGoal(AssignData);
-        //        if (ISAssign)
-        //        {                   
-        //            return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
-        //        }
-        //        else
-        //        {
-        //            return Json(new JsonResponse { message = _assignGoalServices.ValidationErrors.Errors[0].ErrorDescription, success = false });
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return Json(new JsonResponse { message = "Error occured while Assign a Goal", success = false });
-        //    }
-        //}
+        [HttpPost]
+        public JsonResult AssignGoal(AssignGoal AssignData)
+        {
+            try
+            {
+                _assignGoalServices.ClearValidationErrors();
+                var ISAssign = _assignGoalServices.AssignGoal(AssignData);
+                if (ISAssign)
+                {                   
+                    return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+                }
+                else
+                {
+                    return Json(new JsonResponse { message = _assignGoalServices.ValidationErrors.Errors[0].ErrorDescription, success = false });
+                }
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while Assign a Goal", success = false });
+            }
+        }
 
         //done
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]

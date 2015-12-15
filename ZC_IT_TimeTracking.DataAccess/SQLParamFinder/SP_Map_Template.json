@@ -1,4 +1,5 @@
-﻿[
+﻿
+[
   {
     "Name": "sp_GetAllQuarters",
     "Params": []
@@ -55,11 +56,6 @@
         "Name": "GoalAssignDate",
         "sqlDbType": 31,
         "direction": 1
-      },
-      {
-        "Name": "CurrentInsertedId",
-        "sqlDbType": 8,
-        "direction": 3
       }
     ]
   },
@@ -281,7 +277,7 @@
     "Name": "GetResourceByTeam",
     "Params": [
       {
-        "Name": "TeamId",
+        "Name": "TeamID",
         "sqlDbType": 8,
         "direction": 1
       }

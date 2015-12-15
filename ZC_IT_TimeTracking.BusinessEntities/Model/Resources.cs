@@ -20,7 +20,7 @@ namespace ZC_IT_TimeTracking.BusinessEntities
             public Nullable<Int32> TeamID { get; set; }
             public string EMailID { get; set; }
             public string UserName { get; set; }
-            public string Name { get { return Name; } set { Name = FirstName + " " + LastName; } }
+            public string Name { get { return FirstName + " " + LastName; } }
           
             public List<AssignGoal> AssignGoal { get; set; }
 
@@ -28,6 +28,6 @@ namespace ZC_IT_TimeTracking.BusinessEntities
             public string  GoalTitle { get; set; }
             public DateTime GoalAssignDate { get; set; }
             public Int32 weight { get; set; }
-            public Int32 Resource_GoalID { get; set; }
+            public decimal Resource_GoalID { get; set; }
     }
 }
