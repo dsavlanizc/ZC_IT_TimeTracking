@@ -27,7 +27,7 @@ namespace ZC_IT_TimeTracking.BusinessEntities
             public Int32 Goal_MasterID { get; set; }
             public string  GoalTitle { get; set; }
             public DateTime GoalAssignDate { get; set; }
-            public Int32 weight { get; set; }
-            public decimal Resource_GoalID { get; set; }
+            public Int32 Weight { get; set; }
+            public Int32 Resource_GoalID { get; set; }
     }
 }

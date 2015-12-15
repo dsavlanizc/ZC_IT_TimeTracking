@@ -1,5 +1,4 @@
-﻿
-[
+﻿[
   {
     "Name": "sp_GetAllQuarters",
     "Params": []
@@ -287,12 +286,12 @@
     "Name": "GetResourceGoalDetails",
     "Params": [
       {
-        "Name": "resourceId",
+        "Name": "ResourceID",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "GoalId",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -581,7 +580,7 @@
     "Name": "UpdateResourceGoal",
     "Params": [
       {
-        "Name": "ResourceID",
+        "Name": "Resource_GoalID",
         "sqlDbType": 8,
         "direction": 1
       },

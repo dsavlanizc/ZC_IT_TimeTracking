@@ -271,7 +271,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var GoalExist = _assignGoalServices.IsResourceGoalExist (AssignId);
+                var GoalExist = _assignGoalServices.IsResourceGoalExist(AssignId);
                 if (GoalExist != null)
                 {
                     
@@ -287,11 +287,11 @@ namespace ZC_IT_TimeTracking.Controllers
 
         //done
         [HttpPost]
-        public ActionResult EditAssignedGoal(int Weight, int ResourceId, int GoalID)
+        public ActionResult EditAssignedGoal(int Weight, int ResourceGoalId, int GoalID)
         {
             try
             {
-                var IsUpdate = _assignGoalServices.EditAssignedGoal(Weight, ResourceId, GoalID);
+                var IsUpdate = _assignGoalServices.EditAssignedGoal(Weight, ResourceGoalId, GoalID);
                 if (IsUpdate)
                     return Json(new JsonResponse { message = "Weight updated successfully!", success = true });
                 else

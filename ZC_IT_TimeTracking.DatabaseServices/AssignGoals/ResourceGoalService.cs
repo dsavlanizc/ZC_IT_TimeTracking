@@ -27,7 +27,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
         {
             try
             {
-                if (IsResourceGoalExist(resGoalId))
+                if (IsResourceGoalExist(resGoalId) != null)
                 {
                     return _repository.DeleteResourceGoalDB(resGoalId);
                 }
@@ -42,13 +42,9 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             }
         }
 
-        public bool IsResourceGoalExist(int resGoalId)
+        public ResourceGoalModel IsResourceGoalExist(int resGoalId)
         {
-            var result = _repository.GetResourceGoalByIdDB(resGoalId);
-            if (result == null)
-                return false;
-            else
-                return true;
+            return _repository.GetResourceGoalByIdDB(resGoalId);
         }
 
         public bool IsResourceGoalExistByResourceId(int resourceId)
@@ -60,14 +56,13 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 return false;
         }
 
-        public bool EditAssignedGoal(int Weight, int ResourceId, int GoalID)
+        public bool EditAssignedGoal(int Weight, int ResourceGoalId, int GoalID)
         {
             try
             {
-                if (IsResourceGoalExistByResourceId(ResourceId))
+                if (IsResourceGoalExist(ResourceGoalId) != null)
                 {
-                    ResourceGoalModel rg = new ResourceGoalModel();
-                    return _repository.UpdateResourceGoalDB(ResourceId, GoalID, Weight);
+                    return _repository.UpdateResourceGoalDB(ResourceGoalId, GoalID, Weight);
                 }
                 this.ValidationErrors.Add("GoalExistance", "No such goal exist!");
                 return false;

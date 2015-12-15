@@ -10,7 +10,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.ResourceGoalRepo
         List<ResourceGoalModel> GetAllGoalsOfResourceDB(int resourceId);
         bool DeleteResourceGoalDB(int resGoalId);
         ResourceGoalModel GetResourceGoalByIdDB(int resGoalId);
-        bool UpdateResourceGoalDB(int ResourceId, int GoalID, int Weight);
+        bool UpdateResourceGoalDB(int ResourceGoalId, int GoalID, int Weight);
         int AssignGoalToResourceDB(ResourceGoalModel rgm);
         ResourceGoalModel GetResourceGoalDetailsDB(int resourceId, int goalId);
     }

@@ -52,10 +52,10 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository
             return this.GetEntity<ResourceGoalModel>(rg, _GetResourceGoalById);
         }
 
-        public bool UpdateResourceGoalDB(int ResourceId, int GoalID, int Weight)
+        public bool UpdateResourceGoalDB(int ResourceGoalId, int GoalID, int Weight)
         {
             ResourceGoalModel rg = new ResourceGoalModel();
-            rg.ResourceID = ResourceId;
+            rg.Resource_GoalID = ResourceGoalId;
             rg.Goal_MasterID = GoalID;
             rg.Weight = Weight;
             return this.InsertOrUpdate<ResourceGoalModel>(rg, _UpdateResourceGoal);

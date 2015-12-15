@@ -695,13 +695,13 @@ $(function () {
         EditWeight = function (data) {
             var weight = prompt("Update Weight", data.Weight);
             var GoalID = data.Goal_MasterID;
-            var ResourceId = data.ResourceID;
+            var ResourceGoalId = data.Resource_GoalID;
             $.ajax({
                 url: "/Home/EditAssignedGoal",
                 type: "POST",
                 dataType: "Json",
                 contentType: "application/json",
-                data: JSON.stringify({ GoalID: GoalID, Weight: weight, ResourceId: ResourceId }),
+                data: JSON.stringify({ GoalID: GoalID, Weight: weight, ResourceGoalId: ResourceGoalId }),
                 beroreSend: showLoading(),
                 success: function (dt) {
                     hideLoading();

@@ -11,8 +11,8 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
     {
         List<ResourceGoalModel> GetAllGoalsOfResource(int resourceId);
         bool DeleteResourceGoal(int resGoalId);
-        bool IsResourceGoalExist(int resGoalId);
-        bool EditAssignedGoal(int Weight, int ResourceId, int GoalID);
+        ResourceGoalModel IsResourceGoalExist(int resGoalId);
+        bool EditAssignedGoal(int Weight, int ResourceGoalId, int GoalID);
         bool IsResourceGoalExistByResourceId(int resourceId);
     }
 }
