@@ -63,16 +63,9 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
         }
 
         public bool UpdateGoalMasterDB(GoalMaster gm)
-        {
-            GoalMaster goal = new GoalMaster();
-            goal.GoalTitle = gm.GoalTitle;
-            goal.GoalDescription = gm.GoalDescription;
-            goal.UnitOfMeasurement = gm.UnitOfMeasurement;
-            goal.MeasurementValue = gm.MeasurementValue;
-            goal.IsHigherValueGood = gm.IsHigherValueGood;
-            goal.Creation_Date = DateTime.Today;
-            goal.Quarters.QuarterID = gm.Quarters.QuarterID;
-            return this.InsertOrUpdate<GoalMaster>(goal, _UpdateGoalMaster);
+        {                    
+            gm.Creation_Date = DateTime.Today;            
+            return this.InsertOrUpdate<GoalMaster>(gm, _UpdateGoalMaster);
         }
 
         public int DeleteGoalMasterDB(int goalID)
