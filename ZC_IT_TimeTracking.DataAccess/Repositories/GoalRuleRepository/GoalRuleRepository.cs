@@ -28,12 +28,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.GoalRuleRepository
 
         public bool InsertGoalRuleDB(GoalRule gr)
         {
-            GoalRule goalRule = new GoalRule();
-            goalRule.Performance_RangeFrom = gr.Performance_RangeFrom;
-            goalRule.Performance_RangeTo = gr.Performance_RangeTo;
-            goalRule.Rating = gr.Rating;
-            goalRule.GoalId = gr.GoalId;
-            return this.InsertOrUpdate<GoalRule>(goalRule, _InsertGoalRules);
+            return this.InsertOrUpdate<GoalRule>(gr, _InsertGoalRules);
         }
 
         public bool DeleteAllRulesOfGoalByGoalID(int goalID)

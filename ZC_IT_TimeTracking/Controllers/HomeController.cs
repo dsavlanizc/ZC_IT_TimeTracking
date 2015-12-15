@@ -81,7 +81,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 if (_goalServices.IsGoalExist(Id))
                 {
                     var goal = _goalServices.GetGoaldetailByGoalID(Id);
-                    var quarter = _quarterService.GetQuarterById(goal.QuarterId);
+                    var quarter = _quarterService.GetQuarterById(goal.QuarterID);
                     var rules = _ruleService.GetGoalRules(Id);
                     var quarterList = _quarterService.GetAllQuarters();
                     return Json(new { goal = goal, quarter = quarter, rules = rules, quarterList = quarterList, success = true });
