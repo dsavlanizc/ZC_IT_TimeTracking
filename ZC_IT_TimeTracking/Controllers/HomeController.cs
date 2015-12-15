@@ -194,7 +194,7 @@ namespace ZC_IT_TimeTracking.Controllers
                     return Json(new { TitleData = Desc.GoalDescription, success = true });
             }
             catch
-            thay js{
+            {
                 return Json(new JsonResponse { message = "Error occured while Getting Description!", success = false });
             }
         }
@@ -205,12 +205,12 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var TeamMember = _assignGoalServices.GetResourceByTeam(TeamID);
+                var TeamMember = _resourceServices.GetResourceByTeam(TeamID);
                 int count = TeamMember.Count;
                 for (int i = 0; i < count; i++)
                 {
                     var member = TeamMember.ElementAt(i);
-                    var v = _assignGoalServices.GetResourceGoalDetails(member.ResourceID, GoalID);
+                    var v = _resourceServices.GetResourceGoalDetails(member.ResourceID, GoalID);
                     if (v != null)
                     { TeamMember.RemoveAt(i); i--; count--; }
 
