@@ -140,6 +140,7 @@
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Pager.cs" />
+    <Compile Include="Model\Teams.cs" />
     <Compile Include="Model\Utilities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resource.cs">
