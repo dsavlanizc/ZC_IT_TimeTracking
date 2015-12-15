@@ -7,11 +7,13 @@ using ZC_IT_TimeTracking.DataAccess.Interfaces.GoalRepository;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.Resource;
 using ZC_IT_TimeTracking.DataAccess.Interfaces.ResourceGoalRepo;
+using ZC_IT_TimeTracking.DataAccess.Interfaces.Team;
 using ZC_IT_TimeTracking.DataAccess.Repositories.Goal;
 using ZC_IT_TimeTracking.DataAccess.Repositories.GoalRuleRepository;
 using ZC_IT_TimeTracking.DataAccess.Repositories.Quarters;
 using ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository;
 using ZC_IT_TimeTracking.DataAccess.Repositories.ResourceRepository;
+using ZC_IT_TimeTracking.DataAccess.Repositories.TeamRepository;
 
 namespace ZC_IT_TimeTracking.DataAccess.Factory
 {
@@ -82,6 +84,11 @@ namespace ZC_IT_TimeTracking.DataAccess.Factory
         public IResourceGoalRepository GetResourceGoalRepository()
         {
             return new ResourceGoalRepository() { ConnectionString = _ConnectionString };
+        }
+
+        public ITeamRepository GetTeamsRepository()
+        {
+            return new TeamRepository() { ConnectionString = _ConnectionString };
         }
         #endregion
     }

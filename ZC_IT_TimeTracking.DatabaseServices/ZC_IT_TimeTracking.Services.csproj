@@ -117,6 +117,7 @@
     <Compile Include="Role\RoleService.cs" />
     <Compile Include="ServiceBase.cs" />
     <Compile Include="Teamservices\TeamServices.cs" />
+    <Compile Include="Team\TeamServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

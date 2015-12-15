@@ -11,11 +11,11 @@ using ZC_IT_TimeTracking.DataAccess.Library.Repository;
 
 namespace ZC_IT_TimeTracking.Services.Resource
 {
-    public class ResourceServices : ServiceBase
+   public  class ResourceService : ServiceBase
     {
         private IResourceRepository _ResourceRepository;
 
-        public ResourceServices()
+       public ResourceService()
         {
             _ResourceRepository = ZC_IT_TimeTracking.DataAccess.Factory.RepositoryFactory.GetInstance().GetResourceRepository();
             this.ValidationErrors = _ResourceRepository.ValidationErrors;

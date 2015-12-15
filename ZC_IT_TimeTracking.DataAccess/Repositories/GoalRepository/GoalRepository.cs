@@ -57,15 +57,8 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
 
         public int InsertGoalMasterDB(GoalMaster gm)
         {
-            GoalMaster goal = new GoalMaster();
-            goal.GoalTitle = gm.GoalTitle;
-            goal.GoalDescription = gm.GoalDescription;
-            goal.UnitOfMeasurement = gm.UnitOfMeasurement;
-            goal.MeasurementValue = gm.MeasurementValue;
-            goal.IsHigherValueGood = gm.IsHigherValueGood;
-            goal.Creation_Date = DateTime.Today;
-            goal.QuarterId = gm.QuarterId;
-            var result = this.GetEntity<GoalMaster>(goal, _InsertGoalMaster);
+            gm.Creation_Date = DateTime.Today;
+            var result = this.GetEntity<GoalMaster>(gm, _InsertGoalMaster);
             return result != null ? result.Goal_MasterID : -1;
         }
 
@@ -100,7 +93,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.Goal
                 return false;
         }
 
-        public List<GoalMaster> GoalListByQuarterDB(int goalQuarter,int quarterYear)
+        public List<GoalMaster> GoalListByQuarterDB(int goalQuarter, int quarterYear)
         {
             GoalMaster gm = new GoalMaster();
             gm.GoalQuarter = goalQuarter;

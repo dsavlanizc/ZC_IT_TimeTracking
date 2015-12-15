@@ -55,19 +55,7 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
         //    }
         //}
 
-        public List<Team> GetTeam()
-        {
-            try
-            {
-                var team = DbContext.Teams.ToList();
-                return team;
-            }
-            catch
-            {
-                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error While fetching record");
-                return null;
-            }
-        }
+      
         //ResourceModel
         public List<GetAllGoalsOfResource_Result> GetAllGoalsOfResource(int ResourceId)
         {

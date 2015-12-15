@@ -1,5 +1,4 @@
-﻿
-[
+﻿[
   {
     "Name": "sp_GetAllQuarters",
     "Params": []
@@ -447,11 +446,15 @@
         "direction": 1
       },
       {
-        "Name": "GoalID",
+        "Name": "GoalId",
         "sqlDbType": 8,
         "direction": 1
       }
     ]
+  },
+  {
+    "Name": "GetAllTeams",
+    "Params": []
   },
   {
     "Name": "SearchGoalByTitle",
