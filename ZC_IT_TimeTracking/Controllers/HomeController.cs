@@ -199,7 +199,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
-        //Using Services
+        //done
         [HttpPost]
         public ActionResult GetTeamMember(int TeamID, int Weight, int GoalID)
         {
@@ -224,33 +224,33 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         //using Services
-        [HttpPost]
-        public JsonResult AssignGoal(AssignGoal AssignData)
-        {
-            try
-            {
-                _assignGoalServices.ClearValidationErrors();
-                var ISAssign = _assignGoalServices.AssignGoal(AssignData);
-                if (ISAssign)
-                {                   
-                    return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
-                }
-                else
-                {
-                    return Json(new JsonResponse { message = _assignGoalServices.ValidationErrors.Errors[0].ErrorDescription, success = false });
-                }
-            }
-            catch
-            {
-                return Json(new JsonResponse { message = "Error occured while Assign a Goal", success = false });
-            }
-        }
+        //[HttpPost]
+        //public JsonResult AssignGoal(AssignGoal AssignData)
+        //{
+        //    try
+        //    {
+        //        _assignGoalServices.ClearValidationErrors();
+        //        var ISAssign = _assignGoalServices.AssignGoal(AssignData);
+        //        if (ISAssign)
+        //        {                   
+        //            return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
+        //        }
+        //        else
+        //        {
+        //            return Json(new JsonResponse { message = _assignGoalServices.ValidationErrors.Errors[0].ErrorDescription, success = false });
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return Json(new JsonResponse { message = "Error occured while Assign a Goal", success = false });
+        //    }
+        //}
 
-        //Using Services
+        //done
         [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
         public ActionResult ViewAssignGoal(int ResId = -1, int TeamID = -1)
         {
-            ViewBag.Team = _assignGoalServices.GetTeam();
+            ViewBag.Team = _teamService.GetTeam();
             if (ResId != -1)
             {
                 ViewBag.AllGoalResourse = _assignGoalServices.GetAllGoalsOfResource(ResId);
@@ -258,7 +258,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
             if (TeamID != -1)
             {
-                var TeamMember = _assignGoalServices.GetResourceByTeam(TeamID);
+                var TeamMember =_resourceServices.GetResourceByTeam(TeamID);
                 return Json(new { TeamMember = TeamMember, success = true });
             }
             //ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
@@ -272,10 +272,11 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var AssignedGoal = _assignGoalServices.GetAssignedGoal(AssignId);
-                if (AssignedGoal != null)
+                var GoalExist = _assignGoalServices.IsResourceGoalExist (AssignId);
+                if (GoalExist != null)
                 {
-                    return Json(new { Data = AssignedGoal, success = true });
+                    
+                    return Json(new { Data = GoalExist, success = true });
                 }
                 return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
             }
@@ -285,7 +286,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
-        //Using Services
+        //done
         [HttpPost]
         public ActionResult EditAssignedGoal(int Weight, int ResourceId, int GoalID)
         {
@@ -303,13 +304,13 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
-        //Using Services
+        //done
         [HttpPost]
         public ActionResult DeleteAssignedGoal(int Id)
         {
             try
             {
-                var IsDelete = _assignGoalServices.DeleteAssignedGoal(Id);
+                var IsDelete = _assignGoalServices.DeleteResourceGoal(Id);
                 if (IsDelete)
                     return Json(new JsonResponse { message = "Deleted Successfully!", success = true });
                 else
