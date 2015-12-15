@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Goal assigned to resource";
 }
-@using ZC_IT_TimeTracking.BusinessEntities
+@using ZC_IT_TimeTracking.BusinessEntities.Model
 <div class="row">
     <h3>Goal Assigned To Resource</h3>
     <br />
@@ -37,7 +37,7 @@
     </div>
     @if (ViewBag.AllGoalResourse != null)
     {
-        var AllGoal = ViewBag.AllGoalResourse as List<GetAllGoalsOfResource_Result>;
+        var AllGoal = ViewBag.AllGoalResourse as List<ResourceGoalModel>;
         int TotalWeight = AllGoal.Sum(s => s.Weight);
         <table class="table">
             <tr>
