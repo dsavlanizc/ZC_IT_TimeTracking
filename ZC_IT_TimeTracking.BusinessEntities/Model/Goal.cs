@@ -16,7 +16,7 @@ namespace ZC_IT_TimeTracking.BusinessEntities
         public Int32 Goal_MasterID { get; set; }
         public string GoalTitle { get; set; }
         public string GoalDescription { get; set; }
-        public Int32 QuarterId { get; set; }
+        public Int32 QuarterID { get; set; }
         public string UnitOfMeasurement { get; set; }
         public double MeasurementValue { get; set; }
         public DateTime Creation_Date { get; set; }

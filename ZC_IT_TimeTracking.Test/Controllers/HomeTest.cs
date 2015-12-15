@@ -22,9 +22,9 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void RepoTest()
         {
+            var isExist = _quarterService.CheckQuarter(4, 2015);
             var asdf = _rgService.EditAssignedGoal(7, 1004, 3);
             var asas = _goalServices.TotalRecordsOfGoal();
-            var isExist = _quarterService.CheckQuarter(5, 2015);
             var qbyid = _quarterService.GetQuarterById(1);
             var allq = _quarterService.GetAllQuarters();
             var asdfd = _quarterService.GetQuarterFromYear(2015);

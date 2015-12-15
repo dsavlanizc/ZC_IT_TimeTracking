@@ -26,12 +26,40 @@ namespace ZC_IT_TimeTracking.Services.Goals
 
         public int TotalRecordsOfGoal()
         {
-            return _goalRepository.TotalRecordsOfGoal().totalRecords;
+            try
+            {
+                var count = _goalRepository.TotalRecordsOfGoal().totalRecords;
+                if (count != 0)
+                {
+                    return count;
+                }
+                this.ValidationWarnings.Add("NO_REC_AVL","No records available!");
+                return 0;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error occured while Fetching Count!");
+                return 0;
+            }
         }
 
         public int SearchGoalByTitleCount(string title)
         {
-            return _goalRepository.SearchGoalByTitleCount(title).totalRecords;
+            try
+            {
+                var count = _goalRepository.SearchGoalByTitleCount(title).totalRecords;
+                if (count != 0)
+                {
+                    return count;
+                }
+                this.ValidationWarnings.Add("NO_REC_AVL","No records available!");
+                return 0;
+            }
+            catch
+            {
+                this.ValidationErrors.Add("ERR_FETCH_DATA", "Error occured while Fetching Count!");
+                return 0;
+            }
         }
 
         public List<GoalMaster> SearchGoalByTitle(string title, int skip, int recordPerPage)
@@ -101,7 +129,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                 var CheckQuarter = _quarterServices.CheckQuarter(goal.GoalQuarter, goal.QuarterYear);
                 if (CheckQuarter != null)
                 {
-                    goal.QuarterId = CheckQuarter.QuarterID;
+                    goal.QuarterID = CheckQuarter.QuarterID;
                     int goalId = _goalRepository.InsertGoalMasterDB(goal);
                     if (goalId != -1)
                     {
@@ -135,6 +163,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             try
             {
                 var quarter = _quarterServices.CheckQuarter(goal.GoalQuarter, goal.QuarterYear);
+                goal.QuarterID = quarter.QuarterID;
                 _goalRepository.UpdateGoalMasterDB(goal);
                 _ruleServices.DeleteAllGoalRule(goal.Goal_MasterID);
                 foreach (GoalRule rule in goal.GoalRules)
@@ -143,7 +172,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
                     gr.Performance_RangeFrom = rule.Performance_RangeFrom;
                     gr.Performance_RangeTo = rule.Performance_RangeTo;
                     gr.Rating = rule.Rating;
-                    gr.GoalId = rule.GoalId;
+                    gr.GoalId = goal.Goal_MasterID;
                     _ruleServices.InsertGoalRules(gr);
                 }
                 return true;
