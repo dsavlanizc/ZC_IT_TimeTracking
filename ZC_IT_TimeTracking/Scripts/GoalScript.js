@@ -4,7 +4,7 @@
 $(function () {
     isCreate = true;
     $('[data-toggle="tooltip"]').tooltip();
-
+    $('.k-grid-header .k-header').css('font-weight', 'bold');
     //form validation
     var validator = $("#GoalCreateForm").validate({
         rules: {
@@ -269,6 +269,7 @@ $(function () {
                     beforeSend: showLoading(),
                     success: function (dt) {
                         hideLoading();
+                        alert("asdf");
                         bootbox.alert(dt.message, function () {
                             if (dt.success) {
                                 location.reload(true);
@@ -434,11 +435,11 @@ $(function () {
                         beforeSend: showLoading(),
                         success: function (data) {
                             hideLoading();
-                            if (data.success) {
-                                bootbox.alert(data.message, function () {
+                            bootbox.alert(data.message, function () {
+                                if (data.success) {
                                     location.reload(true);
-                                });
-                            }
+                                }
+                            });
                         },
                         error: function (data) {
                             hideLoading();

@@ -11,6 +11,9 @@ using ZC_IT_TimeTracking.Services.Quarters;
 using ZC_IT_TimeTracking.Services.GoalRuleServices;
 using ZC_IT_TimeTracking.Services.Resource;
 using ZC_IT_TimeTracking.Services.Team;
+using System.Collections.Generic;
+using Kendo.Mvc.UI;
+using Kendo.Mvc.Extensions;
 
 namespace ZC_IT_TimeTracking.Controllers
 {
@@ -42,6 +45,9 @@ namespace ZC_IT_TimeTracking.Controllers
                     ViewBag.Message = "There is no quarter available! Please create one";
                     return View("_AddQuarter");
                 }
+
+                //kendo grid
+                ViewBag.GoalList = ReadGoals();
                 //fetching data
                 int skip = (page - 1) * Utilities.RecordPerPage;
                 if (title == "")
@@ -75,6 +81,15 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 return View("~/Views/Shared/_ErrorView.cshtml");
             }
+        }
+
+        public List<GoalMaster> ReadGoals()
+        {
+            var service = new ZC_IT_TimeTracking.Services.Goals.GoalService();
+            var count = service.TotalRecordsOfGoal();
+            List<GoalMaster> list = service.GetGoalDetail(0, count);
+            if (list == null) list = new List<GoalMaster>();
+            return list;
         }
 
         [HttpPost]
