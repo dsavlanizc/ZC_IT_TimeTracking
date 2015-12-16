@@ -623,6 +623,10 @@ $(function () {
     $("#ButtonViewAssignGoal").click(function () {
         window.location.href = "/Home/ViewAssignGoal";
     });
+    //Add Performance
+    $("#ButtonAddPerformance").click(function () {
+        window.location.href = "/Home/AddPerformance";
+    });
 
     $("#TeamMemberName").change(function () {
         var id = $(this).val();
@@ -747,4 +751,146 @@ $(function () {
             }
         });
     }
+
+    //Get TeamList for Calculate performance
+    $("#TeamList").focus(function () {
+        $(this).attr("oldValue", $(this).val());
+    }).change(function (e) {
+        e.preventDefault();
+        var TeamID = $(this).find('option:selected').val();
+        var GoalID = 0;
+        var Weight = 0;
+        $.ajax({
+            url: "GetTeamMember",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TeamID: TeamID, Weight: Weight, GoalID: GoalID }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                //console.log(dt)
+                if (dt.success) {
+                    //console.log(dt);
+                    $("#TeamMembers").html('');
+                    $("#TeamMembers").append("<option value='-1'>-- Select Resource --</option>");
+                    for (var val in dt.TeamMember) {
+                        $("#TeamMembers").append("<option value=" + dt.TeamMember[val].ResourceID + ">" + dt.TeamMember[val].FirstName + " " + dt.TeamMember[val].LastName + "</option>");
+                    }
+                }
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+
+    $("#TeamMembers").focus(function () {
+        $(this).attr("oldvalue", $(this).val());
+    }).change(function (e) {
+        e.preventDefault();
+        var ResourceID = $(this).find('option:selected').val();
+        $.ajax({
+            url: "GetAllResourceGoal",
+            type: "POST",
+            datatype: 'JSON',
+            contentType: "application/json",
+            data: JSON.stringify({ ResourceID: ResourceID }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                if (dt.success) {
+                    console.log(dt);
+                    $("#GoalTitles").html('');
+                    $("#GoalTitles").append("<option value='-1'>-- Select Goal --</option>");
+                    for (var val in dt.Data) {
+                        $("#GoalTitles").append("<option value=" + dt.Data[val].Goal_MasterID + ">" + dt.Data[val].GoalTitle + "</option>");
+                        //console.log(dt.Data[val].Resource_GoalID);
+                    }
+                }
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+
+    //Get Goal Detail from Selected Title
+    $("#GoalTitles").change(function (e) {
+        e.preventDefault();
+        var TitleID = $(this).find('option:selected').val();
+        if (TitleID == "") {
+            $("#GoalDescription").val('');
+            $("#UnitOfMeasurement").val('');
+            $("#MeasurementValue").val('');
+        }
+        $.ajax({
+            url: "GetResourceGoalData",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ TitleID: TitleID }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                console.log(dt);
+                if (dt.success) {
+                    $("#GoalDescription").val(dt.TitleData.GoalDescription);
+                    $("#UnitOfMeasurement").val(dt.TitleData.UnitOfMeasurement);
+                    $("#MeasurementValue").val(dt.TitleData.MeasurementValue);
+                }                
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
+
+    $("#resetButtonPerformance").click(function () {
+        $("#GoalTitles").html('');
+        //$("#TeamMembers").html('');
+    });
+
+    //Insert performance
+    $("#AddPerformanceForm").submit(function (ev) {
+        ev.preventDefault();
+        var goalID = $("#GoalTitles").find('option:selected').val();
+        var resID = $("#TeamMembers").find('option:selected').val();
+        var resPerformance = $("#Performance").val();
+        //console.log("goal"+goalID + "res " + resID + " per" + resPerformance);
+        $.ajax({
+            url: "InsertPerformance",
+            type: "POST",
+            dataType: "json",
+            contentType: "application/json",
+            data: JSON.stringify({ goalID: goalID, resID: resID, resPerformance: resPerformance }),
+            beforeSend: showLoading(),
+            success: function (dt) {
+                hideLoading();
+                console.log(dt);
+                if (dt.success) {
+                    bootbox.alert(dt.message);
+                    location.reload(true);
+                }
+                else {
+                    bootbox.alert(dt.message);
+                }
+            },
+            error: function (dt) {
+                hideLoading();
+                if (dt.readyState == 0) {
+                    bootbox.alert("Please check your internet connection!");
+                }
+            }
+        });
+    });
 });

@@ -246,17 +246,17 @@
     "Name": "calculateResourceGoalRating",
     "Params": [
       {
-        "Name": "ResourceId",
+        "Name": "Goal_MasterID",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "GoalId",
+        "Name": "ResourceID",
         "sqlDbType": 8,
         "direction": 1
       },
       {
-        "Name": "ResourcePerformance",
+        "Name": "Resource_Performance",
         "sqlDbType": 6,
         "direction": 1
       }
@@ -477,6 +477,26 @@
     ]
   },
   {
+    "Name": "calculateResourceGoalRating1",
+    "Params": [
+      {
+        "Name": "ResourceId",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "GoalId",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "ResourcePerformance",
+        "sqlDbType": 6,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "UpdateGoalMaster",
     "Params": [
       {
@@ -547,6 +567,26 @@
     ]
   },
   {
+    "Name": "GetAllResourceGoalByResId",
+    "Params": [
+      {
+        "Name": "ResourceID",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "GoalQuarter",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "QuarterYear",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "UpdateResourceDetails",
     "Params": [
       {
@@ -591,6 +631,155 @@
       },
       {
         "Name": "Weight",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "InsertPerformance",
+    "Params": [
+      {
+        "Name": "ResourceID",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "QuarterID",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "Resource_Performance",
+        "sqlDbType": 6,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "sp_upgraddiagrams",
+    "Params": []
+  },
+  {
+    "Name": "sp_helpdiagrams",
+    "Params": [
+      {
+        "Name": "diagramname",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "owner_id",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "sp_helpdiagramdefinition",
+    "Params": [
+      {
+        "Name": "diagramname",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "owner_id",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "sp_creatediagram",
+    "Params": [
+      {
+        "Name": "diagramname",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "owner_id",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "version",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "definition",
+        "sqlDbType": 21,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "sp_renamediagram",
+    "Params": [
+      {
+        "Name": "diagramname",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "owner_id",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "new_diagramname",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "sp_alterdiagram",
+    "Params": [
+      {
+        "Name": "diagramname",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "owner_id",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "version",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "definition",
+        "sqlDbType": 21,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "sp_dropdiagram",
+    "Params": [
+      {
+        "Name": "diagramname",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "owner_id",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "GetAllOfResourceGoalPerformance",
+    "Params": [
+      {
+        "Name": "Resource_GoalID",
         "sqlDbType": 8,
         "direction": 1
       }

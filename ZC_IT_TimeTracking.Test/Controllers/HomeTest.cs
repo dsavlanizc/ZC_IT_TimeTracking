@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ZC_IT_TimeTracking.BusinessEntities;
+using ZC_IT_TimeTracking.Controllers;
 using ZC_IT_TimeTracking.Services.AssignGoals;
 using ZC_IT_TimeTracking.Services.Goals;
 using ZC_IT_TimeTracking.Services.Interfaces;
@@ -28,6 +29,14 @@ namespace ZC_IT_TimeTracking.Test.Controllers
             var qbyid = _quarterService.GetQuarterById(1);
             var allq = _quarterService.GetAllQuarters();
             var asdfd = _quarterService.GetQuarterFromYear(2015);
+        }
+
+        [TestMethod]
+        public void PerformanceTest()
+        {
+            var Insert = _rgService.InsertPerformance(62,3050,13);
+            //HomeController hr = new HomeController();
+            //hr.InsertPerformance(62,3050,13);
         }
 
         [TestMethod]
@@ -61,30 +70,30 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void UpdateGoalTest()
         {
-            //GoalMaster goal = new GoalMaster();
-            //goal.Goal_MasterID = dbCtx.Goal_Master.Select(s => s.Goal_MasterID).FirstOrDefault();
-            //goal.GoalTitle = "Testing Update goal";
-            //goal.GoalDescription = "Add goal description here";
-            //goal.UnitOfMeasurement = "hours";
-            //goal.MeasurementValue = 40;
-            //goal.GoalQuarter = 4;
-            //goal.QuarterYear = 2015;
-            //GoalRule rule = new GoalRule();
-            //rule.Performance_RangeFrom = 70;
-            //rule.Performance_RangeTo = 90;
-            //rule.Rating = 80;
-            //goal.GoalRules = new List<GoalRule>();
-            //goal.GoalRules.Add(rule);
-            //bool isSuccess = _goalServices.UpdateGoal(goal);
-            //Assert.AreEqual(true, isSuccess);
+            GoalMaster goal = new GoalMaster();
+            goal.Goal_MasterID = 12;
+            goal.GoalTitle = "Testing Update goal";
+            goal.GoalDescription = "Add goal description here";
+            goal.UnitOfMeasurement = "hours";
+            goal.MeasurementValue = 40;
+            goal.GoalQuarter = 4;
+            goal.QuarterYear = 2015;
+            GoalRule rule = new GoalRule();
+            rule.Performance_RangeFrom = 70;
+            rule.Performance_RangeTo = 90;
+            rule.Rating = 80;
+            goal.GoalRules = new List<GoalRule>();
+            goal.GoalRules.Add(rule);
+            bool isSuccess = _goalServices.UpdateGoal(goal);
+            Assert.AreEqual(true, isSuccess);
         }
 
         [TestMethod]
         public void DeleteGoalMaster()
         {
-            //int[] goalId = { dbCtx.Goal_Master.Select(s => s.Goal_MasterID).FirstOrDefault() };
-            //JsonResponse obj = _goalServices.DeleteGoal(goalId);
-            //Assert.AreEqual(true, obj.success);
+            int[] goalId = {21};
+            JsonResponse obj = _goalServices.DeleteGoal(goalId);
+            Assert.AreEqual(true, obj.success);
         }
 
         [TestMethod]
@@ -102,44 +111,50 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         [TestMethod]
         public void AssignGoalTest()
         {
-            //int[] ResId = { dbCtx.Resources.Select(s => s.ResourceID).FirstOrDefault() };
-            //AssignGoal Goal = new AssignGoal();
-            //Goal.Goal_MasterID = 3;
-            //Goal.ResourceID = ResId ;
-            //Goal.Weight = 60;
-            //bool  isAssigned = _rgService.AssignGoal(Goal);
-            //Assert.AreEqual(isAssigned , true);
+            int[] ResId = { 12 };
+            AssignGoal Goal = new AssignGoal();
+            Goal.Goal_MasterID = 3;
+            Goal.ResourceID = ResId;
+            Goal.Weight = 60;
+            bool isAssigned = _rgService.AssignGoal(Goal);
+            Assert.AreEqual(isAssigned, true);
         }
 
         [TestMethod]
         public void EditAssignedGoalTest()
         {
-            //int Weight = 10;
-            //int ResId = dbCtx.Resource_Goal.Select(s => s.ResourceID).FirstOrDefault();
-            //int GoalId = dbCtx.Resource_Goal.Select(s => s.Goal_MasterID).FirstOrDefault();
-            //bool IsUpdated = _rgService.EditAssignedGoal(Weight, ResId, GoalId);
-            //Assert.AreEqual(IsUpdated, true);
+            int Weight = 10;
+            int ResId = 12;
+            int GoalId = 54;
+            bool IsUpdated = _rgService.EditAssignedGoal(Weight, ResId, GoalId);
+            Assert.AreEqual(IsUpdated, true);
         }
 
         [TestMethod]
         public void DeleteAssignedGoalTest()
         {
-            //int Resource_GoalId=dbCtx.Resource_Goal.Select(m=>m.Resource_GoalID).FirstOrDefault();
-            //bool IsDeleted = _rgService.DeleteResourceGoal(Resource_GoalId);
-            //Assert.AreEqual(IsDeleted , true);
+            int Resource_GoalId = 3048;
+            bool IsDeleted = _rgService.DeleteResourceGoal(Resource_GoalId);
+            Assert.AreEqual(IsDeleted, true);
         }
 
         [TestMethod]
         public void GetAssignedGoalTest()
         {
-            //int AssignedGoalId = dbCtx.Resource_Goal.Select(s => s.Resource_GoalID).FirstOrDefault();
-            //ResourceGoal AssignedGoal = _goalAssignServices.GetAssignedGoal(AssignedGoalId);
+            int AssignedGoalId = 3034;
+            var AssignedGoal = _rgService.IsResourceGoalExist(AssignedGoalId);
             //int GoalId = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Goal_MasterID).FirstOrDefault();
             //int ResId = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.ResourceID).FirstOrDefault();
             //int Weight = dbCtx.Resource_Goal.Where(s => s.Resource_GoalID == AssignedGoalId).Select(s => s.Weight).FirstOrDefault();
             //Assert.AreEqual(AssignedGoal.Goal_MasterID, GoalId);
             //Assert.AreEqual(AssignedGoal.ResourceID, ResId);
-            //Assert.AreEqual(AssignedGoal.weight, Weight);
+            //Assert.AreEqual(AssignedGoal.Weight, Weight);
+            Console.WriteLine("GoalID :" + AssignedGoal.Goal_MasterID);
+            Console.WriteLine("ResourceID :" + AssignedGoal.ResourceID);
+            Console.WriteLine("weight :" + AssignedGoal.Weight);
+            Assert.IsNotNull(AssignedGoal.Goal_MasterID);
+            Assert.IsNotNull( AssignedGoal.ResourceID);
+            Assert.IsNotNull( AssignedGoal.Weight);
         }
 
         [TestMethod]

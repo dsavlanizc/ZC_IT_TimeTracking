@@ -130,5 +130,25 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
                 return false;
             }
         }
+
+        public List<ResourceGoalModel> GetAllResourceGoalByResId(int resourceID,int quarter,int year)
+        {
+            return _repository.GetAllResourceGoalByResIdDB(resourceID,quarter,year);
+        }
+
+        public bool InsertPerformance(int goalID, int resID, float resPerformance)
+        {
+            return _repository.InsertPerformanceDB(goalID,resID,resPerformance);
+        }
+
+        public ResourceGoalModel IsPerformanceExist(int resid,int goalID)
+        {
+            var v = _repository.GetResourceGoalDetailsDB(resid, goalID);
+            var dt = _repository.GetAllOfResourceGoalPerformanceDB(v.Resource_GoalID);
+            if (dt == null)
+                return v;
+            else
+                return null;
+        }
     }
 }

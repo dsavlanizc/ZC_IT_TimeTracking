@@ -15,6 +15,9 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository
         const string _UpdateResourceGoal = "UpdateResourceGoal";
         const string _AssignGoalToResource = "AssignGoalToResource";
         const string _GetResourceGoalDetails = "GetResourceGoalDetails";
+        const string _GetAllResourceGoalByResId = "GetAllResourceGoalByResId";
+        const string _InsertPerformance = "calculateResourceGoalRating";
+        const string _GetAllOfResourceGoalPerformance = "GetAllOfResourceGoalPerformance";
 
         public List<ResourceGoalModel> GetAllGoalsOfResourceDB(int resourceId)
         {
@@ -59,6 +62,31 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository
             rg.Goal_MasterID = GoalID;
             rg.Weight = Weight;
             return this.InsertOrUpdate<ResourceGoalModel>(rg, _UpdateResourceGoal);
+        }
+
+        public List<ResourceGoalModel> GetAllResourceGoalByResIdDB(int resourceID,int quarter,int year)
+        {
+            ResourceGoalModel rgm = new ResourceGoalModel();
+            rgm.ResourceID = resourceID;
+            rgm.GoalQuarter = quarter;
+            rgm.QuarterYear = year;
+            return this.GetEntityCollection<ResourceGoalModel>(rgm, _GetAllResourceGoalByResId);
+        }
+
+        public bool InsertPerformanceDB(int goalID, int resID, float resPerformance)
+        {
+            ResourceGoalModel rgm = new ResourceGoalModel();
+            rgm.Goal_MasterID = goalID;
+            rgm.ResourceID = resID;
+            rgm.Resource_Performance = resPerformance;
+            return this.InsertOrUpdate<ResourceGoalModel>(rgm, _InsertPerformance);
+        }
+
+        public ResourceGoalModel GetAllOfResourceGoalPerformanceDB(int resGoalId)
+        {
+            ResourceGoalModel rgm = new ResourceGoalModel();
+            rgm.Resource_GoalID = resGoalId;
+            return this.GetEntity<ResourceGoalModel>(rgm, _GetAllOfResourceGoalPerformance);
         }
     }
 }

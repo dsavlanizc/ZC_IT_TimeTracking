@@ -14,5 +14,8 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
         ResourceGoalModel IsResourceGoalExist(int resGoalId);
         bool EditAssignedGoal(int Weight, int ResourceGoalId, int GoalID);
         bool IsResourceGoalExistByResourceId(int resourceId);
+        List<ResourceGoalModel> GetAllResourceGoalByResId(int resourceID, int quarter, int year);
+        bool InsertPerformance(int goalID, int resID, float resPerformance);
+        ResourceGoalModel IsPerformanceExist(int resid, int goalID);
     }
 }

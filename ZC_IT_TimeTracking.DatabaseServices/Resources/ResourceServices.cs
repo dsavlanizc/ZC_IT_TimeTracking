@@ -36,7 +36,5 @@ namespace ZC_IT_TimeTracking.Services.Resource
         {
             return _ResourceRepository.GetResourceGoalDetails(Resourceid, GoalId);
         }
-
-
     }
 }
