@@ -60,7 +60,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 }
                 else
                 {
-                    var GoalList = _goalServices.SearchGoalByTitle(title,skip,Utilities.RecordPerPage);
+                    var GoalList = _goalServices.SearchGoalByTitle(title, skip, Utilities.RecordPerPage);
                     if ((GoalList.Count() == 0) && (page - 2) >= 0)
                     {
                         ViewBag.page = page - 1;
@@ -231,7 +231,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 _assignGoalServices.ClearValidationErrors();
                 var ISAssign = _assignGoalServices.AssignGoal(AssignData);
                 if (ISAssign)
-                {                   
+                {
                     return Json(new JsonResponse { message = "Assign Goal Succesfully", success = true });
                 }
                 else
@@ -257,7 +257,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
             if (TeamID != -1)
             {
-                var TeamMember =_resourceServices.GetResourceByTeam(TeamID);
+                var TeamMember = _resourceServices.GetResourceByTeam(TeamID);
                 return Json(new { TeamMember = TeamMember, success = true });
             }
             //ViewBag.Resource = DbContext.Resources.Select(s => new { s.ResourceID, Name = s.FirstName + " " + s.LastName }).ToList();
@@ -274,7 +274,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 var GoalExist = _assignGoalServices.IsResourceGoalExist(AssignId);
                 if (GoalExist != null)
                 {
-                    
+
                     return Json(new { Data = GoalExist, success = true });
                 }
                 return Json(new JsonResponse { message = "Requested Assigned goal does not exist", success = false });
@@ -318,6 +318,72 @@ namespace ZC_IT_TimeTracking.Controllers
             catch (Exception)
             {
                 return Json(new JsonResponse { message = "Error occured while fetching Delete Assigned Goal", success = false });
+            }
+        }
+
+        public ActionResult AddPerformance()
+        {
+            ViewBag.TeamList = _teamService.GetTeam();
+            return View("_AddPerformance");
+        }
+
+        [HttpPost]
+        public JsonResult GetAllResourceGoal(int ResourceID)
+        {
+            try
+            {
+                int Quarter = Utilities.GetQuarter();
+                int Year = DateTime.Now.Year;
+                var AllGoalResourseList = _assignGoalServices.GetAllResourceGoalByResId(ResourceID, Quarter, Year);
+                if (AllGoalResourseList.Count != 0)
+                {
+                    return Json(new { Data = AllGoalResourseList, success = true });
+                }
+                return Json(new JsonResponse { message = "No Goal Assign to this Resource", success = false });
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while fetching Data", success = false });
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult GetResourceGoalData(int TitleID)
+        {
+            try
+            {
+                var Desc = _goalServices.GetGoaldetailByGoalID(TitleID);
+                if (Desc == null)
+                    return Json(new JsonResponse { message = "No Description Available", success = false });
+                else
+                    return Json(new { TitleData = Desc, success = true });
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while Getting Description!", success = false });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult InsertPerformance(int goalID, int resID, float resPerformance)
+        {
+            try
+            {
+                var isavl = _assignGoalServices.IsPerformanceExist(resID,goalID);
+                if (isavl != null)
+                {
+                    var success = _assignGoalServices.InsertPerformance(goalID, resID, resPerformance);
+                    if (success)
+                        return Json(new JsonResponse { message = "Performance Added successfully!", success = true });
+                    else
+                        return Json(new JsonResponse { message = "Have some Error on Adding Performance", success = false });
+                }
+                return Json(new JsonResponse { message = "Performance Already Added", success = false });
+            }
+            catch
+            {
+                return Json(new JsonResponse { message = "Error occured while insert Performance", success = false });
             }
         }
     }

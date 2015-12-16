@@ -15,5 +15,12 @@ namespace ZC_IT_TimeTracking.BusinessEntities.Model
         public string GoalTitle { get; set; }
         public string Name { get; set; }
         public int Weight { get; set; }
+        public int GoalQuarter { get; set; }
+        public int QuarterYear { get; set; }
+        public int QuarterID { get; set; }
+        public float Resource_Performance { get; set; }
+        public string UnitOfMeasurement { get; set; }
+        public double MeasurementValue { get; set; }
+        public string GoalDescription { get; set; }
     }
 }
