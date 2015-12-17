@@ -1,4 +1,5 @@
-﻿[
+﻿
+[
   {
     "Name": "sp_GetAllQuarters",
     "Params": []
@@ -631,6 +632,41 @@
       },
       {
         "Name": "Weight",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "GetQuaterlyPerformanceByResID",
+    "Params": [
+      {
+        "Name": "ResourceID",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "QuarterID",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "CalCulteWeightRate",
+    "Params": [
+      {
+        "Name": "Resource_GoalId",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "CalculateQuaterlyPerformance",
+    "Params": [
+      {
+        "Name": "Resource_GoalID",
         "sqlDbType": 8,
         "direction": 1
       }

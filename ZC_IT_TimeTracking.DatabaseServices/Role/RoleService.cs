@@ -9,9 +9,10 @@ namespace ZC_IT_TimeTracking.Services.Role
 {
     public class RoleService : ServiceBase
     {
-        public List<IdentityRole> GetAvailableRoles()
+        public List<string> GetAvailableRoles()
         {
-            return new IdentityDbContext().Roles.ToList();
+            var list = Roles.GetAllRoles();
+            return list.ToList();
         }
     }
 }

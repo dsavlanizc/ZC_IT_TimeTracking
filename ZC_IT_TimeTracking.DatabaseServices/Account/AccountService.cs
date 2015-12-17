@@ -1,58 +1,77 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
-using System.Web;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Web.Security;
 using System;
-using System.Web.Security;
+using ZC_IT_TimeTracking.BusinessEntities.Model;
+using System.Web.Profile;
+using System.Web;
 
 namespace ZC_IT_TimeTracking.Services.Account
 {
     public class AccountService : ServiceBase
     {
-        public bool CreateUser(string UserName, string Password, string EmailId, string[] roles)
+        public bool CreateUser(RegisterUser user)
         {
             try
             {
-                var userStore = new UserStore<IdentityUser>();
-                var userManager = new UserManager<IdentityUser>(userStore);
+                //var userStore = new UserStore<IdentityUser>();
+                //var userManager = new UserManager<IdentityUser>(userStore);
                 
-                var user = new IdentityUser() { UserName = UserName, Email = EmailId };
-                IdentityResult result = userManager.Create(user, Password);
+                //var user = new IdentityUser() { UserName = UserName, Email = EmailId };
+                //IdentityResult result = userManager.Create(user, Password);
 
-                if (result.Succeeded)
+                //if (result.Succeeded)
+                //{
+                //    userManager.AddToRoles(user.Id, roles);
+                //    //Roles.AddUserToRoles(userManager.FindByName(UserName).Id, roles);
+                //}
+                //else
+                //{
+                //    this.ValidationErrors.Add("UserExist", result.Errors.ElementAt(0).ToString());
+                //}
+                //return result.Succeeded;
+                var result = Membership.FindUsersByName(user.UserName);
+                if (result.Count == 0)
                 {
-                    userManager.AddToRoles(user.Id, roles);
-                    //Roles.AddUserToRoles(userManager.FindByName(UserName).Id, roles);
+                    var membershipUser = Membership.CreateUser(user.UserName, user.Password, user.EmailID);
+                    Roles.AddUserToRoles(user.UserName, user.RoleName);
+                    UserProfile profile = UserProfile.GetUserProfile(user.UserName);
+                    profile.FirstName = user.FirstName;
+                    profile.LastName = user.LastName;
+                    profile.Save();
+                    return true;
                 }
                 else
                 {
-                    this.ValidationErrors.Add("UserExist", result.Errors.ElementAt(0).ToString());
+                    this.ValidationErrors.Add("UserExist", "User is already exist!");
+                    return false;
                 }
-                return result.Succeeded;
+
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                this.ValidationErrors.Add("LoginError","Error while creating user!");
+                this.ValidationErrors.Add("LoginError", ex.Message);
                 return false;
             }
         }
 
         public bool LoginUser(string UserName, string Password, bool rememberMe)
         {
-            var userStore = new UserStore<IdentityUser>();
-            var userManager = new UserManager<IdentityUser>(userStore);
-            var user = userManager.Find(UserName, Password);
-
-            if (user != null)
+            var user = Membership.ValidateUser(UserName, Password);
+            if (user)
             {
-                var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-                var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
-
-                authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe }, userIdentity);
+                //var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
+                //var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
+                //authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe }, userIdentity);
+                FormsAuthentication.SetAuthCookie(UserName, rememberMe);
+                UserProfile profile = UserProfile.GetUserProfile(UserName);
+                HttpContext.Current.Session["userFullName"] = profile.FirstName + " " + profile.LastName;
                 return true;
             }
+            else if (Membership.FindUsersByName(UserName).Count > 0)
+            {
+                if (Membership.GetUser(UserName).IsLockedOut)
+                    this.ValidationErrors.Add("LockedOut", "Account is blocked!");
+            }
+            this.ValidationErrors.Add("InvalidCredentials", "Invalid username or password!");
             return false;
         }
 
@@ -60,12 +79,9 @@ namespace ZC_IT_TimeTracking.Services.Account
         {
             try
             {
-                var rs = new RoleStore<IdentityRole>();
-                var rm = new RoleManager<IdentityRole>(rs);
-                if (rm.FindByName(roleName) == null)
+                if (!Roles.RoleExists(roleName))
                 {
-                    var asdf = new IdentityRole(roleName);
-                    rm.Create(asdf);
+                    Roles.CreateRole(roleName);
                     return true;
                 }
                 else
@@ -85,8 +101,7 @@ namespace ZC_IT_TimeTracking.Services.Account
         {
             try
             {
-                var authenticationManager = HttpContext.Current.GetOwinContext().Authentication;
-                authenticationManager.SignOut();
+                FormsAuthentication.SignOut();
                 return true;
             }
             catch
