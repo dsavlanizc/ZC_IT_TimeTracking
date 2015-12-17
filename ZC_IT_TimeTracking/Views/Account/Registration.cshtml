@@ -3,10 +3,11 @@
 @{
     ViewBag.Title = "Registration";
     RoleService roleService = new RoleService();
+    var roleList = roleService.GetAvailableRoles();
 }
 @if (Html.ValidationSummary() != null)
 {
-        @Html.ValidationSummary()
+    @Html.ValidationSummary()
 }
 @if (ViewBag.Message != null)
 {
@@ -37,7 +38,7 @@
         <div class="form-group required">
             @Html.LabelFor(m => m.RoleName, new { @class = "col-md-3 control-label" })
             <div class="col-md-4">
-                @Html.DropDownListFor(m => m.RoleName, new SelectList(roleService.GetAvailableRoles(), "Name", "Name"), null, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.RoleName, new SelectList(roleService.GetAvailableRoles()), null, new { @class = "form-control", multiple = "multiple" })
             </div>
         </div>
         <div class="form-group required">

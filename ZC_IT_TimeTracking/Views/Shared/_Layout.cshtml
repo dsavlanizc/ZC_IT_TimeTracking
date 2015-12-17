@@ -21,7 +21,8 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <li style="color:white;"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Your Profile"><span class="glyphicon glyphicon-user"></span> @User.Identity.Name</a></li>
+                    <li><a>Online user(s) : <b>@Membership.GetNumberOfUsersOnline()</b></a></li>
+                    <li style="color:white;"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Your Profile"><span class="glyphicon glyphicon-user"></span> @Session["userFullName"]</a></li>
                     <li><a href="@Url.Action("Logout","Account")" data-toggle="tooltip" data-placement="bottom" title="LogOut"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 }
                 else

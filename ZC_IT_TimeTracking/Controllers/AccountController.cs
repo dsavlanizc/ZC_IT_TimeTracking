@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using ZC_IT_TimeTracking.BusinessEntities.Model;
 using ZC_IT_TimeTracking.Services.Account;
 using ZC_IT_TimeTracking.Services.Role;
 using ZC_IT_TimeTracking.ViewModels;
@@ -33,7 +34,7 @@ namespace ZC_IT_TimeTracking.Controllers
                 }
                 else
                 {
-                    ViewBag.Message = "Invalid username or password";
+                    ViewBag.Message = accountService.ValidationErrors.Errors[0].ErrorDescription;
                 }
             }
             return View();
@@ -41,7 +42,10 @@ namespace ZC_IT_TimeTracking.Controllers
 
         public ActionResult Registration()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+                return View();
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -51,7 +55,8 @@ namespace ZC_IT_TimeTracking.Controllers
             if (ModelState.IsValid)
             {
                 AccountService accountService = new AccountService();
-                bool isSuccess = accountService.CreateUser(registerModel.UserName, registerModel.Password, registerModel.EmailID, registerModel.RoleName);
+                var user = AutoMapper.Mapper.DynamicMap<RegisterUserViewModel, RegisterUser>(registerModel);
+                bool isSuccess = accountService.CreateUser(user);
                 if (isSuccess)
                 {
                     ModelState.Clear();
@@ -74,13 +79,14 @@ namespace ZC_IT_TimeTracking.Controllers
         [HttpPost]
         public ActionResult CreateRole(string RoleName)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 AccountService accountService = new AccountService();
                 bool isSuccess = accountService.CreateRole(RoleName);
                 if (isSuccess)
                 {
                     ViewBag.Message = "Role Created Successfully!";
+                    ModelState.Clear();
                 }
                 else
                 {
@@ -90,20 +96,14 @@ namespace ZC_IT_TimeTracking.Controllers
             return View();
         }
 
+        [Authorize]
         public ActionResult Logout()
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                AccountService accountService = new AccountService();
-                bool isSuccess = accountService.LogoutUser();
-                if (isSuccess)
-                    return RedirectToAction("Login", "Account");
-                return Content(accountService.ValidationErrors.Errors[0].ErrorDescription);
-            }
-            else
-            {
+            AccountService accountService = new AccountService();
+            bool isSuccess = accountService.LogoutUser();
+            if (isSuccess)
                 return RedirectToAction("Login", "Account");
-            }
+            return Content(accountService.ValidationErrors.Errors[0].ErrorDescription);
         }
     }
 }

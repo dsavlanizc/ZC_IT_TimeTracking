@@ -11,6 +11,7 @@
 <#@ import namespace="ZC_IT_TimeTracking.DataAccess.SQLParamFinder" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ output extension=".json" #>
+
 <#
 		string connectionString = @"data source=INDINA04204VW\SQLEXPRESS;initial catalog=IT-Tracking;integrated security=True";
         SqlConnection conn = new SqlConnection(connectionString);
@@ -25,6 +26,8 @@
         foreach (DataRow row in set.Tables[0].Rows)
         {
             string spName = row[0].ToString();
+			if (spName.StartsWith("aspnet"))
+				continue;
             conn.Open();
             SqlCommand cmd = new SqlCommand(spName, conn);
             cmd.CommandType = CommandType.StoredProcedure;
