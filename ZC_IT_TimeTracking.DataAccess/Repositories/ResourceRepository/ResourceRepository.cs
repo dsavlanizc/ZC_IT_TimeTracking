@@ -13,6 +13,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceRepository
         const string  _GetResourceByTeam = "GetResourceByTeam";
         const string _GetAllGoalsOfResource = "GetAllGoalsOfResource";
         const string _GetResourceGoalDetails = "GetResourceGoalDetails";
+        const string _CalculateQuaterlyPerformance = "CalculateQuaterlyPerformance";
 
         public List<Resources> GetResourceByTeam(int teamId)
         {
@@ -35,6 +36,13 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceRepository
             res.ResourceID = resId;
             res.Goal_MasterID = goalId ;
             return this.GetEntityCollection<Resources>(res, _GetResourceGoalDetails);  
+        }
+
+        public Resources CalCulateQuaterlyPerformanceDB(int resGoalId)
+        {
+            Resources rr = new Resources();
+            rr.Resource_GoalID = resGoalId;
+            return this.GetEntity<Resources>(rr, _CalculateQuaterlyPerformance);
         }
     }
 

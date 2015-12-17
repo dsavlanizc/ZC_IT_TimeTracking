@@ -22,5 +22,6 @@ namespace ZC_IT_TimeTracking.BusinessEntities.Model
         public string UnitOfMeasurement { get; set; }
         public double MeasurementValue { get; set; }
         public string GoalDescription { get; set; }
+        public float Resource_Rating { get; set; }
     }
 }

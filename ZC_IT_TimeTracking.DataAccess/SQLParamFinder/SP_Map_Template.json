@@ -1,7 +1,157 @@
 ﻿[
   {
+    "Name": "aspnet_Profile_GetProperties",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "sp_GetAllQuarters",
     "Params": []
+  },
+  {
+    "Name": "aspnet_Profile_SetProperties",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PropertyNames",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PropertyValuesString",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PropertyValuesBinary",
+        "sqlDbType": 21,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "IsUserAnonymous",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Profile_DeleteProfiles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserNames",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Profile_DeleteInactiveProfiles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ProfileAuthOptions",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "InactiveSinceDate",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Profile_GetNumberOfInactiveProfiles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ProfileAuthOptions",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "InactiveSinceDate",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Profile_GetProfiles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ProfileAuthOptions",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PageIndex",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PageSize",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "UserNameToMatch",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "InactiveSinceDate",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
   },
   {
     "Name": "AddResource",
@@ -34,6 +184,26 @@
     ]
   },
   {
+    "Name": "aspnet_UsersInRoles_IsUserInRole",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleName",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "AssignGoalToResource",
     "Params": [
       {
@@ -59,6 +229,21 @@
     ]
   },
   {
+    "Name": "aspnet_UsersInRoles_GetRolesForUser",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "CheckQuarter",
     "Params": [
       {
@@ -74,11 +259,46 @@
     ]
   },
   {
+    "Name": "aspnet_Roles_CreateRole",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleName",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "Delete_AllRulesOfGoal",
     "Params": [
       {
         "Name": "GoalId",
         "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Roles_DeleteRole",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "DeleteOnlyIfRoleIsEmpty",
+        "sqlDbType": 2,
         "direction": 1
       }
     ]
@@ -94,11 +314,51 @@
     ]
   },
   {
+    "Name": "aspnet_Roles_RoleExists",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleName",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "DeleteResourceGoal",
     "Params": [
       {
         "Name": "Resource_GoalID",
         "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_UsersInRoles_AddUsersToRoles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserNames",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleNames",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
         "direction": 1
       }
     ]
@@ -129,6 +389,26 @@
     ]
   },
   {
+    "Name": "aspnet_UsersInRoles_RemoveUsersFromRoles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserNames",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleNames",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "GetTotalGoalCount",
     "Params": []
   },
@@ -138,6 +418,21 @@
       {
         "Name": "ResourceID",
         "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_UsersInRoles_GetUsersInRoles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleName",
+        "sqlDbType": 12,
         "direction": 1
       }
     ]
@@ -163,6 +458,26 @@
     ]
   },
   {
+    "Name": "aspnet_UsersInRoles_FindUsersInRole",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RoleName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserNameToMatch",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "GetResourceGoalById",
     "Params": [
       {
@@ -178,6 +493,16 @@
       {
         "Name": "Resource_GoalID",
         "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Roles_GetAllRoles",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
         "direction": 1
       }
     ]
@@ -273,12 +598,47 @@
     ]
   },
   {
+    "Name": "aspnet_Personalization_GetApplicationId",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ApplicationId",
+        "sqlDbType": 14,
+        "direction": 3
+      }
+    ]
+  },
+  {
     "Name": "GetResourceByTeam",
     "Params": [
       {
         "Name": "TeamID",
         "sqlDbType": 8,
         "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Paths_CreatePath",
+    "Params": [
+      {
+        "Name": "ApplicationId",
+        "sqlDbType": 14,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PathId",
+        "sqlDbType": 14,
+        "direction": 3
       }
     ]
   },
@@ -477,6 +837,21 @@
     ]
   },
   {
+    "Name": "aspnet_PersonalizationAllUsers_GetPageSettings",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "calculateResourceGoalRating1",
     "Params": [
       {
@@ -542,6 +917,21 @@
     ]
   },
   {
+    "Name": "aspnet_PersonalizationAllUsers_ResetPageSettings",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "UpdateGoalRules",
     "Params": [
       {
@@ -562,6 +952,31 @@
       {
         "Name": "GoalID",
         "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationAllUsers_SetPageSettings",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PageSettings",
+        "sqlDbType": 21,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
         "direction": 1
       }
     ]
@@ -617,6 +1032,31 @@
     ]
   },
   {
+    "Name": "aspnet_PersonalizationPerUser_GetPageSettings",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
     "Name": "UpdateResourceGoal",
     "Params": [
       {
@@ -631,6 +1071,321 @@
       },
       {
         "Name": "Weight",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationPerUser_ResetPageSettings",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationPerUser_SetPageSettings",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PageSettings",
+        "sqlDbType": 21,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationAdministration_DeleteAllState",
+    "Params": [
+      {
+        "Name": "AllUsersScope",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Count",
+        "sqlDbType": 8,
+        "direction": 3
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationAdministration_ResetSharedState",
+    "Params": [
+      {
+        "Name": "Count",
+        "sqlDbType": 8,
+        "direction": 3
+      },
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationAdministration_ResetUserState",
+    "Params": [
+      {
+        "Name": "Count",
+        "sqlDbType": 8,
+        "direction": 3
+      },
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "InactiveSinceDate",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationAdministration_FindState",
+    "Params": [
+      {
+        "Name": "AllUsersScope",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PageIndex",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PageSize",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "InactiveSinceDate",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_PersonalizationAdministration_GetCountOfState",
+    "Params": [
+      {
+        "Name": "Count",
+        "sqlDbType": 8,
+        "direction": 3
+      },
+      {
+        "Name": "AllUsersScope",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Path",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "InactiveSinceDate",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_WebEvent_LogEvent",
+    "Params": [
+      {
+        "Name": "EventId",
+        "sqlDbType": 3,
+        "direction": 1
+      },
+      {
+        "Name": "EventTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "EventTime",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "EventType",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "EventSequence",
+        "sqlDbType": 5,
+        "direction": 1
+      },
+      {
+        "Name": "EventOccurrence",
+        "sqlDbType": 5,
+        "direction": 1
+      },
+      {
+        "Name": "EventCode",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "EventDetailCode",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "Message",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ApplicationPath",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ApplicationVirtualPath",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "MachineName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "RequestUrl",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ExceptionType",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Details",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "GetQuaterlyPerformanceByResID",
+    "Params": [
+      {
+        "Name": "ResourceID",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "QuarterID",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "CalCulteWeightRate",
+    "Params": [
+      {
+        "Name": "Resource_GoalId",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "CalculateQuaterlyPerformance",
+    "Params": [
+      {
+        "Name": "Resource_GoalID",
         "sqlDbType": 8,
         "direction": 1
       }
@@ -780,6 +1535,666 @@
     "Params": [
       {
         "Name": "Resource_GoalID",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Setup_RestorePermissions",
+    "Params": [
+      {
+        "Name": "name",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Setup_RemoveAllRoleMembers",
+    "Params": [
+      {
+        "Name": "name",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_RegisterSchemaVersion",
+    "Params": [
+      {
+        "Name": "Feature",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CompatibleSchemaVersion",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "IsCurrentVersion",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "RemoveIncompatibleSchema",
+        "sqlDbType": 2,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_CheckSchemaVersion",
+    "Params": [
+      {
+        "Name": "Feature",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CompatibleSchemaVersion",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Applications_CreateApplication",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "ApplicationId",
+        "sqlDbType": 14,
+        "direction": 3
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_UnRegisterSchemaVersion",
+    "Params": [
+      {
+        "Name": "Feature",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CompatibleSchemaVersion",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Users_CreateUser",
+    "Params": [
+      {
+        "Name": "ApplicationId",
+        "sqlDbType": 14,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "IsUserAnonymous",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "LastActivityDate",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "UserId",
+        "sqlDbType": 14,
+        "direction": 3
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Users_DeleteUser",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "TablesToDeleteFrom",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "NumTablesDeletedFrom",
+        "sqlDbType": 8,
+        "direction": 3
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_AnyDataInTables",
+    "Params": [
+      {
+        "Name": "TablesToCheck",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_CreateUser",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Password",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordSalt",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Email",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordQuestion",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordAnswer",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "IsApproved",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "CreateDate",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "UniqueEmail",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordFormat",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "UserId",
+        "sqlDbType": 14,
+        "direction": 3
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_GetUserByName",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "UpdateLastActivity",
+        "sqlDbType": 2,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_GetUserByUserId",
+    "Params": [
+      {
+        "Name": "UserId",
+        "sqlDbType": 14,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "UpdateLastActivity",
+        "sqlDbType": 2,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_GetUserByEmail",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Email",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_GetPasswordWithFormat",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UpdateLastLoginActivityDate",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_UpdateUserInfo",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "IsPasswordCorrect",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "UpdateLastLoginActivityDate",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "MaxInvalidPasswordAttempts",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordAttemptWindow",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "LastLoginDate",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "LastActivityDate",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_GetPassword",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "MaxInvalidPasswordAttempts",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordAttemptWindow",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordAnswer",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_SetPassword",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "NewPassword",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordSalt",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordFormat",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_ResetPassword",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "NewPassword",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "MaxInvalidPasswordAttempts",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordAttemptWindow",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordSalt",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordFormat",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PasswordAnswer",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_UnlockUser",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_UpdateUser",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Email",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "Comment",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "IsApproved",
+        "sqlDbType": 2,
+        "direction": 1
+      },
+      {
+        "Name": "LastLoginDate",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "LastActivityDate",
+        "sqlDbType": 4,
+        "direction": 1
+      },
+      {
+        "Name": "UniqueEmail",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_ChangePasswordQuestionAndAnswer",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "NewPasswordQuestion",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "NewPasswordAnswer",
+        "sqlDbType": 12,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_GetAllUsers",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PageIndex",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PageSize",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_GetNumberOfUsersOnline",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "MinutesSinceLastInActive",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "CurrentTimeUtc",
+        "sqlDbType": 4,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_FindUsersByName",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "UserNameToMatch",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PageIndex",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PageSize",
+        "sqlDbType": 8,
+        "direction": 1
+      }
+    ]
+  },
+  {
+    "Name": "aspnet_Membership_FindUsersByEmail",
+    "Params": [
+      {
+        "Name": "ApplicationName",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "EmailToMatch",
+        "sqlDbType": 12,
+        "direction": 1
+      },
+      {
+        "Name": "PageIndex",
+        "sqlDbType": 8,
+        "direction": 1
+      },
+      {
+        "Name": "PageSize",
         "sqlDbType": 8,
         "direction": 1
       }

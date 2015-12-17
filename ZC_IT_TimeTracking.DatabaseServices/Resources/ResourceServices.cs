@@ -36,5 +36,10 @@ namespace ZC_IT_TimeTracking.Services.Resource
         {
             return _ResourceRepository.GetResourceGoalDetails(Resourceid, GoalId);
         }
+
+        public Resources CalCulateQuaterlyPerformance(int resGoalId)
+        {
+            return _ResourceRepository.CalCulateQuaterlyPerformanceDB(resGoalId);
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository
         const string _GetAllResourceGoalByResId = "GetAllResourceGoalByResId";
         const string _InsertPerformance = "calculateResourceGoalRating";
         const string _GetAllOfResourceGoalPerformance = "GetAllOfResourceGoalPerformance";
+        const string _GetQuaterlyPerformanceByResID = "GetQuaterlyPerformanceByResID";
 
         public List<ResourceGoalModel> GetAllGoalsOfResourceDB(int resourceId)
         {
@@ -87,6 +88,14 @@ namespace ZC_IT_TimeTracking.DataAccess.Repositories.ResourceGoalRepository
             ResourceGoalModel rgm = new ResourceGoalModel();
             rgm.Resource_GoalID = resGoalId;
             return this.GetEntity<ResourceGoalModel>(rgm, _GetAllOfResourceGoalPerformance);
+        }
+
+        public List<ResourceGoalModel> GetQuaterlyPerformanceByResIDDB(int resID, int quarterID)
+        {
+            ResourceGoalModel rgm = new ResourceGoalModel();
+            rgm.ResourceID = resID;
+            rgm.QuarterID = quarterID;
+            return this.GetEntityCollection<ResourceGoalModel>(rgm,_GetQuaterlyPerformanceByResID);
         }
     }
 }

@@ -627,10 +627,14 @@ $(function () {
     $("#ButtonAddPerformance").click(function () {
         window.location.href = "/Home/AddPerformance";
     });
+    //View Performance
+    $("#ButtonViewPerformance").click(function () {
+        window.location.href = "/Home/ViewPerformance";
+    }); 
 
     $("#TeamMemberName").change(function () {
         var id = $(this).val();
-        console.log(id);
+        console.log("TeamMemberName" + id);
         if (id != "") {
             $("#ResId").val(id);
         }
@@ -866,7 +870,10 @@ $(function () {
         var goalID = $("#GoalTitles").find('option:selected').val();
         var resID = $("#TeamMembers").find('option:selected').val();
         var resPerformance = $("#Performance").val();
-        //console.log("goal"+goalID + "res " + resID + " per" + resPerformance);
+        console.log(goalID + resID);
+        if (isNaN(goalID) || isNaN(resID)) {
+            bootbox.alert("Please fill out all the fields");
+        }
         $.ajax({
             url: "InsertPerformance",
             type: "POST",
@@ -892,5 +899,13 @@ $(function () {
                 }
             }
         });
+    });
+
+    $("#Quarter").change(function () {
+        var id = $(this).val();
+        console.log("Quarter"+id);
+        if (id != "") {
+            $("#QuarterId").val(id);
+        }
     });
 });

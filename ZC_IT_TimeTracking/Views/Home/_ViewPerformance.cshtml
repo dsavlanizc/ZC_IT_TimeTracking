@@ -1,0 +1,58 @@
+﻿<div class="row">
+    <h3>Resource Goal Performance</h3>
+    <br />
+    <div class="form-inline">
+        <div class="form-group">
+            <label class="col-md-3 control-label">Quarter</label>
+            <div class="col-md-3">
+                @Html.DropDownList("Quarter", new SelectList(ViewBag.AllQuarters, "QuarterID", "GoalQuarter"), "----Select Quarter-----", new { @class = "form-control col-md-4" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Team</label>
+            <div class="col-md-3">
+                @Html.DropDownList("TeamName", new SelectList(ViewBag.Team, "TeamID", "TeamName"), "----Select Team-----", new { @class = "form-control col-md-4" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">Resources</label>
+            <div class="col-md-3">
+                <select name="TeamMemberName" id="TeamMemberName" class="form-control col-md-4">
+                    <option value="">--Select TeamMember--</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <form role="form" class="form-inline" method="post">
+                <input type="hidden" id="ResId" name="ResId" />
+                <input type="hidden" id="QuarterId" name="QuarterId" />
+                <div class="col-md-3">
+                    <button class="btn btn-default" type="submit">Find</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    @if (ViewBag.record != null)
+    {
+        <table class="table">
+            <tr>
+                <th>Quarter</th>
+                <th>Year</th>
+                <th>Weight</th>
+                <th>Rating(%)</th>
+            </tr>
+            @foreach (var dt in ViewBag.record)
+            {
+                <tr>
+                    <td>@dt.GoalQuarter</td>
+                    <td>@dt.QuarterYear</td>
+                    <td>@dt.Weight</td>
+                    <td>@dt.Resource_Rating</td>
+                </tr>
+            }
+        </table>
+    }
+    @if(ViewBag.TotalPerformance != null){
+    <div><p class="bg-info">Overall Performance is <strong>@ViewBag.TotalPerformance &#37;</strong>&nbsp; Out of <strong>@ViewBag.outofweight &#37;</strong></p></div>
+    }
+</div>

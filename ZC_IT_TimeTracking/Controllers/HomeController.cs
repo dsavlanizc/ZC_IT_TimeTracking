@@ -385,7 +385,7 @@ namespace ZC_IT_TimeTracking.Controllers
         {
             try
             {
-                var isavl = _assignGoalServices.IsPerformanceExist(resID,goalID);
+                var isavl = _assignGoalServices.IsPerformanceExist(resID, goalID);
                 if (isavl != null)
                 {
                     var success = _assignGoalServices.InsertPerformance(goalID, resID, resPerformance);
@@ -400,6 +400,34 @@ namespace ZC_IT_TimeTracking.Controllers
             {
                 return Json(new JsonResponse { message = "Error occured while insert Performance", success = false });
             }
+        }
+
+        [AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        public ActionResult ViewPerformance(int ResId = -1, int QuarterId = -1)
+        {
+            int Year = DateTime.Now.Year;
+            ViewBag.AllQuarters = _quarterService.GetQuarterFromYear(Year).OrderByDescending(s => s.GoalQuarter);
+            ViewBag.Team = _teamService.GetTeam();
+            if (ResId != -1 && QuarterId != -1)
+            {
+                var record = _assignGoalServices.GetQuaterlyPerformanceByResID(ResId, QuarterId);
+                ViewBag.record = record;
+                float TotalPerformance = 0;
+                float weight = 0;
+                if (record.Count != 0)
+                {
+                    foreach (var dt in record)
+                    {
+                        var fg = _resourceServices.CalCulateQuaterlyPerformance(dt.Resource_GoalID);
+                        weight = weight + dt.Weight;
+                        TotalPerformance = TotalPerformance + float.Parse(fg.Resource_Performance.ToString());
+                    }
+                    ViewBag.outofweight = weight;
+                    ViewBag.TotalPerformance = TotalPerformance / 100;
+                }
+
+            }
+            return View("_ViewPerformance");
         }
     }
 }

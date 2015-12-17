@@ -16,5 +16,6 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.ResourceGoalRepo
         List<ResourceGoalModel> GetAllResourceGoalByResIdDB(int resourceID, int quarter, int year);
         bool InsertPerformanceDB(int goalID, int resID, float resPerformance);
         ResourceGoalModel GetAllOfResourceGoalPerformanceDB(int resGoalId);
+        List<ResourceGoalModel> GetQuaterlyPerformanceByResIDDB(int resID, int quarterID);
     }
 }

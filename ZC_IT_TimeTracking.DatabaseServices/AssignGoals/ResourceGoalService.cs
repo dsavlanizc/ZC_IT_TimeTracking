@@ -150,5 +150,11 @@ namespace ZC_IT_TimeTracking.Services.AssignGoals
             else
                 return null;
         }
+
+        public List<ResourceGoalModel> GetQuaterlyPerformanceByResID(int resID, int quarterID)
+        {
+            var Data = _repository.GetQuaterlyPerformanceByResIDDB(resID, quarterID);
+            return Data;
+        }
     }
 }

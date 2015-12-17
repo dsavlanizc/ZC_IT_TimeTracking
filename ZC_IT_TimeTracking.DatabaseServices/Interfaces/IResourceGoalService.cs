@@ -17,5 +17,6 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
         List<ResourceGoalModel> GetAllResourceGoalByResId(int resourceID, int quarter, int year);
         bool InsertPerformance(int goalID, int resID, float resPerformance);
         ResourceGoalModel IsPerformanceExist(int resid, int goalID);
+        List<ResourceGoalModel> GetQuaterlyPerformanceByResID(int resID, int quarterID);
     }
 }

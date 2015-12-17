@@ -13,5 +13,6 @@ namespace ZC_IT_TimeTracking.DataAccess.Interfaces.Resource
         List<Resources> GetResourceByTeam(int teamId);
         List<Resources> GetAllGoalsOfResource(int resId);
         List<Resources> GetResourceGoalDetails(int resId, int goalId);
+        Resources CalCulateQuaterlyPerformanceDB(int resGoalId);
     }
 }
