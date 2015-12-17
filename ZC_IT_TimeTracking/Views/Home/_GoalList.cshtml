@@ -16,7 +16,13 @@
         }
     </div>
 }
-@(Html.Kendo().Grid((List<ZC_IT_TimeTracking.BusinessEntities.GoalMaster>)ViewBag.GoalList)//<ZC_IT_TimeTracking.BusinessEntities.GoalMaster>()
+@if (ViewBag.GoalList == null)
+{
+    <h1>No records available</h1>
+}
+else
+{
+    @(Html.Kendo().Grid((List<ZC_IT_TimeTracking.BusinessEntities.GoalMaster>)ViewBag.GoalList)//<ZC_IT_TimeTracking.BusinessEntities.GoalMaster>()
         .Name("grid")
             .Columns(col =>
             {
@@ -24,25 +30,26 @@
                 col.Bound(c => c.GoalTitle);
                 col.Bound(c => c.GoalDescription).Title("Description");
                 col.Bound(c => c.Creation_Date).Format("{0:dd/MM/yyyy}").Title("Create Date");
-                col.Bound(c => c.GoalQuarter).Title("Quarter");
-                col.Bound(c => c.QuarterYear).Title("Year");
+                col.Bound(c => c.GoalQuarter).Title("Quarter").Width(95);
+                col.Bound(c => c.QuarterYear).Title("Year").Width(75);
                 col.Bound(c => c.UnitOfMeasurement);
                 col.Bound(c => c.MeasurementValue);
                 col.Template(@<div>
-                                <span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="View Goal" onclick="ViewGoal(@item.Goal_MasterID)">&nbsp;</span>
-                                <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Goal" onclick="EditGoal(@item.Goal_MasterID)">&nbsp;</span>
-                                <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Goal" onclick="DeleteGoal(@item.Goal_MasterID)"></span>
-                             </div>).Title("Action").Width(95);
+                    <span class="glyphicon glyphicon-eye-open" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="View Goal" onclick="ViewGoal(@item.Goal_MasterID)">&nbsp;</span>
+                    <span class="glyphicon glyphicon-pencil" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Edit Goal" onclick="EditGoal(@item.Goal_MasterID)">&nbsp;</span>
+                    <span class="glyphicon glyphicon-remove" style="cursor:pointer;" data-toggle="tooltip" data-placement="bottom" title="Delete Goal" onclick="DeleteGoal(@item.Goal_MasterID)"></span>
+                </div>).Title("Action").Width(95);
                 //.ClientTemplate("<span class='glyphicon glyphicon-eye-open' style='cursor:pointer;' data-toggle='tooltip' data-placement='bottom' title='View Goal' onclick='ViewGoal(#= Goal_MasterID #)'>&nbsp;</span>"
                 //+ "<span class='glyphicon glyphicon-pencil' style='cursor:pointer;' data-toggle='tooltip' data-placement='bottom' title='Edit Goal' onclick='EditGoal(#= Goal_MasterID #)'>&nbsp;</span>"
                 //+ "<span class='glyphicon glyphicon-remove' style='cursor:pointer;' data-toggle='tooltip' data-placement='bottom' title='Delete Goal' onclick='DeleteGoal(#= Goal_MasterID #)'></span>").Title("Action");
             })
-            .Scrollable(s=>s.Height(300))
-            .Filterable()
-            .Sortable()
-            .Pageable(p => p.PageSizes(true))
+                .Scrollable(s => s.Height(300))
+                .Filterable()
+                .Sortable()
+                .Pageable(p => p.PageSizes(true))
         //.DataSource(d => d.Ajax().Read(r => r.Action("ReadGoals", "Home")))
-)
+    )
+}
 @if (Model == null)
 {
     <h1>No records available</h1>
