@@ -181,6 +181,7 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessDeniedAuthorizeAttribute.cs" />
     <Compile Include="App_GlobalResources\CustomErrorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -226,6 +227,7 @@
     <Content Include="Views\Home\_ViewPerformance.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
+    <Content Include="Views\Account\_AccessDenied.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

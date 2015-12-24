@@ -112,7 +112,11 @@ namespace ZC_IT_TimeTracking.Controllers
             return View("ChangePassword");
         }
 
-
+        [Authorize]
+        public ActionResult AccessDenied()
+        {
+            return View("_AccessDenied");
+        }
         [HttpPost]
         public ActionResult ChangePassword(ChangePasswordViewModel model)
         {
