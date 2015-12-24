@@ -92,8 +92,8 @@ namespace ZC_IT_TimeTracking.Test.Controllers
         public void DeleteGoalMaster()
         {
             int[] goalId = {21};
-            JsonResponse obj = _goalServices.DeleteGoal(goalId);
-            Assert.AreEqual(true, obj.success);
+            int obj = _goalServices.DeleteGoal(goalId);
+            Assert.AreEqual(true, obj);
         }
 
         [TestMethod]

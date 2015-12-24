@@ -105,5 +105,28 @@ namespace ZC_IT_TimeTracking.Controllers
                 return RedirectToAction("Login", "Account");
             return Content(accountService.ValidationErrors.Errors[0].ErrorDescription);
         }
+        
+        [Authorize]
+        public ActionResult ChangePassword()
+        {
+            return View("ChangePassword");
+        }
+
+        
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);                
+            }
+            else
+            {
+                AccountService accountService = new AccountService();
+                accountService.ChangePassword(model.NewPassword);
+                
+                return View("ChangePassword");
+            }
+        }
     }
 }

@@ -56,9 +56,9 @@ $(function () {
     $("#GoalCreateForm").submit(function (ev) {
         ev.preventDefault();
         if (isCreate)
-            postUrl = "/Home/CreateGoal";
+            postUrl = "/ZCIT/Home/CreateGoal";
         else {
-            postUrl = "/Home/UpdateGoal";
+            postUrl = "/ZCIT/Home/UpdateGoal";
         }
         if ($("#GoalCreateForm").valid()) {
             var GoalData = {};
@@ -138,7 +138,7 @@ $(function () {
         $("#submitButton").attr("disabled", true);
         $('#formInput input,textarea,select').attr('readonly', true);
         $.ajax({
-            url: "/Home/GetGoalById",
+            url: "/ZCIT/Home/GetGoalById",
             type: "POST",
             dataType: "json",
             contentType: "application/json",
@@ -193,7 +193,7 @@ $(function () {
         //ViewGoal(id);
         $("#submitButton").attr("disabled", false);
         $.ajax({
-            url: "/Home/GetGoalById",
+            url: "/ZCIT/Home/GetGoalById",
             type: "POST",
             dataType: "json",
             contentType: "application/json",
@@ -261,7 +261,7 @@ $(function () {
         bootbox.confirm("Are you sure to delete?", function (r) {
             if (r) {
                 $.ajax({
-                    url: "/Home/DeleteGoal",
+                    url: "/ZCIT/Home/DeleteGoal",
                     type: "POST",
                     dataType: "json",
                     contentType: "application/json",
@@ -334,7 +334,7 @@ $(function () {
             QuarterData.GoalCreateTo = $("#GoalCreateTo").val();
 
             $.ajax({
-                url: "/Home/AddQuarter",
+                url: "/ZCIT/Home/AddQuarter",
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json",
@@ -427,7 +427,7 @@ $(function () {
                 });
                 if (ids.length > 0) {
                     $.ajax({
-                        url: "/Home/DeleteGoal",
+                        url: "/ZCIT/Home/DeleteGoal",
                         type: "POST",
                         dataType: "json",
                         contentType: "application/json",
@@ -470,7 +470,7 @@ $(function () {
 
     $("#ButtonAssignGoal").click(function (e) {
         e.preventDefault();
-        window.location.href = '/Home/AssignGoal';
+        window.location.href = '/ZCIT/Home/AssignGoal';
     });
     //Get Description from Selected Title
     $("#Goal_MasterID").change(function (e) {
@@ -594,7 +594,7 @@ $(function () {
 
             //Assign data
             $.ajax({
-                url: "/Home/AssignGoal",
+                url: "/ZCIT/Home/AssignGoal",
                 type: "POST",
                 dataType: "json",
                 contentType: "application/json",
@@ -621,15 +621,15 @@ $(function () {
     });
     //View AssignGoal
     $("#ButtonViewAssignGoal").click(function () {
-        window.location.href = "/Home/ViewAssignGoal";
+        window.location.href = "/ZCIT/Home/ViewAssignGoal";
     });
     //Add Performance
     $("#ButtonAddPerformance").click(function () {
-        window.location.href = "/Home/AddPerformance";
+        window.location.href = "/ZCIT/Home/AddPerformance";
     });
     //View Performance
     $("#ButtonViewPerformance").click(function () {
-        window.location.href = "/Home/ViewPerformance";
+        window.location.href = "/ZCIT/Home/ViewPerformance";
     }); 
 
     $("#TeamMemberName").change(function () {
@@ -678,7 +678,7 @@ $(function () {
 
     EditAssignedGoalWight = function (id) {                
         $.ajax({
-            url: "/Home/GetAssignedGoal",
+            url: "/ZCIT/Home/GetAssignedGoal",
             type: "POST",
             dataType: "Json",
             contentType: "application/json",
@@ -706,7 +706,7 @@ $(function () {
             var GoalID = data.Goal_MasterID;
             var ResourceGoalId = data.Resource_GoalID;
             $.ajax({
-                url: "/Home/EditAssignedGoal",
+                url: "/ZCIT/Home/EditAssignedGoal",
                 type: "POST",
                 dataType: "Json",
                 contentType: "application/json",
@@ -730,7 +730,7 @@ $(function () {
         bootbox.confirm("Are you sure to delete?", function (r) {
             if (r) {
                 $.ajax({
-                    url: "/Home/DeleteAssignedGoal",
+                    url: "/ZCIT/Home/DeleteAssignedGoal",
                     type: "POST",
                     dataType: "json",
                     contentType: "application/json",

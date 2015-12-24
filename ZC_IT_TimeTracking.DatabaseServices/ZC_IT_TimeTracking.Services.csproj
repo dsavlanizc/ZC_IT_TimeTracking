@@ -93,9 +93,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ZC_IT_TimeTracking.BusinessEntities\ZC_IT_TimeTracking.BusinessEntities.csproj">
       <Project>{9a6283da-218b-4c23-b169-0cab423a8e11}</Project>
       <Name>ZC_IT_TimeTracking.BusinessEntities</Name>
@@ -109,9 +106,7 @@
       <Name>ZC_IT_TimeTracking.DataAccess</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="..\packages\AutoMapper.3.1.1\lib\net40\AutoMapper.Net4.dll">
       <Link>AutoMapper.Net4.dll</Link>

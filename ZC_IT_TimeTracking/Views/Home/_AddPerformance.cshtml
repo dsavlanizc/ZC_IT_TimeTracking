@@ -1,54 +1,51 @@
 ﻿<form role="form" id="AddPerformanceForm" class="form-horizontal">
-    <div class="form-horizontal" id="formInput">
-        <div class="form-group required">
-            <label class="control-label col-md-3">Team</label>
-            <div class="col-md-3">
-                @Html.DropDownList("TeamList", new SelectList(ViewBag.TeamList, "TeamID", "TeamName"), "----Select Team-----", new { @class = "form-control col-md-4" })
-            </div>
+    <div class="form-group required">
+        <label class="control-label col-md-3">Team</label>
+        <div class="col-md-3">
+            @Html.DropDownList("TeamList", new SelectList(ViewBag.TeamList, "TeamID", "TeamName"), "----Select Team-----", new { @class = "form-control col-md-4" })
         </div>
-        <div class="form-group required">
-            <label class="control-label col-md-3">Team Member</label>
-            <div class="col-md-3">
-                <select name="TeamMembers" id="TeamMembers" class="form-control"></select>
-            </div>
+    </div>
+    <div class="form-group required">
+        <label class="control-label col-md-3">Team Member</label>
+        <div class="col-md-3">
+            <select name="TeamMembers" id="TeamMembers" class="form-control"></select>
         </div>
-        <div class="form-group required">
-            <label class="control-label col-md-3">Goal Title</label>
-            <div class="col-md-3">
-                <select name="GoalTitles" id="GoalTitles" class="form-control"></select>
-            </div>
+    </div>
+    <div class="form-group required">
+        <label class="control-label col-md-3">Goal Title</label>
+        <div class="col-md-3">
+            <select name="GoalTitles" id="GoalTitles" class="form-control"></select>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-3">Goal Description</label>
-            <div class="col-md-4">
-                <textarea name="GoalDescription" id="GoalDescription" class="form-control" readonly="readonly"></textarea>
-            </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3">Goal Description</label>
+        <div class="col-md-4">
+            <textarea name="GoalDescription" id="GoalDescription" class="form-control" readonly="readonly"></textarea>
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-3">UnitOfMeasurement</label>
-            <div class="col-md-4">
-                <input type="text" name="UnitOfMeasurement" id="UnitOfMeasurement" class="form-control" readonly="readonly">
-            </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3">UnitOfMeasurement</label>
+        <div class="col-md-4">
+            <input type="text" name="UnitOfMeasurement" id="UnitOfMeasurement" class="form-control" readonly="readonly">
         </div>
-        <div class="form-group">
-            <label class="control-label col-md-3">MeasurementValue</label>
-            <div class="col-md-4">
-                <input type="text" name="MeasurementValue" id="MeasurementValue" class="form-control" readonly="readonly">
-            </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-3">MeasurementValue</label>
+        <div class="col-md-4">
+            <input type="text" name="MeasurementValue" id="MeasurementValue" class="form-control" readonly="readonly">
         </div>
-        <div class="form-group required">
-            <label class="control-label col-md-3">Performance</label>
-            <div class="col-md-4">
-                <input type="number" name="Performance" id="Performance" class="form-control" step="0.01" required="required">
-            </div>
+    </div>
+    <div class="form-group required">
+        <label class="control-label col-md-3">Performance</label>
+        <div class="col-md-4">
+            <input type="number" name="Performance" id="Performance" class="form-control" step="0.01" required="required">
         </div>
-        <div class="form-group required">
-            <div class="col-md-4">
-                <button type="submit" class="btn btn-primary right" id="submitButtonPerformance">Submit</button>
-                <button type="reset" class="btn btn-default right" id="resetButtonPerformance">Reset</button>
-            </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <button type="submit" class="btn btn-primary col-md-offset-3" id="submitButtonPerformance">Submit</button>
+            <button type="reset" class="btn btn-default" id="resetButtonPerformance">Reset</button>
             <button type="button" class="btn btn-primary right" style="float:right" onclick="@("window.location.href='" + @Url.Action("Index", "Home") + "'");">Back</button>
         </div>
-        <input type="hidden" id="ResGoalID" name="ResGoalID" />
     </div>
 </form>

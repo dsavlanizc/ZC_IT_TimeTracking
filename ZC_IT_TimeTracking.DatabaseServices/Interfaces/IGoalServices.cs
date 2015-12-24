@@ -15,7 +15,7 @@ namespace ZC_IT_TimeTracking.Services.Interfaces
         GoalMaster GetGoaldetailByGoalID(int id);
         bool CreateGoal(GoalMaster goal);
         bool UpdateGoal(GoalMaster goal);
-        JsonResponse DeleteGoal(int[] goalid);
+        int DeleteGoal(int[] goalid);
         List<GoalMaster> GetGoalIDandTitle();
         int TotalRecordsOfGoal();
     }

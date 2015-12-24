@@ -165,7 +165,19 @@ namespace ZC_IT_TimeTracking.Controllers
             try
             {
                 var Isdelete = _goalServices.DeleteGoal(id);
-                return Json(new JsonResponse { message = Isdelete.message, success = Isdelete.success });
+                if (Isdelete == id.Length)
+                {
+                    return Json(new JsonResponse { message = "Goal(s) Deleted Successfully!", success = true });
+
+                }
+                else if (Isdelete > 0)
+                {
+                    return Json(new JsonResponse { message = "Some of goal(s) deleted!", success = true });
+                }
+                else
+                {
+                    return Json(new JsonResponse { message = "No such goal exist!", success = false });
+                }
             }
             catch
             {
@@ -238,6 +250,7 @@ namespace ZC_IT_TimeTracking.Controllers
             }
         }
 
+        
         [HttpPost]
         public JsonResult AssignGoal(AssignGoal AssignData)
         {
@@ -422,8 +435,7 @@ namespace ZC_IT_TimeTracking.Controllers
                         weight = weight + dt.Weight;
                         TotalPerformance = TotalPerformance + float.Parse(fg.Resource_Performance.ToString());
                     }
-                    ViewBag.outofweight = weight;
-                    ViewBag.TotalPerformance = TotalPerformance / 100;
+                    ViewBag.TotalPerformance = TotalPerformance / weight;
                 }
 
             }

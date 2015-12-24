@@ -1,5 +1,5 @@
 ﻿@using ZC_IT_TimeTracking.Models
-@if (ViewBag.SearchString != "" || Model != null)
+@*@if (ViewBag.SearchString != "" || Model != null)
 {
     <div class="row">
         <div class="col-lg-3">
@@ -15,7 +15,7 @@
             <button class="btn btn-danger" id="ClearTitleSearch" style="display:none;"><span class="glyphicon glyphicon-remove-sign"></span></button>
         }
     </div>
-}
+}*@
 @if (ViewBag.GoalList == null)
 {
     <h1>No records available</h1>
@@ -49,8 +49,11 @@ else
                 .Pageable(p => p.PageSizes(true))
         //.DataSource(d => d.Ajax().Read(r => r.Action("ReadGoals", "Home")))
     )
+    <div>
+        <input type="button" id="DeleteMultiGoals" class="btn btn-danger" value="Delete Goal(s)" style="display:none;" />
+    </div>
 }
-@if (Model == null)
+@*@if (Model == null)
 {
     <h1>No records available</h1>
 }
@@ -145,4 +148,4 @@ else
         </ul>
 
     </div>
-</form>
+</form>*@

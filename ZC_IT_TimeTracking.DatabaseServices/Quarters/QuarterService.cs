@@ -114,7 +114,7 @@ namespace ZC_IT_TimeTracking.Services.Quarters
             }
             catch
             {
-                this.ValidationErrors.Add("ERR_DEL_GOAL", "Error Occured while Creating Quarter!");
+                this.ValidationErrors.Add("ERR_DEL_QUA", "Error Occured while Creating Quarter!");
                 return null;
             }
         }

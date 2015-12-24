@@ -184,7 +184,7 @@ namespace ZC_IT_TimeTracking.Services.Goals
             }
         }
 
-        public JsonResponse DeleteGoal(int[] goalid)
+        public int DeleteGoal(int[] goalid)
         {
             JsonResponse js = new JsonResponse();
             try
@@ -195,29 +195,12 @@ namespace ZC_IT_TimeTracking.Services.Goals
                     int res = _goalRepository.DeleteGoalMasterDB(i);
                     if (res > 0) count++;
                 }
-                if (count == goalid.Length)
-                {
-                    js.message = "Goal(s) Deleted Successfully!";
-                    js.success = true;
-                    return js;
-                }
-                else if (count > 0)
-                {
-                    js.message = "Some of goal(s) deleted!";
-                    js.success = true;
-                    return js;
-                }
-                else
-                {
-                    js.message = "No such goal exist!";
-                    js.success = false;
-                    return js;
-                }
+                return count;
             }
             catch
             {
                 this.ValidationErrors.Add("ERR_DEL_GOAL", "Error Occured while Deleting Goal!");
-                return null;
+                return 0;
             }
         }
 

@@ -33,8 +33,46 @@
             </ul>
         </div>
     </nav>
-    <div class="container panel panel-primary">        
-            @RenderBody()
+    @if (User.Identity.IsAuthenticated)
+    {
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-default">
+                    <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                    @if (User.IsInRole("Admin") && User.IsInRole("Manager"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Assign</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Action("AssignGoal", "Home")">AssignGoal</a></li>
+                                <li><a href="@Url.Action("ViewAssignGoal", "Home")">View AssignGoal</a></li>
+                            </ul>
+                        </li>
+                    }
+
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">Performance</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("AddPerformance", "Home")">Add Performance</a></li>
+                            <li><a href="@Url.Action("ViewPerformance", "Home")">View Performance</a></li>
+                        </ul>
+                    </li>
+                    @*<li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#">resources</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Add Resources</a></li>
+                                <li><a href="#">View Resources</a></li>
+                            </ul>
+                        </li>*@
+                </ul>
+                @*<ul class="nav navbar-nav navbar-right">
+                        <li><a href="@Url.Action("ChangePassword", "Account")">Change password</a></li>
+                    </ul>*@
+            </div>
+        </nav>
+    }
+    <div class="container panel panel-primary">
+        @RenderBody()
     </div>
 </body>
 </html>
