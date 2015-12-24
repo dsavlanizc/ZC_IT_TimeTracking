@@ -3,9 +3,6 @@ using System;
 using ZC_IT_TimeTracking.BusinessEntities.Model;
 using System.Web.Profile;
 using System.Web;
-using System.Web.SessionState;
-using System.Data.SqlClient;
-using System.Data;
 
 namespace ZC_IT_TimeTracking.Services.Account
 {
@@ -65,9 +62,6 @@ namespace ZC_IT_TimeTracking.Services.Account
                 //var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                 //authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe }, userIdentity);
                 FormsAuthentication.SetAuthCookie(UserName, rememberMe);
-                UserProfile profile = UserProfile.GetUserProfile(UserName);
-                HttpContext.Current.Session["userFullName"] = profile.FirstName + " " + profile.LastName;
-                HttpContext.Current.Session["UserName"] = UserName;
                 return true;
             }
             else if (Membership.FindUsersByName(UserName).Count > 0)
@@ -113,25 +107,6 @@ namespace ZC_IT_TimeTracking.Services.Account
                 this.ValidationErrors.Add("Logout_failed","Requested logout failed!");
                 return false;
             }
-        }
-
-        public bool ChangePassword(string paswd)
-        {
-            DatabaseContext db = new DatabaseContext();
-            var con = new SqlConnection("data source=INDINA04204VW\\SQLEXPRESS;initial catalog=IT-Tracking;integrated security=True");
-            con.Open();
-            SqlCommand cmd = new SqlCommand("aspnet_Membership_SetPassword",con);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@ApplicationName",Membership.ApplicationName);
-            cmd.Parameters.Add("@UserName",HttpContext.Current.Session["UserName"].ToString());
-            //string hashedPwd = FormsAuthentication.HashPasswordForStoringInConfigFile(paswd,"sha1");
-            cmd.Parameters.Add("@NewPassword", paswd);
-            cmd.Parameters.Add("@PasswordSalt", "ywLIWwNipZZCkaaIRNH+Qg==");
-            cmd.Parameters.Add("@CurrentTimeUtc", DateTime.Now);
-            cmd.Parameters.Add("@PasswordFormat", 1);            
-            cmd.ExecuteNonQuery();
-            con.Close();            
-            return true;
         }
     }
 }
