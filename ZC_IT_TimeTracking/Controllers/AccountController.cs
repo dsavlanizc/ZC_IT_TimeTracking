@@ -113,20 +113,20 @@ namespace ZC_IT_TimeTracking.Controllers
         }
 
         
-        [HttpPost]
-        public ActionResult ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);                
-            }
-            else
-            {
-                AccountService accountService = new AccountService();
-                accountService.ChangePassword(model.NewPassword);
+        //[HttpPost]
+        //public ActionResult ChangePassword(ChangePasswordViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);                
+        //    }
+        //    else
+        //    {
+        //        AccountService accountService = new AccountService();
+        //        accountService.ChangePassword(model.NewPassword);
                 
-                return View("ChangePassword");
-            }
-        }
+        //        return View("ChangePassword");
+        //    }
+        //}
     }
 }
