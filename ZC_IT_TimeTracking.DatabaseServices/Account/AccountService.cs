@@ -95,6 +95,12 @@ namespace ZC_IT_TimeTracking.Services.Account
             }
         }
 
+        public bool ChangePassword(string oldPassword, string newPassword)
+        {
+            var user = Membership.GetUser();
+            return user.ChangePassword(oldPassword, newPassword);
+        }
+
         public bool LogoutUser()
         {
             try
