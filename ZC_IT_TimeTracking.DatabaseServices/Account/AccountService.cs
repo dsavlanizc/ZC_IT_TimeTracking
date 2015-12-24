@@ -62,8 +62,6 @@ namespace ZC_IT_TimeTracking.Services.Account
                 //var userIdentity = userManager.CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                 //authenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = rememberMe }, userIdentity);
                 FormsAuthentication.SetAuthCookie(UserName, rememberMe);
-                UserProfile profile = UserProfile.GetUserProfile(UserName);
-                HttpContext.Current.Session["userFullName"] = profile.FirstName + " " + profile.LastName;
                 return true;
             }
             else if (Membership.FindUsersByName(UserName).Count > 0)

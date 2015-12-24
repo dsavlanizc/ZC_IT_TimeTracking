@@ -21,8 +21,10 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (User.Identity.IsAuthenticated)
                 {
+                    var profile = ZC_IT_TimeTracking.Services.UserProfile.GetUserProfile(User.Identity.Name);
+                    var name = profile.FirstName + " " + profile.LastName;
                     <li><a>Online user(s) : <b>@Membership.GetNumberOfUsersOnline()</b></a></li>
-                    <li style="color:white;"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Your Profile"><span class="glyphicon glyphicon-user"></span> @Session["userFullName"]</a></li>
+                    <li style="color:white;"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Your Profile"><span class="glyphicon glyphicon-user"></span> @name</a></li>
                     <li><a href="@Url.Action("Logout","Account")" data-toggle="tooltip" data-placement="bottom" title="LogOut"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
                 }
                 else
